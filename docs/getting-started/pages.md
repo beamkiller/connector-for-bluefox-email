@@ -1,5 +1,15 @@
 # Thank-you and preferences pages
 
+## Pages to create
+
+| Page | Suggested slug | Content | Required | Link it in |
+|---|---|---|---|---|
+| Newsletter confirmed | `newsletter-confirmed` | `[cfbe_thankyou]` | yes | bluefox list → double opt-in **Redirect link** |
+| Newsletter preferences | `newsletter-preferences` | `[cfbe_preferences]` | when the preferences page switch is on | bluefox project → **Custom subscription preferences URL** |
+| Newsletter (signup) | any, e.g. `newsletter` | **bluefox.email signup form** block or `[cfbe_form]` | optional | your menu, footer or promo banners (`[cfbe_promo]`) |
+
+Other URLs than the suggested slugs work too: enter them on the [Emails tab](../settings/emails.md). The signup form can also live in any existing page, widget area or popup – see [Signup forms](../features/signup-forms.md).
+
 ## Thank-you page
 
 bluefox sends the visitor to the list's **Redirect link** after they confirm. Create that page in WordPress:
