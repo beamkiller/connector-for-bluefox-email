@@ -136,6 +136,9 @@ final class Form_Tab {
 	public function sanitize_emails( array $clean, array $input ): array {
 		$clean['thankyou_url']    = esc_url_raw( (string) ( $input['thankyou_url'] ?? '' ) );
 		$clean['preferences_url'] = esc_url_raw( (string) ( $input['preferences_url'] ?? '' ) );
+		if ( isset( $input['pending_expiry_days'] ) ) {
+			$clean['pending_expiry_days'] = min( 60, max( 1, (int) $input['pending_expiry_days'] ) );
+		}
 
 		$defaults = Settings::defaults( 'emails' );
 		if ( isset( $input['prefs_title'] ) ) {

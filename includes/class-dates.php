@@ -65,17 +65,6 @@ final class Dates {
 	}
 
 	/**
-	 * Former Hungarian short date; kept for callers that still use it.
-	 *
-	 * @deprecated Use local_date().
-	 *
-	 * @param int $timestamp Unix timestamp.
-	 */
-	public static function hu_date( int $timestamp ): string {
-		return self::local_date( $timestamp );
-	}
-
-	/**
 	 * ISO 8601 UTC with milliseconds, as bluefox stores dates.
 	 *
 	 * @param int $timestamp Unix timestamp.

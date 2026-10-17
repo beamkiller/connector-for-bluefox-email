@@ -6,7 +6,7 @@ Your own, translatable unsubscribe and pause page on your site, instead of the p
 
 ## What the visitor sees
 
-The "Unsubscribe" and "Pause" links of your newsletters open the page with a `?token=…` parameter. The page shows the **Title** and **Intro** from the Emails tab (section *Newsletter preferences page*), the email address, and the options that fit the current status on your **default list**:
+The "Unsubscribe" and "Pause" links of your newsletters open the page with a `?token=…` parameter. The page shows the **Title** and **Intro** from the Emails tab (section *Newsletter preferences page*), the email address, and the options that fit the current status on one list – the list the newsletter was sent to (when the link carries it), otherwise the list the person signed up to on this site, otherwise the default list from the General tab:
 
 | Status | Options |
 |---|---|

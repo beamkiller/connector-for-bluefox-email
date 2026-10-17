@@ -29,7 +29,7 @@ $cfbe_lists  = List_Options::lists( (string) $cfbe_values['list_id'] );
 		<tr>
 			<th scope="row"><label for="cfbe-coupon-email-id-c"><?php esc_html_e( 'Coupon email ID', 'connector-for-bluefox-email' ); ?></label></th>
 			<td>
-				<input type="text" class="regular-text code" id="cfbe-coupon-email-id-c" name="<?php echo esc_attr( $cfbe_name( 'email_id' ) ); ?>" value="<?php echo esc_attr( (string) $cfbe_values['email_id'] ); ?>" placeholder="<?php echo esc_attr( (string) Settings::get( 'emails', 'coupon_email_id' ) ); ?>">
+				<input type="text" class="regular-text code" id="cfbe-coupon-email-id-c" name="<?php echo esc_attr( $cfbe_name( 'email_id' ) ); ?>" value="<?php echo esc_attr( (string) $cfbe_values['email_id'] ); ?>" placeholder="<?php echo esc_attr( \CFBE\Reward_Service::coupon_email_id() ); ?>">
 				<p class="description"><?php esc_html_e( 'ID of the bluefox transactional email that delivers the coupon (see “Coupon email in bluefox” below). No coupon is sent without it.', 'connector-for-bluefox-email' ); ?></p>
 			</td>
 		</tr>
@@ -75,11 +75,6 @@ $cfbe_lists  = List_Options::lists( (string) $cfbe_values['list_id'] );
 		<tr>
 			<th scope="row"><label for="cfbe-prefix"><?php esc_html_e( 'Code prefix', 'connector-for-bluefox-email' ); ?></label></th>
 			<td><input type="text" class="small-text code" id="cfbe-prefix" maxlength="10" name="<?php echo esc_attr( $cfbe_name( 'code_prefix' ) ); ?>" value="<?php echo esc_attr( $cfbe_values['code_prefix'] ); ?>"></td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="cfbe-pending"><?php esc_html_e( 'Confirmation deadline (days)', 'connector-for-bluefox-email' ); ?></label></th>
-			<td><input type="number" min="1" max="60" class="small-text" id="cfbe-pending" name="<?php echo esc_attr( $cfbe_name( 'pending_expiry_days' ) ); ?>" value="<?php echo esc_attr( (string) $cfbe_values['pending_expiry_days'] ); ?>">
-			<p class="description"><?php esc_html_e( 'Only subscriptions confirmed within this many days receive a coupon; after that the pending signup expires.', 'connector-for-bluefox-email' ); ?></p></td>
 		</tr>
 	</table>
 

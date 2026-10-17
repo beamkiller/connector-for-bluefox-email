@@ -58,7 +58,7 @@ Tick **Users list → Show the bluefox status … in a column of the Users list*
 
 | Hook | Parameters | Fires |
 |---|---|---|
-| `cfbe_webhook_received` | `string $type, array $payload` | for every authenticated event with a type, in the request (also when the switch is off) |
+| `cfbe_webhook_received` | `string $type, array $payload` | for every authenticated event with a type, in the request, while this feature is on |
 | `cfbe_webhook_event` | `string $type, array $payload` | in the background job, for every event |
 | `cfbe_webhook_{type}` | `array $payload` | in the background job, e.g. `cfbe_webhook_bounce`, `cfbe_webhook_unsubscribe` |
 

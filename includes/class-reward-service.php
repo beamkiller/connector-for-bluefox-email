@@ -186,7 +186,7 @@ class Reward_Service {
 	 * @param string $list_id bluefox list ID.
 	 */
 	public static function coupon_enabled_for( string $list_id ): bool {
-		if ( ! Modules::enabled( 'coupon' ) || empty( Settings::get( 'coupon', 'enabled' ) ) ) {
+		if ( ! Modules::enabled( 'coupon' ) ) {
 			return false;
 		}
 		$coupon_list = (string) Settings::get( 'coupon', 'list_id' );
@@ -194,11 +194,15 @@ class Reward_Service {
 	}
 
 	/**
-	 * Transactional email ID of the coupon email in bluefox (Coupon tab; falls back to the older Emails tab value).
+	 * Transactional email ID of the coupon email in bluefox (Coupon tab; before 1.0 it was stored with the emails).
 	 */
 	public static function coupon_email_id(): string {
 		$id = (string) Settings::get( 'coupon', 'email_id' );
-		return '' !== $id ? $id : (string) Settings::get( 'emails', 'coupon_email_id' );
+		if ( '' !== $id ) {
+			return $id;
+		}
+		$legacy = get_option( Settings::option_name( 'emails' ), array() );
+		return is_array( $legacy ) ? (string) preg_replace( '/[^A-Za-z0-9]/', '', (string) ( $legacy['coupon_email_id'] ?? '' ) ) : '';
 	}
 
 	/**
@@ -221,7 +225,7 @@ class Reward_Service {
 	 * @return int Number of rewards enqueued.
 	 */
 	public function poll(): int {
-		$days = max( 1, (int) Settings::get( 'coupon', 'pending_expiry_days' ) );
+		$days = Settings::pending_expiry_days();
 		$this->repository->expire_older_than( $days );
 
 		if ( null === $this->client ) {

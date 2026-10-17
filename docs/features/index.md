@@ -30,4 +30,4 @@ Every signup – form, popup, checkout or a third-party form – goes through th
     - `active` → shown *Already subscribed*, tags and name are merged into the contact, no coupon;
     - `paused` → made active again without an email, no coupon.
 3. **bluefox errors never lose a signup.** Network errors, rate limits and 5xx answers are retried in the background after 5 minutes, 30 minutes and 2 hours. A suppressed or bounced address (bluefox 405) is marked failed and the visitor sees the generic error message.
-4. **Confirmation is detected** by the [webhook](../getting-started/webhook.md) or by the 15-minute poll. The plugin re-reads the status from bluefox, marks the signup confirmed and fires `cfbe_signup_confirmed`. Unconfirmed signups expire after the **Confirmation deadline** (Coupon tab, default 14 days).
+4. **Confirmation is detected** by the [webhook](../getting-started/webhook.md) or by the 15-minute poll. The plugin re-reads the status from bluefox, marks the signup confirmed and fires `cfbe_signup_confirmed`. Unconfirmed signups expire after the **Confirmation deadline** (Emails tab, default 14 days).

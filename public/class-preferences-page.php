@@ -126,7 +126,7 @@ final class Preferences_Page {
 		}
 
 		$action = sanitize_key( (string) ( $post['cfbe_pref_action'] ?? '' ) );
-		$list   = (string) Settings::get( 'api', 'list_id' );
+		$list   = $this->list_for( $token );
 		if ( ! in_array( $action, self::ACTIONS, true ) || '' === $list ) {
 			return $this->result_url( $raw, 'error' );
 		}
@@ -247,8 +247,9 @@ final class Preferences_Page {
 		}
 
 		$subscriber = null;
+		$list_id    = $this->list_for( $token );
 		foreach ( (array) ( $lists['items'] ?? array() ) as $item ) {
-			if ( is_array( $item ) && (string) Settings::get( 'api', 'list_id' ) === (string) ( $item['_id'] ?? '' ) ) {
+			if ( is_array( $item ) && '' !== $list_id && (string) ( $item['_id'] ?? '' ) === $list_id ) {
 				$subscriber = is_array( $item['subscriber'] ?? null ) ? $item['subscriber'] : null;
 			}
 		}
@@ -271,7 +272,7 @@ final class Preferences_Page {
 				$html .= '<p class="cfbe-prefs__status">' . esc_html(
 					false !== $until
 						/* translators: %s: date */
-						? sprintf( __( 'Your newsletter is paused until %s', 'connector-for-bluefox-email' ), Dates::hu_date( $until ) )
+						? sprintf( __( 'Your newsletter is paused until %s', 'connector-for-bluefox-email' ), Dates::local_date( $until ) )
 						: __( 'Your newsletter is paused.', 'connector-for-bluefox-email' )
 				) . '</p>';
 				$html .= $this->button_form( $token, 'resubscribe', __( 'Resume now', 'connector-for-bluefox-email' ), 'primary' );
@@ -288,6 +289,23 @@ final class Preferences_Page {
 				$html .= '<p class="cfbe-prefs__status">' . esc_html__( 'This email address is not subscribed to our newsletter.', 'connector-for-bluefox-email' ) . '</p>';
 		}
 		return $html;
+	}
+
+	/**
+	 * The list this page manages for a token: the list the newsletter was sent to, else the list the person
+	 * signed up to on this site, else the default list (General tab).
+	 *
+	 * @param Preferences_Token $token Token.
+	 */
+	private function list_for( Preferences_Token $token ): string {
+		if ( '' !== $token->list_id ) {
+			return $token->list_id;
+		}
+		$row = $this->repository->find_by_email( $token->email );
+		if ( $row && '' !== (string) ( $row['list_id'] ?? '' ) ) {
+			return (string) $row['list_id'];
+		}
+		return (string) Settings::get( 'api', 'list_id' );
 	}
 
 	/**

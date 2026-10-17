@@ -49,18 +49,27 @@ final class Preferences_Token {
 	public $type;
 
 	/**
+	 * List the email was sent to ('' when the token does not say).
+	 *
+	 * @var string
+	 */
+	public $list_id;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $raw        Raw token.
 	 * @param string $email      Email.
 	 * @param string $project_id Project ID.
 	 * @param string $type       Link type.
+	 * @param string $list_id    Subscriber list ID.
 	 */
-	private function __construct( string $raw, string $email, string $project_id, string $type ) {
+	private function __construct( string $raw, string $email, string $project_id, string $type, string $list_id ) {
 		$this->raw        = $raw;
 		$this->email      = $email;
 		$this->project_id = $project_id;
 		$this->type       = $type;
+		$this->list_id    = $list_id;
 	}
 
 	/**
@@ -86,6 +95,8 @@ final class Preferences_Token {
 		if ( '' === $email || ! is_email( $email ) || ! preg_match( '/^[A-Za-z0-9]{1,64}$/', $project_id ) ) {
 			return null;
 		}
-		return new self( $raw, $email, $project_id, in_array( $type, self::TYPES, true ) ? $type : '' );
+		$list_id = (string) ( $payload['subscriberListId'] ?? '' );
+		$list_id = preg_match( '/^[A-Za-z0-9]{1,64}$/', $list_id ) ? $list_id : '';
+		return new self( $raw, $email, $project_id, in_array( $type, self::TYPES, true ) ? $type : '', $list_id );
 	}
 }

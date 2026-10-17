@@ -61,7 +61,7 @@ Authentication, compared in constant time:
 
 Payloads:
 
-- Project webhook: `{ "type": "subscribe", "subscription": { "email", "status", "subscriberList": { "_id" } }, … }`. Every authenticated event fires [`cfbe_webhook_received`](hooks.md#inbound-webhooks). Subscription events update the local list status. Only `subscribe` / `resubscribe` with status `active`, on the list of the email's own signup, queue a confirmation check.
+- Project webhook: `{ "type": "subscribe", "subscription": { "email", "status", "subscriberList": { "_id" } }, … }`. While Inbound webhooks is on, every authenticated event fires [`cfbe_webhook_received`](hooks.md#inbound-webhooks). Subscription events update the local list status. Only `subscribe` / `resubscribe` with status `active`, on the list of the email's own signup, queue a confirmation check.
 - Automation step: `{ "automationId", "contactId", "contact": { "email", … } }`. Queues a confirmation check if the email has a local signup.
 
 The webhook only queues work. The confirmation itself re-reads the subscriber's status from the bluefox API.

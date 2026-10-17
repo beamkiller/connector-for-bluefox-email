@@ -80,8 +80,10 @@ final class CLI_Command {
 		\WP_CLI::log( 'Local: ' . ( $row ? wp_json_encode( array_intersect_key( $row, array_flip( array( 'status', 'source', 'tags', 'attempts', 'last_error', 'created_at', 'confirmed_at', 'coupon_id' ) ) ) ) : 'no row' ) );
 
 		if ( $this->client ) {
-			$sub = $this->client->get_subscriber( (string) Settings::get( 'api', 'list_id' ), $email );
-			\WP_CLI::log( 'bluefox: ' . ( is_wp_error( $sub ) ? $sub->get_error_code() : (string) ( $sub['status'] ?? '?' ) ) );
+			// The list the person signed up to on this site, else the default list.
+			$list = $row && '' !== (string) ( $row['list_id'] ?? '' ) ? (string) $row['list_id'] : (string) Settings::get( 'api', 'list_id' );
+			$sub  = $this->client->get_subscriber( $list, $email );
+			\WP_CLI::log( 'bluefox (list ' . $list . '): ' . ( is_wp_error( $sub ) ? $sub->get_error_code() : (string) ( $sub['status'] ?? '?' ) ) );
 		}
 		if ( $row && ! empty( $row['coupon_id'] ) && function_exists( 'wc_get_coupon_code_by_id' ) ) {
 			\WP_CLI::log( 'Coupon: ' . wc_get_coupon_code_by_id( (int) $row['coupon_id'] ) );

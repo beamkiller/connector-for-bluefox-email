@@ -13,4 +13,4 @@ See [Checkout opt-in](../features/checkout-opt-in.md) for how the checkbox works
 | My Account | `cfbe_checkout[account_optin]` | off | **Also offer the checkbox on My Account → Account details**. |
 | Preview | – | – | Shows the label as customers will see it. |
 
-`cfbe_checkout[enabled]` is kept for backwards compatibility and is always saved as `true`; the **Checkout opt-in** switch on the General tab turns the feature on and off.
+The **Checkout opt-in** switch on the General tab turns the feature on and off.

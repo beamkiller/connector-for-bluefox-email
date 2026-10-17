@@ -214,9 +214,6 @@ final class Checkout_Optin {
 	 * @param string $email Logged-in customer's e-mail ('' for guests).
 	 */
 	public function should_offer( string $email ): bool {
-		if ( empty( Settings::get( 'checkout', 'enabled' ) ) ) {
-			return false;
-		}
 		if ( '' === $email ) {
 			return true;
 		}

@@ -49,7 +49,6 @@ final class Checkout_Tab {
 	public function sanitize( array $clean, array $input, array $previous = array() ): array {
 		$defaults = Settings::defaults( 'checkout' );
 		// On/off is the module switch on the General tab; the key stays for compatibility.
-		$clean['enabled']       = true;
 		$label                  = sanitize_text_field( (string) ( $input['label'] ?? '' ) );
 		$clean['label']         = '' !== $label ? $label : $defaults['label'];
 		$clean['description']   = sanitize_text_field( (string) ( $input['description'] ?? '' ) );

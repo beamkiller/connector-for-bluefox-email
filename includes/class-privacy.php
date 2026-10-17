@@ -249,7 +249,7 @@ final class Privacy {
 	}
 
 	/**
-	 * Sanitizes the setting; keeps the stored value when the posted form does not contain it (General tab).
+	 * Sanitizes the setting; keeps the stored value when the posted form does not contain it (e.g. the General tab).
 	 *
 	 * @param array $clean    Sanitized values.
 	 * @param array $input    Raw input.
@@ -264,7 +264,7 @@ final class Privacy {
 		} else {
 			$clean[ self::SETTING ] = ! empty( $previous[ self::SETTING ] );
 		}
-		// Forms that do not contain the IP settings (General tab) keep the stored values.
+		// Forms without the IP settings (they live on the Privacy tab) keep the stored values.
 		$mode = (string) ( $input[ Consent_Ip::SETTING_MODE ] ?? $previous[ Consent_Ip::SETTING_MODE ] ?? Consent_Ip::DEFAULT_MODE );
 
 		$clean[ Consent_Ip::SETTING_MODE ]      = in_array( $mode, Consent_Ip::MODES, true ) ? $mode : Consent_Ip::DEFAULT_MODE;

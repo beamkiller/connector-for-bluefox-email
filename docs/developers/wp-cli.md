@@ -38,7 +38,7 @@ wp cfbe status jane@example.com
 ```
 
 - **Local** – the row in `{prefix}cfbe_subscribers`, or `no row`.
-- **bluefox** – the subscriber status on the **default list** (General tab), or the error code.
+- **bluefox** – the subscriber status on the list the person signed up to on this site (the default list from the General tab when there is no local row), or the error code.
 - **Coupon** – the welcome coupon code, if one was issued.
 
 ## wp cfbe resend-coupon

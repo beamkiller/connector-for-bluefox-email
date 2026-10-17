@@ -11,6 +11,7 @@ The thank-you page and preferences page texts. See [Thank-you and preferences pa
 | Label | Option key | Default | What it does |
 |---|---|---|---|
 | Thank-you page URL | `cfbe_emails[thankyou_url]` | empty = `/newsletter-confirmed/` | Where visitors land after confirming. Set the same URL as the **Redirect link** of the bluefox list. The popup is never shown on this page. |
+| Confirmation deadline (days) | `cfbe_emails[pending_expiry_days]` | `14` | 1–60. A signup not confirmed within this time expires: it no longer counts as pending and never receives a welcome coupon. |
 
 ### Thank-you page texts – [cfbe_thankyou]
 
@@ -30,4 +31,3 @@ Each state has a title and a text. An empty value falls back to the default. The
 | Title | `cfbe_emails[prefs_title]` | *Newsletter preferences* | Page heading. Empty = the default. |
 | Intro | `cfbe_emails[prefs_intro]` | *Here you can pause or cancel our newsletter. You will still receive emails about your orders.* | Text under the heading. Basic HTML allowed. |
 
-`cfbe_emails[coupon_email_id]` is an older location of the coupon email ID. It is not shown here any more; the [Coupon tab](coupon.md) uses it as a fallback.

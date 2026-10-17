@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Capture: logged-in shoppers on every cart change; guests once they type their email at checkout
  * (classic checkout: small script → `POST cfbe/v1/cart-email`; block checkout: Store API customer update).
- * A recurring job finds idle carts and hands them to the Dispatcher; `?cfbe_cart=<token>` restores a cart.
+ * A recurring job finds idle carts and hands them to the Dispatcher; `?cfbe_cart_<token>` restores a cart.
  */
 class Cart_Tracker {
 

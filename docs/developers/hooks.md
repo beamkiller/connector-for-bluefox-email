@@ -74,7 +74,7 @@ The mailer also fires the core hooks `wp_mail_succeeded` and `wp_mail_failed`, a
 
 | Action | Parameters | Description |
 |---|---|---|
-| `cfbe_webhook_received` | `string $type`, `array $payload` | Every authenticated project webhook event, during the HTTP request and before the core handling. Only queue work here; bluefox expects a fast response. Fires even when the Inbound webhooks module is off. |
+| `cfbe_webhook_received` | `string $type`, `array $payload` | Every authenticated project webhook event, during the HTTP request and before the core handling. Only queue work here; bluefox expects a fast response. Only fires while the **Inbound webhooks** feature is on. |
 | `cfbe_webhook_event` | `string $type`, `array $payload` | Every project webhook event, in a background job after the plugin has stored it. Needs the Inbound webhooks module. |
 | `cfbe_webhook_{$type}` | `array $payload` | One event type, e.g. `cfbe_webhook_bounce`, `cfbe_webhook_unsubscribe`, `cfbe_webhook_pause-subscription`. Needs the Inbound webhooks module. |
 

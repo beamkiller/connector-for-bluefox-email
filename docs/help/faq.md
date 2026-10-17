@@ -34,7 +34,7 @@ Yes. Every email is designed in bluefox.email; the plugin only passes data such 
 
 ## Can I use more than one list?
 
-Yes. The default list is set on the General tab. A block, shortcode, the popup, the checkout opt-in and each form integration can use another list. The preferences page only manages the default list.
+Yes. The default list is set on the General tab. A block, shortcode, the popup, the checkout opt-in and each form integration can use another list. The preferences page manages the list the newsletter was sent to (when the link carries it), otherwise the list the person signed up to on this site, otherwise the default list from the General tab.
 
 ## Does it replace my SMTP plugin?
 

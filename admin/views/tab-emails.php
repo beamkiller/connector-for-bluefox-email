@@ -25,6 +25,13 @@ $cfbe_option = Settings::option_name( 'emails' );
 				<p class="description"><?php esc_html_e( 'Visitors land here after confirming. Set the same URL in the “Redirect link” field of the bluefox list’s double opt-in settings.', 'connector-for-bluefox-email' ); ?></p>
 			</td>
 		</tr>
+		<tr>
+			<th scope="row"><label for="cfbe-pending"><?php esc_html_e( 'Confirmation deadline (days)', 'connector-for-bluefox-email' ); ?></label></th>
+			<td>
+				<input type="number" min="1" max="60" class="small-text" id="cfbe-pending" name="<?php echo esc_attr( $cfbe_option ); ?>[pending_expiry_days]" value="<?php echo esc_attr( (string) Settings::pending_expiry_days() ); ?>">
+				<p class="description"><?php esc_html_e( 'A signup not confirmed within this many days expires: it no longer counts as pending and never receives a welcome coupon.', 'connector-for-bluefox-email' ); ?></p>
+			</td>
+		</tr>
 	</table>
 
 	<h2><?php esc_html_e( 'Thank-you page texts – [cfbe_thankyou]', 'connector-for-bluefox-email' ); ?></h2>

@@ -134,6 +134,7 @@ class Data_Collector {
 			$query['billing_email'] = $email;
 		}
 		$orders = (array) wc_get_orders( $query );
+		$more   = count( $orders ) >= self::ORDER_LIMIT;
 		if ( null === $user ) {
 			// Guests only: orders placed by a registered account belong to that account.
 			$orders = array_values(
@@ -159,8 +160,6 @@ class Data_Collector {
 		if ( null !== $user ) {
 			$customer = call_user_func( $this->customer_factory, (int) $user->ID );
 			if ( is_object( $customer ) ) {
-				$values['orderCount']     = (int) $customer->get_order_count();
-				$values['totalSpent']     = round( (float) $customer->get_total_spent(), 2 );
 				$values['billingCountry'] = (string) $customer->get_billing_country();
 				$values['billingCity']    = (string) $customer->get_billing_city();
 				$values['firstName']      = (string) $customer->get_billing_first_name();
@@ -168,14 +167,14 @@ class Data_Collector {
 			}
 			$values['customerType'] = 'customer';
 		} else {
-			$total = 0.0;
-			foreach ( $orders as $order ) {
-				$total += (float) $order->get_total() - (float) $order->get_total_refunded();
-			}
-			$values['orderCount']   = $paid;
-			$values['totalSpent']   = round( $total, 2 );
 			$values['customerType'] = 'guest';
 		}
+
+		// Same numbers for customers and guests: paid orders, total minus refunds.
+		$totals               = $this->paid_totals( $query, $orders, $more, null === $user );
+		$paid                 = $totals['count'];
+		$values['orderCount'] = $paid;
+		$values['totalSpent'] = round( $totals['total'], 2 );
 
 		if ( null !== $latest ) {
 			$values['lastOrderDate']  = self::order_date( $latest );
@@ -216,6 +215,45 @@ class Data_Collector {
 		return array(
 			'values' => $values,
 			'paid'   => $paid,
+		);
+	}
+
+	/**
+	 * Count and net total (total minus refunds) of all paid orders. The first page is already loaded; more pages
+	 * are only read for customers with ORDER_LIMIT or more orders.
+	 *
+	 * @param array $query      Order query (first page).
+	 * @param array $orders     Orders of the first page (guests: already without account orders).
+	 * @param bool  $more       Whether the first page was full (more pages may exist).
+	 * @param bool  $guest_only Skip orders placed by a registered account.
+	 * @return array{count: int, total: float}
+	 */
+	private function paid_totals( array $query, array $orders, bool $more, bool $guest_only ): array {
+		$count = 0;
+		$total = 0.0;
+		$page  = 1;
+		$batch = $orders;
+		while ( true ) {
+			foreach ( $batch as $order ) {
+				if ( ! is_object( $order ) || ( $guest_only && 0 !== (int) $order->get_customer_id() ) ) {
+					continue;
+				}
+				++$count;
+				$total += (float) $order->get_total() - (float) $order->get_total_refunded();
+			}
+			if ( ! $more ) {
+				break;
+			}
+			++$page;
+			$batch = (array) wc_get_orders( array_merge( $query, array( 'paged' => $page ) ) );
+			$more  = count( $batch ) >= self::ORDER_LIMIT;
+			if ( ! $batch ) {
+				break;
+			}
+		}
+		return array(
+			'count' => $count,
+			'total' => $total,
 		);
 	}
 

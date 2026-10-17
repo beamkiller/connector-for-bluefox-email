@@ -43,9 +43,9 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:148
 #: admin/class-admin-page.php:239
-#: admin/class-coupon-tab.php:164
-#: admin/class-coupon-tab.php:222
-#: admin/class-coupon-tab.php:234
+#: admin/class-coupon-tab.php:150
+#: admin/class-coupon-tab.php:208
+#: admin/class-coupon-tab.php:220
 #: includes/class-privacy.php:348
 #: modules/mailer/class-admin.php:293
 #: modules/sync/class-sync-tab.php:262
@@ -114,47 +114,47 @@ msgstr "Naplók"
 msgid "Checkout"
 msgstr "Pénztár"
 
-#: admin/class-coupon-tab.php:64
+#: admin/class-coupon-tab.php:63
 msgid "Coupon"
 msgstr "Kupon"
 
-#: admin/class-coupon-tab.php:89
+#: admin/class-coupon-tab.php:87
 msgid "The discount amount must be greater than 0; the default value has been restored."
 msgstr "A kedvezmény mértéke 0-nál nagyobb kell legyen; az alapértéket állítottuk vissza."
 
 #. translators: %s: discount, e.g. 10%
-#: admin/class-coupon-tab.php:133
+#: admin/class-coupon-tab.php:119
 #, php-format
 msgid "%s discount"
 msgstr "%s kedvezmény"
 
 #. translators: %d: days
-#: admin/class-coupon-tab.php:135
+#: admin/class-coupon-tab.php:121
 #, php-format
 msgid "valid for %d days"
 msgstr "%d napig érvényes"
 
-#: admin/class-coupon-tab.php:136
+#: admin/class-coupon-tab.php:122
 msgid "single use, only with the subscriber's email address"
 msgstr "egyszer, csak a feliratkozó e-mail címével"
 
 #. translators: %s: minimum order amount
-#: admin/class-coupon-tab.php:140
+#: admin/class-coupon-tab.php:126
 #, php-format
 msgid "minimum order %s"
 msgstr "minimum %s rendelés"
 
-#: admin/class-coupon-tab.php:143
+#: admin/class-coupon-tab.php:129
 #: includes/class-coupon-data.php:64
 msgid "cannot be combined with other coupons"
 msgstr "más kuponnal nem vonható össze"
 
-#: admin/class-coupon-tab.php:146
+#: admin/class-coupon-tab.php:132
 msgid "not valid for sale items"
 msgstr "akciós termékekre nem érvényes"
 
 #. translators: 1: created field names, 2: existing field names
-#: admin/class-coupon-tab.php:180
+#: admin/class-coupon-tab.php:166
 #: modules/sync/class-sync-tab.php:197
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
@@ -284,7 +284,7 @@ msgid "Form tab"
 msgstr "Űrlap fül"
 
 #: admin/class-shortcodes-tab.php:104
-#: admin/views/tab-emails.php:48
+#: admin/views/tab-emails.php:55
 msgid "text"
 msgstr "szöveg"
 
@@ -645,83 +645,75 @@ msgstr "Ingyenes szállítást is ad"
 msgid "Code prefix"
 msgstr "Kód előtag"
 
-#: admin/views/tab-coupon.php:80
-msgid "Confirmation deadline (days)"
-msgstr "Megerősítési határidő (nap)"
-
-#: admin/views/tab-coupon.php:82
-msgid "Only subscriptions confirmed within this many days receive a coupon; after that the pending signup expires."
-msgstr "Ennyi napon belül megerősített feliratkozás kap kupont; utána a függő feliratkozás lejár."
-
-#: admin/views/tab-coupon.php:86
+#: admin/views/tab-coupon.php:81
 msgid "“Your coupon expires soon” reminder"
 msgstr "„Hamarosan lejár a kuponod” emlékeztető"
 
-#: admin/views/tab-coupon.php:89
+#: admin/views/tab-coupon.php:84
 msgid "Coupon data in bluefox"
 msgstr "Kupon adatok a bluefoxban"
 
-#: admin/views/tab-coupon.php:91
+#: admin/views/tab-coupon.php:86
 msgid "Update the couponCode, couponExpires and couponUsed fields"
 msgstr "couponCode, couponExpires, couponUsed mezők frissítése"
 
-#: admin/views/tab-coupon.php:92
+#: admin/views/tab-coupon.php:87
 msgid "Create bluefox fields"
 msgstr "bluefox mezők létrehozása"
 
-#: admin/views/tab-coupon.php:96
+#: admin/views/tab-coupon.php:91
 msgid "Reminder before expiry (days)"
 msgstr "Emlékeztető lejárat előtt (nap)"
 
-#: admin/views/tab-coupon.php:101
+#: admin/views/tab-coupon.php:96
 msgid "Setup in bluefox (one-time):"
 msgstr "Beállítás a bluefoxban (egyszer kell):"
 
-#: admin/views/tab-coupon.php:103
+#: admin/views/tab-coupon.php:98
 msgid "Segments → new segment “Coupon expires soon”: couponUsed = false AND couponExpires within the next days:"
 msgstr "Segments → új szegmens „Kupon hamarosan lejár”: couponUsed = false ÉS couponExpires a következő napokon belül:"
 
-#: admin/views/tab-coupon.php:104
+#: admin/views/tab-coupon.php:99
 msgid "Automations → new automation: Enter segment “Coupon expires soon” (once per contact) → Send email."
 msgstr "Automations → új automatizmus: Enter segment „Kupon hamarosan lejár” (egyszer kontaktonként) → Send email."
 
-#: admin/views/tab-coupon.php:105
+#: admin/views/tab-coupon.php:100
 msgid "Available in the email: {{contact.couponCode}}, {{contact.name}}."
 msgstr "Az e-mailben használható: {{contact.couponCode}}, {{contact.name}}."
 
-#: admin/views/tab-coupon.php:111
+#: admin/views/tab-coupon.php:106
 msgid "Coupon email in bluefox"
 msgstr "Kupon e-mail a bluefox-ban"
 
-#: admin/views/tab-coupon.php:114
+#: admin/views/tab-coupon.php:109
 msgid "In bluefox, open Transactional emails and create a new email of type HTML (for example “Welcome coupon”). Set its subject, for example: Your {{discount}} welcome coupon."
 msgstr "A bluefox-ban nyisd meg a Transactional emails részt, és hozz létre egy új, HTML típusú e-mailt (pl. „Üdvözlő kupon”). Add meg a tárgyát, például: {{discount}} értékű üdvözlő kuponod."
 
-#: admin/views/tab-coupon.php:115
+#: admin/views/tab-coupon.php:110
 msgid "Paste the template below as the HTML content and adjust the texts and colours to your brand."
 msgstr "Másold be az alábbi sablont HTML tartalomként, és igazítsd a szövegeket és a színeket a márkádhoz."
 
-#: admin/views/tab-coupon.php:116
+#: admin/views/tab-coupon.php:111
 msgid "Save it, copy the email ID and paste it into “Coupon email ID” above."
 msgstr "Mentsd el, másold ki az e-mail ID-t, és illeszd be fent a „Kupon e-mail ID” mezőbe."
 
-#: admin/views/tab-coupon.php:118
+#: admin/views/tab-coupon.php:113
 msgid "Merge tags sent with the coupon email:"
 msgstr "A kupon e-maillel küldött változók:"
 
-#: admin/views/tab-coupon.php:124
+#: admin/views/tab-coupon.php:119
 msgid "Contact fields work too, e.g. {{contact.name}}. The coupon email is transactional (no unsubscribe link), so keep it about the coupon only."
 msgstr "A kontakt mezők is működnek, pl. {{contact.name}}. A kupon e-mail tranzakciós (nincs benne leiratkozó link), ezért csak a kuponról szóljon."
 
-#: admin/views/tab-coupon.php:129
+#: admin/views/tab-coupon.php:124
 msgid "Welcome coupon template"
 msgstr "Üdvözlő kupon sablon"
 
-#: admin/views/tab-coupon.php:130
+#: admin/views/tab-coupon.php:125
 msgid "Double opt-in confirmation template (set it as the confirmation email of the bluefox list; it must contain {{verifyLink}})"
 msgstr "Dupla megerősítés (double opt-in) sablon (állítsd be a bluefox lista megerősítő e-mailjeként; tartalmaznia kell a {{verifyLink}} változót)"
 
-#: admin/views/tab-coupon.php:141
+#: admin/views/tab-coupon.php:136
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
 #: modules/webhooks/views/tab-webhooks.php:99
@@ -736,48 +728,56 @@ msgstr "Köszönő oldal URL"
 msgid "Visitors land here after confirming. Set the same URL in the “Redirect link” field of the bluefox list’s double opt-in settings."
 msgstr "Ide érkezik a látogató a megerősítés után. Ugyanezt állítsd be a bluefox lista double opt-in „Redirect link” mezőjében is."
 
-#: admin/views/tab-emails.php:30
+#: admin/views/tab-emails.php:29
+msgid "Confirmation deadline (days)"
+msgstr "Megerősítési határidő (nap)"
+
+#: admin/views/tab-emails.php:32
+msgid "A signup not confirmed within this many days expires: it no longer counts as pending and never receives a welcome coupon."
+msgstr "Az ennyi napon belül meg nem erősített feliratkozás lejár: többé nem számít függőben lévőnek, és üdvözlő kupont sem kap."
+
+#: admin/views/tab-emails.php:37
 msgid "Thank-you page texts – [cfbe_thankyou]"
 msgstr "Köszönő oldal szövegei – [cfbe_thankyou]"
 
-#: admin/views/tab-emails.php:31
+#: admin/views/tab-emails.php:38
 msgid "Add the [cfbe_thankyou] shortcode to the thank-you page (Shortcode block or your page builder’s shortcode element). Options: show_title=\"0\" (if the design has its own heading), tag=\"h2\"."
 msgstr "Tedd a [cfbe_thankyou] shortcode-ot a köszönő oldalra (Shortcode blokk vagy az oldalépítőd shortcode eleme). Opciók: show_title=\"0\" (ha a dizájnban saját címsor van), tag=\"h2\"."
 
-#: admin/views/tab-emails.php:36
+#: admin/views/tab-emails.php:43
 msgid "Confirmation successful"
 msgstr "Sikeres megerősítés"
 
-#: admin/views/tab-emails.php:37
+#: admin/views/tab-emails.php:44
 msgid "Expired link (?cfbe=expired)"
 msgstr "Lejárt link (?cfbe=expired)"
 
-#: admin/views/tab-emails.php:38
+#: admin/views/tab-emails.php:45
 msgid "Error (?cfbe=error)"
 msgstr "Hiba (?cfbe=error)"
 
-#: admin/views/tab-emails.php:47
+#: admin/views/tab-emails.php:54
 msgid "title"
 msgstr "cím"
 
-#: admin/views/tab-emails.php:54
+#: admin/views/tab-emails.php:61
 msgid "Newsletter preferences page – [cfbe_preferences]"
 msgstr "Hírlevél beállítások oldal – [cfbe_preferences]"
 
-#: admin/views/tab-emails.php:55
+#: admin/views/tab-emails.php:62
 msgid "Your own unsubscribe / pause page. Add the [cfbe_preferences] shortcode to a page and set its URL in the bluefox project (Project Settings → Custom subscription preferences URL). The “Unsubscribe” and “Pause” links in your newsletters lead here."
 msgstr "Saját leiratkozó / szüneteltető oldal. Tedd a [cfbe_preferences] shortcode-ot egy oldalra, és az oldal URL-jét állítsd be a bluefox projektben (Project Settings → Custom subscription preferences URL). A hírlevelek „Leiratkozás” és „Szüneteltetés” linkje ide vezet."
 
-#: admin/views/tab-emails.php:58
+#: admin/views/tab-emails.php:65
 msgid "Preferences page URL"
 msgstr "Beállítások oldal URL"
 
-#: admin/views/tab-emails.php:64
+#: admin/views/tab-emails.php:71
 #: admin/views/tab-form.php:76
 msgid "Title"
 msgstr "Cím"
 
-#: admin/views/tab-emails.php:68
+#: admin/views/tab-emails.php:75
 msgid "Intro"
 msgstr "Bevezető"
 
@@ -1583,7 +1583,7 @@ msgid "Resend coupon email"
 msgstr "Kupon e-mail újraküldése"
 
 #. translators: %d: order ID
-#: admin/views/tab-subscribers.php:150
+#: admin/views/tab-subscribers.php:153
 #, php-format
 msgid "Order #%d"
 msgstr "Rendelés #%d"
@@ -1692,33 +1692,33 @@ msgstr "Ismeretlen beállítási terület: „%1$s”. Érvényes területek: %2
 msgid "The bluefox connection is not configured (Project ID / API key)."
 msgstr "A bluefox kapcsolat nincs beállítva (Project ID / API kulcs)."
 
-#: includes/class-checkout-optin.php:239
+#: includes/class-checkout-optin.php:236
 #: public/class-form-renderer.php:239
 msgid "Privacy policy"
 msgstr "Adatkezelési tájékoztató"
 
-#: includes/class-checkout-optin.php:447
+#: includes/class-checkout-optin.php:444
 msgid "Newsletter: the customer subscribed, the confirmation email has been sent."
 msgstr "Hírlevél: a vásárló feliratkozott, a megerősítő e-mailt elküldtük."
 
-#: includes/class-checkout-optin.php:449
+#: includes/class-checkout-optin.php:446
 msgid "Newsletter: the customer is already a subscriber (no new coupon)."
 msgstr "Hírlevél: a vásárló már feliratkozó (nem kap új kupont)."
 
-#: includes/class-checkout-optin.php:451
+#: includes/class-checkout-optin.php:448
 msgid "Newsletter: bluefox is unavailable right now, the subscription will be retried later."
 msgstr "Hírlevél: a bluefox most nem érhető el, a feliratkozást később újrapróbáljuk."
 
-#: includes/class-checkout-optin.php:453
+#: includes/class-checkout-optin.php:450
 msgid "Newsletter: the subscription failed (details: bluefox.email → Logs)."
 msgstr "Hírlevél: a feliratkozás nem sikerült (részletek: bluefox.email → Naplók)."
 
-#: includes/class-checkout-optin.php:471
+#: includes/class-checkout-optin.php:468
 msgid "Newsletter:"
 msgstr "Hírlevél:"
 
 #. translators: %s: date and time of the consent
-#: includes/class-checkout-optin.php:475
+#: includes/class-checkout-optin.php:472
 #, php-format
 msgid "subscribed at checkout (%s)"
 msgstr "feliratkozott a pénztárban (%s)"
@@ -2062,7 +2062,7 @@ msgstr "Ismeretlen forrás."
 msgid "Too many attempts, please try again later."
 msgstr "Túl sok próbálkozás, kérjük, próbáld újra később."
 
-#: includes/class-reward-service.php:213
+#: includes/class-reward-service.php:217
 msgid "No coupon has been created for this email address yet."
 msgstr "Ehhez az e-mail címhez még nem készült kupon."
 
@@ -3243,79 +3243,79 @@ msgid "We can’t load your preferences right now. Please try again in a few min
 msgstr "A beállításaidat most nem tudjuk betölteni. Kérjük, próbáld újra pár perc múlva."
 
 #. translators: %s: email address
-#: public/class-preferences-page.php:258
+#: public/class-preferences-page.php:259
 #, php-format
 msgid "Email address: %s"
 msgstr "E-mail cím: %s"
 
-#: public/class-preferences-page.php:265
+#: public/class-preferences-page.php:266
 msgid "You are subscribed to our newsletter."
 msgstr "Feliratkoztál a hírlevelünkre."
 
-#: public/class-preferences-page.php:267
-#: public/class-preferences-page.php:278
+#: public/class-preferences-page.php:268
+#: public/class-preferences-page.php:279
 msgid "Unsubscribe from the newsletter"
 msgstr "Leiratkozom a hírlevélről"
 
 #. translators: %s: date
-#: public/class-preferences-page.php:274
+#: public/class-preferences-page.php:275
 #, php-format
 msgid "Your newsletter is paused until %s"
 msgstr "A hírlevél szünetel eddig: %s"
 
-#: public/class-preferences-page.php:275
+#: public/class-preferences-page.php:276
 msgid "Your newsletter is paused."
 msgstr "A hírlevél szünetel."
 
-#: public/class-preferences-page.php:277
+#: public/class-preferences-page.php:278
 msgid "Resume now"
 msgstr "Kérem újra most"
 
-#: public/class-preferences-page.php:281
+#: public/class-preferences-page.php:282
 msgid "We don’t send newsletters to this address."
 msgstr "Erre a címre nem küldünk hírlevelet."
 
-#: public/class-preferences-page.php:282
+#: public/class-preferences-page.php:283
 msgid "Subscribe again"
 msgstr "Újra feliratkozom"
 
-#: public/class-preferences-page.php:285
+#: public/class-preferences-page.php:286
 msgid "Your subscription is not confirmed yet. Please click the button in the confirmation email."
 msgstr "A feliratkozásod még nincs megerősítve. Kérjük, kattints a megerősítő e-mailben kapott gombra."
 
-#: public/class-preferences-page.php:288
+#: public/class-preferences-page.php:289
 msgid "This email address is not subscribed to our newsletter."
 msgstr "Ez az e-mail cím nincs feliratkozva a hírlevelünkre."
 
-#: public/class-preferences-page.php:300
+#: public/class-preferences-page.php:318
 msgid "Take a break"
 msgstr "Szünetet tartanék"
 
 #. translators: %d: number of months
-#: public/class-preferences-page.php:304
+#: public/class-preferences-page.php:322
 #, php-format
 msgid "For %d month"
 msgid_plural "For %d months"
 msgstr[0] "%d hónapig"
 msgstr[1] "%d hónapig"
 
-#: public/class-preferences-page.php:309
+#: public/class-preferences-page.php:327
 msgid "Pause"
 msgstr "Szüneteltetem"
 
-#: public/class-preferences-page.php:344
+#: public/class-preferences-page.php:362
 msgid "Done. We won’t send you newsletters for the chosen period; after that they resume automatically."
 msgstr "Rendben, a megadott ideig nem küldünk hírlevelet. Utána automatikusan újra megkapod."
 
-#: public/class-preferences-page.php:345
+#: public/class-preferences-page.php:363
 msgid "You have unsubscribed and won’t receive our newsletter at this address any more. You will still get emails about your orders."
 msgstr "Leiratkoztál, erre a címre többé nem küldünk hírlevelet. A rendeléseiddel kapcsolatos e-maileket továbbra is megkapod."
 
-#: public/class-preferences-page.php:346
+#: public/class-preferences-page.php:364
 msgid "Thank you, you will receive our newsletter again!"
 msgstr "Köszönjük, újra megkapod a hírlevelünket!"
 
-#: public/class-preferences-page.php:347
+#: public/class-preferences-page.php:365
 msgid "The change could not be saved. Please try again in a few minutes."
 msgstr "A módosítás most nem sikerült. Kérjük, próbáld újra pár perc múlva."
 

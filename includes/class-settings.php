@@ -62,7 +62,8 @@ final class Settings {
 				break;
 			case 'emails':
 				$defaults = array(
-					'coupon_email_id'          => '',
+					// Days a signup may stay unconfirmed before it expires (all signups, with or without coupon).
+					'pending_expiry_days'      => 14,
 					'thankyou_url'             => '',
 					'preferences_url'          => '',
 					'prefs_title'              => 'Newsletter preferences',
@@ -77,11 +78,9 @@ final class Settings {
 				break;
 			case 'coupon':
 				$defaults = array(
-					// Module switch (General tab) is the real on/off; kept for compatibility.
-					'enabled'               => true,
 					// Empty = confirmed signups on any list get the coupon.
 					'list_id'               => '',
-					// bluefox transactional email ID; empty = the legacy emails.coupon_email_id.
+					// bluefox transactional email ID of the coupon email.
 					'email_id'              => '',
 					'code_prefix'           => 'WELCOME-',
 					'discount_type'         => 'percent',
@@ -91,15 +90,12 @@ final class Settings {
 					'individual_use'        => true,
 					'exclude_sale_items'    => true,
 					'free_shipping'         => false,
-					'pending_expiry_days'   => 14,
 					'store_code_in_bluefox' => true,
 					'reminder_days'         => 5,
 				);
 				break;
 			case 'checkout':
 				$defaults = array(
-					// Module switch (General tab) is the real on/off; kept for compatibility.
-					'enabled'       => true,
 					// {discount} is replaced with the Coupon tab value; the privacy link is appended automatically.
 					'label'         => 'Subscribe me to the newsletter.',
 					'description'   => 'We will send you a confirmation email. You can unsubscribe at any time.',
@@ -198,6 +194,22 @@ final class Settings {
 	public static function thankyou_url(): string {
 		$url = (string) self::get( 'emails', 'thankyou_url' );
 		return '' !== $url ? $url : home_url( '/newsletter-confirmed/' );
+	}
+
+	/**
+	 * Days a signup may stay unconfirmed (Emails tab). Before 1.0 the value lived on the Coupon tab.
+	 */
+	public static function pending_expiry_days(): int {
+		$emails = get_option( self::option_name( 'emails' ), array() );
+		$coupon = get_option( self::option_name( 'coupon' ), array() );
+		if ( is_array( $emails ) && isset( $emails['pending_expiry_days'] ) ) {
+			$days = (int) $emails['pending_expiry_days'];
+		} elseif ( is_array( $coupon ) && isset( $coupon['pending_expiry_days'] ) ) {
+			$days = (int) $coupon['pending_expiry_days'];
+		} else {
+			$days = (int) self::defaults( 'emails' )['pending_expiry_days'];
+		}
+		return min( 60, max( 1, $days ) );
 	}
 
 	/**

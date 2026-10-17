@@ -42,7 +42,7 @@ Each row of the **Fields** table is one bluefox contact field. Tick **Sync**, an
 | Purchased product categories (comma-separated slugs) | `purchasedCategories` | string | no |
 | Customer type (`customer` / `guest`) | `customerType` | string | yes |
 
-The fields from *Number of orders* down need WooCommerce. For registered customers the order count and total spent come from WooCommerce's customer data; for guests they are calculated from their paid orders, minus refunds. Dates are sent as `YYYY-MM-DD`.
+The fields from *Number of orders* down need WooCommerce. For registered customers and guests alike, the order count and total spent are calculated from their paid orders (processing or completed), minus refunds. Dates are sent as `YYYY-MM-DD`.
 
 The fields must exist in bluefox, otherwise bluefox silently ignores the values. Save the settings, then click **Create missing fields in bluefox**.
 

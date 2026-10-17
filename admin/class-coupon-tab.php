@@ -48,7 +48,6 @@ final class Coupon_Tab {
 	public function register(): void {
 		add_filter( 'cfbe_settings_tabs', array( $this, 'add_tab' ) );
 		add_filter( 'cfbe_sanitize_settings_coupon', array( $this, 'sanitize' ), 10, 3 );
-		add_filter( 'cfbe_sanitize_settings_emails', array( $this, 'sanitize_emails' ), 20, 2 );
 		add_action( 'wp_ajax_cfbe_setup_fields', array( $this, 'ajax_setup_fields' ) );
 		add_action( 'admin_post_cfbe_resend_coupon', array( $this, 'handle_resend' ) );
 		add_action( 'admin_post_cfbe_poll_now', array( $this, 'handle_poll_now' ) );
@@ -77,7 +76,6 @@ final class Coupon_Tab {
 	 */
 	public function sanitize( array $clean, array $input, array $previous = array() ): array {
 		// On/off is the module switch on the General tab; the key stays for compatibility.
-		$clean['enabled']       = true;
 		$clean['email_id']      = (string) preg_replace( '/[^A-Za-z0-9]/', '', (string) ( $input['email_id'] ?? '' ) );
 		$clean['list_id']       = List_Options::sanitize( (string) ( $input['list_id'] ?? '' ), (string) ( $previous['list_id'] ?? '' ) );
 		$type                   = 'fixed_cart' === ( $input['discount_type'] ?? '' ) ? 'fixed_cart' : 'percent';
@@ -88,12 +86,11 @@ final class Coupon_Tab {
 			$clean['amount'] = (float) Settings::defaults( 'coupon' )['amount'];
 			add_settings_error( 'cfbe_coupon', 'cfbe_amount', __( 'The discount amount must be greater than 0; the default value has been restored.', 'connector-for-bluefox-email' ) );
 		}
-		$clean['minimum_amount']      = max( 0.0, (float) str_replace( ',', '.', (string) ( $input['minimum_amount'] ?? 0 ) ) );
-		$clean['expiry_days']         = min( 365, max( 1, (int) ( $input['expiry_days'] ?? 30 ) ) );
-		$clean['pending_expiry_days'] = min( 60, max( 1, (int) ( $input['pending_expiry_days'] ?? 14 ) ) );
-		$clean['reminder_days']       = min( 30, max( 1, (int) ( $input['reminder_days'] ?? 5 ) ) );
-		$prefix                       = strtoupper( (string) preg_replace( '/[^A-Za-z0-9-]/', '', (string) ( $input['code_prefix'] ?? '' ) ) );
-		$clean['code_prefix']         = substr( $prefix, 0, 10 );
+		$clean['minimum_amount'] = max( 0.0, (float) str_replace( ',', '.', (string) ( $input['minimum_amount'] ?? 0 ) ) );
+		$clean['expiry_days']    = min( 365, max( 1, (int) ( $input['expiry_days'] ?? 30 ) ) );
+		$clean['reminder_days']  = min( 30, max( 1, (int) ( $input['reminder_days'] ?? 5 ) ) );
+		$prefix                  = strtoupper( (string) preg_replace( '/[^A-Za-z0-9-]/', '', (string) ( $input['code_prefix'] ?? '' ) ) );
+		$clean['code_prefix']    = substr( $prefix, 0, 10 );
 		return $clean;
 	}
 
@@ -109,17 +106,6 @@ final class Coupon_Tab {
 		}
 		$html = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local file bundled with the plugin.
 		return false === $html ? '' : $html;
-	}
-
-	/**
-	 * Adds coupon_email_id to the Emails sanitizer.
-	 *
-	 * @param array $clean Values.
-	 * @param array $input Raw input.
-	 */
-	public function sanitize_emails( array $clean, array $input ): array {
-		$clean['coupon_email_id'] = (string) preg_replace( '/[^A-Za-z0-9]/', '', (string) ( $input['coupon_email_id'] ?? '' ) );
-		return $clean;
 	}
 
 	/**

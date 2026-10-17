@@ -44,7 +44,7 @@ Switching to a stricter mode (full → anonymised → off) starts a background j
 ## Retention
 
 - **Erase IP addresses after** (default 24 months, 0 = keep): a daily job clears older IPs from signup rows and the `_cfbe_optin_ip` order meta.
-- Unconfirmed signups are marked expired after the **Confirmation deadline** (Coupon tab, default 14 days). The row is kept as a record; no coupon is ever created for it.
+- Unconfirmed signups are marked expired after the **Confirmation deadline** (Emails tab, default 14 days). The row is kept as a record; no coupon is ever created for it.
 - Abandoned carts are marked expired after **Keep carts for** (default 30 days) and deleted after twice that time.
 - The log options are ring buffers and keep only the latest entries.
 

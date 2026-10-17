@@ -110,11 +110,12 @@ final class Rest_Webhook {
 		}
 
 		$type = self::event_type( $request );
-		if ( '' !== $type ) {
+		if ( '' !== $type && Modules::enabled( 'webhooks' ) ) {
 			$payload = json_decode( (string) $request->get_body(), true );
 
 			/**
-			 * Fires for every authenticated bluefox project webhook event, before the core handling.
+			 * Fires for every authenticated bluefox project webhook event, before the core handling, while the
+			 * Inbound webhooks feature is on.
 			 * Listeners must return quickly (queue a job); bluefox expects a fast 200.
 			 *
 			 * @param string $type    Event type (subscribe, resubscribe, unsubscribe, pause-subscription, bounce,

@@ -143,8 +143,11 @@ if ( isset( $cfbe_notices[ $cfbe_notice ] ) ) {
 								<br><a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'email', rawurlencode( $cfbe_row['email'] ), admin_url( 'admin-post.php?action=cfbe_resend_coupon' ) ), 'cfbe_resend_coupon_' . $cfbe_row['email'] ) ); ?>"><?php esc_html_e( 'Resend coupon email', 'connector-for-bluefox-email' ); ?></a>
 							<?php endif; ?>
 						<?php endif; ?>
-						<?php if ( ! empty( $cfbe_row['order_id'] ) ) : ?>
-							<a href="<?php echo esc_url( get_edit_post_link( (int) $cfbe_row['order_id'] ) ); ?>">
+						<?php
+						$cfbe_order = ! empty( $cfbe_row['order_id'] ) && function_exists( 'wc_get_order' ) ? wc_get_order( (int) $cfbe_row['order_id'] ) : null;
+						?>
+						<?php if ( $cfbe_order ) : ?>
+							<a href="<?php echo esc_url( $cfbe_order->get_edit_order_url() ); ?>">
 								<?php
 								/* translators: %d: order ID */
 								echo esc_html( sprintf( __( 'Order #%d', 'connector-for-bluefox-email' ), (int) $cfbe_row['order_id'] ) );
