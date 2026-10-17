@@ -2,6 +2,8 @@
 
 Switch: **AI agent access (experimental)** (off by default, needs WordPress 6.9 or newer). Settings: [General tab](../settings/general.md).
 
+![AI agent access switch in the Features section of the General tab](../assets/images/settings-ai-agent-access.png)
+
 Lets an AI agent read and change the plugin's settings in plain language – "show the popup after 15 seconds", "switch on the checkout opt-in", "which list do new subscribers go to?". The plugin registers its settings as **abilities** with the WordPress Abilities API, which is part of WordPress from version 6.9. An MCP client such as Claude reaches them through the **MCP Adapter** plugin.
 
 !!! warning "Experimental"

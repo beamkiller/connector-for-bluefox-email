@@ -59,6 +59,12 @@ The full form directly on the page. Use the block in the block editor and the sh
 
 `[cfbe_promo]` – a compact bar or box with a button that opens the full form in a dialog, or scrolls to a form on the page. Subscribers get the `source-promo` tag.
 
+| `style="light"` and `style="dark"` | `style="bar" corners="round"` |
+|---|---|
+| ![Light and dark promo box](../assets/images/promo-boxes.png) | ![Rounded promo bar](../assets/images/promo-bar-round.png) |
+
+![style="bar": slim promo bar at the top of the page](../assets/images/promo-bar-top.png)
+
 | Attribute | Values | Default | Description |
 |---|---|---|---|
 | `style` | `light`, `dark`, `bar` | `light` | light: light box · dark: coloured box · bar: slim single-row bar. |

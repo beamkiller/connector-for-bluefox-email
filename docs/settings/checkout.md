@@ -2,6 +2,8 @@
 
 Tab id: `checkout` · Option: `cfbe_checkout` · Needs: **Checkout opt-in** and WooCommerce.
 
+![Checkout tab](../assets/images/settings-checkout.png)
+
 See [Checkout opt-in](../features/checkout-opt-in.md) for how the checkbox works on the classic and block checkout.
 
 | Label | Option key | Default | What it does |

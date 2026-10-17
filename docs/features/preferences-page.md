@@ -4,6 +4,8 @@ Switch: **Subscription preferences page** (on by default). Texts: [Emails tab](.
 
 Your own, translatable unsubscribe and pause page on your site, instead of the page hosted by bluefox. Setup is described in [Thank-you and preferences pages](../getting-started/pages.md): a page with the `[cfbe_preferences]` shortcode, set as the bluefox project's **Custom subscription preferences URL**.
 
+![Newsletter preferences page section on the Emails tab: page URL, title and intro](../assets/images/settings-preferences.png)
+
 ## What the visitor sees
 
 The "Unsubscribe" and "Pause" links of your newsletters open the page with a `?token=…` parameter. The page shows the **Title** and **Intro** from the Emails tab (section *Newsletter preferences page*), the email address, and the options that fit the current status on one list – the list the newsletter was sent to (when the link carries it), otherwise the list the person signed up to on this site, otherwise the default list from the General tab:
@@ -18,7 +20,9 @@ The "Unsubscribe" and "Pause" links of your newsletters open the page with a `?t
 
 When the link came from a "Pause" link, the pause button is the primary one. After a change, a confirmation message is shown on the same page. A paused subscription resumes automatically at the end of the period.
 
-Without a token, or with an invalid or expired one, the page asks the visitor to use the link at the bottom of the latest newsletter.
+Without a token, or with an invalid or expired one, the page asks the visitor to use the link at the bottom of the latest newsletter:
+
+![Preferences page opened without a token: title, intro and a note to use the Unsubscribe or Pause link of a newsletter](../assets/images/preferences-no-token.png){ width="620" }
 
 ## How it works
 

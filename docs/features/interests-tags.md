@@ -2,6 +2,8 @@
 
 Every signup is tagged in bluefox, so you can build segments (*has tag*) and compare placements.
 
+![Signup form with the interests field as checkboxes](../assets/images/interests-form.png){ width="600" }
+
 ## Tags the plugin adds
 
 | Tag | When |
@@ -23,6 +25,8 @@ Set it up on the [Form tab](../settings/form.md) under **Fields → Interests**:
 - **Dropdown (single choice)** or **Checkboxes (multiple choice)**.
 - **Question text**, default *What are you most interested in?*
 - **Options** – up to 12 rows of **Label** and **bluefox tag**. Leave the tag empty to generate it from the label: *Special offers* → `interest-special-offers`.
+
+![Interests settings on the Form tab: show, required, dropdown or checkboxes, question text and label → tag options](../assets/images/settings-interests.png)
 
 Only configured tags are accepted from the browser. Hide the field per form with `show_interests="0"` (shortcode), the block toggle, or the popup's **Interests field** checkbox. The checkout and third-party forms have no interests field.
 

@@ -45,6 +45,14 @@ Three styles are available: **Card** (light background, subtle border), **Banner
 
     ![Promo box and rounded bar](../assets/images/promo.png)
 
+    `style="bar"` as a slim bar at the top of the page:
+
+    ![Promo bar at the top of the page, above the site header](../assets/images/promo-bar-top.png)
+
+    The button opens the full form in a dialog:
+
+    ![Signup form in the promo dialog](../assets/images/promo-dialog.png){ width="420" }
+
     With `action="scroll"` the button scrolls to the last `[cfbe_form]` on the page (or the `target="#id"` element) and focuses the email field; if there is no form, it opens the dialog.
 
 === "Popup"

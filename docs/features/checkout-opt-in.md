@@ -2,15 +2,19 @@
 
 Switch: **Checkout opt-in** (needs WooCommerce). Settings: [Checkout tab](../settings/checkout.md).
 
+![Newsletter checkbox below the email field on the Checkout block](../assets/images/checkout-optin-block.png)
+
 An **unticked** newsletter checkbox at checkout. It is separate from your terms acceptance. Customers who are already subscribed (confirmed through the plugin, or an existing subscriber) do not see it; customers who unsubscribed since then see it again.
 
 === "Classic checkout"
 
     The checkbox appears directly below the billing email field. The text comes from the Checkout tab; a **Privacy policy** link (the URL from the Form tab) is added after it, and the **Small print below** text under it.
 
+    ![Newsletter checkbox and small print below the billing email on the classic checkout](../assets/images/checkout-optin-classic.png){ width="470" }
+
 === "Checkout block"
 
-    The checkbox is registered as an additional checkout field in the contact information step. The block checkout only supports plain text, so no privacy link is added – mention your privacy policy in the store's checkout terms. The small print is not shown.
+    The checkbox is registered as an additional checkout field in the contact information step (see the picture above). The block checkout only supports plain text, so no privacy link is added – mention your privacy policy in the store's checkout terms. The small print is not shown.
 
 ## What happens after the order
 
@@ -28,3 +32,5 @@ Tick **My Account → Also offer the checkbox on My Account → Account details*
 ## Preview
 
 The Checkout tab shows a preview of the label with `{discount}` replaced by the coupon value.
+
+![Checkout tab with text, small print, list, extra tags and preview](../assets/images/settings-checkout.png)
