@@ -70,7 +70,7 @@ Sent on the events of the [Order emails](../features/order-emails.md) rules, as 
 | `{{billing.firstName}}`, `{{billing.lastName}}`, `{{billing.company}}`, `{{billing.city}}`, `{{billing.country}}`, `{{billing.phone}}` | Billing details |
 | `{{shipping.firstName}}`, `{{shipping.lastName}}`, `{{shipping.company}}`, `{{shipping.address1}}`, `{{shipping.address2}}`, `{{shipping.city}}`, `{{shipping.postcode}}`, `{{shipping.state}}`, `{{shipping.country}}` | Shipping address |
 | `{{shippingAddressLines}}` | Formatted shipping address as a list of lines |
-| `{{items}}` | Line items, each with `name`, `quantity`, `total` (incl. tax), `sku`, `image` (thumbnail URL) |
+| `{{items}}` | Line items, each with `name`, `quantity`, `total` (incl. tax), `sku`, `image` (thumbnail URL), `url` (product page) and `reviewUrl` (product page, Reviews tab) |
 | `{{itemCount}}` | Number of items |
 | `{{couponCodes}}` | Coupon codes used on the order (list) |
 | `{{viewOrderUrl}}` | "View order" URL in My Account |

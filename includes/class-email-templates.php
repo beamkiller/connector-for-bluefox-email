@@ -106,15 +106,15 @@ final class Email_Templates {
 				'event'      => 'review_request',
 				'delay'      => 7,
 				'delay_unit' => 'days',
-				'button_url' => '{{{viewOrderUrl}}}',
-				'blocks'     => array( 'items' ),
+				'button_url' => '{{{siteUrl}}}',
+				'blocks'     => array( 'review_items' ),
 				'variables'  => $order_vars,
 				'defaults'   => array(
 					'subject' => __( 'How did we do?', 'connector-for-bluefox-email' ),
 					'preview' => __( 'Your opinion helps other shoppers.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'How was your order?', 'connector-for-bluefox-email' ),
 					'intro'   => __( 'Hi {{DEFAULT billing.firstName "there"}}, we hope you are happy with your order #{{orderNumber}}. Would you take a minute to review the products?', 'connector-for-bluefox-email' ),
-					'button'  => __( 'Write a review', 'connector-for-bluefox-email' ),
+					'button'  => __( 'Visit the shop', 'connector-for-bluefox-email' ),
 					'footer'  => __( 'Thank you for helping us get better.', 'connector-for-bluefox-email' ),
 				),
 			),
@@ -302,10 +302,12 @@ final class Email_Templates {
 	public static function sample_data( string $key ): array {
 		$items = array(
 			array(
-				'name'     => __( 'Sample product', 'connector-for-bluefox-email' ),
-				'quantity' => 2,
-				'total'    => '24.00',
-				'image'    => '',
+				'name'      => __( 'Sample product', 'connector-for-bluefox-email' ),
+				'quantity'  => 2,
+				'total'     => '24.00',
+				'image'     => '',
+				'url'       => home_url( '/' ),
+				'reviewUrl' => home_url( '/' ) . '#reviews',
 			),
 		);
 		$site  = html_entity_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES, 'UTF-8' );
@@ -364,6 +366,14 @@ final class Email_Templates {
 					/* translators: %s: expiry date placeholder */
 					. '<div style="font-size:13px;color:' . $colors['muted'] . ';">' . sprintf( esc_html__( 'Valid until %s. The link below applies it automatically.', 'connector-for-bluefox-email' ), '{{couponExpiry}}' ) . '</div>'
 					. '</td></tr></table>{{/if}}';
+			case 'review_items':
+				// One row per product: image, name and its own review button (to the product's Reviews tab).
+				return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;border-top:1px solid ' . $colors['border'] . ';">'
+					. '{{#each items}}<tr>'
+					. '<td style="padding:14px 12px 14px 0;border-bottom:1px solid ' . $colors['border'] . ';font-size:15px;">{{#if image}}<img src="{{{image}}}" width="56" height="56" alt="" style="display:inline-block;vertical-align:middle;margin-right:12px;border-radius:8px;object-fit:cover;">{{/if}}{{name}}</td>'
+					. '<td align="right" style="padding:14px 0;border-bottom:1px solid ' . $colors['border'] . ';white-space:nowrap;">{{#if reviewUrl}}<a href="{{{reviewUrl}}}" target="_blank" style="display:inline-block;padding:9px 16px;border-radius:8px;background:' . $colors['primary'] . ';color:' . $colors['button_text'] . ';font-size:14px;font-weight:600;text-decoration:none;">' . esc_html__( 'Write a review', 'connector-for-bluefox-email' ) . '</a>{{/if}}</td>'
+					. '</tr>{{/each}}'
+					. '</table>';
 			case 'note':
 				return '<div style="margin:0 0 24px 0;padding:16px 18px;border-left:4px solid ' . $colors['accent'] . ';background:' . $colors['card'] . ';border-radius:8px;font-size:15px;line-height:1.6;">{{note}}</div>';
 			case 'items':

@@ -29,12 +29,16 @@ class Payload_Builder {
 		$items = array();
 		foreach ( $order->get_items() as $item ) {
 			$product = is_callable( array( $item, 'get_product' ) ) ? $item->get_product() : null;
+			$url     = $product && is_callable( array( $product, 'get_permalink' ) ) ? (string) $product->get_permalink() : '';
 			$items[] = array(
-				'name'     => self::text( (string) $item->get_name() ),
-				'quantity' => (int) $item->get_quantity(),
-				'total'    => self::money( (float) $item->get_total() + (float) $item->get_total_tax(), $currency ),
-				'sku'      => $product ? (string) $product->get_sku() : '',
-				'image'    => $product ? self::image_url( (int) $product->get_image_id() ) : '',
+				'name'      => self::text( (string) $item->get_name() ),
+				'quantity'  => (int) $item->get_quantity(),
+				'total'     => self::money( (float) $item->get_total() + (float) $item->get_total_tax(), $currency ),
+				'sku'       => $product ? (string) $product->get_sku() : '',
+				'image'     => $product ? self::image_url( (int) $product->get_image_id() ) : '',
+				'url'       => $url,
+				// WooCommerce opens the Reviews tab for #reviews.
+				'reviewUrl' => '' !== $url ? $url . '#reviews' : '',
 			);
 		}
 

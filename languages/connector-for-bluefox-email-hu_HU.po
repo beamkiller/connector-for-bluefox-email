@@ -166,7 +166,7 @@ msgstr "egyszer, csak a feliratkozó e-mail címével"
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
 #: admin/class-coupon-tab.php:126
-#: includes/class-email-templates.php:357
+#: includes/class-email-templates.php:359
 #, php-format
 msgid "minimum order %s"
 msgstr "minimum %s rendelés"
@@ -2276,6 +2276,7 @@ msgid "Hi {{DEFAULT billing.firstName \"there\"}}, thank you for choosing us for
 msgstr "Kedves {{DEFAULT billing.firstName \"Vásárlónk\"}}! Köszönjük, hogy első rendelésedhez minket választottál. Reméljük, nagyon elégedett leszel."
 
 #: includes/class-email-templates.php:92
+#: includes/class-email-templates.php:117
 msgid "Visit the shop"
 msgstr "Irány a bolt"
 
@@ -2319,10 +2320,6 @@ msgstr "Milyen volt a rendelésed?"
 #: includes/class-email-templates.php:116
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we hope you are happy with your order #{{orderNumber}}. Would you take a minute to review the products?"
 msgstr "Kedves {{DEFAULT billing.firstName \"Vásárlónk\"}}! Reméljük, elégedett vagy a rendeléseddel (#{{orderNumber}}). Szánnál egy percet a termékek értékelésére?"
-
-#: includes/class-email-templates.php:117
-msgid "Write a review"
-msgstr "Értékelés írása"
 
 #: includes/class-email-templates.php:118
 msgid "Thank you for helping us get better."
@@ -2383,78 +2380,82 @@ msgstr "%s (Connector for bluefox.email)"
 msgid "Sample product"
 msgstr "Mintatermék"
 
-#: includes/class-email-templates.php:326
+#: includes/class-email-templates.php:328
 msgid "Your parcel ships tomorrow."
 msgstr "A csomagod holnap indul."
 
-#: includes/class-email-templates.php:352
+#: includes/class-email-templates.php:354
 msgid "Your coupon code"
 msgstr "A kuponkódod"
 
 #. translators: %s: discount placeholder, e.g. 10%
-#: includes/class-email-templates.php:355
+#: includes/class-email-templates.php:357
 #, php-format
 msgid "%s off"
 msgstr "%s kedvezmény"
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:357
+#: includes/class-email-templates.php:359
 #, php-format
 msgid "Valid until %s"
 msgstr "Érvényes eddig: %s"
 
 #. translators: %s: discount placeholder
-#: includes/class-email-templates.php:362
+#: includes/class-email-templates.php:364
 #, php-format
 msgid "Finish your order now and get %s off with this code:"
 msgstr "Fejezd be most a rendelésedet, és ezzel a kóddal %s kedvezményt kapsz:"
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:365
+#: includes/class-email-templates.php:367
 #, php-format
 msgid "Valid until %s. The link below applies it automatically."
 msgstr "Érvényes eddig: %s. Az alábbi link automatikusan érvényesíti."
 
-#: includes/class-email-templates.php:378
+#: includes/class-email-templates.php:374
+msgid "Write a review"
+msgstr "Értékelés írása"
+
+#: includes/class-email-templates.php:388
 #: modules/woo-events/views/tab-woo-events.php:285
 msgid "Total"
 msgstr "Összesen"
 
-#: includes/class-email-templates.php:426
+#: includes/class-email-templates.php:436
 msgid "Not used yet: choose it as the double opt-in email of your list in bluefox."
 msgstr "Még nincs használatban: állítsd be a listád dupla megerősítő (double opt-in) e-mailjeként a bluefox-ban."
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:433
+#: includes/class-email-templates.php:443
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr "Használatban: a(z) „%s” lista dupla megerősítő (double opt-in) e-mailje."
 
-#: includes/class-email-templates.php:442
+#: includes/class-email-templates.php:452
 msgid "In use: coupon email on the Coupon tab."
 msgstr "Használatban: kupon e-mail a Kupon fülön."
 
-#: includes/class-email-templates.php:446
+#: includes/class-email-templates.php:456
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr "Még nincs használatban: válaszd ki kupon e-mailként a Kupon fülön."
 
-#: includes/class-email-templates.php:459
+#: includes/class-email-templates.php:469
 msgid "In use: abandoned cart reminder (on)."
 msgstr "Használatban: elhagyott kosár emlékeztető (bekapcsolva)."
 
-#: includes/class-email-templates.php:459
+#: includes/class-email-templates.php:469
 msgid "In use: Order emails rule (on)."
 msgstr "Használatban: Rendelési e-mailek szabály (bekapcsolva)."
 
-#: includes/class-email-templates.php:460
+#: includes/class-email-templates.php:470
 msgid "Selected in a rule that is switched off."
 msgstr "Egy kikapcsolt szabályban van kiválasztva."
 
-#: includes/class-email-templates.php:466
+#: includes/class-email-templates.php:476
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr "Még nincs használatban: válaszd ki emlékeztetőként az Elhagyott kosarak fülön."
 
-#: includes/class-email-templates.php:467
+#: includes/class-email-templates.php:477
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr "Még nincs használatban: válaszd ki egy szabályban a Rendelési e-mailek fülön."
 
@@ -3732,8 +3733,8 @@ msgid "Use triggered (marketing) emails for these: bluefox delivers them only to
 msgstr "Ezekhez triggered (marketing) e-maileket használj: a bluefox csak az e-mail listájának aktív feliratkozóinak kézbesíti őket, leiratkozó linkkel. A tranzakciós e-mailek minden vásárlóhoz eljutnak – csak olyan szolgáltatási információhoz használd őket, amit a WooCommerce nem küld el."
 
 #: modules/woo-events/views/tab-woo-events.php:126
-msgid "Template data (use them as {{orderNumber}}, {{#each items}}{{name}}{{/each}} …): orderId, orderNumber, orderStatus, orderDate, orderTotal, currency, paymentMethod, shippingMethod, customerNote, billing.firstName/lastName/company/city/country/phone, shipping.*, shippingAddressLines, items (name, quantity, total, sku, image), itemCount, couponCodes, viewOrderUrl, siteName, siteUrl, note (customer note emails)."
-msgstr "Sablonadatok (így használd: {{orderNumber}}, {{#each items}}{{name}}{{/each}} …): orderId, orderNumber, orderStatus, orderDate, orderTotal, currency, paymentMethod, shippingMethod, customerNote, billing.firstName/lastName/company/city/country/phone, shipping.*, shippingAddressLines, items (name, quantity, total, sku, image), itemCount, couponCodes, viewOrderUrl, siteName, siteUrl, note (vásárlói megjegyzés e-mailek)."
+msgid "Template data (use them as {{orderNumber}}, {{#each items}}{{name}}{{/each}} …): orderId, orderNumber, orderStatus, orderDate, orderTotal, currency, paymentMethod, shippingMethod, customerNote, billing.firstName/lastName/company/city/country/phone, shipping.*, shippingAddressLines, items (name, quantity, total, sku, image, url, reviewUrl), itemCount, couponCodes, viewOrderUrl, siteName, siteUrl, note (customer note emails)."
+msgstr "Sablonadatok (így használd: {{orderNumber}}, {{#each items}}{{name}}{{/each}} …): orderId, orderNumber, orderStatus, orderDate, orderTotal, currency, paymentMethod, shippingMethod, customerNote, billing.firstName/lastName/company/city/country/phone, shipping.*, shippingAddressLines, items (name, quantity, total, sku, image, url, reviewUrl), itemCount, couponCodes, viewOrderUrl, siteName, siteUrl, note (vásárlói megjegyzés e-mailek)."
 
 #: modules/woo-events/views/tab-woo-events.php:127
 msgid "Put links in triple braces, e.g. href=\"{{{viewOrderUrl}}}\": with two braces Handlebars HTML-escapes characters such as = and &, and link click tracking can break such URLs."
