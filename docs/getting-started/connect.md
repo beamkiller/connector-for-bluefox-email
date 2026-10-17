@@ -36,3 +36,6 @@ Click **Load lists** again whenever you create a new list in bluefox that you us
 
 !!! warning "Turn on double opt-in"
     The plugin does not send confirmation emails itself. bluefox sends them when double opt-in is on for the list – see [Set up your bluefox list](bluefox-list.md). The list picker marks lists that have double opt-in on.
+
+!!! tip "Site behind Cloudflare or a proxy?"
+    Then every visitor reaches WordPress from the proxy's address. Set **Privacy → Visitor IP address** to *Cloudflare (CF-Connecting-IP)* (or your proxy's header), so consent records store the real visitor IP and the signup rate limits do not hit all visitors at once. See [Troubleshooting](../help/troubleshooting.md).
