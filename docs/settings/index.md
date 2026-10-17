@@ -8,7 +8,7 @@ The tabs are grouped under five main tabs; the sub-tabs of the active group are 
 
 | Main tab | Sub-tabs |
 |---|---|
-| General | General |
+| General | General · Email templates |
 | Signup forms | Form · Popup · Emails · Shortcodes |
 | WooCommerce | Checkout · Coupon · Order emails · Abandoned carts |
 | Integrations | Contact sync · Email delivery · Form integrations · Webhooks |
@@ -21,6 +21,7 @@ Only administrators see the page by default. Developers can change the capabilit
 | Tab | Tab id | Shown when | Option |
 |---|---|---|---|
 | [General](general.md) | `api` | always | `cfbe_api`, `cfbe_modules` |
+| [Email templates](../features/email-templates.md) | `email_templates` | always | `cfbe_email_templates` |
 | [Form](form.md) | `form` | Signup forms on | `cfbe_form` |
 | [Popup](popup.md) | `popup` | Signup forms on | `cfbe_popup` |
 | [Checkout](checkout.md) | `checkout` | Checkout opt-in on | `cfbe_checkout` |

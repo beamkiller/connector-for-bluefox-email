@@ -14,6 +14,10 @@ Signup forms with double opt-in, WooCommerce opt-in and coupons, contact sync an
 
 Connector for bluefox.email links your WordPress site and WooCommerce store to your [bluefox.email](https://bluefox.email) account. Every feature is a module you can switch on or off, so the plugin only loads what you use.
 
+**Ready-made emails**
+
+* One click creates mobile-friendly emails in bluefox.email for everything the plugin sends – double opt-in confirmation, welcome coupon, order emails, review request, abandoned cart reminder – and wires them up. Edit the texts in WordPress, update them later, or keep designing them in bluefox.
+
 **Signup forms**
 
 * Gutenberg block, `[cfbe_form]` shortcode and a configurable popup (scroll, delay, exit intent, page views, page targeting, device, frequency).

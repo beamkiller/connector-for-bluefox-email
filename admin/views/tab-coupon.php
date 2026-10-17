@@ -30,7 +30,20 @@ $cfbe_lists  = List_Options::lists( (string) $cfbe_values['list_id'] );
 			<th scope="row"><label for="cfbe-coupon-email-id-c"><?php esc_html_e( 'Coupon email ID', 'connector-for-bluefox-email' ); ?></label></th>
 			<td>
 				<input type="text" class="regular-text code" id="cfbe-coupon-email-id-c" name="<?php echo esc_attr( $cfbe_name( 'email_id' ) ); ?>" value="<?php echo esc_attr( (string) $cfbe_values['email_id'] ); ?>" placeholder="<?php echo esc_attr( \CFBE\Reward_Service::coupon_email_id() ); ?>">
-				<p class="description"><?php esc_html_e( 'ID of the bluefox transactional email that delivers the coupon (see “Coupon email in bluefox” below). No coupon is sent without it.', 'connector-for-bluefox-email' ); ?></p>
+				<p class="description"><?php esc_html_e( 'ID of the bluefox transactional email that delivers the coupon (see “Coupon email in bluefox” below). No coupon is sent without it.', 'connector-for-bluefox-email' ); ?>
+					<a href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							array(
+								'tab'      => 'email_templates',
+								'template' => 'welcome_coupon',
+							),
+							admin_url( 'admin.php?page=' . \CFBE\Admin\Admin_Page::SLUG )
+						) . '#cfbe-template-welcome_coupon'
+					);
+					?>
+					"><?php esc_html_e( 'No email yet? Create one from a template.', 'connector-for-bluefox-email' ); ?></a></p>
 			</td>
 		</tr>
 		<tr>

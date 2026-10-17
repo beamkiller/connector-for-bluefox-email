@@ -138,6 +138,21 @@ $cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, 
 
 	<h2><?php echo esc_html( $cfbe_is_cart ? __( 'Reminder email', 'connector-for-bluefox-email' ) : __( 'Rules', 'connector-for-bluefox-email' ) ); ?></h2>
 	<p>
+		<a href="
+		<?php
+		echo esc_url(
+			add_query_arg(
+				array(
+					'tab'      => 'email_templates',
+					'template' => $cfbe_is_cart ? 'cart_reminder' : 'order_processing',
+				),
+				admin_url( 'admin.php?page=' . \CFBE\Admin\Admin_Page::SLUG )
+			) . ( $cfbe_is_cart ? '#cfbe-template-cart_reminder' : '#cfbe-template-order_processing' )
+		);
+		?>
+		"><?php esc_html_e( 'No email in bluefox yet? Create a ready-made one from a template – the rule is added for you.', 'connector-for-bluefox-email' ); ?></a>
+	</p>
+	<p>
 		<button type="button" class="button" id="cfbe-woo-events-refresh" <?php disabled( ! $cfbe_connected ); ?>><?php esc_html_e( 'Refresh email lists', 'connector-for-bluefox-email' ); ?></button>
 		<span id="cfbe-woo-events-refresh-result" class="cfbe-result" role="status" aria-live="polite">
 			<?php

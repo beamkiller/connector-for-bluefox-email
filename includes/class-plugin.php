@@ -282,6 +282,7 @@ final class Plugin {
 		if ( is_admin() ) {
 			( new Admin\Admin_Page( $this->settings, $this->repository ) )->register();
 			( new Admin\Admin_Ajax() )->register();
+			( new Admin\Email_Templates_Tab( array( $this, 'client' ) ) )->register();
 			$this->register_settings_tabs();
 		} else {
 			// Abilities save settings over REST / WP-CLI: load the settings screens' sanitizers on demand.

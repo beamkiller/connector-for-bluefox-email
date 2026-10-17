@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-17T11:38:59+00:00\n"
+"POT-Creation-Date: 2026-10-17T12:14:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -57,6 +57,7 @@ msgstr ""
 #: admin/class-coupon-tab.php:150
 #: admin/class-coupon-tab.php:208
 #: admin/class-coupon-tab.php:220
+#: admin/class-email-templates-tab.php:94
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
 #: modules/sync/class-sync-tab.php:262
@@ -169,7 +170,9 @@ msgid "single use, only with the subscriber's email address"
 msgstr ""
 
 #. translators: %s: minimum order amount
+#. translators: %s: amount placeholder
 #: admin/class-coupon-tab.php:126
+#: includes/class-email-templates.php:367
 #, php-format
 msgid "minimum order %s"
 msgstr ""
@@ -188,6 +191,39 @@ msgstr ""
 #: modules/sync/class-sync-tab.php:197
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
+msgstr ""
+
+#: admin/class-email-templates-tab.php:60
+msgid "Email templates"
+msgstr ""
+
+#: admin/class-email-templates-tab.php:97
+#: includes/class-email-template-sync.php:48
+msgid "Unknown email template."
+msgstr ""
+
+#: admin/class-email-templates-tab.php:102
+#: admin/views/tab-email-templates.php:33
+#: modules/woo-events/class-settings-tab.php:229
+msgid "Connect bluefox on the General tab first."
+msgstr ""
+
+#: admin/class-email-templates-tab.php:119
+msgid "The email was created in bluefox."
+msgstr ""
+
+#: admin/class-email-templates-tab.php:129
+msgid "The email was updated in bluefox."
+msgstr ""
+
+#. translators: %s: email address
+#: admin/class-email-templates-tab.php:141
+#, php-format
+msgid "A test was sent to %s with sample data."
+msgstr ""
+
+#: admin/class-email-templates-tab.php:145
+msgid "Unknown action."
 msgstr ""
 
 #: admin/class-form-tab.php:38
@@ -539,6 +575,7 @@ msgid "An unticked newsletter checkbox at checkout: directly below the billing e
 msgstr ""
 
 #: admin/views/tab-checkout.php:27
+#: admin/views/tab-email-templates.php:25
 #: admin/views/tab-form.php:21
 #: admin/views/tab-form.php:77
 msgid "Text"
@@ -557,6 +594,7 @@ msgid "Classic checkout and My Account only."
 msgstr ""
 
 #: admin/views/tab-checkout.php:41
+#: admin/views/tab-email-templates.php:115
 msgid "Subscriber list"
 msgstr ""
 
@@ -611,155 +649,266 @@ msgstr ""
 msgid "ID of the bluefox transactional email that delivers the coupon (see “Coupon email in bluefox” below). No coupon is sent without it."
 msgstr ""
 
-#: admin/views/tab-coupon.php:37
+#: admin/views/tab-coupon.php:46
+msgid "No email yet? Create one from a template."
+msgstr ""
+
+#: admin/views/tab-coupon.php:50
 msgid "Reward signups on list"
 msgstr ""
 
-#: admin/views/tab-coupon.php:40
+#: admin/views/tab-coupon.php:53
 msgid "Any list"
 msgstr ""
 
-#: admin/views/tab-coupon.php:45
+#: admin/views/tab-coupon.php:58
 msgid "Only signups confirmed on this list receive the coupon. The lists come from the General tab (“Load lists”)."
 msgstr ""
 
-#: admin/views/tab-coupon.php:49
+#: admin/views/tab-coupon.php:62
 msgid "Discount"
 msgstr ""
 
-#: admin/views/tab-coupon.php:51
+#: admin/views/tab-coupon.php:64
 msgid "Discount amount"
 msgstr ""
 
-#: admin/views/tab-coupon.php:53
-#: modules/woo-events/views/tab-woo-events.php:227
+#: admin/views/tab-coupon.php:66
+#: modules/woo-events/views/tab-woo-events.php:242
 msgid "% off the cart"
 msgstr ""
 
-#: admin/views/tab-coupon.php:54
-#: modules/woo-events/views/tab-woo-events.php:228
+#: admin/views/tab-coupon.php:67
+#: modules/woo-events/views/tab-woo-events.php:243
 msgid "off the cart"
 msgstr ""
 
-#: admin/views/tab-coupon.php:59
+#: admin/views/tab-coupon.php:72
 msgid "Valid for (days)"
 msgstr ""
 
-#: admin/views/tab-coupon.php:63
+#: admin/views/tab-coupon.php:76
 msgid "Minimum order amount"
 msgstr ""
 
-#: admin/views/tab-coupon.php:65
+#: admin/views/tab-coupon.php:78
 msgid "0 = no minimum."
 msgstr ""
 
-#: admin/views/tab-coupon.php:68
+#: admin/views/tab-coupon.php:81
 msgid "Restrictions"
 msgstr ""
 
-#: admin/views/tab-coupon.php:70
-#: modules/woo-events/views/tab-woo-events.php:252
+#: admin/views/tab-coupon.php:83
+#: modules/woo-events/views/tab-woo-events.php:267
 msgid "Cannot be combined with other coupons"
 msgstr ""
 
-#: admin/views/tab-coupon.php:71
-#: modules/woo-events/views/tab-woo-events.php:253
+#: admin/views/tab-coupon.php:84
+#: modules/woo-events/views/tab-woo-events.php:268
 msgid "Not valid on sale items"
 msgstr ""
 
-#: admin/views/tab-coupon.php:72
+#: admin/views/tab-coupon.php:85
 msgid "Also grants free shipping"
 msgstr ""
 
-#: admin/views/tab-coupon.php:76
+#: admin/views/tab-coupon.php:89
 msgid "Code prefix"
 msgstr ""
 
-#: admin/views/tab-coupon.php:80
+#: admin/views/tab-coupon.php:93
 msgid "Email aliases"
 msgstr ""
 
-#: admin/views/tab-coupon.php:82
+#: admin/views/tab-coupon.php:95
 msgid "One coupon per mailbox"
 msgstr ""
 
-#: admin/views/tab-coupon.php:83
+#: admin/views/tab-coupon.php:96
 msgid "Aliases such as name+shop@example.com and Gmail addresses written with dots (j.ane@gmail.com) count as the same address, so one person cannot collect several coupons. Turn it off to give each address its own coupon."
 msgstr ""
 
-#: admin/views/tab-coupon.php:88
+#: admin/views/tab-coupon.php:101
 msgid "“Your coupon expires soon” reminder"
 msgstr ""
 
-#: admin/views/tab-coupon.php:91
+#: admin/views/tab-coupon.php:104
 msgid "Coupon data in bluefox"
 msgstr ""
 
-#: admin/views/tab-coupon.php:93
+#: admin/views/tab-coupon.php:106
 msgid "Update the couponCode, couponExpires and couponUsed fields"
 msgstr ""
 
-#: admin/views/tab-coupon.php:94
+#: admin/views/tab-coupon.php:107
 msgid "Create bluefox fields"
 msgstr ""
 
-#: admin/views/tab-coupon.php:98
+#: admin/views/tab-coupon.php:111
 msgid "Reminder before expiry (days)"
 msgstr ""
 
-#: admin/views/tab-coupon.php:103
+#: admin/views/tab-coupon.php:116
 msgid "Setup in bluefox (one-time):"
 msgstr ""
 
-#: admin/views/tab-coupon.php:105
+#: admin/views/tab-coupon.php:118
 msgid "Segments → new segment “Coupon expires soon”: couponUsed = false AND couponExpires within the next days:"
 msgstr ""
 
-#: admin/views/tab-coupon.php:106
+#: admin/views/tab-coupon.php:119
 msgid "Automations → new automation: Enter segment “Coupon expires soon” (once per contact) → Send email."
 msgstr ""
 
-#: admin/views/tab-coupon.php:107
+#: admin/views/tab-coupon.php:120
 msgid "Available in the email: {{contact.couponCode}}, {{contact.name}}."
 msgstr ""
 
-#: admin/views/tab-coupon.php:113
+#: admin/views/tab-coupon.php:126
 msgid "Coupon email in bluefox"
 msgstr ""
 
-#: admin/views/tab-coupon.php:116
+#: admin/views/tab-coupon.php:129
 msgid "In bluefox, open Transactional emails and create a new email of type HTML (for example “Welcome coupon”). Set its subject, for example: Your {{discount}} welcome coupon."
 msgstr ""
 
-#: admin/views/tab-coupon.php:117
+#: admin/views/tab-coupon.php:130
 msgid "Paste the template below as the HTML content and adjust the texts and colours to your brand."
 msgstr ""
 
-#: admin/views/tab-coupon.php:118
+#: admin/views/tab-coupon.php:131
 msgid "Save it, copy the email ID and paste it into “Coupon email ID” above."
 msgstr ""
 
-#: admin/views/tab-coupon.php:120
+#: admin/views/tab-coupon.php:133
 msgid "Merge tags sent with the coupon email:"
 msgstr ""
 
-#: admin/views/tab-coupon.php:126
+#: admin/views/tab-coupon.php:139
 msgid "Contact fields work too, e.g. {{contact.name}}. The coupon email is transactional (no unsubscribe link), so keep it about the coupon only."
 msgstr ""
 
-#: admin/views/tab-coupon.php:131
+#: admin/views/tab-coupon.php:144
 msgid "Welcome coupon template"
 msgstr ""
 
-#: admin/views/tab-coupon.php:132
+#: admin/views/tab-coupon.php:145
 msgid "Double opt-in confirmation template (set it as the confirmation email of the bluefox list; it must contain {{verifyLink}})"
 msgstr ""
 
-#: admin/views/tab-coupon.php:143
+#: admin/views/tab-coupon.php:156
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
 #: modules/webhooks/views/tab-webhooks.php:99
 msgid "Copy"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:22
+#: modules/mailer/views/tab-mailer.php:118
+msgid "Subject"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:23
+msgid "Preview text"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:24
+#: admin/views/tab-form.php:57
+#: admin/views/tab-popup.php:37
+#: blocks/signup-form/index.js:90
+msgid "Heading"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:26
+#: blocks/signup-form/index.js:92
+msgid "Button label"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:27
+msgid "Small print"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:30
+msgid "Ready-made emails for everything this plugin sends. Adjust the texts, then create the email in bluefox with one click: it is selected where the plugin uses it, so there is nothing to copy. Later changes can be sent to bluefox from here too; for the design (images, layout) open the email in bluefox."
+msgstr ""
+
+#: admin/views/tab-email-templates.php:37
+msgid "Switch on a feature that sends emails (signup forms, welcome coupon, order or abandoned cart emails) to see its templates."
+msgstr ""
+
+#: admin/views/tab-email-templates.php:57
+msgid "Triggered (marketing)"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:57
+msgid "Transactional"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:59
+msgid "Created in bluefox"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:61
+msgid "Not created yet"
+msgstr ""
+
+#. translators: %s: bluefox email ID
+#: admin/views/tab-email-templates.php:74
+#, php-format
+msgid "bluefox email ID: %s"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:97
+msgid "Variables"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:98
+msgid "usable in every text; the plugin fills them in when it sends the email."
+msgstr ""
+
+#: admin/views/tab-email-templates.php:102
+msgid "Sender"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:105
+msgid "Project default sender"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:119
+msgid "— Load lists on the General tab —"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:129
+msgid "Double opt-in is switched on for this list with the new email."
+msgstr ""
+
+#: admin/views/tab-email-templates.php:130
+msgid "Triggered emails belong to a list: only its active subscribers receive them, and they get an unsubscribe link."
+msgstr ""
+
+#: admin/views/tab-email-templates.php:139
+msgid "Use it"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:140
+msgid "Select the new email where the plugin needs it (recommended)"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:147
+msgid "Create in bluefox"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:149
+msgid "Replace the version in bluefox"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:151
+msgid "Update in bluefox"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:152
+msgid "Send me a test"
 msgstr ""
 
 #: admin/views/tab-emails.php:22
@@ -875,12 +1024,6 @@ msgstr ""
 
 #: admin/views/tab-form.php:52
 msgid "Appearance"
-msgstr ""
-
-#: admin/views/tab-form.php:57
-#: admin/views/tab-popup.php:37
-#: blocks/signup-form/index.js:90
-msgid "Heading"
 msgstr ""
 
 #: admin/views/tab-form.php:59
@@ -1055,7 +1198,7 @@ msgid "bluefox tag"
 msgstr ""
 
 #: admin/views/tab-form.php:187
-#: modules/woo-events/views/tab-woo-events.php:160
+#: modules/woo-events/views/tab-woo-events.php:175
 msgid "Actions"
 msgstr ""
 
@@ -1537,8 +1680,8 @@ msgstr ""
 #: admin/views/tab-subscribers.php:71
 #: admin/views/tab-subscribers.php:103
 #: modules/woo-events/class-privacy.php:103
-#: modules/woo-events/views/tab-woo-events.php:159
-#: modules/woo-events/views/tab-woo-events.php:271
+#: modules/woo-events/views/tab-woo-events.php:174
+#: modules/woo-events/views/tab-woo-events.php:286
 msgid "Status"
 msgstr ""
 
@@ -1579,7 +1722,7 @@ msgstr ""
 #: includes/class-privacy.php:461
 #: modules/webhooks/views/tab-webhooks.php:115
 #: modules/woo-events/class-privacy.php:91
-#: modules/woo-events/views/tab-woo-events.php:268
+#: modules/woo-events/views/tab-woo-events.php:283
 msgid "Email"
 msgstr ""
 
@@ -1838,6 +1981,358 @@ msgstr ""
 msgid "Newsletter welcome coupon – %s"
 msgstr ""
 
+#: includes/class-email-template-sync.php:57
+msgid "Choose the subscriber list of this triggered email."
+msgstr ""
+
+#: includes/class-email-template-sync.php:68
+msgid "bluefox did not return the ID of the new email."
+msgstr ""
+
+#: includes/class-email-template-sync.php:101
+#: includes/class-email-template-sync.php:151
+msgid "This email has not been created in bluefox yet."
+msgstr ""
+
+#: includes/class-email-template-sync.php:108
+msgid "The email no longer exists in bluefox. Create it again."
+msgstr ""
+
+#: includes/class-email-template-sync.php:113
+msgid "This email was switched to bluefox’s visual editor, so it can only be edited in bluefox now."
+msgstr ""
+
+#: includes/class-email-template-sync.php:117
+msgid "This email was changed in bluefox after it was created here. Updating it replaces those changes."
+msgstr ""
+
+#: includes/class-email-template-sync.php:170
+msgid "Choose it as the double opt-in email of your list in bluefox."
+msgstr ""
+
+#. translators: %s: error message
+#: includes/class-email-template-sync.php:185
+#, php-format
+msgid "The list could not be updated (%s): choose the email as its double opt-in email in bluefox."
+msgstr ""
+
+#: includes/class-email-template-sync.php:186
+msgid "Double opt-in is on for the list, with this email and your thank-you page as the redirect link."
+msgstr ""
+
+#: includes/class-email-template-sync.php:194
+msgid "Selected as the coupon email on the Coupon tab."
+msgstr ""
+
+#: includes/class-email-template-sync.php:211
+msgid "A rule for this event already exists: select the new email in it if you want to use it."
+msgstr ""
+
+#: includes/class-email-template-sync.php:224
+msgid "The new email was selected in the existing rule for this event, and the rule was switched on."
+msgstr ""
+
+#: includes/class-email-template-sync.php:237
+msgid "A rule that sends this email was added and switched on."
+msgstr ""
+
+#: includes/class-email-templates.php:31
+msgid "Double opt-in confirmation"
+msgstr ""
+
+#: includes/class-email-templates.php:32
+msgid "Sent by bluefox when someone subscribes. Creating it also sets it as the confirmation email of the list chosen below, with your thank-you page as the redirect link."
+msgstr ""
+
+#: includes/class-email-templates.php:39
+msgid "Please confirm your subscription"
+msgstr ""
+
+#: includes/class-email-templates.php:40
+msgid "One click and you are on the list."
+msgstr ""
+
+#: includes/class-email-templates.php:41
+msgid "Confirm your subscription"
+msgstr ""
+
+#: includes/class-email-templates.php:42
+msgid "Thank you for signing up to our newsletter. Please click the button below to confirm your email address."
+msgstr ""
+
+#: includes/class-email-templates.php:43
+msgid "Yes, subscribe me"
+msgstr ""
+
+#: includes/class-email-templates.php:44
+msgid "If you did not sign up, simply ignore this email: you will not be subscribed."
+msgstr ""
+
+#: includes/class-email-templates.php:48
+#: includes/class-modules.php:89
+msgid "Welcome coupon"
+msgstr ""
+
+#: includes/class-email-templates.php:49
+msgid "Delivers the welcome coupon after the subscription is confirmed. Creating it also selects it on the Coupon tab."
+msgstr ""
+
+#: includes/class-email-templates.php:56
+msgid "Your welcome gift: {{discount}} off"
+msgstr ""
+
+#: includes/class-email-templates.php:57
+msgid "Your coupon code is inside."
+msgstr ""
+
+#: includes/class-email-templates.php:58
+msgid "Welcome, {{DEFAULT name \"friend\"}}!"
+msgstr ""
+
+#: includes/class-email-templates.php:59
+msgid "Thank you for confirming your subscription. As promised, here is your welcome gift. Enter the code in the cart, using the same email address you subscribed with."
+msgstr ""
+
+#: includes/class-email-templates.php:60
+msgid "Start shopping"
+msgstr ""
+
+#: includes/class-email-templates.php:61
+msgid "One welcome coupon per email address. {{terms}}"
+msgstr ""
+
+#: includes/class-email-templates.php:65
+msgid "Order received"
+msgstr ""
+
+#: includes/class-email-templates.php:66
+msgid "Order status “Processing”. Creating it also adds an order email rule for this status."
+msgstr ""
+
+#: includes/class-email-templates.php:74
+msgid "We received your order #{{orderNumber}}"
+msgstr ""
+
+#: includes/class-email-templates.php:75
+msgid "Thank you! We are preparing your order."
+msgstr ""
+
+#: includes/class-email-templates.php:76
+msgid "Thank you for your order!"
+msgstr ""
+
+#: includes/class-email-templates.php:77
+msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we have received your order #{{orderNumber}} and are preparing it now."
+msgstr ""
+
+#: includes/class-email-templates.php:78
+#: includes/class-email-templates.php:96
+#: includes/class-email-templates.php:132
+msgid "View your order"
+msgstr ""
+
+#: includes/class-email-templates.php:79
+msgid "Questions about your order? Simply reply to this email."
+msgstr ""
+
+#: includes/class-email-templates.php:83
+msgid "Order completed"
+msgstr ""
+
+#: includes/class-email-templates.php:84
+msgid "Order status “Completed”. Creating it also adds an order email rule for this status."
+msgstr ""
+
+#: includes/class-email-templates.php:92
+msgid "Your order #{{orderNumber}} is complete"
+msgstr ""
+
+#: includes/class-email-templates.php:93
+msgid "Your order is on its way."
+msgstr ""
+
+#: includes/class-email-templates.php:94
+msgid "Your order is complete"
+msgstr ""
+
+#: includes/class-email-templates.php:95
+msgid "Hi {{DEFAULT billing.firstName \"there\"}}, good news: your order #{{orderNumber}} has been completed."
+msgstr ""
+
+#: includes/class-email-templates.php:97
+msgid "Thank you for shopping with us!"
+msgstr ""
+
+#: includes/class-email-templates.php:101
+msgid "First order thank-you"
+msgstr ""
+
+#: includes/class-email-templates.php:102
+msgid "The first paid order of a customer. Creating it also adds an order email rule for this event."
+msgstr ""
+
+#: includes/class-email-templates.php:110
+msgid "Thank you for your first order!"
+msgstr ""
+
+#: includes/class-email-templates.php:111
+msgid "A warm welcome from our team."
+msgstr ""
+
+#: includes/class-email-templates.php:112
+msgid "Welcome to {{siteName}}!"
+msgstr ""
+
+#: includes/class-email-templates.php:113
+msgid "Hi {{DEFAULT billing.firstName \"there\"}}, thank you for choosing us for your first order. We hope you love it."
+msgstr ""
+
+#: includes/class-email-templates.php:114
+msgid "Visit the shop"
+msgstr ""
+
+#: includes/class-email-templates.php:115
+#: includes/class-email-templates.php:133
+#: includes/class-email-templates.php:173
+msgid "Questions? Simply reply to this email."
+msgstr ""
+
+#: includes/class-email-templates.php:119
+msgid "Note to customer"
+msgstr ""
+
+#: includes/class-email-templates.php:120
+msgid "Sent when you add a note to the customer on an order. Creating it also adds an order email rule for this event."
+msgstr ""
+
+#: includes/class-email-templates.php:128
+msgid "A note about your order #{{orderNumber}}"
+msgstr ""
+
+#: includes/class-email-templates.php:129
+msgid "We added a note to your order."
+msgstr ""
+
+#: includes/class-email-templates.php:130
+msgid "A note about your order"
+msgstr ""
+
+#: includes/class-email-templates.php:131
+msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we added the following note to your order #{{orderNumber}}:"
+msgstr ""
+
+#: includes/class-email-templates.php:137
+msgid "Review request"
+msgstr ""
+
+#: includes/class-email-templates.php:138
+msgid "Asks for a review 7 days after the order is completed (triggered email: only active subscribers of the chosen list receive it). Creating it also adds an order email rule."
+msgstr ""
+
+#: includes/class-email-templates.php:148
+msgid "How did we do?"
+msgstr ""
+
+#: includes/class-email-templates.php:149
+msgid "Your opinion helps other shoppers."
+msgstr ""
+
+#: includes/class-email-templates.php:150
+msgid "How was your order?"
+msgstr ""
+
+#: includes/class-email-templates.php:151
+msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we hope you are happy with your order #{{orderNumber}}. Would you take a minute to review the products?"
+msgstr ""
+
+#: includes/class-email-templates.php:152
+msgid "Write a review"
+msgstr ""
+
+#: includes/class-email-templates.php:153
+msgid "Thank you for helping us get better."
+msgstr ""
+
+#: includes/class-email-templates.php:157
+msgid "Abandoned cart reminder"
+msgstr ""
+
+#: includes/class-email-templates.php:158
+msgid "Reminds shoppers of the cart they left, with a restore link and the recovery coupon when it is on (triggered email: only active subscribers of the chosen list receive it). Creating it also adds an abandoned cart rule."
+msgstr ""
+
+#: includes/class-email-templates.php:168
+msgid "You left something in your cart"
+msgstr ""
+
+#: includes/class-email-templates.php:169
+msgid "Your cart is saved and waiting for you."
+msgstr ""
+
+#: includes/class-email-templates.php:170
+msgid "Still thinking it over?"
+msgstr ""
+
+#: includes/class-email-templates.php:171
+msgid "You left these items in your cart. We saved it for you, so you can finish your order with one click."
+msgstr ""
+
+#: includes/class-email-templates.php:172
+msgid "Back to my cart"
+msgstr ""
+
+#. translators: unsubscribe link label in marketing emails
+#: includes/class-email-templates.php:280
+msgid "Unsubscribe"
+msgstr ""
+
+#. translators: %s: template label, e.g. Welcome coupon
+#: includes/class-email-templates.php:299
+#, php-format
+msgid "%s (Connector for bluefox.email)"
+msgstr ""
+
+#: includes/class-email-templates.php:315
+msgid "Sample product"
+msgstr ""
+
+#: includes/class-email-templates.php:336
+msgid "Your parcel ships tomorrow."
+msgstr ""
+
+#: includes/class-email-templates.php:362
+msgid "Your coupon code"
+msgstr ""
+
+#. translators: %s: discount placeholder, e.g. 10%
+#: includes/class-email-templates.php:365
+#, php-format
+msgid "%s off"
+msgstr ""
+
+#. translators: %s: expiry date placeholder
+#: includes/class-email-templates.php:367
+#, php-format
+msgid "Valid until %s"
+msgstr ""
+
+#. translators: %s: discount placeholder
+#: includes/class-email-templates.php:372
+#, php-format
+msgid "Finish your order now and get %s off with this code:"
+msgstr ""
+
+#. translators: %s: expiry date placeholder
+#: includes/class-email-templates.php:375
+#, php-format
+msgid "Valid until %s. The link below applies it automatically."
+msgstr ""
+
+#: includes/class-email-templates.php:388
+#: modules/woo-events/views/tab-woo-events.php:285
+msgid "Total"
+msgstr ""
+
 #: includes/class-modules.php:87
 msgid "Signup form block, shortcode and popup with double opt-in."
 msgstr ""
@@ -1848,10 +2343,6 @@ msgstr ""
 
 #: includes/class-modules.php:88
 msgid "Newsletter checkbox on the WooCommerce checkout (classic and block checkout)."
-msgstr ""
-
-#: includes/class-modules.php:89
-msgid "Welcome coupon"
 msgstr ""
 
 #: includes/class-modules.php:89
@@ -2514,10 +3005,6 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: modules/mailer/views/tab-mailer.php:118
-msgid "Subject"
-msgstr ""
-
 #: modules/mailer/views/tab-mailer.php:119
 msgid "Result"
 msgstr ""
@@ -2956,7 +3443,7 @@ msgstr ""
 
 #: modules/webhooks/views/tab-webhooks.php:114
 #: modules/woo-events/views/tab-woo-events.php:56
-#: modules/woo-events/views/tab-woo-events.php:154
+#: modules/woo-events/views/tab-woo-events.php:169
 msgid "Event"
 msgstr ""
 
@@ -2991,7 +3478,7 @@ msgid "Cart total"
 msgstr ""
 
 #: modules/woo-events/class-privacy.php:107
-#: modules/woo-events/views/tab-woo-events.php:272
+#: modules/woo-events/views/tab-woo-events.php:287
 msgid "Last updated (UTC)"
 msgstr ""
 
@@ -3029,10 +3516,6 @@ msgstr ""
 
 #: modules/woo-events/class-rules.php:61
 msgid "Abandoned cart"
-msgstr ""
-
-#: modules/woo-events/class-settings-tab.php:229
-msgid "Connect bluefox on the General tab first."
 msgstr ""
 
 #: modules/woo-events/class-settings-tab.php:319
@@ -3074,12 +3557,12 @@ msgid "hours"
 msgstr ""
 
 #: modules/woo-events/views/tab-woo-events.php:40
-#: modules/woo-events/views/tab-woo-events.php:243
+#: modules/woo-events/views/tab-woo-events.php:258
 msgid "days"
 msgstr ""
 
 #: modules/woo-events/views/tab-woo-events.php:82
-#: modules/woo-events/views/tab-woo-events.php:157
+#: modules/woo-events/views/tab-woo-events.php:172
 msgid "Delay"
 msgstr ""
 
@@ -3139,146 +3622,146 @@ msgstr ""
 msgid "Rules"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:141
+#: modules/woo-events/views/tab-woo-events.php:153
+msgid "No email in bluefox yet? Create a ready-made one from a template – the rule is added for you."
+msgstr ""
+
+#: modules/woo-events/views/tab-woo-events.php:156
 msgid "Refresh email lists"
 msgstr ""
 
 #. translators: %s: date and time
-#: modules/woo-events/views/tab-woo-events.php:146
+#: modules/woo-events/views/tab-woo-events.php:161
 #, php-format
 msgid "Lists loaded: %s"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:155
+#: modules/woo-events/views/tab-woo-events.php:170
 msgid "Email type"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:156
+#: modules/woo-events/views/tab-woo-events.php:171
 msgid "bluefox email"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:158
+#: modules/woo-events/views/tab-woo-events.php:173
 msgid "On"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:184
+#: modules/woo-events/views/tab-woo-events.php:199
 msgid "Add reminder"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:184
+#: modules/woo-events/views/tab-woo-events.php:199
 msgid "Add rule"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:186
+#: modules/woo-events/views/tab-woo-events.php:201
 msgid "The delay counts from the moment the cart is found idle. Add a second reminder with a longer delay for a follow-up."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:188
+#: modules/woo-events/views/tab-woo-events.php:203
 msgid "Review request: sent the set delay after the order is completed (e.g. 7 days). First paid order: the customer’s first processing/completed order by billing email (guests included)."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:194
+#: modules/woo-events/views/tab-woo-events.php:209
 msgid "Cart settings"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:197
+#: modules/woo-events/views/tab-woo-events.php:212
 msgid "Cart tracking"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:198
+#: modules/woo-events/views/tab-woo-events.php:213
 msgid "Store carts (only while a reminder is enabled)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:201
+#: modules/woo-events/views/tab-woo-events.php:216
 msgid "Opted-in shoppers only"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:203
+#: modules/woo-events/views/tab-woo-events.php:218
 msgid "Only track carts of people who opted in"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:204
+#: modules/woo-events/views/tab-woo-events.php:219
 msgid "Opted in = confirmed a newsletter signup made with this plugin (form, checkout or form plugin). When off, every cart with a known email is stored (bluefox still only delivers triggered reminders to active subscribers)."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:208
+#: modules/woo-events/views/tab-woo-events.php:223
 msgid "Idle time"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:209
+#: modules/woo-events/views/tab-woo-events.php:224
 msgid "minutes without changes before a cart counts as abandoned (checked every 15 minutes)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:212
+#: modules/woo-events/views/tab-woo-events.php:227
 msgid "Keep carts for"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:213
+#: modules/woo-events/views/tab-woo-events.php:228
 msgid "days (then expired; deleted after twice as long)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:216
+#: modules/woo-events/views/tab-woo-events.php:231
 msgid "Recovery coupon"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:218
+#: modules/woo-events/views/tab-woo-events.php:233
 msgid "Add a single-use coupon to the reminder"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:219
+#: modules/woo-events/views/tab-woo-events.php:234
 msgid "Created when the reminder is sent, one per cart, usable once and only with the shopper’s email address. The restore link applies it automatically. Template data: {{couponCode}}, {{couponDiscount}}, {{couponExpiry}}, {{couponMinSpend}} – wrap them in {{#if couponCode}}…{{/if}}."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:223
+#: modules/woo-events/views/tab-woo-events.php:238
 msgid "Coupon discount"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:226
+#: modules/woo-events/views/tab-woo-events.php:241
 msgid "Discount type"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:233
+#: modules/woo-events/views/tab-woo-events.php:248
 msgid "Coupon valid for"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:234
+#: modules/woo-events/views/tab-woo-events.php:249
 msgid "days after the reminder"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:237
+#: modules/woo-events/views/tab-woo-events.php:252
 msgid "Coupon minimum order"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:238
+#: modules/woo-events/views/tab-woo-events.php:253
 msgid "0 = no minimum"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:241
+#: modules/woo-events/views/tab-woo-events.php:256
 msgid "Coupon cooldown"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:244
+#: modules/woo-events/views/tab-woo-events.php:259
 msgid "Stops shoppers from abandoning carts on purpose to collect discounts: within this period an email address gets at most one recovery coupon. A still unused one is shown again instead of creating a new one; after a redeemed one the reminder goes out without a coupon. 0 = a coupon for every reminder."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:248
+#: modules/woo-events/views/tab-woo-events.php:263
 msgid "Coupon code prefix"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:261
+#: modules/woo-events/views/tab-woo-events.php:276
 msgid "Recent carts"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:263
+#: modules/woo-events/views/tab-woo-events.php:278
 msgid "No carts stored yet."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:269
+#: modules/woo-events/views/tab-woo-events.php:284
 msgid "Items"
-msgstr ""
-
-#: modules/woo-events/views/tab-woo-events.php:270
-msgid "Total"
 msgstr ""
 
 #: public/class-assets.php:64
@@ -3426,10 +3909,6 @@ msgstr ""
 
 #: blocks/signup-form/index.js:89
 msgid "Content"
-msgstr ""
-
-#: blocks/signup-form/index.js:92
-msgid "Button label"
 msgstr ""
 
 #: blocks/signup-form/index.js:96

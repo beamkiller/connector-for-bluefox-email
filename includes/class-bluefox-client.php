@@ -287,6 +287,81 @@ class Bluefox_Client {
 	}
 
 	/**
+	 * Creates a triggered email (bound to a subscriber list).
+	 *
+	 * @param array $data name, subject, previewText, subscriberListId, senderIdentity, type, document.
+	 * @return array|\WP_Error
+	 */
+	public function create_triggered_email( array $data ) {
+		return $this->request( 'POST', 'triggered-emails', $data );
+	}
+
+	/**
+	 * One email (content, type and updatedAt included).
+	 *
+	 * @param string $type     transactional | triggered.
+	 * @param string $email_id Email ID.
+	 * @return array|\WP_Error
+	 */
+	public function get_email( string $type, string $email_id ) {
+		return $this->request( 'GET', self::email_path( $type, $email_id ) );
+	}
+
+	/**
+	 * Partially updates an email (only the given fields change).
+	 *
+	 * @param string $type     transactional | triggered.
+	 * @param string $email_id Email ID.
+	 * @param array  $data     Fields.
+	 * @return array|\WP_Error
+	 */
+	public function update_email( string $type, string $email_id, array $data ) {
+		return $this->request( 'PATCH', self::email_path( $type, $email_id ), $data );
+	}
+
+	/**
+	 * Sends a test of an email with sample template data.
+	 *
+	 * @param string $type     transactional | triggered.
+	 * @param string $email_id Email ID.
+	 * @param string $to       Recipient.
+	 * @param array  $data     Template data.
+	 * @return array|\WP_Error
+	 */
+	public function send_test_email( string $type, string $email_id, string $to, array $data = array() ) {
+		return $this->request(
+			'POST',
+			'test-email/' . rawurlencode( $email_id ),
+			array(
+				'type'  => $type,
+				'email' => $to,
+				'data'  => (object) $data,
+			)
+		);
+	}
+
+	/**
+	 * Partially updates a subscriber list (e.g. its double opt-in settings).
+	 *
+	 * @param string $list_id List ID.
+	 * @param array  $data    Fields.
+	 * @return array|\WP_Error
+	 */
+	public function update_list( string $list_id, array $data ) {
+		return $this->request( 'PATCH', 'subscriber-lists/' . rawurlencode( $list_id ), $data );
+	}
+
+	/**
+	 * Path of an email resource.
+	 *
+	 * @param string $type     transactional | triggered.
+	 * @param string $email_id Email ID.
+	 */
+	private static function email_path( string $type, string $email_id ): string {
+		return ( 'triggered' === $type ? 'triggered-emails/' : 'transactional-emails/' ) . rawurlencode( $email_id );
+	}
+
+	/**
 	 * Sender identities of the project.
 	 *
 	 * @return array|\WP_Error Items.

@@ -176,7 +176,7 @@ final class Admin_Page {
 	 * tabs in no group (e.g. from add-ons) go to "More".
 	 */
 	const GROUPS = array(
-		'general'      => array( 'api' ),
+		'general'      => array( 'api', 'email_templates' ),
 		'forms'        => array( 'form', 'popup', 'emails', 'shortcodes' ),
 		'woocommerce'  => array( 'checkout', 'coupon', 'woo_events', 'abandoned_cart' ),
 		'integrations' => array( 'sync', 'mailer', 'integrations', 'webhooks' ),

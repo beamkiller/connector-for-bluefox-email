@@ -4,6 +4,7 @@ Each feature is a module with its own switch on the **General** tab (see [Switch
 
 | Feature | What it does |
 |---|---|
+| [Email templates](email-templates.md) | Ready-made bluefox emails for everything the plugin sends, created and updated with one click (not a switch: always on the General tab) |
 | [Signup forms](signup-forms.md) | Block, `[cfbe_form]` shortcode and `[cfbe_promo]` bar with double opt-in |
 | [Popup](popup.md) | The signup form in a popup with triggers, targeting and frequency rules |
 | [Interests and tags](interests-tags.md) | How signups are tagged in bluefox for segments |

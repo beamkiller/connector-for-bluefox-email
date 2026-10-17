@@ -71,6 +71,7 @@ nav:
       - Webhook: getting-started/webhook.md
   - Features:
       - features/index.md
+      - Email templates: features/email-templates.md
       - Signup forms: features/signup-forms.md
       - Popup: features/popup.md
       - Interests and tags: features/interests-tags.md
