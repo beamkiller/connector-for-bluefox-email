@@ -39,4 +39,4 @@ Translations: English and Hungarian are bundled.
 5. [Create the thank-you and preferences pages](getting-started/pages.md) and [register the webhook](getting-started/webhook.md).
 
 !!! note "Not an official bluefox.email product"
-    The plugin is developed by [Peter Kulcsár](https://www.linkedin.com/in/peterkulcsar/) and released under GPL-2.0-or-later. It is not developed by or affiliated with bluefox.email.
+    The plugin is developed by [Peter Kulcsár - KREMONT s.r.o.](https://www.linkedin.com/in/peterkulcsar/) and released under GPL-2.0-or-later. It is not developed by or affiliated with bluefox.email.

@@ -26,8 +26,8 @@ msgstr "A WordPress és a WooCommerce összekapcsolása a bluefox.email szolgál
 
 #. Author of the plugin
 #: connector-for-bluefox-email.php
-msgid "Peter Kulcsár"
-msgstr "Peter Kulcsár"
+msgid "Peter Kulcsár - KREMONT s.r.o."
+msgstr "Peter Kulcsár - KREMONT s.r.o."
 
 #. Author URI of the plugin
 #: connector-for-bluefox-email.php
