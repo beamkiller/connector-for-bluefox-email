@@ -24,7 +24,7 @@ On activation the plugin creates its table `{prefix}cfbe_subscribers` (signups a
 
 ## Requirements
 
-- WordPress 6.6 or newer, PHP 8.1 or newer.
+- WordPress 6.7 or newer, PHP 8.1 or newer.
 - WooCommerce 9.0 or newer for the checkout opt-in, welcome coupon, order emails and abandoned cart emails. Everything else works without WooCommerce.
 - WordPress 6.9 or newer for [AI agent access](../features/ai-agent-access.md).
 

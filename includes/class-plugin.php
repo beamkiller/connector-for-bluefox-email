@@ -147,7 +147,6 @@ final class Plugin {
 	public function on_plugins_loaded(): void {
 		Modules::set_woocommerce_check( $this->wc_check );
 		Installer::maybe_upgrade();
-		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		$this->init_services();
 
@@ -169,13 +168,6 @@ final class Plugin {
 		$mtime = defined( 'CFBE_DIR' ) ? @filemtime( CFBE_DIR . $path ) : false; // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- A missing file falls back to the plugin version.
 		$base  = defined( 'CFBE_VERSION' ) ? CFBE_VERSION : '0';
 		return false !== $mtime ? $base . '.' . $mtime : $base;
-	}
-
-	/**
-	 * Loads the bundled translations (language packs from translate.wordpress.org take precedence).
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain( self::TEXT_DOMAIN, false, dirname( plugin_basename( CFBE_FILE ) ) . '/languages' );
 	}
 
 	/**

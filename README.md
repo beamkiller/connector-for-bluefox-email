@@ -34,7 +34,7 @@ Every feature is a module you switch on or off, so the plugin only loads what yo
 
 | | Version |
 |---|---|
-| WordPress | 6.6 or newer (6.9+ for AI agent access) |
+| WordPress | 6.7 or newer (6.9+ for AI agent access) |
 | PHP | 8.1 or newer |
 | WooCommerce | optional, 9.0 or newer – HPOS and the block checkout are supported |
 | bluefox.email | an account with a project and an API key |
