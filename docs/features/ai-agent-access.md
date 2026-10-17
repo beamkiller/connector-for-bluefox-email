@@ -18,6 +18,11 @@ All abilities are in the **bluefox.email** category.
 | `cfbe/set-modules` | `modules` (module → `true` / `false`) | Switches feature modules on or off. A module whose required plugin is not active stays off |
 | `cfbe/list-bluefox-lists` | – | Returns the subscriber lists of the connected bluefox project: `id`, `name`, `doi` (double opt-in on). Also refreshes the list cache used to validate list IDs |
 | `cfbe/list-bluefox-emails` | – | Returns the `transactional` and `triggered` emails of the project (`id`, `name`), for the coupon email and order / abandoned cart rules |
+| `cfbe/list-email-templates` | – | The ready-made emails of the [Email templates](email-templates.md) tab whose feature is on: what / why / when, allowed `types`, texts, whether created, where used, `design_outdated`. Also the design source and the project's sender identities |
+| `cfbe/create-email-template` | `template`, optional `texts`, `type`, `list_id`, `sender_id`, `assign` | **Create in bluefox**: creates the email in the project and wires it up (coupon email, rule, double opt-in email). Triggered (marketing) emails need `list_id` |
+| `cfbe/update-email-template` | `template`, optional `texts`, `force` | **Update in bluefox**: new texts and the current design. Refuses with `cfbe_template_changed` if the email was edited in bluefox – `force: true` replaces those edits |
+| `cfbe/send-test-email` | `template` | **Send me a test**: sample data, always to the signed-in admin's own address |
+| `cfbe/set-email-design` | `design` (`woocommerce` / `form`) | Design source of the templates. Returns the created emails whose design is now `outdated` |
 
 **Areas** are the option groups of the settings tabs: `api`, `form`, `popup`, `checkout`, `coupon`, `emails`, plus one per enabled module (`sync`, `mailer`, `woo_events`, `integrations`, `webhooks`). The keys are listed in the [Settings reference](../settings/index.md).
 
@@ -29,6 +34,7 @@ All abilities are in the **bluefox.email** category.
 - **Secrets stay in wp-admin.** The API key and the webhook secret are never returned – `cfbe/get-settings` only reports `api_key_set` and `webhook_secret_set` – and `cfbe/update-settings` refuses to change them.
 - **Same validation as the settings screens.** Values go through the same sanitizers. Invalid values fall back to a safe value and are reported under `adjusted`; unknown keys or areas return an error that lists the valid ones.
 - A list value (for example `form.interests` or `woo_events.rules`) replaces the whole list, so the agent has to send the complete list.
+- **Template emails write to bluefox.** `cfbe/create-email-template` and `cfbe/update-email-template` change your bluefox project like the buttons do. Changes made in bluefox are only replaced with an explicit `force`, emails switched to bluefox's visual editor never, and test emails only go to the signed-in admin.
 
 ## Connect an AI agent
 
@@ -69,5 +75,7 @@ Revoke the application password under **Users → Profile** to cut the agent's a
 - "Switch on the checkout opt-in and the welcome coupon. Give new subscribers a 15% coupon valid for 14 days."
 - "Add an order email rule: when an order is completed, send the bluefox email *Order shipped* as a transactional email."
 - "Turn off the abandoned cart emails."
+- "Create the review request email as a marketing email on my *Newsletter* list, then send me a test."
+- "Use the WooCommerce email design for the templates and update the emails that are already in bluefox."
 
-The agent will usually call `cfbe/get-settings` first to see the keys, then `cfbe/update-settings` or `cfbe/set-modules`, and report what was adjusted.
+The agent will usually call `cfbe/get-settings` first to see the keys, then `cfbe/update-settings` or `cfbe/set-modules`, and report what was adjusted. For emails it starts with `cfbe/list-email-templates`.

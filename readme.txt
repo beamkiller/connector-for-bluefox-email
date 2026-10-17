@@ -104,7 +104,7 @@ Yes. Public forms contain no nonces and do not depend on the visitor; spam is bl
 
 = Can an AI agent change the settings? =
 
-Yes, on WordPress 6.9 or later, once you switch on the experimental **AI agent access** feature on the General tab (it is off by default). The plugin then registers the abilities `cfbe/get-settings`, `cfbe/update-settings`, `cfbe/set-modules`, `cfbe/list-bluefox-lists` and `cfbe/list-bluefox-emails`. With the MCP Adapter plugin they are available to MCP clients such as Claude, signed in as an administrator (for example with an application password). The API key and webhook secret can only be set in wp-admin.
+Yes, on WordPress 6.9 or later, once you switch on the experimental **AI agent access** feature on the General tab (it is off by default). The plugin then registers the abilities `cfbe/get-settings`, `cfbe/update-settings`, `cfbe/set-modules`, `cfbe/list-bluefox-lists`, `cfbe/list-bluefox-emails`, `cfbe/list-email-templates`, `cfbe/create-email-template`, `cfbe/update-email-template`, `cfbe/send-test-email` and `cfbe/set-email-design`. With the MCP Adapter plugin they are available to MCP clients such as Claude, signed in as an administrator (for example with an application password). The API key and webhook secret can only be set in wp-admin.
 
 = Can I use my own email templates? =
 

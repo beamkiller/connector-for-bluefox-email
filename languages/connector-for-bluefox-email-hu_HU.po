@@ -1972,30 +1972,130 @@ msgstr "bluefox e-mailek lekérése"
 msgid "Returns the transactional and triggered emails of the connected bluefox project (id, name). Use an id as coupon.email_id (transactional) or as email_id of an order email / abandoned cart rule (transactional or triggered, matching the rule type)."
 msgstr "Visszaadja a csatlakoztatott bluefox projekt tranzakciós és triggered e-mailjeit (azonosító, név). Az azonosítót coupon.email_id-ként (tranzakciós), vagy egy rendelési / elhagyott kosár szabály email_id-jaként használd (tranzakciós vagy triggered, a szabály típusának megfelelően)."
 
+#: includes/class-abilities.php:251
+msgid "Texts to use: subject, preview, heading, intro, button, footer (Handlebars variables such as {{orderNumber}} work). Omitted texts keep their current value."
+msgstr "A használandó szövegek: subject, preview, heading, intro, button, footer (a Handlebars változók, pl. {{orderNumber}}, működnek). A meg nem adott szövegek megtartják a jelenlegi értéküket."
+
+#: includes/class-abilities.php:258
+msgid "Template key, see cfbe/list-email-templates."
+msgstr "Sablon kulcs, lásd cfbe/list-email-templates."
+
+#: includes/class-abilities.php:264
+msgid "List bluefox email templates"
+msgstr "bluefox e-mail sablonok listázása"
+
+#: includes/class-abilities.php:265
+msgid "Returns the ready-made emails of the Email templates tab whose feature is on: key, label, what it is, why use it, when it is sent, the email types the admin may choose (triggered = marketing, only active subscribers of a list, with an unsubscribe link; transactional = every recipient), its texts, whether it was created in bluefox, where it is used and whether its design is older than the current one. Also returns the design source (woocommerce or form) and the sender identities of the bluefox project."
+msgstr "Visszaadja az E-mail sablonok fül kész e-mailjeit, amelyek funkciója be van kapcsolva: kulcs, név, mi ez, mire jó, mikor megy ki, a választható e-mail típusok (triggered = marketing, csak egy lista aktív feliratkozóinak, leiratkozó linkkel; transactional = minden címzettnek), a szövegei, létre lett-e hozva a bluefoxban, hol használja a bővítmény, és régebbi-e a dizájnja a jelenleginél. Visszaadja a dizájn forrását (woocommerce vagy form) és a bluefox projekt küldő azonosítóit is."
+
+#: includes/class-abilities.php:284
+msgid "Create a bluefox email from a template"
+msgstr "bluefox e-mail létrehozása sablonból"
+
+#: includes/class-abilities.php:285
+msgid "Creates a ready-made email in the connected bluefox project (\"Create in bluefox\" on the Email templates tab) and, unless assign is false, selects it where the plugin uses it: confirmation = double opt-in email of the list, welcome_coupon = coupon email, order and cart emails = an Order emails / Abandoned carts rule. Triggered (marketing) emails need list_id (see cfbe/list-bluefox-lists). WooCommerce keeps sending its own order emails."
+msgstr "Létrehoz egy kész e-mailt a csatlakoztatott bluefox projektben (az E-mail sablonok fül „Létrehozás a bluefox-ban” gombja), és – ha az assign nem false – kiválasztja ott, ahol a bővítmény használja: megerősítő = a lista dupla megerősítő e-mailje, welcome_coupon = kupon e-mail, rendelési és kosár e-mailek = egy Rendelési e-mailek / Elhagyott kosarak szabály. A triggered (marketing) e-mailekhez list_id kell (lásd cfbe/list-bluefox-lists). A WooCommerce továbbra is elküldi a saját rendelési e-mailjeit."
+
+#: includes/class-abilities.php:295
+msgid "Email type, only where the template allows a choice (default: the first allowed type)."
+msgstr "E-mail típusa, csak ahol a sablon választást enged (alapértelmezés: az első engedélyezett típus)."
+
+#: includes/class-abilities.php:299
+msgid "Subscriber list: required for triggered emails; for the confirmation email the list that gets double opt-in."
+msgstr "Feliratkozói lista: a triggered e-mailekhez kötelező; a megerősítő e-mailnél az a lista, amely dupla megerősítést kap."
+
+#: includes/class-abilities.php:303
+msgid "Sender identity ID from cfbe/list-email-templates. Omit for the project default sender."
+msgstr "Küldő azonosító a cfbe/list-email-templates válaszából. Elhagyva a projekt alapértelmezett küldője."
+
+#: includes/class-abilities.php:307
+msgid "Select the new email where the plugin uses it. Default true."
+msgstr "Az új e-mail kiválasztása ott, ahol a bővítmény használja. Alapértelmezés: true."
+
+#: includes/class-abilities.php:332
+msgid "Update a bluefox email from its template"
+msgstr "bluefox e-mail frissítése a sablonjából"
+
+#: includes/class-abilities.php:333
+msgid "Sends new texts and the current design to an email created from a template (\"Update in bluefox\"). Refuses with cfbe_template_changed when the email was changed in bluefox after the plugin last wrote it: ask the admin before repeating with force true, which replaces those changes. Emails switched to the bluefox visual editor are never overwritten."
+msgstr "Új szövegeket és a jelenlegi dizájnt küldi egy sablonból létrehozott e-mailnek („Frissítés a bluefox-ban”). cfbe_template_changed hibával elutasítja, ha az e-mailt a bővítmény utolsó írása óta módosították a bluefoxban: kérdezd meg az adminisztrátort, mielőtt force true értékkel megismétled, ami felülírja ezeket a módosításokat. A bluefox vizuális szerkesztőjére váltott e-maileket soha nem írja felül."
+
+#: includes/class-abilities.php:342
+msgid "Replace changes made in bluefox. Default false."
+msgstr "A bluefoxban végzett módosítások felülírása. Alapértelmezés: false."
+
+#: includes/class-abilities.php:363
+msgid "Send a test of a template email"
+msgstr "Teszt küldése egy sablon e-mailből"
+
+#: includes/class-abilities.php:364
+msgid "Has bluefox send a created template email, filled with sample data, to the email address of the signed-in admin (\"Send me a test\"). It cannot send to any other address."
+msgstr "A bluefox elküld egy létrehozott sablon e-mailt mintaadatokkal a bejelentkezett adminisztrátor e-mail címére („Küldj nekem tesztet”). Más címre nem tud küldeni."
+
+#: includes/class-abilities.php:389
+msgid "Set the design of the template emails"
+msgstr "A sablon e-mailek dizájnjának beállítása"
+
+#: includes/class-abilities.php:390
+msgid "Chooses the design of the ready-made emails: woocommerce = logo, colours, font and footer from WooCommerce → Settings → Emails (needs WooCommerce); form = the signup form colours. Emails already created keep their design until cfbe/update-email-template is run for them."
+msgstr "Kiválasztja a kész e-mailek dizájnját: woocommerce = logó, színek, betűtípus és lábléc a WooCommerce → Beállítások → E-mailek oldalról (WooCommerce kell hozzá); form = a feliratkozó űrlap színei. A már létrehozott e-mailek megtartják a dizájnjukat, amíg nem futtatod rájuk a cfbe/update-email-template-et."
+
+#: includes/class-abilities.php:409
+msgid "Created templates whose design differs from the new one."
+msgstr "Létrehozott sablonok, amelyek dizájnja eltér az újtól."
+
 #. translators: 1: setting keys, 2: settings area
-#: includes/class-abilities.php:314
+#: includes/class-abilities.php:495
 #, php-format
 msgid "Unknown settings %1$s in area %2$s. Call cfbe/get-settings for the valid keys."
 msgstr "Ismeretlen beállítás(ok): %1$s a(z) %2$s területen. Az érvényes kulcsokat a cfbe/get-settings adja meg."
 
 #. translators: %s: setting keys
-#: includes/class-abilities.php:323
+#: includes/class-abilities.php:504
 #, php-format
 msgid "%s can only be changed in wp-admin."
 msgstr "%s csak a wp-adminban módosítható."
 
 #. translators: 1: module slugs, 2: valid module slugs
-#: includes/class-abilities.php:374
+#: includes/class-abilities.php:555
 #, php-format
 msgid "Unknown modules %1$s. Valid modules: %2$s."
 msgstr "Ismeretlen modul(ok): %1$s. Érvényes modulok: %2$s."
 
-#: includes/class-abilities.php:459
+#: includes/class-abilities.php:699
+msgid "This email was already created in bluefox: use cfbe/update-email-template to change it."
+msgstr "Ez az e-mail már létre lett hozva a bluefoxban: a módosításához használd a cfbe/update-email-template-et."
+
+#. translators: %s: allowed email types
+#: includes/class-abilities.php:706
+#, php-format
+msgid "This template can only be created as: %s."
+msgstr "Ez a sablon csak így hozható létre: %s."
+
+#: includes/class-abilities.php:765
+msgid "The signed-in user has no email address."
+msgstr "A bejelentkezett felhasználónak nincs e-mail címe."
+
+#: includes/class-abilities.php:781
+msgid "Design must be woocommerce or form."
+msgstr "A dizájn csak woocommerce vagy form lehet."
+
+#: includes/class-abilities.php:784
+msgid "WooCommerce is not active, so its email design cannot be used."
+msgstr "A WooCommerce nincs bekapcsolva, ezért az e-mail dizájnja nem használható."
+
+#. translators: %s: template keys
+#: includes/class-abilities.php:813
+#, php-format
+msgid "Unknown template or its feature is off. Available: %s."
+msgstr "Ismeretlen sablon, vagy a funkciója ki van kapcsolva. Elérhető: %s."
+
+#: includes/class-abilities.php:830
 msgid "bluefox is not connected yet: set the project ID and API key on the General tab in wp-admin."
 msgstr "A bluefox még nincs csatlakoztatva: add meg a projekt azonosítót és az API kulcsot a wp-admin Általános fülén."
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:519
+#: includes/class-abilities.php:890
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr "Ismeretlen beállítási terület: „%1$s”. Érvényes területek: %2$s."

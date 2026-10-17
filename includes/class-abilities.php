@@ -235,6 +235,187 @@ final class Abilities {
 				'meta'                => self::meta( true, true ),
 			)
 		);
+
+		$this->register_template_abilities( $permission );
+	}
+
+	/**
+	 * Registers the Email templates abilities (the buttons of the Email templates tab).
+	 *
+	 * @param callable $permission Permission callback.
+	 */
+	private function register_template_abilities( $permission ): void {
+		$keys  = array_keys( Email_Templates::definitions() );
+		$texts = array(
+			'type'                 => 'object',
+			'description'          => __( 'Texts to use: subject, preview, heading, intro, button, footer (Handlebars variables such as {{orderNumber}} work). Omitted texts keep their current value.', 'connector-for-bluefox-email' ),
+			'properties'           => array_fill_keys( Email_Templates::TEXT_FIELDS, array( 'type' => 'string' ) ),
+			'additionalProperties' => false,
+		);
+		$key   = array(
+			'type'        => 'string',
+			'enum'        => $keys,
+			'description' => __( 'Template key, see cfbe/list-email-templates.', 'connector-for-bluefox-email' ),
+		);
+
+		wp_register_ability(
+			'cfbe/list-email-templates',
+			array(
+				'label'               => __( 'List bluefox email templates', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Returns the ready-made emails of the Email templates tab whose feature is on: key, label, what it is, why use it, when it is sent, the email types the admin may choose (triggered = marketing, only active subscribers of a list, with an unsubscribe link; transactional = every recipient), its texts, whether it was created in bluefox, where it is used and whether its design is older than the current one. Also returns the design source (woocommerce or form) and the sender identities of the bluefox project.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'design'    => array( 'type' => 'string' ),
+						'senders'   => array( 'type' => 'array' ),
+						'templates' => array( 'type' => 'array' ),
+					),
+				),
+				'execute_callback'    => array( $this, 'list_templates' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( true, true ),
+			)
+		);
+
+		wp_register_ability(
+			'cfbe/create-email-template',
+			array(
+				'label'               => __( 'Create a bluefox email from a template', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Creates a ready-made email in the connected bluefox project ("Create in bluefox" on the Email templates tab) and, unless assign is false, selects it where the plugin uses it: confirmation = double opt-in email of the list, welcome_coupon = coupon email, order and cart emails = an Order emails / Abandoned carts rule. Triggered (marketing) emails need list_id (see cfbe/list-bluefox-lists). WooCommerce keeps sending its own order emails.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'template'  => $key,
+						'texts'     => $texts,
+						'type'      => array(
+							'type'        => 'string',
+							'enum'        => array( 'triggered', 'transactional' ),
+							'description' => __( 'Email type, only where the template allows a choice (default: the first allowed type).', 'connector-for-bluefox-email' ),
+						),
+						'list_id'   => array(
+							'type'        => 'string',
+							'description' => __( 'Subscriber list: required for triggered emails; for the confirmation email the list that gets double opt-in.', 'connector-for-bluefox-email' ),
+						),
+						'sender_id' => array(
+							'type'        => 'string',
+							'description' => __( 'Sender identity ID from cfbe/list-email-templates. Omit for the project default sender.', 'connector-for-bluefox-email' ),
+						),
+						'assign'    => array(
+							'type'        => 'boolean',
+							'description' => __( 'Select the new email where the plugin uses it. Default true.', 'connector-for-bluefox-email' ),
+						),
+					),
+					'required'             => array( 'template' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'email_id' => array( 'type' => 'string' ),
+						'notes'    => array(
+							'type'  => 'array',
+							'items' => array( 'type' => 'string' ),
+						),
+					),
+				),
+				'execute_callback'    => array( $this, 'create_template' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( false, false ),
+			)
+		);
+
+		wp_register_ability(
+			'cfbe/update-email-template',
+			array(
+				'label'               => __( 'Update a bluefox email from its template', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Sends new texts and the current design to an email created from a template ("Update in bluefox"). Refuses with cfbe_template_changed when the email was changed in bluefox after the plugin last wrote it: ask the admin before repeating with force true, which replaces those changes. Emails switched to the bluefox visual editor are never overwritten.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'template' => $key,
+						'texts'    => $texts,
+						'force'    => array(
+							'type'        => 'boolean',
+							'description' => __( 'Replace changes made in bluefox. Default false.', 'connector-for-bluefox-email' ),
+						),
+					),
+					'required'             => array( 'template' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'updated' => array( 'type' => 'boolean' ),
+					),
+				),
+				'execute_callback'    => array( $this, 'update_template' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( false, true ),
+			)
+		);
+
+		wp_register_ability(
+			'cfbe/send-test-email',
+			array(
+				'label'               => __( 'Send a test of a template email', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Has bluefox send a created template email, filled with sample data, to the email address of the signed-in admin ("Send me a test"). It cannot send to any other address.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'template' => $key,
+					),
+					'required'             => array( 'template' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'sent_to' => array( 'type' => 'string' ),
+					),
+				),
+				'execute_callback'    => array( $this, 'send_test' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( false, false ),
+			)
+		);
+
+		wp_register_ability(
+			'cfbe/set-email-design',
+			array(
+				'label'               => __( 'Set the design of the template emails', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Chooses the design of the ready-made emails: woocommerce = logo, colours, font and footer from WooCommerce → Settings → Emails (needs WooCommerce); form = the signup form colours. Emails already created keep their design until cfbe/update-email-template is run for them.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'design' => array(
+							'type' => 'string',
+							'enum' => array( Email_Design::SOURCE_WOOCOMMERCE, Email_Design::SOURCE_FORM ),
+						),
+					),
+					'required'             => array( 'design' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'design'   => array( 'type' => 'string' ),
+						'outdated' => array(
+							'type'        => 'array',
+							'description' => __( 'Created templates whose design differs from the new one.', 'connector-for-bluefox-email' ),
+							'items'       => array( 'type' => 'string' ),
+						),
+					),
+				),
+				'execute_callback'    => array( $this, 'set_design' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( false, true ),
+			)
+		);
 	}
 
 	/**
@@ -444,6 +625,196 @@ final class Abilities {
 			}
 		}
 		return $out;
+	}
+
+	/**
+	 * `cfbe/list-email-templates`.
+	 *
+	 * @return array
+	 */
+	public function list_templates(): array {
+		$hash      = Email_Design::hash();
+		$templates = array();
+		foreach ( Email_Templates::available() as $key => $definition ) {
+			$record      = Email_Templates::record( $key );
+			$created     = '' !== (string) ( $record['email_id'] ?? '' );
+			$usage       = Email_Templates::usage( $key );
+			$templates[] = array(
+				'key'             => $key,
+				'label'           => (string) $definition['label'],
+				'what'            => (string) $definition['what'],
+				'why'             => (string) $definition['why'],
+				'when'            => (string) $definition['when'],
+				'types'           => Email_Templates::types( $key ),
+				'needs_list'      => in_array( 'triggered', Email_Templates::types( $key ), true ) || 'confirm' === $key,
+				'texts'           => Email_Templates::texts( $key ),
+				'variables'       => (string) $definition['variables'],
+				'created'         => $created,
+				'email_id'        => $created ? (string) $record['email_id'] : '',
+				'type'            => $created ? (string) ( $record['type'] ?? '' ) : '',
+				'in_use'          => $usage['used'],
+				'usage'           => $usage['text'],
+				'design_outdated' => $created && '' !== (string) ( $record['design'] ?? '' ) && $record['design'] !== $hash,
+			);
+		}
+
+		$senders = array();
+		$client  = $this->client();
+		$items   = is_wp_error( $client ) ? array() : $client->get_sender_identities();
+		foreach ( is_wp_error( $items ) ? array() : (array) $items as $item ) {
+			$id = (string) preg_replace( '/[^A-Za-z0-9]/', '', (string) ( $item['_id'] ?? '' ) );
+			if ( '' !== $id ) {
+				$senders[] = array(
+					'id'    => $id,
+					'name'  => (string) ( $item['name'] ?? '' ),
+					'email' => (string) ( $item['email'] ?? '' ),
+				);
+			}
+		}
+
+		return array(
+			'design'    => Email_Design::source(),
+			'senders'   => $senders,
+			'templates' => $templates,
+		);
+	}
+
+	/**
+	 * `cfbe/create-email-template`.
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function create_template( $input = array() ) {
+		$input = is_array( $input ) ? $input : array();
+		$key   = $this->template_key( $input );
+		if ( is_wp_error( $key ) ) {
+			return $key;
+		}
+		$client = $this->client();
+		if ( is_wp_error( $client ) ) {
+			return $client;
+		}
+		if ( '' !== (string) ( Email_Templates::record( $key )['email_id'] ?? '' ) ) {
+			return new \WP_Error( 'cfbe_template_exists', __( 'This email was already created in bluefox: use cfbe/update-email-template to change it.', 'connector-for-bluefox-email' ), array( 'status' => 409 ) );
+		}
+		$type = isset( $input['type'] ) ? sanitize_key( (string) $input['type'] ) : '';
+		if ( '' !== $type && ! in_array( $type, Email_Templates::types( $key ), true ) ) {
+			return new \WP_Error(
+				'cfbe_template_type',
+				/* translators: %s: allowed email types */
+				sprintf( __( 'This template can only be created as: %s.', 'connector-for-bluefox-email' ), implode( ', ', Email_Templates::types( $key ) ) ),
+				array( 'status' => 400 )
+			);
+		}
+		$result = ( new Email_Template_Sync( $client ) )->create(
+			$key,
+			Email_Templates::clean_texts( $key, (array) ( $input['texts'] ?? array() ) ),
+			(string) preg_replace( '/[^A-Za-z0-9]/', '', (string) ( $input['sender_id'] ?? '' ) ),
+			Form_Config::clean_list_id( (string) ( $input['list_id'] ?? '' ) ),
+			! isset( $input['assign'] ) || ! empty( $input['assign'] ),
+			$type
+		);
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		return array(
+			'email_id' => (string) $result['email_id'],
+			'notes'    => array_values( array_map( 'strval', (array) $result['notes'] ) ),
+		);
+	}
+
+	/**
+	 * `cfbe/update-email-template`.
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function update_template( $input = array() ) {
+		$input = is_array( $input ) ? $input : array();
+		$key   = $this->template_key( $input );
+		if ( is_wp_error( $key ) ) {
+			return $key;
+		}
+		$client = $this->client();
+		if ( is_wp_error( $client ) ) {
+			return $client;
+		}
+		$result = ( new Email_Template_Sync( $client ) )->update( $key, Email_Templates::clean_texts( $key, (array) ( $input['texts'] ?? array() ) ), ! empty( $input['force'] ) );
+		return is_wp_error( $result ) ? $result : array( 'updated' => true );
+	}
+
+	/**
+	 * `cfbe/send-test-email`: only to the signed-in user.
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function send_test( $input = array() ) {
+		$input = is_array( $input ) ? $input : array();
+		$key   = $this->template_key( $input );
+		if ( is_wp_error( $key ) ) {
+			return $key;
+		}
+		$client = $this->client();
+		if ( is_wp_error( $client ) ) {
+			return $client;
+		}
+		$to = (string) wp_get_current_user()->user_email;
+		if ( '' === $to ) {
+			return new \WP_Error( 'cfbe_no_email', __( 'The signed-in user has no email address.', 'connector-for-bluefox-email' ), array( 'status' => 400 ) );
+		}
+		$result = ( new Email_Template_Sync( $client ) )->test( $key, $to );
+		return is_wp_error( $result ) ? $result : array( 'sent_to' => $to );
+	}
+
+	/**
+	 * `cfbe/set-email-design`.
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function set_design( $input = array() ) {
+		$input  = is_array( $input ) ? $input : array();
+		$design = (string) ( $input['design'] ?? '' );
+		if ( ! in_array( $design, array( Email_Design::SOURCE_WOOCOMMERCE, Email_Design::SOURCE_FORM ), true ) ) {
+			return new \WP_Error( 'cfbe_design', __( 'Design must be woocommerce or form.', 'connector-for-bluefox-email' ), array( 'status' => 400 ) );
+		}
+		if ( Email_Design::SOURCE_WOOCOMMERCE === $design && ! Email_Design::woocommerce_available() ) {
+			return new \WP_Error( 'cfbe_design', __( 'WooCommerce is not active, so its email design cannot be used.', 'connector-for-bluefox-email' ), array( 'status' => 409 ) );
+		}
+		Email_Design::set_source( $design );
+		$hash     = Email_Design::hash();
+		$outdated = array();
+		foreach ( array_keys( Email_Templates::definitions() ) as $key ) {
+			$record = Email_Templates::record( $key );
+			if ( '' !== (string) ( $record['email_id'] ?? '' ) && '' !== (string) ( $record['design'] ?? '' ) && $record['design'] !== $hash ) {
+				$outdated[] = $key;
+			}
+		}
+		return array(
+			'design'   => Email_Design::source(),
+			'outdated' => $outdated,
+		);
+	}
+
+	/**
+	 * Template key from the input; only templates whose feature is on.
+	 *
+	 * @param array $input Input.
+	 * @return string|\WP_Error
+	 */
+	private function template_key( array $input ) {
+		$key = sanitize_key( (string) ( $input['template'] ?? '' ) );
+		if ( ! isset( Email_Templates::available()[ $key ] ) ) {
+			return new \WP_Error(
+				'cfbe_template_unknown',
+				/* translators: %s: template keys */
+				sprintf( __( 'Unknown template or its feature is off. Available: %s.', 'connector-for-bluefox-email' ), implode( ', ', array_keys( Email_Templates::available() ) ) ),
+				array( 'status' => 400 )
+			);
+		}
+		return $key;
 	}
 
 	/**
