@@ -185,6 +185,26 @@ class Cart_Repository {
 	}
 
 	/**
+	 * Moves a cart to the session that restored it from the reminder link, so that session keeps updating the
+	 * reminded cart instead of starting a new one (which would be reminded again).
+	 *
+	 * @param int    $id          Cart row ID.
+	 * @param string $session_key Session key of the restoring visitor.
+	 */
+	public function adopt( int $id, string $session_key ): bool {
+		if ( $id <= 0 || '' === $session_key ) {
+			return false;
+		}
+		return (bool) $this->db->update(
+			$this->table,
+			array( 'session_key' => substr( $session_key, 0, 100 ) ),
+			array( 'id' => $id ),
+			array( '%s' ),
+			array( '%d' )
+		);
+	}
+
+	/**
 	 * Sets the email of a session's active cart (guest typed it at checkout).
 	 *
 	 * @param string $session_key Session key.

@@ -503,6 +503,8 @@ class Cart_Tracker {
 		}
 		$wc->session->set( self::SESSION_RESTORED, (int) $cart['id'] );
 		$wc->session->set( self::SESSION_EMAIL, (string) $cart['email'] );
+		// This visitor now owns the reminded cart: later changes update it, no second reminder for the same cart.
+		$this->carts->adopt( (int) $cart['id'], (string) $wc->session->get_customer_id() );
 		return true;
 	}
 
