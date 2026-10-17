@@ -544,7 +544,7 @@ class Cart_Tracker {
 		if ( ! $this->enabled() || ! function_exists( 'is_checkout' ) || ! is_checkout() || is_order_received_page() ) {
 			return;
 		}
-		wp_enqueue_script( 'cfbe-woo-events-checkout', CFBE_URL . 'modules/woo-events/assets/checkout.js', array(), CFBE_VERSION, true );
+		wp_enqueue_script( 'cfbe-woo-events-checkout', CFBE_URL . 'modules/woo-events/assets/checkout.js', array(), \CFBE\Plugin::asset_version( 'modules/woo-events/assets/checkout.js' ), true );
 		wp_localize_script(
 			'cfbe-woo-events-checkout',
 			'cfbeCartCapture',

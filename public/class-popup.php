@@ -71,7 +71,7 @@ final class Popup {
 		if ( ! $this->active ) {
 			return;
 		}
-		wp_register_script( self::HANDLE, CFBE_URL . 'assets/js/cfbe-popup.js', array( Assets::HANDLE ), CFBE_VERSION, true );
+		wp_register_script( self::HANDLE, CFBE_URL . 'assets/js/cfbe-popup.js', array( Assets::HANDLE ), \CFBE\Plugin::asset_version( 'assets/js/cfbe-popup.js' ), true );
 		Assets::enqueue();
 		wp_enqueue_script( self::HANDLE );
 		wp_add_inline_style( Assets::HANDLE, self::backdrop_css( $settings ) );

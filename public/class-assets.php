@@ -30,10 +30,10 @@ final class Assets {
 	 * Registers (and optionally enqueues) the assets.
 	 */
 	public function register_assets(): void {
-		wp_register_style( self::HANDLE, CFBE_URL . 'assets/css/cfbe-form.css', array(), CFBE_VERSION );
+		wp_register_style( self::HANDLE, CFBE_URL . 'assets/css/cfbe-form.css', array(), \CFBE\Plugin::asset_version( 'assets/css/cfbe-form.css' ) );
 		wp_add_inline_style( self::HANDLE, Style_Vars::css( Settings::get( 'form' ) ) );
 
-		wp_register_script( self::HANDLE, CFBE_URL . 'assets/js/cfbe-form.js', array(), CFBE_VERSION, true );
+		wp_register_script( self::HANDLE, CFBE_URL . 'assets/js/cfbe-form.js', array(), \CFBE\Plugin::asset_version( 'assets/js/cfbe-form.js' ), true );
 		wp_localize_script( self::HANDLE, 'cfbeForm', self::config() );
 
 		if ( ! empty( Settings::get( 'form', 'assets_everywhere' ) ) ) {

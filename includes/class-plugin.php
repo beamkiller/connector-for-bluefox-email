@@ -160,6 +160,18 @@ final class Plugin {
 	}
 
 	/**
+	 * Version string of a bundled asset: the plugin version plus the file's modification time, so browsers and
+	 * page caches fetch a changed file even when the plugin version stays the same.
+	 *
+	 * @param string $path Path relative to the plugin folder.
+	 */
+	public static function asset_version( string $path ): string {
+		$mtime = defined( 'CFBE_DIR' ) ? @filemtime( CFBE_DIR . $path ) : false; // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- A missing file falls back to the plugin version.
+		$base  = defined( 'CFBE_VERSION' ) ? CFBE_VERSION : '0';
+		return false !== $mtime ? $base . '.' . $mtime : $base;
+	}
+
+	/**
 	 * Loads the bundled translations (language packs from translate.wordpress.org take precedence).
 	 */
 	public function load_textdomain(): void {

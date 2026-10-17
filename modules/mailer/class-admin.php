@@ -107,7 +107,7 @@ final class Admin {
 		if ( 'toplevel_page_' . Admin_Page::SLUG !== $hook || self::TAB !== $tab ) {
 			return;
 		}
-		wp_enqueue_script( 'cfbe-mailer-admin', CFBE_URL . 'modules/mailer/assets/mailer-admin.js', array(), CFBE_VERSION, true );
+		wp_enqueue_script( 'cfbe-mailer-admin', CFBE_URL . 'modules/mailer/assets/mailer-admin.js', array(), \CFBE\Plugin::asset_version( 'modules/mailer/assets/mailer-admin.js' ), true );
 		wp_localize_script(
 			'cfbe-mailer-admin',
 			'cfbeMailer',

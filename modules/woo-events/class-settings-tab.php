@@ -300,8 +300,8 @@ class Settings_Tab {
 		if ( ! self::is_tab( (string) $hook ) ) {
 			return;
 		}
-		wp_enqueue_style( 'cfbe-woo-events-admin', CFBE_URL . 'modules/woo-events/assets/admin.css', array(), CFBE_VERSION );
-		wp_enqueue_script( 'cfbe-woo-events-admin', CFBE_URL . 'modules/woo-events/assets/admin.js', array(), CFBE_VERSION, true );
+		wp_enqueue_style( 'cfbe-woo-events-admin', CFBE_URL . 'modules/woo-events/assets/admin.css', array(), \CFBE\Plugin::asset_version( 'modules/woo-events/assets/admin.css' ) );
+		wp_enqueue_script( 'cfbe-woo-events-admin', CFBE_URL . 'modules/woo-events/assets/admin.js', array(), \CFBE\Plugin::asset_version( 'modules/woo-events/assets/admin.js' ), true );
 		$cache = self::cached_emails();
 		wp_localize_script(
 			'cfbe-woo-events-admin',

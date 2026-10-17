@@ -55,13 +55,13 @@ final class Form_Block {
 			self::EDITOR_SCRIPT,
 			CFBE_URL . 'blocks/signup-form/index.js',
 			array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-server-side-render', 'wp-i18n' ),
-			CFBE_VERSION,
+			\CFBE\Plugin::asset_version( 'blocks/signup-form/index.js' ),
 			true
 		);
 		wp_set_script_translations( self::EDITOR_SCRIPT, 'connector-for-bluefox-email', CFBE_DIR . 'languages' );
 
 		// The preview in the (iframed) editor needs the form CSS and the colour variables.
-		wp_register_style( self::EDITOR_STYLE, CFBE_URL . 'assets/css/cfbe-form.css', array(), CFBE_VERSION );
+		wp_register_style( self::EDITOR_STYLE, CFBE_URL . 'assets/css/cfbe-form.css', array(), \CFBE\Plugin::asset_version( 'assets/css/cfbe-form.css' ) );
 		wp_add_inline_style( self::EDITOR_STYLE, Style_Vars::css( Settings::get( 'form' ) ) );
 
 		register_block_type(

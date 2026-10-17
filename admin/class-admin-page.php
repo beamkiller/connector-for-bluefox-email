@@ -109,10 +109,10 @@ final class Admin_Page {
 		if ( '' === $this->hook || $hook !== $this->hook ) {
 			return;
 		}
-		wp_enqueue_style( 'cfbe-admin', CFBE_URL . 'admin/assets/admin.css', array(), CFBE_VERSION );
+		wp_enqueue_style( 'cfbe-admin', CFBE_URL . 'admin/assets/admin.css', array(), \CFBE\Plugin::asset_version( 'admin/assets/admin.css' ) );
 		// Frontend form CSS for the Form tab live preview (variables are set on the preview wrapper).
-		wp_enqueue_style( 'cfbe-form', CFBE_URL . 'assets/css/cfbe-form.css', array(), CFBE_VERSION );
-		wp_enqueue_script( 'cfbe-admin', CFBE_URL . 'admin/assets/admin.js', array(), CFBE_VERSION, true );
+		wp_enqueue_style( 'cfbe-form', CFBE_URL . 'assets/css/cfbe-form.css', array(), \CFBE\Plugin::asset_version( 'assets/css/cfbe-form.css' ) );
+		wp_enqueue_script( 'cfbe-admin', CFBE_URL . 'admin/assets/admin.js', array(), \CFBE\Plugin::asset_version( 'admin/assets/admin.js' ), true );
 		wp_localize_script(
 			'cfbe-admin',
 			'cfbeAdmin',

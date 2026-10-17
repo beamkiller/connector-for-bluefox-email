@@ -83,7 +83,7 @@ class Sync_Tab {
 		if ( 'toplevel_page_' . Admin_Page::SLUG !== $hook || 'sync' !== $tab ) {
 			return;
 		}
-		wp_enqueue_script( 'cfbe-sync-admin', CFBE_URL . 'modules/sync/assets/sync-admin.js', array(), CFBE_VERSION, true );
+		wp_enqueue_script( 'cfbe-sync-admin', CFBE_URL . 'modules/sync/assets/sync-admin.js', array(), \CFBE\Plugin::asset_version( 'modules/sync/assets/sync-admin.js' ), true );
 		wp_localize_script(
 			'cfbe-sync-admin',
 			'cfbeSync',

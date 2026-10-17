@@ -95,7 +95,7 @@ final class Webhooks_Tab {
 		if ( 'toplevel_page_' . Admin_Page::SLUG !== $hook || 'webhooks' !== $tab ) {
 			return;
 		}
-		wp_enqueue_script( 'cfbe-webhooks', CFBE_URL . 'modules/webhooks/assets/webhooks.js', array( 'cfbe-admin' ), CFBE_VERSION, true );
+		wp_enqueue_script( 'cfbe-webhooks', CFBE_URL . 'modules/webhooks/assets/webhooks.js', array( 'cfbe-admin' ), \CFBE\Plugin::asset_version( 'modules/webhooks/assets/webhooks.js' ), true );
 		wp_localize_script(
 			'cfbe-webhooks',
 			'cfbeWebhooks',

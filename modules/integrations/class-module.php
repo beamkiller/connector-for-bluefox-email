@@ -150,8 +150,7 @@ final class Module {
 		if ( 'toplevel_page_' . Admin_Page::SLUG !== $hook || self::AREA !== $tab ) {
 			return;
 		}
-		$version = defined( 'CFBE_VERSION' ) ? CFBE_VERSION : false;
-		wp_enqueue_style( 'cfbe-integrations-admin', CFBE_URL . 'modules/integrations/assets/integrations-admin.css', array(), $version );
-		wp_enqueue_script( 'cfbe-integrations-admin', CFBE_URL . 'modules/integrations/assets/integrations-admin.js', array(), $version, true );
+		wp_enqueue_style( 'cfbe-integrations-admin', CFBE_URL . 'modules/integrations/assets/integrations-admin.css', array(), \CFBE\Plugin::asset_version( 'modules/integrations/assets/integrations-admin.css' ) );
+		wp_enqueue_script( 'cfbe-integrations-admin', CFBE_URL . 'modules/integrations/assets/integrations-admin.js', array(), \CFBE\Plugin::asset_version( 'modules/integrations/assets/integrations-admin.js' ), true );
 	}
 }
