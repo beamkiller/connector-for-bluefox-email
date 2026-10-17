@@ -1,0 +1,57 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cfbe/signup-form",
+	"version": "1.0.0",
+	"title": "bluefox.email signup form",
+	"category": "widgets",
+	"icon": "email-alt",
+	"description": "Newsletter signup form that subscribes visitors to a bluefox.email list (double opt-in by bluefox).",
+	"keywords": [ "newsletter", "subscribe", "bluefox", "email", "form" ],
+	"textdomain": "connector-for-bluefox-email",
+	"attributes": {
+		"list": {
+			"type": "string",
+			"default": ""
+		},
+		"tags": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"intro": {
+			"type": "string",
+			"default": ""
+		},
+		"button": {
+			"type": "string",
+			"default": ""
+		},
+		"variant": {
+			"type": "string",
+			"enum": [ "", "card", "banner", "plain" ],
+			"default": ""
+		},
+		"showName": {
+			"type": "boolean",
+			"default": true
+		},
+		"showInterests": {
+			"type": "boolean",
+			"default": true
+		},
+		"place": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	},
+	"editorScript": "cfbe-signup-form-editor",
+	"editorStyle": "cfbe-form-editor"
+}

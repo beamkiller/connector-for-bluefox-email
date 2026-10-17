@@ -1,0 +1,1098 @@
+/* Connector for bluefox.email – signup form. Colours/radii come from :root --cfbe-* (printed from the settings).
+   Fonts are inherited from the theme. Tints use color-mix() with a plain fallback declared first. */
+
+.cfbe-form {
+	--cfbe-gap: 16px;
+	--cfbe-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+	box-sizing: border-box;
+	color: var(--cfbe-text, #1c2026);
+	font-family: inherit;
+	font-size: inherit; /* the site's own text size; everything below scales from it */
+	line-height: 1.6;
+	text-align: left;
+}
+
+.cfbe-form *,
+.cfbe-form *::before,
+.cfbe-form *::after {
+	box-sizing: inherit;
+}
+
+.cfbe-form__heading {
+	margin: 0 0 8px;
+	font-size: 1.375em;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
+	color: var(--cfbe-primary, #1b3a57);
+}
+
+.cfbe-form__intro {
+	margin: 0 0 16px;
+	color: var(--cfbe-muted, #5b6270);
+}
+
+.cfbe-form .cfbe-form__form {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.cfbe-form__fields {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cfbe-gap);
+}
+
+.cfbe-form--inline .cfbe-form__fields {
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+.cfbe-form--inline .cfbe-form__fields > .cfbe-field {
+	flex: 1 1 200px;
+	min-width: 0;
+}
+
+.cfbe-form--inline .cfbe-field--checkboxes {
+	flex-basis: 100%;
+}
+
+/* Fields */
+
+.cfbe-form .cfbe-field {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+}
+
+.cfbe-form .cfbe-field__label {
+	display: block;
+	margin: 0 0 6px;
+	padding: 0;
+	font-size: 0.875em;
+	font-weight: 600;
+	color: var(--cfbe-text, #1c2026);
+}
+
+.cfbe-form .cfbe-req {
+	color: var(--cfbe-accent, #d9603b);
+}
+
+.cfbe-form input.cfbe-field__input,
+.cfbe-form select.cfbe-field__input {
+	display: block;
+	width: 100%;
+	height: auto;
+	min-height: 48px;
+	margin: 0;
+	padding: 11px 14px;
+	font-family: inherit;
+	font-size: 1em;
+	line-height: 1.5;
+	color: var(--cfbe-text, #1c2026);
+	background: var(--cfbe-background, #ffffff);
+	border: 1px solid var(--cfbe-border, #d5d9e0);
+	border-radius: var(--cfbe-radius-input, 8px);
+	box-shadow: inset 0 1px 2px rgba(16, 24, 40, 0.05);
+	outline: none;
+	appearance: auto;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cfbe-form input.cfbe-field__input::placeholder {
+	color: var(--cfbe-muted, #5b6270);
+	opacity: 0.7;
+}
+
+.cfbe-form input.cfbe-field__input:hover,
+.cfbe-form select.cfbe-field__input:hover {
+	border-color: #b4bac5;
+	border-color: color-mix(in srgb, var(--cfbe-border, #d5d9e0) 65%, var(--cfbe-text, #1c2026));
+}
+
+.cfbe-form input.cfbe-field__input:focus,
+.cfbe-form select.cfbe-field__input:focus {
+	border-color: var(--cfbe-accent, #d9603b);
+	box-shadow: 0 0 0 3px rgba(217, 96, 59, 0.25);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--cfbe-accent, #d9603b) 25%, transparent);
+}
+
+.cfbe-form .cfbe-field__input[aria-invalid="true"] {
+	border-color: var(--cfbe-error, #b42318);
+}
+
+.cfbe-form .cfbe-field__input[aria-invalid="true"]:focus {
+	box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.2);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--cfbe-error, #b42318) 20%, transparent);
+}
+
+.cfbe-form .cfbe-field__options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 16px;
+}
+
+.cfbe-form .cfbe-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 32px;
+	margin: 0;
+	font-size: 0.9375em;
+	font-weight: 400;
+	cursor: pointer;
+}
+
+/* Consent */
+
+.cfbe-form .cfbe-field--consent {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 12px;
+	align-items: start;
+	margin-top: var(--cfbe-gap);
+}
+
+.cfbe-form .cfbe-field--consent .cfbe-field__error {
+	grid-column: 2;
+}
+
+.cfbe-form input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	margin: 3px 0 0;
+	accent-color: var(--cfbe-primary, #1b3a57);
+	cursor: pointer;
+}
+
+.cfbe-form .cfbe-check input[type="checkbox"] {
+	margin-top: 0;
+}
+
+.cfbe-form input[type="checkbox"]:focus-visible {
+	outline: 2px solid var(--cfbe-accent, #d9603b);
+	outline-offset: 2px;
+}
+
+.cfbe-form .cfbe-field__consent-label {
+	margin: 0;
+	font-size: 0.8125em;
+	font-weight: 400;
+	line-height: 1.55;
+	color: var(--cfbe-muted, #5b6270);
+	cursor: pointer;
+}
+
+.cfbe-form .cfbe-field__consent-label a {
+	color: var(--cfbe-primary, #1b3a57);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.cfbe-form .cfbe-field__consent-label a:hover {
+	text-decoration-thickness: 2px;
+}
+
+.cfbe-form .cfbe-field__consent-label a:focus-visible {
+	outline: 2px solid var(--cfbe-accent, #d9603b);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+/* Errors */
+
+.cfbe-form .cfbe-field__error {
+	margin: 6px 0 0;
+	font-size: 0.875em;
+	line-height: 1.4;
+	color: var(--cfbe-error, #b42318);
+}
+
+/* Button */
+
+.cfbe-form button.cfbe-form__submit {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	min-height: 52px;
+	margin: 20px 0 0;
+	padding: 14px 24px;
+	font-family: inherit;
+	font-size: 1em;
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: 0.01em;
+	text-transform: none;
+	color: var(--cfbe-button-text, #ffffff);
+	background: var(--cfbe-primary, #1b3a57);
+	border: 1px solid var(--cfbe-primary, #1b3a57);
+	border-radius: var(--cfbe-radius-button, 10px);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08), 0 8px 20px -8px rgba(27, 58, 87, 0.5);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08), 0 8px 20px -8px color-mix(in srgb, var(--cfbe-primary, #1b3a57) 55%, transparent);
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.25s var(--cfbe-ease);
+}
+
+.cfbe-form--inline button.cfbe-form__submit {
+	width: auto;
+	min-width: 200px;
+}
+
+.cfbe-form button.cfbe-form__submit:hover {
+	background: var(--cfbe-primary-hover, #132b42);
+	border-color: var(--cfbe-primary-hover, #132b42);
+	transform: translateY(-1px);
+}
+
+.cfbe-form button.cfbe-form__submit:active {
+	transform: translateY(0) scale(0.99);
+	transition-duration: 0.1s;
+}
+
+.cfbe-form button.cfbe-form__submit:focus-visible {
+	outline: 2px solid var(--cfbe-accent, #d9603b);
+	outline-offset: 3px;
+}
+
+.cfbe-form button.cfbe-form__submit[disabled] {
+	cursor: wait;
+	opacity: 0.75;
+	transform: none;
+}
+
+.cfbe-form button.cfbe-form__submit[aria-busy="true"]::before {
+	content: "";
+	width: 16px;
+	height: 16px;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: cfbe-spin 0.7s linear infinite;
+}
+
+@keyframes cfbe-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Offer + status */
+
+.cfbe-form__offer {
+	margin: 12px 0 0;
+	font-size: 0.8125em;
+	line-height: 1.5;
+	color: var(--cfbe-muted, #5b6270);
+}
+
+/* Kept in the DOM (not display:none) so screen readers announce updates. */
+/* The hidden attribute always wins inside our blocks (variant rules may set display). */
+.cfbe-form [hidden],
+.cfbe-promo [hidden] {
+	display: none !important;
+}
+
+.cfbe-form .cfbe-form__status:empty {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+.cfbe-form .cfbe-form__status {
+	margin: 16px 0 0;
+	padding: 12px 16px;
+	font-size: 0.9375em;
+	line-height: 1.5;
+	color: var(--cfbe-text, #1c2026);
+	background: #fdf1f0;
+	background: color-mix(in srgb, var(--cfbe-error, #b42318) 7%, var(--cfbe-background, #ffffff));
+	border: 1px solid #f1c4c0;
+	border: 1px solid color-mix(in srgb, var(--cfbe-error, #b42318) 28%, transparent);
+	border-radius: 10px;
+	outline: none;
+}
+
+.cfbe-form .cfbe-form__status:not(:empty) {
+	animation: cfbe-rise 0.3s var(--cfbe-ease);
+}
+
+.cfbe-form .cfbe-form__status.is-success {
+	background: #eef8f3;
+	background: color-mix(in srgb, var(--cfbe-success, #1a7f52) 8%, var(--cfbe-background, #ffffff));
+	border-color: #b9dfcb;
+	border-color: color-mix(in srgb, var(--cfbe-success, #1a7f52) 30%, transparent);
+}
+
+@keyframes cfbe-rise {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.cfbe-form.is-done .cfbe-form__fields,
+.cfbe-form.is-done .cfbe-field--consent,
+.cfbe-form.is-done .cfbe-form__submit,
+.cfbe-form.is-done .cfbe-form__offer {
+	display: none;
+}
+
+/* Honeypot: off-screen, not display:none (some bots skip hidden fields). */
+
+.cfbe-form .cfbe-hp {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cfbe-form *,
+	.cfbe-form *::before {
+		animation: none !important;
+		transition: none !important;
+	}
+
+	.cfbe-form button.cfbe-form__submit:hover {
+		transform: none;
+	}
+}
+
+
+/* =====================================================================
+   Offer badge (optional, Form tab → badge settings): a small pill.
+   ===================================================================== */
+
+.cfbe-form .cfbe-badge,
+.cfbe-promo .cfbe-badge {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	margin: 0 0 12px;
+	padding: 4px 12px;
+	font-size: 0.8125em;
+	line-height: 1.4;
+	color: var(--cfbe-accent, #d9603b);
+	background: #fbeee9;
+	background: color-mix(in srgb, var(--cfbe-accent, #d9603b) 12%, var(--cfbe-background, #ffffff));
+	border: 1px solid #f2cbbd;
+	border: 1px solid color-mix(in srgb, var(--cfbe-accent, #d9603b) 30%, transparent);
+	border-radius: 999px;
+}
+
+.cfbe-badge__value {
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.cfbe-badge__label {
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+
+/* ---------- Benefits ---------- */
+
+.cfbe-form .cfbe-form__benefits {
+	margin: 0 0 24px;
+	padding: 0;
+	list-style: none;
+}
+
+.cfbe-form .cfbe-form__benefits li {
+	position: relative;
+	margin: 0 0 8px;
+	padding: 0 0 0 32px;
+	font-size: 0.9375em;
+	line-height: 1.5;
+}
+
+/* Tinted disc + check mark drawn in the primary colour (mask, so it follows the settings). */
+.cfbe-form .cfbe-form__benefits li::before,
+.cfbe-form .cfbe-form__benefits li::after {
+	content: "";
+	position: absolute;
+	top: 1px;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+}
+
+.cfbe-form .cfbe-form__benefits li::before {
+	background: #e3e8ee;
+	background: color-mix(in srgb, var(--cfbe-primary, #1b3a57) 12%, transparent);
+}
+
+.cfbe-form .cfbe-form__benefits li::after {
+	background: var(--cfbe-primary, #1b3a57);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M6 10.5l2.75 2.75L14.5 7.5'/%3E%3C/svg%3E") center / 20px no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' d='M6 10.5l2.75 2.75L14.5 7.5'/%3E%3C/svg%3E") center / 20px no-repeat;
+}
+
+.cfbe-form .cfbe-form__header {
+	margin-bottom: 16px;
+}
+
+/* ---------- Variant: card ---------- */
+
+.cfbe-form--card,
+.cfbe-form--banner {
+	position: relative;
+	padding: 32px;
+	border-radius: 16px;
+}
+
+.cfbe-form--card {
+	background: var(--cfbe-card, #f5f6f8);
+	border: 1px solid var(--cfbe-border, #d5d9e0);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 16px 40px -20px rgba(27, 58, 87, 0.28);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 16px 40px -20px color-mix(in srgb, var(--cfbe-primary, #1b3a57) 32%, transparent);
+}
+
+.cfbe-form--card .cfbe-form__heading,
+.cfbe-form--banner .cfbe-form__heading {
+	font-size: 1.625em;
+	line-height: 1.2;
+}
+
+/* ---------- Variant: banner (full colour band) ---------- */
+
+.cfbe-form--banner {
+	color: var(--cfbe-button-text, #ffffff);
+	background: var(--cfbe-primary, #1b3a57);
+	background:
+		radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--cfbe-accent, #d9603b) 16%, transparent) 0%, transparent 50%),
+		radial-gradient(90% 120% at 0% 100%, color-mix(in srgb, var(--cfbe-button-text, #ffffff) 8%, transparent) 0%, transparent 60%),
+		var(--cfbe-primary, #1b3a57);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08), 0 20px 48px -24px rgba(27, 58, 87, 0.6);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08), 0 20px 48px -24px color-mix(in srgb, var(--cfbe-primary, #1b3a57) 70%, transparent);
+}
+
+.cfbe-form--banner .cfbe-form__heading,
+.cfbe-form--banner .cfbe-form__intro,
+.cfbe-form--banner .cfbe-form__benefits li,
+.cfbe-form--banner .cfbe-field__label,
+.cfbe-form--banner .cfbe-check,
+.cfbe-form--banner .cfbe-req,
+.cfbe-form--banner .cfbe-field__consent-label a {
+	color: var(--cfbe-button-text, #ffffff);
+}
+
+.cfbe-form--banner .cfbe-form__intro {
+	opacity: 0.85;
+}
+
+.cfbe-form--banner .cfbe-form__benefits li::before {
+	background: rgba(255, 255, 255, 0.16);
+}
+
+.cfbe-form--banner .cfbe-form__benefits li::after {
+	background: var(--cfbe-button-text, #ffffff);
+}
+
+.cfbe-form--banner input.cfbe-field__input,
+.cfbe-form--banner select.cfbe-field__input {
+	border-color: transparent;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cfbe-form--banner input.cfbe-field__input:focus,
+.cfbe-form--banner select.cfbe-field__input:focus {
+	border-color: var(--cfbe-accent, #d9603b);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+.cfbe-form--banner .cfbe-field__consent-label,
+.cfbe-form--banner .cfbe-form__offer {
+	color: var(--cfbe-button-text, #ffffff);
+	opacity: 0.85;
+}
+
+.cfbe-form--banner .cfbe-badge {
+	color: var(--cfbe-button-text, #ffffff);
+	background: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cfbe-form--banner .cfbe-field__error {
+	display: inline-block;
+	padding: 2px 8px;
+	color: var(--cfbe-error, #b42318);
+	background: #ffffff;
+	border-radius: 6px;
+}
+
+.cfbe-form--banner button.cfbe-form__submit {
+	color: var(--cfbe-primary, #1b3a57);
+	background: var(--cfbe-button-text, #ffffff);
+	border-color: var(--cfbe-button-text, #ffffff);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 10px 24px -10px rgba(0, 0, 0, 0.45);
+}
+
+.cfbe-form--banner button.cfbe-form__submit:hover {
+	color: var(--cfbe-primary, #1b3a57);
+	background: var(--cfbe-button-text, #ffffff);
+	border-color: var(--cfbe-button-text, #ffffff);
+	opacity: 0.94;
+}
+
+.cfbe-form--banner button.cfbe-form__submit:focus-visible,
+.cfbe-form--banner input[type="checkbox"]:focus-visible {
+	outline-color: var(--cfbe-button-text, #ffffff);
+}
+
+.cfbe-form--banner .cfbe-form__status,
+.cfbe-form--banner .cfbe-form__status.is-success {
+	color: var(--cfbe-text, #1c2026);
+	background: var(--cfbe-background, #ffffff);
+}
+
+/* ---------- Inline layout: the button lines up with the fields on wide screens ---------- */
+
+.cfbe-form--inline .cfbe-field--consent {
+	margin-top: 12px;
+}
+
+/* =====================================================================
+   [cfbe_promo] - slim teaser strip
+   ===================================================================== */
+
+.cfbe-promo {
+	--cfbe-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+	position: relative;
+	box-sizing: border-box;
+	padding: 20px 24px;
+	font-family: inherit;
+	color: var(--cfbe-text, #1c2026);
+	background: var(--cfbe-card, #f5f6f8);
+	border: 1px solid var(--cfbe-border, #d5d9e0);
+	border-radius: 16px;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 12px 32px -20px rgba(27, 58, 87, 0.28);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 12px 32px -20px color-mix(in srgb, var(--cfbe-primary, #1b3a57) 32%, transparent);
+}
+
+.cfbe-promo *,
+.cfbe-promo *::before,
+.cfbe-promo *::after {
+	box-sizing: border-box;
+}
+
+.cfbe-promo--dark {
+	color: var(--cfbe-button-text, #ffffff);
+	background: var(--cfbe-primary, #1b3a57);
+	background:
+		radial-gradient(120% 160% at 100% 0%, color-mix(in srgb, var(--cfbe-accent, #d9603b) 16%, transparent) 0%, transparent 50%),
+		var(--cfbe-primary, #1b3a57);
+	border-color: transparent;
+}
+
+.cfbe-promo__body {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 24px;
+}
+
+.cfbe-promo__body > .cfbe-badge {
+	flex: 0 0 auto;
+	margin: 0;
+}
+
+.cfbe-promo__copy {
+	flex: 1 1 240px;
+	min-width: 0;
+}
+
+.cfbe-promo .cfbe-promo__heading {
+	margin: 0;
+	font-size: 1.25em;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+	color: var(--cfbe-primary, #1b3a57);
+}
+
+.cfbe-promo--dark .cfbe-promo__heading,
+.cfbe-promo--dark .cfbe-badge {
+	color: var(--cfbe-button-text, #ffffff);
+	background: transparent;
+}
+
+.cfbe-promo .cfbe-promo__text {
+	margin: 4px 0 0;
+	font-size: 0.9375em;
+	line-height: 1.5;
+	color: inherit;
+	opacity: 0.8;
+}
+
+.cfbe-promo button.cfbe-promo__open {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	margin: 0;
+	padding: 12px 24px;
+	font-family: inherit;
+	font-size: 0.9375em;
+	font-weight: 600;
+	line-height: 1.2;
+	color: var(--cfbe-button-text, #ffffff);
+	background: var(--cfbe-primary, #1b3a57);
+	border: 0;
+	border-radius: var(--cfbe-radius-button, 10px);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08), 0 8px 20px -10px rgba(27, 58, 87, 0.5);
+	cursor: pointer;
+	transition: background-color 0.15s ease, opacity 0.15s ease, transform 0.25s var(--cfbe-ease);
+}
+
+.cfbe-promo button.cfbe-promo__open:hover {
+	background: var(--cfbe-primary-hover, #132b42);
+	transform: translateY(-1px);
+}
+
+.cfbe-promo button.cfbe-promo__open:active {
+	transform: translateY(0) scale(0.99);
+	transition-duration: 0.1s;
+}
+
+.cfbe-promo--dark button.cfbe-promo__open,
+.cfbe-promo--bar button.cfbe-promo__open {
+	color: var(--cfbe-primary, #1b3a57);
+	background: var(--cfbe-button-text, #ffffff);
+}
+
+.cfbe-promo--dark button.cfbe-promo__open:hover,
+.cfbe-promo--bar button.cfbe-promo__open:hover {
+	color: var(--cfbe-primary, #1b3a57);
+	background: var(--cfbe-button-text, #ffffff);
+	opacity: 0.94;
+}
+
+.cfbe-promo button.cfbe-promo__open:focus-visible {
+	outline: 2px solid var(--cfbe-accent, #d9603b);
+	outline-offset: 3px;
+}
+
+.cfbe-promo--dark button.cfbe-promo__open:focus-visible,
+.cfbe-promo--bar button.cfbe-promo__open:focus-visible {
+	outline-color: var(--cfbe-button-text, #ffffff);
+}
+
+/* =====================================================================
+   [cfbe_promo style="bar"] - one-line strip for the top of the page
+   ===================================================================== */
+
+.cfbe-promo--bar {
+	padding: 10px 16px;
+	color: var(--cfbe-button-text, #ffffff);
+	background: var(--cfbe-primary, #1b3a57);
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+/* corners="round": a rounded box that sits among content cards (e.g. on the product page). */
+.cfbe-promo--bar.cfbe-promo--round {
+	padding: 12px 16px 12px 20px;
+	border-radius: 14px;
+}
+
+.cfbe-promo--bar .cfbe-promo__body {
+	flex-wrap: nowrap;
+	max-width: 1200px;
+	margin: 0 auto;
+	gap: 8px 16px;
+}
+
+.cfbe-promo--bar .cfbe-badge {
+	padding: 2px 10px;
+	font-size: 0.75em;
+	color: var(--cfbe-button-text, #ffffff);
+	background: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cfbe-promo--bar .cfbe-promo__heading {
+	font-family: inherit;
+	font-size: 1em;
+	color: var(--cfbe-button-text, #ffffff);
+}
+
+.cfbe-promo--bar .cfbe-promo__text {
+	display: inline;
+	margin: 0 0 0 6px;
+	font-size: 0.9375em;
+}
+
+.cfbe-promo--bar .cfbe-promo__heading,
+.cfbe-promo--bar .cfbe-promo__copy {
+	display: inline;
+}
+
+.cfbe-promo--bar button.cfbe-promo__open {
+	min-height: 40px;
+	padding: 8px 16px;
+	font-size: 0.875em;
+	box-shadow: none;
+}
+
+@media (max-width: 720px) {
+	/* On phones the bar keeps only the badge, the heading and the button. */
+	.cfbe-promo--bar .cfbe-promo__text {
+		display: none;
+	}
+
+	.cfbe-promo--bar .cfbe-promo__heading {
+		font-size: 0.875em;
+	}
+}
+
+/* =====================================================================
+   Dialog (promo teaser and automatic popup)
+   ===================================================================== */
+
+.cfbe-dialog {
+	width: min(560px, calc(100vw - 24px));
+	max-width: none;
+	max-height: calc(100vh - 24px);
+	margin: auto;
+	padding: 0;
+	overflow: auto;
+	/* The dialog lives inside the teaser: reset what the (dark) teaser sets. */
+	color: var(--cfbe-text, #1c2026);
+	font-family: inherit;
+	background: transparent;
+	border: 0;
+	overscroll-behavior: contain;
+}
+
+.cfbe-dialog::backdrop {
+	background: rgba(16, 24, 40, 0.6);
+}
+
+.cfbe-dialog[open] {
+	animation: cfbe-dialog-in 0.3s var(--cfbe-ease, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+/* Keep the open modal centred whatever the theme does to its ancestors' children
+   (e.g. `.entry-content > * > :last-child { margin-bottom: 0 }` pushed it to the bottom). */
+dialog.cfbe-dialog[open]:not(.is-inline) {
+	position: fixed !important;
+	inset: 0 !important;
+	margin: auto !important;
+	max-width: none !important;
+}
+
+@keyframes cfbe-dialog-in {
+	from {
+		opacity: 0;
+		transform: translateY(16px) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.cfbe-dialog .cfbe-form {
+	margin: 0;
+	box-shadow: 0 2px 6px rgba(16, 24, 40, 0.12), 0 32px 64px -24px rgba(16, 24, 40, 0.55);
+}
+
+.cfbe-dialog .cfbe-form--card {
+	background: var(--cfbe-background, #ffffff);
+}
+
+.cfbe-dialog .cfbe-form--plain {
+	padding: 32px;
+	background: var(--cfbe-background, #ffffff);
+	border-radius: 16px;
+}
+
+.cfbe-dialog button.cfbe-dialog__close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 3;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+	color: var(--cfbe-text, #1c2026);
+	background: rgba(255, 255, 255, 0.92);
+	border: 1px solid rgba(16, 24, 40, 0.1);
+	border-radius: 50%;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+	cursor: pointer;
+	transition: transform 0.25s var(--cfbe-ease, cubic-bezier(0.34, 1.56, 0.64, 1)), opacity 0.15s ease;
+}
+
+.cfbe-dialog button.cfbe-dialog__close:hover {
+	transform: rotate(90deg);
+}
+
+.cfbe-dialog button.cfbe-dialog__close:active {
+	transform: rotate(90deg) scale(0.94);
+}
+
+.cfbe-dialog button.cfbe-dialog__close:focus-visible {
+	outline: 2px solid var(--cfbe-accent, #d9603b);
+	outline-offset: 2px;
+}
+
+/* Keep the heading clear of the close button in the top-right corner. */
+.cfbe-dialog .cfbe-form__header {
+	padding-right: 40px;
+}
+
+/* Automatic popup: width presets, viewport-safe height; the backdrop colour is printed inline from the settings. */
+.cfbe-dialog--popup {
+	max-height: calc(100vh - 32px);
+	max-height: calc(100dvh - 32px);
+}
+
+.cfbe-dialog--sm {
+	width: min(420px, calc(100vw - 24px));
+}
+
+.cfbe-dialog--md {
+	width: min(520px, calc(100vw - 24px));
+}
+
+.cfbe-dialog--lg {
+	width: min(640px, calc(100vw - 24px));
+}
+
+/* Programmatic focus on the dialog box itself (touch screens): no ring, the next Tab goes to the first control. */
+.cfbe-dialog:focus {
+	outline: none;
+}
+
+.cfbe-dialog--static[open] {
+	animation: none;
+}
+
+/* Inline fallback when <dialog> isn't supported. */
+.cfbe-dialog.is-inline {
+	position: static;
+	display: block;
+	width: auto;
+	margin-top: 16px;
+}
+
+/* Themes sometimes decorate headings (e.g. a dash via ::before) - not inside the form. */
+.cfbe-form .cfbe-form__heading::before,
+.cfbe-form .cfbe-form__heading::after {
+	content: none;
+	display: none;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 520px) {
+	.cfbe-form--card,
+	.cfbe-form--banner {
+		padding: 24px 20px;
+	}
+
+	.cfbe-dialog .cfbe-form--plain {
+		padding: 24px 20px;
+	}
+
+	.cfbe-form--card .cfbe-form__heading,
+	.cfbe-form--banner .cfbe-form__heading {
+		font-size: 1.375em;
+	}
+
+	.cfbe-form--inline button.cfbe-form__submit {
+		width: 100%;
+	}
+
+	.cfbe-promo:not(.cfbe-promo--bar) button.cfbe-promo__open {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cfbe-dialog[open] {
+		animation: none !important;
+	}
+
+	.cfbe-promo button.cfbe-promo__open,
+	.cfbe-dialog button.cfbe-dialog__close {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+/* Lock page scroll while the dialog is open. */
+html.cfbe-dialog-open {
+	overflow: hidden;
+}
+
+/* =====================================================================
+   [cfbe_preferences] - subscription preferences page
+   ===================================================================== */
+
+.cfbe-prefs {
+	box-sizing: border-box;
+	max-width: 640px;
+	font-family: inherit;
+	color: var(--cfbe-text, #1c2026);
+}
+
+.cfbe-prefs *,
+.cfbe-prefs *::before,
+.cfbe-prefs *::after {
+	box-sizing: border-box;
+}
+
+.cfbe-prefs .cfbe-prefs__title {
+	margin: 0 0 12px;
+	letter-spacing: -0.02em;
+	color: var(--cfbe-primary, #1b3a57);
+}
+
+.cfbe-prefs__intro p,
+.cfbe-prefs__email,
+.cfbe-prefs__status {
+	margin: 0 0 12px;
+	line-height: 1.6;
+}
+
+.cfbe-prefs__status {
+	font-weight: 700;
+}
+
+.cfbe-prefs .cfbe-prefs__notice {
+	margin: 0 0 16px;
+	padding: 12px 16px;
+	line-height: 1.5;
+	background: var(--cfbe-card, #f5f6f8);
+	border: 1px solid var(--cfbe-border, #d5d9e0);
+	border-radius: 10px;
+}
+
+.cfbe-prefs .cfbe-prefs__notice--error {
+	background: #fdf1f0;
+	background: color-mix(in srgb, var(--cfbe-error, #b42318) 7%, var(--cfbe-background, #ffffff));
+	border-color: #f1c4c0;
+	border-color: color-mix(in srgb, var(--cfbe-error, #b42318) 28%, transparent);
+}
+
+.cfbe-prefs__form {
+	margin: 0 0 16px;
+}
+
+.cfbe-prefs__pause {
+	padding: 24px;
+	background: var(--cfbe-card, #f5f6f8);
+	border: 1px solid var(--cfbe-border, #d5d9e0);
+	border-radius: 16px;
+}
+
+.cfbe-prefs__pause fieldset {
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+}
+
+.cfbe-prefs__pause legend {
+	margin: 0 0 8px;
+	padding: 0;
+	font-weight: 700;
+}
+
+.cfbe-prefs__option {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	margin: 0 24px 0 0;
+	cursor: pointer;
+}
+
+.cfbe-prefs__option input {
+	width: 18px;
+	height: 18px;
+	margin: 0;
+	accent-color: var(--cfbe-primary, #1b3a57);
+}
+
+.cfbe-prefs button.cfbe-prefs__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	margin: 0;
+	padding: 12px 24px;
+	font-family: inherit;
+	font-size: 0.9375em;
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: 0.01em;
+	border-radius: var(--cfbe-radius-button, 10px);
+	cursor: pointer;
+	transition: background-color 0.15s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cfbe-prefs button.cfbe-prefs__button:hover {
+	transform: translateY(-1px);
+}
+
+.cfbe-prefs button.cfbe-prefs__button:active {
+	transform: translateY(0) scale(0.99);
+}
+
+.cfbe-prefs button.cfbe-prefs__button--primary {
+	color: var(--cfbe-button-text, #ffffff);
+	background: var(--cfbe-primary, #1b3a57);
+	border: 2px solid var(--cfbe-primary, #1b3a57);
+}
+
+.cfbe-prefs button.cfbe-prefs__button--primary:hover {
+	background: var(--cfbe-primary-hover, #132b42);
+	border-color: var(--cfbe-primary-hover, #132b42);
+}
+
+.cfbe-prefs button.cfbe-prefs__button--secondary {
+	color: var(--cfbe-primary, #1b3a57);
+	background: var(--cfbe-background, #ffffff);
+	border: 2px solid var(--cfbe-primary, #1b3a57);
+}
+
+.cfbe-prefs button.cfbe-prefs__button--secondary:hover {
+	background: var(--cfbe-card, #f5f6f8);
+}
+
+.cfbe-prefs button.cfbe-prefs__button:focus-visible,
+.cfbe-prefs__option input:focus-visible {
+	outline: 2px solid var(--cfbe-accent, #d9603b);
+	outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cfbe-prefs button.cfbe-prefs__button {
+		transition: none;
+		transform: none !important;
+	}
+}
