@@ -1,5 +1,33 @@
 .cfbe-admin .cfbe-tab {
+	clear: both;
 	margin-top: 16px;
+	padding-top: 1px;
+}
+
+.cfbe-admin .cfbe-subnav {
+	float: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 6px;
+	margin: 12px 0 0;
+	font-size: 14px;
+}
+
+.cfbe-admin .cfbe-subnav li {
+	margin: 0;
+}
+
+.cfbe-admin .cfbe-subnav__sep {
+	color: #a7aaad;
+}
+
+.cfbe-admin .cfbe-subnav a {
+	padding: 2px 0;
+}
+
+.cfbe-admin .cfbe-subnav a.current {
+	color: #1d2327;
+	font-weight: 600;
 }
 
 .cfbe-admin .cfbe-result {

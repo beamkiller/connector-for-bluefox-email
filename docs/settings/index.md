@@ -2,6 +2,18 @@
 
 All settings are under **bluefox.email** in the wp-admin menu (`wp-admin/admin.php?page=cfbe-newsletter`). Each tab has its own URL: `…&tab=<tab id>`.
 
+The tabs are grouped under five main tabs; the sub-tabs of the active group are shown as links below them:
+
+| Main tab | Sub-tabs |
+|---|---|
+| General | General |
+| Signup forms | Form · Popup · Emails · Shortcodes |
+| WooCommerce | Checkout · Coupon · Order emails · Abandoned carts |
+| Integrations | Contact sync · Email delivery · Form integrations · Webhooks |
+| Subscribers | Subscribers · Privacy · Logs |
+
+A main tab only appears when at least one of its sub-tabs is switched on. Tabs added by other plugins appear under **More** unless they set a `group` key in the `cfbe_settings_tabs` filter.
+
 Only administrators see the page by default. Developers can change the capability with the `cfbe_capability` filter (for example `manage_woocommerce` for shop managers).
 
 | Tab | Tab id | Shown when | Option |

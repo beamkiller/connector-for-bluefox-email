@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Tabbed settings page. Modules add tabs via the `cfbe_settings_tabs` filter:
- * `slug => array( 'label' => string, 'render' => callable, 'position' => int )`.
+ * `slug => array( 'label' => string, 'render' => callable, 'position' => int, 'group' => string (optional) )`.
  */
 final class Admin_Page {
 
@@ -172,6 +172,58 @@ final class Admin_Page {
 	}
 
 	/**
+	 * Tab groups shown as the main tabs: group => tab slugs. A tab can name its group with a `group` key;
+	 * tabs in no group (e.g. from add-ons) go to "More".
+	 */
+	const GROUPS = array(
+		'general'      => array( 'api' ),
+		'forms'        => array( 'form', 'popup', 'emails', 'shortcodes' ),
+		'woocommerce'  => array( 'checkout', 'coupon', 'woo_events', 'abandoned_cart' ),
+		'integrations' => array( 'sync', 'mailer', 'integrations', 'webhooks' ),
+		'subscribers'  => array( 'subscribers', 'privacy', 'logs' ),
+	);
+
+	/**
+	 * Group labels.
+	 *
+	 * @return array<string, string>
+	 */
+	private static function group_labels(): array {
+		return array(
+			'general'      => __( 'General', 'connector-for-bluefox-email' ),
+			'forms'        => __( 'Signup forms', 'connector-for-bluefox-email' ),
+			'woocommerce'  => __( 'WooCommerce', 'connector-for-bluefox-email' ),
+			'integrations' => __( 'Integrations', 'connector-for-bluefox-email' ),
+			'subscribers'  => __( 'Subscribers', 'connector-for-bluefox-email' ),
+			'more'         => __( 'More', 'connector-for-bluefox-email' ),
+		);
+	}
+
+	/**
+	 * The registered tabs grouped, in group order and tab position order; empty groups are left out.
+	 *
+	 * @param array $tabs Tabs (ordered).
+	 * @return array<string, string[]> group => tab slugs
+	 */
+	public static function grouped( array $tabs ): array {
+		$out = array_fill_keys( array_keys( self::group_labels() ), array() );
+		foreach ( array_keys( $tabs ) as $slug ) {
+			$group = (string) ( $tabs[ $slug ]['group'] ?? '' );
+			if ( ! isset( $out[ $group ] ) ) {
+				$group = 'more';
+				foreach ( self::GROUPS as $key => $slugs ) {
+					if ( in_array( $slug, $slugs, true ) ) {
+						$group = $key;
+						break;
+					}
+				}
+			}
+			$out[ $group ][] = (string) $slug;
+		}
+		return array_filter( $out );
+	}
+
+	/**
 	 * Current tab slug (falls back to the first tab).
 	 *
 	 * @param array $tabs Tabs.
@@ -194,16 +246,37 @@ final class Admin_Page {
 
 		echo '<div class="wrap cfbe-admin"><h1>' . esc_html__( 'bluefox.email', 'connector-for-bluefox-email' ) . '</h1>';
 		settings_errors();
-		echo '<nav class="nav-tab-wrapper">';
-		foreach ( $tabs as $slug => $tab ) {
+		$groups = self::grouped( $tabs );
+		$labels = self::group_labels();
+		$active = array();
+		echo '<nav class="nav-tab-wrapper cfbe-nav">';
+		foreach ( $groups as $group => $slugs ) {
+			$is_active = in_array( $current, $slugs, true );
+			if ( $is_active ) {
+				$active = $slugs;
+			}
 			printf(
-				'<a href="%s" class="nav-tab%s">%s</a>',
-				esc_url( add_query_arg( 'tab', $slug, admin_url( 'admin.php?page=' . self::SLUG ) ) ),
-				$slug === $current ? ' nav-tab-active' : '',
-				esc_html( $tab['label'] )
+				'<a href="%s" class="nav-tab%s"%s>%s</a>',
+				esc_url( add_query_arg( 'tab', $slugs[0], admin_url( 'admin.php?page=' . self::SLUG ) ) ),
+				$is_active ? ' nav-tab-active' : '',
+				$is_active ? ' aria-current="page"' : '',
+				esc_html( $labels[ $group ] )
 			);
 		}
-		echo '</nav><div class="cfbe-tab cfbe-tab-' . esc_attr( $current ) . '">';
+		echo '</nav>';
+		if ( count( $active ) > 1 ) {
+			$links = array();
+			foreach ( $active as $slug ) {
+				$links[] = sprintf(
+					'<li><a href="%s"%s>%s</a></li>',
+					esc_url( add_query_arg( 'tab', $slug, admin_url( 'admin.php?page=' . self::SLUG ) ) ),
+					$slug === $current ? ' class="current" aria-current="page"' : '',
+					esc_html( $tabs[ $slug ]['label'] )
+				);
+			}
+			echo '<ul class="subsubsub cfbe-subnav">' . implode( '<li class="cfbe-subnav__sep" aria-hidden="true">|</li>', $links ) . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+		}
+		echo '<div class="cfbe-tab cfbe-tab-' . esc_attr( $current ) . '">';
 		call_user_func( $tabs[ $current ]['render'] );
 		echo '</div></div>';
 	}

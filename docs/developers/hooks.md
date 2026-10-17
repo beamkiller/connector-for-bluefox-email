@@ -10,7 +10,7 @@ All hooks are prefixed `cfbe_`. Hooks that belong to a module only fire while th
 |---|---|---|
 | `cfbe_capability` | `string $capability` (default `manage_options`) | Capability needed for the settings page and admin actions, e.g. `manage_woocommerce` for shop managers. |
 | `cfbe_modules` | `array $modules` – `slug => [label, description, woocommerce, default, group]` | Module definitions shown on the General tab. |
-| `cfbe_settings_tabs` | `array $tabs` – `slug => [label, render, position]` | Settings tabs. |
+| `cfbe_settings_tabs` | `array $tabs` – `slug => [label, render, position, group]` | Settings tabs. `group` (optional): general, forms, woocommerce, integrations, subscribers; other tabs go under **More**. |
 | `cfbe_settings_areas` | `string[] $areas` | Settings areas; each is stored in option `cfbe_{area}`. |
 | `cfbe_settings_defaults_{area}` | `array $defaults` | Defaults of an area. They also define the allowed keys. |
 | `cfbe_sanitize_settings_{area}` | `array $clean`, `array $input`, `array $previous` | Sanitized values of an area before saving. |

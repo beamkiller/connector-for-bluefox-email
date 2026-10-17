@@ -42,7 +42,7 @@ msgid "Connected: %1$s (%2$s)"
 msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:148
-#: admin/class-admin-page.php:239
+#: admin/class-admin-page.php:312
 #: admin/class-coupon-tab.php:150
 #: admin/class-coupon-tab.php:208
 #: admin/class-coupon-tab.php:220
@@ -60,7 +60,7 @@ msgstr "Add meg a Project ID-t és az API kulcsot."
 
 #: admin/class-admin-page.php:93
 #: admin/class-admin-page.php:94
-#: admin/class-admin-page.php:195
+#: admin/class-admin-page.php:247
 #: includes/class-abilities.php:68
 #: modules/integrations/elementor/class-elementor-form-action.php:48
 #: modules/integrations/elementor/class-elementor-form-action.php:60
@@ -97,17 +97,36 @@ msgid "Generate a new webhook secret? You will also have to update the header in
 msgstr "Új webhook titok generálása? A bluefox automatizmus fejlécét is frissíteni kell!"
 
 #: admin/class-admin-page.php:142
+#: admin/class-admin-page.php:193
 #: admin/views/tab-popup.php:30
 msgid "General"
 msgstr "Általános"
 
 #: admin/class-admin-page.php:147
+#: admin/class-admin-page.php:197
 msgid "Subscribers"
 msgstr "Feliratkozók"
 
 #: admin/class-admin-page.php:152
 msgid "Logs"
 msgstr "Naplók"
+
+#: admin/class-admin-page.php:194
+#: includes/class-modules.php:87
+msgid "Signup forms"
+msgstr "Feliratkozó űrlapok"
+
+#: admin/class-admin-page.php:195
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: admin/class-admin-page.php:196
+msgid "Integrations"
+msgstr "Integrációk"
+
+#: admin/class-admin-page.php:198
+msgid "More"
+msgstr "Egyéb"
 
 #: admin/class-checkout-tab.php:35
 #: admin/views/tab-subscribers.php:29
@@ -1782,10 +1801,6 @@ msgstr "és a feltüntetett dátumig érvényes"
 #, php-format
 msgid "Newsletter welcome coupon – %s"
 msgstr "Hírlevél üdvözlő kupon – %s"
-
-#: includes/class-modules.php:87
-msgid "Signup forms"
-msgstr "Feliratkozó űrlapok"
 
 #: includes/class-modules.php:87
 msgid "Signup form block, shortcode and popup with double opt-in."
