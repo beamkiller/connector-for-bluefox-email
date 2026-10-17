@@ -53,6 +53,25 @@
 		}
 	}
 
+	// WooCommerce column: "Replace “…”" for events WooCommerce has a customer email for (transactional only).
+	function syncReplace( row ) {
+		var cell = row.querySelector( '.cfbe-rule-wc' );
+		if ( ! cell ) {
+			return;
+		}
+		var event = row.querySelector( '.cfbe-rule-event' ).value;
+		var title = ( cfbeWooEvents.wcEmails || {} )[ event ] || '';
+		var transactional = row.querySelector( '.cfbe-rule-type' ).value === 'transactional';
+		var box = cell.querySelector( '.cfbe-rule-replace input' );
+		cell.querySelector( '.cfbe-rule-replace' ).hidden = ! title || ! transactional;
+		cell.querySelector( '.cfbe-rule-wc-name' ).textContent = title ? '“' + title + '”' : '';
+		cell.querySelector( '.cfbe-rule-extra' ).hidden = !! title;
+		cell.querySelector( '.cfbe-rule-replace-note' ).hidden = ! title || transactional;
+		if ( ! title || ! transactional ) {
+			box.checked = false;
+		}
+	}
+
 	function reindex() {
 		Array.prototype.forEach.call( body.querySelectorAll( 'tr.cfbe-rule' ), function ( row, i ) {
 			Array.prototype.forEach.call( row.querySelectorAll( '[name]' ), function ( el ) {
@@ -63,6 +82,7 @@
 
 	function initRow( row ) {
 		enforceType( row );
+		syncReplace( row );
 	}
 
 	body.addEventListener( 'change', function ( e ) {
@@ -72,8 +92,10 @@
 		}
 		if ( e.target.classList.contains( 'cfbe-rule-type' ) ) {
 			fillEmails( row );
+			syncReplace( row );
 		} else if ( e.target.classList.contains( 'cfbe-rule-event' ) ) {
 			enforceType( row );
+			syncReplace( row );
 		} else if ( e.target.classList.contains( 'cfbe-rule-email' ) ) {
 			e.target.setAttribute( 'data-value', e.target.value );
 		}

@@ -89,6 +89,7 @@ final class Module {
 		$dispatcher = new Dispatcher( $this->plugin->client(), $this->plugin->jobs(), $this->plugin->logger(), new Payload_Builder(), $carts, null, null, $coupons );
 		$dispatcher->set_event_filter( array( self::class, 'event_on' ) );
 		$dispatcher->register();
+		( new WC_Email_Switch( null !== $this->plugin->client() ) )->register();
 
 		if ( Modules::enabled( 'abandoned_cart' ) ) {
 			$tracker = new Cart_Tracker( $carts, $dispatcher, $this->plugin->repository(), $this->plugin->jobs(), $this->plugin->logger(), new Rate_Limiter(), $coupons );

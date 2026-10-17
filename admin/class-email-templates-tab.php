@@ -8,6 +8,7 @@
 namespace CFBE\Admin;
 
 use CFBE\Bluefox_Client;
+use CFBE\Email_Design;
 use CFBE\Email_Template_Sync;
 use CFBE\Email_Templates;
 use CFBE\Form_Config;
@@ -22,6 +23,7 @@ final class Email_Templates_Tab {
 
 	const TAB        = 'email_templates';
 	const ACTION     = 'cfbe_email_template';
+	const DESIGN     = 'cfbe_email_design';
 	const NOTICE     = 'cfbe_template_notice_';
 	const IDENTITIES = 'cfbe_sender_identities';
 
@@ -47,6 +49,7 @@ final class Email_Templates_Tab {
 	public function register(): void {
 		add_filter( 'cfbe_settings_tabs', array( $this, 'add_tab' ) );
 		add_action( 'admin_post_' . self::ACTION, array( $this, 'handle' ) );
+		add_action( 'admin_post_' . self::DESIGN, array( $this, 'handle_design' ) );
 	}
 
 	/**
@@ -72,7 +75,8 @@ final class Email_Templates_Tab {
 		$client     = call_user_func( $this->client );
 		$cfbe_ready = $client instanceof Bluefox_Client;
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only: which card to open after a redirect.
-		$cfbe_open = isset( $_GET['template'] ) ? sanitize_key( wp_unslash( $_GET['template'] ) ) : '';
+		$cfbe_open  = isset( $_GET['template'] ) ? sanitize_key( wp_unslash( $_GET['template'] ) ) : '';
+		$cfbe_saved = isset( $_GET['design'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 		$cfbe_notice     = get_transient( self::NOTICE . get_current_user_id() );
 		$cfbe_templates  = Email_Templates::available();
@@ -80,6 +84,7 @@ final class Email_Templates_Tab {
 		$cfbe_lists      = Form_Config::known_lists();
 		$cfbe_default    = (string) Settings::get( 'api', 'list_id' );
 		$cfbe_action     = self::ACTION;
+		$cfbe_design     = self::DESIGN;
 		delete_transient( self::NOTICE . get_current_user_id() );
 		include __DIR__ . '/views/tab-email-templates.php';
 	}
@@ -111,7 +116,7 @@ final class Email_Templates_Tab {
 
 		switch ( $do ) {
 			case 'create':
-				$result = $sync->create( $key, $texts, $identity, $list_id, ! empty( $_POST['assign'] ) );
+				$result = $sync->create( $key, $texts, $identity, $list_id, ! empty( $_POST['assign'] ), ! empty( $_POST['replace_wc'] ) );
 				if ( is_wp_error( $result ) ) {
 					$this->finish( $key, 'error', $result->get_error_message() );
 					return;
@@ -143,6 +148,27 @@ final class Email_Templates_Tab {
 				return;
 		}
 		$this->finish( $key, 'error', __( 'Unknown action.', 'connector-for-bluefox-email' ) );
+	}
+
+	/**
+	 * Saves the design source (WooCommerce emails or the Form tab).
+	 */
+	public function handle_design(): void {
+		check_admin_referer( self::DESIGN );
+		if ( ! current_user_can( Admin_Page::capability() ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'connector-for-bluefox-email' ), '', array( 'response' => 403 ) );
+		}
+		Email_Design::set_source( isset( $_POST['source'] ) ? sanitize_key( wp_unslash( $_POST['source'] ) ) : '' );
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'tab'    => self::TAB,
+					'design' => 'saved',
+				),
+				admin_url( 'admin.php?page=' . Admin_Page::SLUG )
+			)
+		);
+		exit;
 	}
 
 	/**

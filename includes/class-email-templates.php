@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Template definitions, the shared responsive layout and the record of what was created in bluefox.
  * The texts are plain admin input (Handlebars variables such as {{orderNumber}} work in them); the layout,
- * colours (Form tab), logo and data blocks (items, coupon box …) are added here.
+ * design (Email_Design: WooCommerce's email settings or the Form tab), logo and data blocks (items, coupon box …) are added here.
  */
 final class Email_Templates {
 
@@ -21,21 +21,26 @@ final class Email_Templates {
 	const TEXT_FIELDS = array( 'subject', 'preview', 'heading', 'intro', 'button', 'footer' );
 
 	/**
-	 * Template definitions: key => label, description, type, module, event (order email rule), delay (rule delay,
-	 * in delay_unit), delay_unit, button_url, blocks, variables, defaults (texts).
+	 * Template definitions: key => label, group (newsletter | replaces = WooCommerce sends the same email | extra),
+	 * what / why / when / on_create (card texts), type, module, event (order email rule), delay (rule delay, in
+	 * delay_unit), delay_unit, button_url, blocks, variables, defaults (texts).
 	 */
 	public static function definitions(): array {
 		$order_vars = '{{orderNumber}}, {{orderDate}}, {{orderTotal}}, {{billing.firstName}}, {{paymentMethod}}, {{shippingMethod}}, {{siteName}}';
 		return array(
 			'confirm'          => array(
-				'label'       => __( 'Double opt-in confirmation', 'connector-for-bluefox-email' ),
-				'description' => __( 'Sent by bluefox when someone subscribes. Creating it also sets it as the confirmation email of the list chosen below, with your thank-you page as the redirect link.', 'connector-for-bluefox-email' ),
-				'type'        => 'transactional',
-				'module'      => 'forms',
-				'button_url'  => '{{{verifyLink}}}',
-				'blocks'      => array(),
-				'variables'   => '{{contact.email}}',
-				'defaults'    => array(
+				'label'      => __( 'Double opt-in confirmation', 'connector-for-bluefox-email' ),
+				'group'      => 'newsletter',
+				'what'       => __( 'Asks a new subscriber to confirm their email address (double opt-in).', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Only confirmed, real addresses join your list – this keeps it clean and GDPR-proof. The welcome coupon is sent only after confirmation.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'Right after someone subscribes. bluefox sends it.', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Switches on double opt-in for the chosen list with this email, and sets your thank-you page as the page shown after confirming.', 'connector-for-bluefox-email' ),
+				'type'       => 'transactional',
+				'module'     => 'forms',
+				'button_url' => '{{{verifyLink}}}',
+				'blocks'     => array(),
+				'variables'  => '{{contact.email}}',
+				'defaults'   => array(
 					'subject' => __( 'Please confirm your subscription', 'connector-for-bluefox-email' ),
 					'preview' => __( 'One click and you are on the list.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Confirm your subscription', 'connector-for-bluefox-email' ),
@@ -45,14 +50,18 @@ final class Email_Templates {
 				),
 			),
 			'welcome_coupon'   => array(
-				'label'       => __( 'Welcome coupon', 'connector-for-bluefox-email' ),
-				'description' => __( 'Delivers the welcome coupon after the subscription is confirmed. Creating it also selects it on the Coupon tab.', 'connector-for-bluefox-email' ),
-				'type'        => 'transactional',
-				'module'      => 'coupon',
-				'button_url'  => '{{{shopUrl}}}',
-				'blocks'      => array( 'coupon' ),
-				'variables'   => '{{couponCode}}, {{discount}}, {{expiry}}, {{minSpend}}, {{name}}, {{shopName}}',
-				'defaults'    => array(
+				'label'      => __( 'Welcome coupon', 'connector-for-bluefox-email' ),
+				'group'      => 'newsletter',
+				'what'       => __( 'Delivers the welcome coupon code to a new subscriber.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Rewards the signup and brings the new subscriber straight to the shop.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'When the subscriber has clicked the confirmation link.', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Selects it as the coupon email on the Coupon tab.', 'connector-for-bluefox-email' ),
+				'type'       => 'transactional',
+				'module'     => 'coupon',
+				'button_url' => '{{{shopUrl}}}',
+				'blocks'     => array( 'coupon' ),
+				'variables'  => '{{couponCode}}, {{discount}}, {{expiry}}, {{minSpend}}, {{name}}, {{shopName}}',
+				'defaults'   => array(
 					'subject' => __( 'Your welcome gift: {{discount}} off', 'connector-for-bluefox-email' ),
 					'preview' => __( 'Your coupon code is inside.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Welcome, {{DEFAULT name "friend"}}!', 'connector-for-bluefox-email' ),
@@ -62,15 +71,19 @@ final class Email_Templates {
 				),
 			),
 			'order_processing' => array(
-				'label'       => __( 'Order received', 'connector-for-bluefox-email' ),
-				'description' => __( 'Order status “Processing”. Creating it also adds an order email rule for this status.', 'connector-for-bluefox-email' ),
-				'type'        => 'transactional',
-				'module'      => 'order_emails',
-				'event'       => 'order_status_processing',
-				'button_url'  => '{{{viewOrderUrl}}}',
-				'blocks'      => array( 'items' ),
-				'variables'   => $order_vars,
-				'defaults'    => array(
+				'label'      => __( 'Order received', 'connector-for-bluefox-email' ),
+				'group'      => 'replaces',
+				'what'       => __( 'Order confirmation with the ordered items and the total.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'When an order is paid or set to Processing.', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
+				'type'       => 'transactional',
+				'module'     => 'order_emails',
+				'event'      => 'order_status_processing',
+				'button_url' => '{{{viewOrderUrl}}}',
+				'blocks'     => array( 'items' ),
+				'variables'  => $order_vars,
+				'defaults'   => array(
 					'subject' => __( 'We received your order #{{orderNumber}}', 'connector-for-bluefox-email' ),
 					'preview' => __( 'Thank you! We are preparing your order.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Thank you for your order!', 'connector-for-bluefox-email' ),
@@ -80,15 +93,19 @@ final class Email_Templates {
 				),
 			),
 			'order_completed'  => array(
-				'label'       => __( 'Order completed', 'connector-for-bluefox-email' ),
-				'description' => __( 'Order status “Completed”. Creating it also adds an order email rule for this status.', 'connector-for-bluefox-email' ),
-				'type'        => 'transactional',
-				'module'      => 'order_emails',
-				'event'       => 'order_status_completed',
-				'button_url'  => '{{{viewOrderUrl}}}',
-				'blocks'      => array( 'items' ),
-				'variables'   => $order_vars,
-				'defaults'    => array(
+				'label'      => __( 'Order completed', 'connector-for-bluefox-email' ),
+				'group'      => 'replaces',
+				'what'       => __( 'Tells the customer that the order is complete, with the ordered items.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'When an order is set to Completed.', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
+				'type'       => 'transactional',
+				'module'     => 'order_emails',
+				'event'      => 'order_status_completed',
+				'button_url' => '{{{viewOrderUrl}}}',
+				'blocks'     => array( 'items' ),
+				'variables'  => $order_vars,
+				'defaults'   => array(
 					'subject' => __( 'Your order #{{orderNumber}} is complete', 'connector-for-bluefox-email' ),
 					'preview' => __( 'Your order is on its way.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Your order is complete', 'connector-for-bluefox-email' ),
@@ -98,15 +115,19 @@ final class Email_Templates {
 				),
 			),
 			'first_order'      => array(
-				'label'       => __( 'First order thank-you', 'connector-for-bluefox-email' ),
-				'description' => __( 'The first paid order of a customer. Creating it also adds an order email rule for this event.', 'connector-for-bluefox-email' ),
-				'type'        => 'transactional',
-				'module'      => 'order_emails',
-				'event'       => 'first_order',
-				'button_url'  => '{{{siteUrl}}}',
-				'blocks'      => array(),
-				'variables'   => $order_vars,
-				'defaults'    => array(
+				'label'      => __( 'First order thank-you', 'connector-for-bluefox-email' ),
+				'group'      => 'extra',
+				'what'       => __( 'A personal thank-you for a customer’s very first order.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'With the first paid order of an email address (guests included).', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
+				'type'       => 'transactional',
+				'module'     => 'order_emails',
+				'event'      => 'first_order',
+				'button_url' => '{{{siteUrl}}}',
+				'blocks'     => array(),
+				'variables'  => $order_vars,
+				'defaults'   => array(
 					'subject' => __( 'Thank you for your first order!', 'connector-for-bluefox-email' ),
 					'preview' => __( 'A warm welcome from our team.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Welcome to {{siteName}}!', 'connector-for-bluefox-email' ),
@@ -116,15 +137,19 @@ final class Email_Templates {
 				),
 			),
 			'customer_note'    => array(
-				'label'       => __( 'Note to customer', 'connector-for-bluefox-email' ),
-				'description' => __( 'Sent when you add a note to the customer on an order. Creating it also adds an order email rule for this event.', 'connector-for-bluefox-email' ),
-				'type'        => 'transactional',
-				'module'      => 'order_emails',
-				'event'       => 'order_note_customer',
-				'button_url'  => '{{{viewOrderUrl}}}',
-				'blocks'      => array( 'note' ),
-				'variables'   => $order_vars . ', {{note}}',
-				'defaults'    => array(
+				'label'      => __( 'Note to customer', 'connector-for-bluefox-email' ),
+				'group'      => 'replaces',
+				'what'       => __( 'Delivers a note you write to the customer on an order.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'When you add a “Note to customer” on the order screen.', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
+				'type'       => 'transactional',
+				'module'     => 'order_emails',
+				'event'      => 'order_note_customer',
+				'button_url' => '{{{viewOrderUrl}}}',
+				'blocks'     => array( 'note' ),
+				'variables'  => $order_vars . ', {{note}}',
+				'defaults'   => array(
 					'subject' => __( 'A note about your order #{{orderNumber}}', 'connector-for-bluefox-email' ),
 					'preview' => __( 'We added a note to your order.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'A note about your order', 'connector-for-bluefox-email' ),
@@ -134,17 +159,21 @@ final class Email_Templates {
 				),
 			),
 			'review_request'   => array(
-				'label'       => __( 'Review request', 'connector-for-bluefox-email' ),
-				'description' => __( 'Asks for a review 7 days after the order is completed (triggered email: only active subscribers of the chosen list receive it). Creating it also adds an order email rule.', 'connector-for-bluefox-email' ),
-				'type'        => 'triggered',
-				'module'      => 'order_emails',
-				'event'       => 'review_request',
-				'delay'       => 7,
-				'delay_unit'  => 'days',
-				'button_url'  => '{{{viewOrderUrl}}}',
-				'blocks'      => array( 'items' ),
-				'variables'   => $order_vars,
-				'defaults'    => array(
+				'label'      => __( 'Review request', 'connector-for-bluefox-email' ),
+				'group'      => 'extra',
+				'what'       => __( 'Asks the customer to review the products they bought.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'More reviews build trust and bring more sales. WooCommerce does not ask for reviews by email.', 'connector-for-bluefox-email' ),
+				'when'       => __( '7 days after the order is completed – only to active subscribers of the chosen list (it is a marketing email).', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Adds an Order emails rule with a 7-day delay.', 'connector-for-bluefox-email' ),
+				'type'       => 'triggered',
+				'module'     => 'order_emails',
+				'event'      => 'review_request',
+				'delay'      => 7,
+				'delay_unit' => 'days',
+				'button_url' => '{{{viewOrderUrl}}}',
+				'blocks'     => array( 'items' ),
+				'variables'  => $order_vars,
+				'defaults'   => array(
 					'subject' => __( 'How did we do?', 'connector-for-bluefox-email' ),
 					'preview' => __( 'Your opinion helps other shoppers.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'How was your order?', 'connector-for-bluefox-email' ),
@@ -154,17 +183,21 @@ final class Email_Templates {
 				),
 			),
 			'cart_reminder'    => array(
-				'label'       => __( 'Abandoned cart reminder', 'connector-for-bluefox-email' ),
-				'description' => __( 'Reminds shoppers of the cart they left, with a restore link and the recovery coupon when it is on (triggered email: only active subscribers of the chosen list receive it). Creating it also adds an abandoned cart rule.', 'connector-for-bluefox-email' ),
-				'type'        => 'triggered',
-				'module'      => 'abandoned_cart',
-				'event'       => 'abandoned_cart',
-				'delay'       => 0,
-				'delay_unit'  => 'minutes',
-				'button_url'  => '{{{cartUrl}}}',
-				'blocks'      => array( 'cart_items', 'cart_coupon' ),
-				'variables'   => '{{cartTotal}}, {{itemCount}}, {{couponCode}}, {{couponDiscount}}, {{couponExpiry}}, {{siteName}}',
-				'defaults'    => array(
+				'label'      => __( 'Abandoned cart reminder', 'connector-for-bluefox-email' ),
+				'group'      => 'extra',
+				'what'       => __( 'Reminds shoppers of the cart they left, with a button that restores it.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Wins back sales that would otherwise be lost; can include a single-use recovery coupon. WooCommerce has no such email.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'When a cart has been left untouched for the idle time set on the Abandoned carts tab – only to active subscribers of the chosen list (it is a marketing email).', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Adds an abandoned cart reminder on the Abandoned carts tab.', 'connector-for-bluefox-email' ),
+				'type'       => 'triggered',
+				'module'     => 'abandoned_cart',
+				'event'      => 'abandoned_cart',
+				'delay'      => 0,
+				'delay_unit' => 'minutes',
+				'button_url' => '{{{cartUrl}}}',
+				'blocks'     => array( 'cart_items', 'cart_coupon' ),
+				'variables'  => '{{cartTotal}}, {{itemCount}}, {{couponCode}}, {{couponDiscount}}, {{couponExpiry}}, {{siteName}}',
+				'defaults'   => array(
 					'subject' => __( 'You left something in your cart', 'connector-for-bluefox-email' ),
 					'preview' => __( 'Your cart is saved and waiting for you.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Still thinking it over?', 'connector-for-bluefox-email' ),
@@ -259,9 +292,14 @@ final class Email_Templates {
 	public static function render( string $key, array $texts ): array {
 		$definition = self::definitions()[ $key ];
 		$texts      = array_merge( $definition['defaults'], $texts );
-		$colors     = self::colors();
+		$design     = Email_Design::get();
+		$colors     = (array) $design['colors'];
 		$site_raw   = html_entity_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES, 'UTF-8' );
 		$site       = self::text( $site_raw );
+		$font       = str_replace( '"', '\'', (string) $design['font'] );
+		$logo       = (array) $design['logo'];
+		// Same page and card colour (WooCommerce's newer default): a border keeps the card visible.
+		$card_edge = strtolower( $colors['page'] ) === strtolower( $colors['body'] ) ? 'border:1px solid ' . $colors['border'] . ';' : '';
 
 		$blocks = '';
 		foreach ( $definition['blocks'] as $block ) {
@@ -277,21 +315,24 @@ final class Email_Templates {
 		$footer = '' !== trim( $texts['footer'] ) ? '<p style="margin:24px 0 0 0;font-size:13px;line-height:1.6;color:' . $colors['muted'] . ';">' . nl2br( self::text( $texts['footer'] ) ) . '</p>' : '';
 		$legal  = 'triggered' === $definition['type']
 			/* translators: unsubscribe link label in marketing emails */
-			? '<br><a href="{{{unsubscribeLink}}}" style="color:' . $colors['muted'] . ';">' . esc_html__( 'Unsubscribe', 'connector-for-bluefox-email' ) . '</a>'
+			? '<br><a href="{{{unsubscribeLink}}}" style="color:' . $colors['footer'] . ';">' . esc_html__( 'Unsubscribe', 'connector-for-bluefox-email' ) . '</a>'
 			: '';
+		$bottom = '' !== (string) $design['footer']
+			? (string) preg_replace( '/<a /', '<a style="color:' . $colors['footer'] . ';" ', (string) $design['footer'] )
+			: '<a href="' . esc_url( home_url( '/' ) ) . '" style="color:' . $colors['footer'] . ';text-decoration:none;">' . $site . '</a>';
 
 		$document = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="x-apple-disable-message-reformatting"><title>' . self::text( $texts['subject'] ) . '</title></head>'
 			. '<body style="margin:0;padding:0;background:' . $colors['page'] . ';">'
 			. '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' . self::text( $texts['preview'] ) . '</div>'
 			. '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' . $colors['page'] . ';"><tr><td align="center" style="padding:32px 12px;">'
-			. '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;color:' . $colors['text'] . ';">'
-			. '<tr><td align="center" style="padding:0 0 20px 0;">' . self::logo( $site_raw, $colors ) . '</td></tr>'
-			. '<tr><td style="background:#ffffff;border-radius:16px;border-top:4px solid ' . $colors['accent'] . ';padding:36px 36px 32px 36px;">'
+			. '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;font-family:' . $font . ';color:' . $colors['text'] . ';">'
+			. '<tr><td align="' . esc_attr( (string) $logo['align'] ) . '" style="padding:0 0 20px 0;">' . self::logo( $site_raw, $colors, $logo ) . '</td></tr>'
+			. '<tr><td style="background:' . $colors['body'] . ';border-radius:16px;' . $card_edge . 'border-top:4px solid ' . $colors['accent'] . ';padding:36px 36px 32px 36px;">'
 			. '<h1 style="margin:0 0 14px 0;font-size:24px;line-height:1.3;font-weight:700;color:' . $colors['text'] . ';">' . self::text( $texts['heading'] ) . '</h1>'
 			. '<p style="margin:0 0 20px 0;font-size:16px;line-height:1.65;">' . nl2br( self::text( $texts['intro'] ) ) . '</p>'
 			. $blocks . $button . $footer
 			. '</td></tr>'
-			. '<tr><td align="center" style="padding:20px 12px 0 12px;font-size:12px;line-height:1.6;color:' . $colors['muted'] . ';"><a href="' . esc_url( home_url( '/' ) ) . '" style="color:' . $colors['muted'] . ';text-decoration:none;">' . $site . '</a>' . $legal . '</td></tr>'
+			. '<tr><td align="center" style="padding:20px 12px 0 12px;font-size:12px;line-height:1.6;color:' . $colors['footer'] . ';">' . $bottom . $legal . '</td></tr>'
 			. '</table></td></tr></table></body></html>';
 
 		return array(
@@ -392,44 +433,91 @@ final class Email_Templates {
 	}
 
 	/**
-	 * Site logo (custom logo, else the site icon), else the site name.
+	 * Logo (see Email_Design), else the site name.
 	 *
 	 * @param string $site   Site name.
 	 * @param array  $colors Colours.
+	 * @param array  $logo   url, width (px, 0 = auto), align.
 	 */
-	private static function logo( string $site, array $colors ): string {
-		$url = '';
-		if ( function_exists( 'get_theme_mod' ) && get_theme_mod( 'custom_logo' ) ) {
-			$url = (string) wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'medium' );
-		}
-		if ( '' === $url && function_exists( 'get_site_icon_url' ) ) {
-			$url = (string) get_site_icon_url( 96 );
-		}
+	private static function logo( string $site, array $colors, array $logo ): string {
+		$url = (string) ( $logo['url'] ?? '' );
 		if ( '' !== $url ) {
-			return '<a href="' . esc_url( home_url( '/' ) ) . '" target="_blank"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $site ) . '" style="display:block;max-height:56px;max-width:220px;height:auto;border:0;"></a>';
+			$width = (int) ( $logo['width'] ?? 0 );
+			$size  = $width > 0 ? 'width:' . $width . 'px;max-width:100%;' : 'max-height:56px;max-width:220px;';
+			return '<a href="' . esc_url( home_url( '/' ) ) . '" target="_blank" style="display:inline-block;"><img src="' . esc_url( $url ) . '" alt="' . esc_attr( $site ) . '"' . ( $width > 0 ? ' width="' . $width . '"' : '' ) . ' style="display:block;' . $size . 'height:auto;border:0;"></a>';
 		}
 		return '<a href="' . esc_url( home_url( '/' ) ) . '" target="_blank" style="font-size:20px;font-weight:700;color:' . $colors['text'] . ';text-decoration:none;">' . self::text( $site ) . '</a>';
 	}
 
 	/**
-	 * Email colours from the Form tab.
+	 * Where the created email is used: whether it is in use, a text and the admin URL of that place.
+	 *
+	 * @param string $key Template key.
+	 * @return array{used: bool, text: string, url: string}
 	 */
-	private static function colors(): array {
-		$form = Settings::get( 'form' );
-		$pick = static function ( string $key ) use ( $form ): string {
-			$value = Style_Vars::hex( (string) ( $form[ 'color_' . $key ] ?? '' ) );
-			return null !== $value ? $value : Style_Vars::DEFAULT_COLORS[ 'color_' . $key ];
+	public static function usage( string $key ): array {
+		$definition = self::definitions()[ $key ] ?? array();
+		$record     = self::record( $key );
+		$email_id   = (string) ( $record['email_id'] ?? '' );
+		$tab_url    = static function ( string $tab ): string {
+			return add_query_arg( 'tab', $tab, admin_url( 'admin.php?page=' . Admin\Admin_Page::SLUG ) );
 		};
-		return array(
-			'primary'     => $pick( 'primary' ),
-			'button_text' => $pick( 'button_text' ),
-			'accent'      => $pick( 'accent' ),
-			'text'        => $pick( 'text' ),
-			'muted'       => $pick( 'muted' ),
-			'border'      => $pick( 'border' ),
-			'card'        => $pick( 'card' ),
-			'page'        => '#f2f3f5',
+		$unused     = array(
+			'used' => false,
+			'text' => '',
+			'url'  => '',
 		);
+		if ( '' === $email_id ) {
+			return $unused;
+		}
+
+		if ( 'confirm' === $key ) {
+			$list = (string) ( $record['used_on_list'] ?? '' );
+			if ( '' === $list ) {
+				$unused['text'] = __( 'Not used yet: choose it as the double opt-in email of your list in bluefox.', 'connector-for-bluefox-email' );
+				return $unused;
+			}
+			$lists = Form_Config::known_lists();
+			return array(
+				'used' => true,
+				/* translators: %s: subscriber list name */
+				'text' => sprintf( __( 'In use: double opt-in email of the list “%s”.', 'connector-for-bluefox-email' ), $lists[ $list ] ?? $list ),
+				'url'  => '',
+			);
+		}
+
+		if ( 'welcome_coupon' === $key ) {
+			if ( (string) Settings::get( 'coupon', 'email_id' ) === $email_id ) {
+				return array(
+					'used' => true,
+					'text' => __( 'In use: coupon email on the Coupon tab.', 'connector-for-bluefox-email' ),
+					'url'  => $tab_url( 'coupon' ),
+				);
+			}
+			$unused['text'] = __( 'Not used yet: select it as the coupon email on the Coupon tab.', 'connector-for-bluefox-email' );
+			$unused['url']  = $tab_url( 'coupon' );
+			return $unused;
+		}
+
+		$tab   = 'abandoned_cart' === ( $definition['event'] ?? '' ) ? 'abandoned_cart' : 'woo_events';
+		$rules = (array) ( ( (array) get_option( Settings::option_name( 'woo_events' ), array() ) )['rules'] ?? array() );
+		foreach ( $rules as $rule ) {
+			if ( is_array( $rule ) && (string) ( $rule['email_id'] ?? '' ) === $email_id ) {
+				$on = ! empty( $rule['enabled'] );
+				return array(
+					'used' => $on,
+					'text' => $on
+						? ( 'abandoned_cart' === $tab ? __( 'In use: abandoned cart reminder (on).', 'connector-for-bluefox-email' ) : __( 'In use: Order emails rule (on).', 'connector-for-bluefox-email' ) )
+						: __( 'Selected in a rule that is switched off.', 'connector-for-bluefox-email' ),
+					'url'  => $tab_url( $tab ),
+				);
+			}
+		}
+		$unused['text'] = 'abandoned_cart' === $tab
+			? __( 'Not used yet: select it as a reminder on the Abandoned carts tab.', 'connector-for-bluefox-email' )
+			: __( 'Not used yet: select it in a rule on the Order emails tab.', 'connector-for-bluefox-email' );
+		$unused['url']  = $tab_url( $tab );
+		return $unused;
 	}
 
 	/**

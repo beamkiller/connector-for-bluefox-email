@@ -15,7 +15,7 @@ Every feature is a module you switch on or off, so the plugin only loads what yo
 
 ## Features
 
-- **Email templates** – ready-made, mobile-friendly bluefox emails (confirmation, welcome coupon, order emails, abandoned cart reminder) created in bluefox with one click and wired up automatically – no copying of email IDs.
+- **Email templates** – ready-made, mobile-friendly bluefox emails (confirmation, welcome coupon, order emails, abandoned cart reminder) created in bluefox with one click and wired up automatically – no copying of email IDs. They match your WooCommerce email design, and the order emails can replace WooCommerce's own so customers get one email.
 - **Signup forms** – block, `[cfbe_form]` shortcode, compact `[cfbe_promo]` bar and a popup with scroll, delay, exit-intent and page-view triggers, page targeting and frequency rules. Double opt-in is handled by your bluefox list.
 - **Tags and interests** – every signup is tagged by source and placement; an optional interests field adds one tag per choice.
 - **Checkout opt-in** – an unticked newsletter checkbox on the classic and block checkout, and optionally on My Account.

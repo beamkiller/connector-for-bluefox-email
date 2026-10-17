@@ -30,11 +30,12 @@ $cfbe_time = static function ( int $timestamp ): string {
 	return $timestamp > 0 ? (string) wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $timestamp ) : '';
 };
 
-$cfbe_types = array(
+$cfbe_types     = array(
 	Rules::TYPE_TRANSACTIONAL => __( 'Transactional (service email, anyone)', 'connector-for-bluefox-email' ),
 	Rules::TYPE_TRIGGERED     => __( 'Triggered (marketing, active subscribers only)', 'connector-for-bluefox-email' ),
 );
-$cfbe_units = array(
+$cfbe_wc_titles = Rules::wc_email_titles();
+$cfbe_units     = array(
 	'minutes' => __( 'minutes', 'connector-for-bluefox-email' ),
 	'hours'   => __( 'hours', 'connector-for-bluefox-email' ),
 	'days'    => __( 'days', 'connector-for-bluefox-email' ),
@@ -43,7 +44,7 @@ $cfbe_units = array(
 /**
  * Prints one rule row. `$cfbe_index` is a number or the `__INDEX__` placeholder of the template row.
  */
-$cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, $cfbe_events, $cfbe_types, $cfbe_units, $cfbe_cache, $cfbe_statuses, $cfbe_time ): void {
+$cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, $cfbe_events, $cfbe_types, $cfbe_units, $cfbe_cache, $cfbe_statuses, $cfbe_time, $cfbe_is_cart, $cfbe_wc_titles ): void {
 	$cfbe_base   = $cfbe_name( 'rules' ) . '[' . $cfbe_index . ']';
 	$cfbe_type   = (string) ( $cfbe_rule['type'] ?? Rules::TYPE_TRANSACTIONAL );
 	$cfbe_emails = (array) ( $cfbe_cache[ $cfbe_type ] ?? array() );
@@ -86,6 +87,17 @@ $cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, 
 				<?php endforeach; ?>
 			</select>
 		</td>
+		<?php if ( ! $cfbe_is_cart ) : ?>
+			<?php $cfbe_wc = $cfbe_wc_titles[ (string) ( $cfbe_rule['event'] ?? '' ) ] ?? ''; ?>
+			<td class="cfbe-rule-wc">
+				<label class="cfbe-rule-replace" <?php echo '' === $cfbe_wc ? 'hidden' : ''; ?>>
+					<input type="checkbox" value="1" name="<?php echo esc_attr( $cfbe_base . '[replace_wc]' ); ?>" <?php checked( ! empty( $cfbe_rule['replace_wc'] ) ); ?>>
+					<?php esc_html_e( 'Replace', 'connector-for-bluefox-email' ); ?> <span class="cfbe-rule-wc-name"><?php echo esc_html( '' !== $cfbe_wc ? '“' . $cfbe_wc . '”' : '' ); ?></span>
+				</label>
+				<span class="cfbe-rule-extra description" <?php echo '' !== $cfbe_wc ? 'hidden' : ''; ?>><?php esc_html_e( 'Extra email', 'connector-for-bluefox-email' ); ?></span>
+				<span class="cfbe-rule-replace-note description" hidden><?php esc_html_e( 'Only a transactional email can replace it.', 'connector-for-bluefox-email' ); ?></span>
+			</td>
+		<?php endif; ?>
 		<td><input type="checkbox" value="1" name="<?php echo esc_attr( $cfbe_base . '[enabled]' ); ?>" <?php checked( ! empty( $cfbe_rule['enabled'] ) ); ?> aria-label="<?php esc_attr_e( 'Enabled', 'connector-for-bluefox-email' ); ?>"></td>
 		<td class="cfbe-rule-status">
 			<?php if ( ! empty( $cfbe_status['last_sent'] ) ) : ?>
@@ -120,7 +132,8 @@ $cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, 
 		<li><?php esc_html_e( 'Put links in triple braces, e.g. href="{{{cartUrl}}}": with two braces Handlebars HTML-escapes characters such as = and &, and link click tracking can break such URLs.', 'connector-for-bluefox-email' ); ?></li>
 	</ul>
 <?php else : ?>
-	<p class="description"><?php esc_html_e( 'Send your own bluefox emails when something happens to an order. Every email is sent in the background, never during checkout. Each rule is sent at most once per order. WooCommerce’s own emails are not affected.', 'connector-for-bluefox-email' ); ?></p>
+	<p class="description"><?php esc_html_e( 'Send bluefox emails when something happens to an order. Every email is sent in the background, never during checkout, and each rule at most once per order.', 'connector-for-bluefox-email' ); ?></p>
+	<p class="description"><?php esc_html_e( 'WooCommerce sends its own customer emails for some events (processing, completed, customer note …). Tick “Replace” in the WooCommerce column to switch WooCommerce’s email off, so the customer gets only the bluefox email. Without it the customer gets both. WooCommerce’s email comes back by itself whenever the rule is off or bluefox is not connected.', 'connector-for-bluefox-email' ); ?></p>
 	<ul class="cfbe-woo-events-help">
 		<li><?php esc_html_e( 'Transactional emails are service emails (order updates) and reach any customer. Triggered emails are marketing emails with an unsubscribe link: bluefox only delivers them to active subscribers of the email’s list. Use triggered emails for review requests.', 'connector-for-bluefox-email' ); ?></li>
 		<li><?php esc_html_e( 'Template data (use them as {{orderNumber}}, {{#each items}}{{name}}{{/each}} …): orderId, orderNumber, orderStatus, orderDate, orderTotal, currency, paymentMethod, shippingMethod, customerNote, billing.firstName/lastName/company/city/country/phone, shipping.*, shippingAddressLines, items (name, quantity, total, sku, image), itemCount, couponCodes, viewOrderUrl, siteName, siteUrl, note (customer note emails).', 'connector-for-bluefox-email' ); ?></li>
@@ -170,6 +183,9 @@ $cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, 
 				<th scope="col"><?php esc_html_e( 'Email type', 'connector-for-bluefox-email' ); ?></th>
 				<th scope="col"><?php esc_html_e( 'bluefox email', 'connector-for-bluefox-email' ); ?></th>
 				<th scope="col"><?php esc_html_e( 'Delay', 'connector-for-bluefox-email' ); ?></th>
+				<?php if ( ! $cfbe_is_cart ) : ?>
+					<th scope="col"><?php esc_html_e( 'WooCommerce email', 'connector-for-bluefox-email' ); ?></th>
+				<?php endif; ?>
 				<th scope="col"><?php esc_html_e( 'On', 'connector-for-bluefox-email' ); ?></th>
 				<th scope="col"><?php esc_html_e( 'Status', 'connector-for-bluefox-email' ); ?></th>
 				<th scope="col"><span class="screen-reader-text"><?php esc_html_e( 'Actions', 'connector-for-bluefox-email' ); ?></span></th>

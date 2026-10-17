@@ -4,7 +4,9 @@ Switch: **Order emails** (needs WooCommerce). Settings: [Order emails tab](../se
 
 ![Order emails tab](../assets/images/settings-order-emails.png)
 
-Send your own bluefox emails when something happens to an order. You design the emails in bluefox; the plugin sends them with the order data. WooCommerce's own emails are not affected – switch those off in **WooCommerce → Settings → Emails** if bluefox should replace them.
+Send bluefox emails when something happens to an order. You design the emails in bluefox – or create ready-made ones on the [Email templates](email-templates.md) tab – and the plugin sends them with the order data.
+
+For events WooCommerce already covers (processing, completed, customer note …) a rule can **replace** WooCommerce's email, so the customer gets one email, not two – see [Replacing WooCommerce's emails](#replacing-woocommerces-emails).
 
 ## Rules
 
@@ -20,6 +22,26 @@ Each row on the tab is a rule: **Event** → **Email type** → **bluefox email*
 **Delay** is in minutes, hours or days (at most one year). 0 sends right away – still in the background, never during checkout.
 
 Click **Refresh email lists** to load your bluefox emails into the dropdowns. A rule without an email is saved switched off.
+
+## Replacing WooCommerce's emails
+
+WooCommerce sends its own customer emails for some events. Without a change the customer gets both emails – WooCommerce's and bluefox's. Tick **Replace** in the **WooCommerce email** column to switch WooCommerce's email off while the rule is on:
+
+| Event | WooCommerce email switched off |
+|---|---|
+| Order status: Processing | Processing order |
+| Order status: Completed | Completed order |
+| Order status: On hold | Order on-hold |
+| Order status: Refunded | Refunded order |
+| Order status: Cancelled | Cancelled order |
+| Order status: Failed | Failed order |
+| Note to customer added | Customer note |
+
+- Only a **transactional** rule can replace an email: a triggered (marketing) email would skip customers who are not subscribers.
+- WooCommerce's email comes back by itself when the rule is switched off, has no email, or bluefox is not connected – a customer is never left without the email.
+- It also applies when you resend the email from the order screen (*Order actions*).
+- Other events (first paid order, review request) are extra emails: WooCommerce has no email for them.
+- Admin emails (*New order* etc.) are never touched.
 
 ## Transactional or triggered
 

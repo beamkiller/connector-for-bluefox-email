@@ -315,6 +315,7 @@ class Settings_Tab {
 					'triggered'     => (object) $cache['triggered'],
 				),
 				'triggeredOnly' => Rules::TRIGGERED_ONLY,
+				'wcEmails'      => (object) Rules::wc_email_titles(),
 				'i18n'          => array(
 					'working' => __( 'Loading…', 'connector-for-bluefox-email' ),
 					'loaded'  => __( 'Email lists refreshed.', 'connector-for-bluefox-email' ),
