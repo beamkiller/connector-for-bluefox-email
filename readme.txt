@@ -108,11 +108,11 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 
 == Screenshots ==
 
-1. General settings: connection and feature switches.
-2. Signup form block in the editor.
-3. Popup settings.
-4. Checkout opt-in on the block checkout.
-5. WooCommerce email rules.
+1. General tab: bluefox connection, default list and feature switches.
+2. The signup form (card style) with benefits and the consent checkbox.
+3. Form tab: fields, texts and colours with a live preview.
+4. Popup settings: triggers, page targeting, devices and frequency.
+5. Order emails: send your own bluefox emails on WooCommerce order events.
 
 == Changelog ==
 
