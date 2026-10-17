@@ -18,8 +18,6 @@
 
 use CFBE\Email_Design;
 use CFBE\Email_Templates;
-use CFBE\Woo_Events\Rules;
-use CFBE\Woo_Events\WC_Email_Switch;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -36,18 +34,13 @@ $cfbe_groups = array(
 		__( 'Newsletter emails', 'connector-for-bluefox-email' ),
 		__( 'Sent when someone subscribes through the plugin’s forms or at checkout.', 'connector-for-bluefox-email' ),
 	),
-	'replaces'   => array(
-		__( 'Order emails WooCommerce also sends', 'connector-for-bluefox-email' ),
-		__( 'WooCommerce already sends these emails. Create one here to send the bluefox version instead: WooCommerce’s email for the same event is switched off, so customers get one email, in your design, with open and click statistics in bluefox.', 'connector-for-bluefox-email' ),
-	),
 	'extra'      => array(
 		__( 'Extra emails WooCommerce does not send', 'connector-for-bluefox-email' ),
-		__( 'Additional emails that bring customers back. They do not replace anything.', 'connector-for-bluefox-email' ),
+		__( 'Emails that bring customers back. WooCommerce keeps sending its own order emails (confirmation, invoice, payment details) – these come on top.', 'connector-for-bluefox-email' ),
 	),
 );
 $cfbe_source = Email_Design::source();
 $cfbe_hash   = Email_Design::hash();
-$cfbe_titles = Rules::wc_email_titles();
 ?>
 <p class="cfbe-lead"><?php esc_html_e( 'Ready-made, mobile-friendly emails for everything this plugin sends. Adjust the texts and click “Create in bluefox”: the email is created in your bluefox account and selected where the plugin uses it, so there is nothing to copy. You can change the texts here later and send them to bluefox with “Update in bluefox”.', 'connector-for-bluefox-email' ); ?></p>
 
@@ -121,8 +114,6 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 		$cfbe_list   = (string) ( $cfbe_record['list_id'] ?? '' );
 		$cfbe_list   = '' !== $cfbe_list ? $cfbe_list : $cfbe_default;
 		$cfbe_id     = 'cfbe-template-' . $cfbe_key;
-		$cfbe_event  = (string) ( $cfbe_template['event'] ?? '' );
-		$cfbe_wc     = 'replaces' === $cfbe_group && isset( $cfbe_titles[ $cfbe_event ] ) ? $cfbe_titles[ $cfbe_event ] : '';
 		$cfbe_stale  = $cfbe_created && '' !== (string) ( $cfbe_record['design'] ?? '' ) && $cfbe_record['design'] !== $cfbe_hash;
 		$cfbe_status = __( 'Not created yet', 'connector-for-bluefox-email' );
 		$cfbe_class  = '';
@@ -164,20 +155,6 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 						);
 						?>
 					</dd>
-					<?php if ( '' !== $cfbe_wc ) : ?>
-						<dt><?php esc_html_e( 'WooCommerce', 'connector-for-bluefox-email' ); ?></dt>
-						<dd>
-							<?php
-							if ( $cfbe_created && WC_Email_Switch::replaced( $cfbe_event ) ) {
-								/* translators: %s: WooCommerce email name */
-								echo esc_html( sprintf( __( 'WooCommerce’s “%s” email is switched off: customers get this email instead.', 'connector-for-bluefox-email' ), $cfbe_wc ) );
-							} else {
-								/* translators: %s: WooCommerce email name */
-								echo esc_html( sprintf( __( 'WooCommerce sends its own “%s” email for this event.', 'connector-for-bluefox-email' ), $cfbe_wc ) );
-							}
-							?>
-						</dd>
-					<?php endif; ?>
 					<?php if ( $cfbe_created ) : ?>
 						<dt><?php esc_html_e( 'Status', 'connector-for-bluefox-email' ); ?></dt>
 						<dd>
@@ -262,14 +239,6 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 								<th scope="row"><?php esc_html_e( 'Use it', 'connector-for-bluefox-email' ); ?></th>
 								<td>
 									<label><input type="checkbox" name="assign" value="1" checked> <?php esc_html_e( 'Select the new email where the plugin needs it (recommended)', 'connector-for-bluefox-email' ); ?></label>
-									<?php if ( '' !== $cfbe_wc ) : ?>
-										<br><label><input type="checkbox" name="replace_wc" value="1" checked>
-										<?php
-										/* translators: %s: WooCommerce email name */
-										echo esc_html( sprintf( __( 'Switch off WooCommerce’s “%s” email, so customers get only this one (recommended)', 'connector-for-bluefox-email' ), $cfbe_wc ) );
-										?>
-										</label>
-									<?php endif; ?>
 								</td>
 							</tr>
 						<?php endif; ?>

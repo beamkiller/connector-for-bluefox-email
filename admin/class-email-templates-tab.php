@@ -116,7 +116,7 @@ final class Email_Templates_Tab {
 
 		switch ( $do ) {
 			case 'create':
-				$result = $sync->create( $key, $texts, $identity, $list_id, ! empty( $_POST['assign'] ), ! empty( $_POST['replace_wc'] ) );
+				$result = $sync->create( $key, $texts, $identity, $list_id, ! empty( $_POST['assign'] ) );
 				if ( is_wp_error( $result ) ) {
 					$this->finish( $key, 'error', $result->get_error_message() );
 					return;

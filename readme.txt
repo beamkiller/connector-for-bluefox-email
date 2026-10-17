@@ -29,7 +29,7 @@ Connector for bluefox.email links your WordPress site and WooCommerce store to y
 
 * Newsletter opt-in checkbox on the checkout – classic and block checkout – and optionally on My Account.
 * Welcome coupon: a single-use coupon locked to the subscriber's email address, created only after they confirm their subscription, one per email address.
-* Order emails: send your own bluefox transactional or triggered emails on order status changes, first purchase, customer notes and review requests. Replace WooCommerce's own customer email for the same event with one click, so customers get one email, not two.
+* Order emails: send your own bluefox transactional or triggered emails on order status changes, first purchase, customer notes and review requests. WooCommerce keeps sending its own order emails – these come on top.
 * Abandoned cart emails: remind shoppers of carts they left, with a restore link and an optional single-use recovery coupon.
 * Compatible with High-Performance Order Storage (HPOS).
 

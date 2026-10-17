@@ -13,17 +13,13 @@ Every card says **what** the email is, **why** you would use it, **when** it is 
 The cards are grouped:
 
 - **Newsletter emails** – double opt-in confirmation and welcome coupon.
-- **Order emails WooCommerce also sends** – order received, order completed, note to customer. Creating one switches WooCommerce's email for the same event off (the **Switch off WooCommerce's “…” email** checkbox, on by default), so customers get one email. See [Replacing WooCommerce's emails](order-emails.md#replacing-woocommerces-emails).
-- **Extra emails WooCommerce does not send** – first order thank-you, review request, abandoned cart reminder.
+- **Extra emails WooCommerce does not send** – first order thank-you, review request, abandoned cart reminder. WooCommerce keeps sending its own order emails; these come on top.
 
 | Template | Type | Shown when | Wired up on **Create** |
 |---|---|---|---|
 | Double opt-in confirmation | transactional | Signup forms on | Double opt-in is switched on for the chosen list with this email, and your thank-you page becomes the list's redirect link. |
 | Welcome coupon | transactional | Welcome coupon on | Selected as **Coupon email ID** on the Coupon tab. |
-| Order received | transactional | Order emails on | Rule *Order status: Processing*, replacing WooCommerce's *Processing order* email. |
-| Order completed | transactional | Order emails on | Rule *Order status: Completed*, replacing WooCommerce's *Completed order* email. |
-| First order thank-you | transactional | Order emails on | Rule *First paid order of a customer*. |
-| Note to customer | transactional | Order emails on | Rule *Note to customer added*, replacing WooCommerce's *Customer note* email. |
+| First order thank-you | triggered | Order emails on | Rule *First paid order of a customer*. |
 | Review request | triggered | Order emails on | Rule *Review request*, 7 days after completion. |
 | Abandoned cart reminder | triggered | Abandoned cart emails on | Rule *Abandoned cart*, with the item list, restore button and – when switched on – the recovery coupon. |
 

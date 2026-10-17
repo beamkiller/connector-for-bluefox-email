@@ -10,8 +10,7 @@ namespace CFBE\Woo_Events;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * A rule = event + email type (transactional | triggered) + bluefox email ID + optional delay + enabled
- * (+ replace_wc: switch off WooCommerce's own email for the event).
+ * A rule = event + email type (transactional | triggered) + bluefox email ID + optional delay + enabled.
  * Stored in the `woo_events` settings area under `rules`.
  */
 final class Rules {
@@ -41,20 +40,6 @@ final class Rules {
 	const TRIGGERED_ONLY = array( self::EVENT_ABANDONED_CART );
 
 	/**
-	 * Events WooCommerce already covers with a customer email: event => WooCommerce email ID. A transactional rule
-	 * with `replace_wc` switches that WooCommerce email off, so the customer gets only the bluefox email.
-	 */
-	const WC_EMAILS = array(
-		self::STATUS_PREFIX . 'processing' => 'customer_processing_order',
-		self::STATUS_PREFIX . 'completed'  => 'customer_completed_order',
-		self::STATUS_PREFIX . 'on-hold'    => 'customer_on_hold_order',
-		self::STATUS_PREFIX . 'refunded'   => 'customer_refunded_order',
-		self::STATUS_PREFIX . 'cancelled'  => 'customer_cancelled_order',
-		self::STATUS_PREFIX . 'failed'     => 'customer_failed_order',
-		self::EVENT_CUSTOMER_NOTE          => 'customer_note',
-	);
-
-	/**
 	 * Selectable events: event => label.
 	 *
 	 * @param array $statuses Order statuses (`wc_get_order_statuses()`: `wc-processing` => label).
@@ -75,40 +60,6 @@ final class Rules {
 		$events[ self::EVENT_REVIEW_REQUEST ] = __( 'Review request (after the order is completed)', 'connector-for-bluefox-email' );
 		$events[ self::EVENT_ABANDONED_CART ] = __( 'Abandoned cart', 'connector-for-bluefox-email' );
 		return $events;
-	}
-
-	/**
-	 * Names of the WooCommerce customer emails a rule can replace: event => email name.
-	 *
-	 * @return array<string, string>
-	 */
-	public static function wc_email_titles(): array {
-		return array(
-			self::STATUS_PREFIX . 'processing' => __( 'Processing order', 'connector-for-bluefox-email' ),
-			self::STATUS_PREFIX . 'completed'  => __( 'Completed order', 'connector-for-bluefox-email' ),
-			self::STATUS_PREFIX . 'on-hold'    => __( 'Order on-hold', 'connector-for-bluefox-email' ),
-			self::STATUS_PREFIX . 'refunded'   => __( 'Refunded order', 'connector-for-bluefox-email' ),
-			self::STATUS_PREFIX . 'cancelled'  => __( 'Cancelled order', 'connector-for-bluefox-email' ),
-			self::STATUS_PREFIX . 'failed'     => __( 'Failed order', 'connector-for-bluefox-email' ),
-			self::EVENT_CUSTOMER_NOTE          => __( 'Customer note', 'connector-for-bluefox-email' ),
-		);
-	}
-
-	/**
-	 * WooCommerce email IDs switched off by enabled, complete transactional rules with `replace_wc`.
-	 *
-	 * @param array $rules Rules.
-	 * @return string[]
-	 */
-	public static function replaced_wc_emails( array $rules ): array {
-		$ids = array();
-		foreach ( $rules as $rule ) {
-			$event = is_array( $rule ) ? (string) ( $rule['event'] ?? '' ) : '';
-			if ( isset( self::WC_EMAILS[ $event ] ) && ! empty( $rule['replace_wc'] ) && self::TYPE_TRANSACTIONAL === ( $rule['type'] ?? '' ) && self::matching( array( $rule ), $event ) ) {
-				$ids[ self::WC_EMAILS[ $event ] ] = true;
-			}
-		}
-		return array_keys( $ids );
 	}
 
 	/**
@@ -176,8 +127,6 @@ final class Rules {
 				'delay'      => $delay,
 				'delay_unit' => $unit,
 				'enabled'    => ! empty( $row['enabled'] ) && '' !== $email_id,
-				// Only a transactional email can stand in for WooCommerce's: a triggered one skips non-subscribers.
-				'replace_wc' => ! empty( $row['replace_wc'] ) && isset( self::WC_EMAILS[ $event ] ) && self::TYPE_TRANSACTIONAL === $type,
 			);
 		}
 		return $rules;

@@ -21,14 +21,14 @@ final class Email_Templates {
 	const TEXT_FIELDS = array( 'subject', 'preview', 'heading', 'intro', 'button', 'footer' );
 
 	/**
-	 * Template definitions: key => label, group (newsletter | replaces = WooCommerce sends the same email | extra),
+	 * Template definitions: key => label, group (newsletter | extra = emails WooCommerce does not send),
 	 * what / why / when / on_create (card texts), type, module, event (order email rule), delay (rule delay, in
 	 * delay_unit), delay_unit, button_url, blocks, variables, defaults (texts).
 	 */
 	public static function definitions(): array {
 		$order_vars = '{{orderNumber}}, {{orderDate}}, {{orderTotal}}, {{billing.firstName}}, {{paymentMethod}}, {{shippingMethod}}, {{siteName}}';
 		return array(
-			'confirm'          => array(
+			'confirm'        => array(
 				'label'      => __( 'Double opt-in confirmation', 'connector-for-bluefox-email' ),
 				'group'      => 'newsletter',
 				'what'       => __( 'Asks a new subscriber to confirm their email address (double opt-in).', 'connector-for-bluefox-email' ),
@@ -49,7 +49,7 @@ final class Email_Templates {
 					'footer'  => __( 'If you did not sign up, simply ignore this email: you will not be subscribed.', 'connector-for-bluefox-email' ),
 				),
 			),
-			'welcome_coupon'   => array(
+			'welcome_coupon' => array(
 				'label'      => __( 'Welcome coupon', 'connector-for-bluefox-email' ),
 				'group'      => 'newsletter',
 				'what'       => __( 'Delivers the welcome coupon code to a new subscriber.', 'connector-for-bluefox-email' ),
@@ -70,58 +70,14 @@ final class Email_Templates {
 					'footer'  => __( 'One welcome coupon per email address. {{terms}}', 'connector-for-bluefox-email' ),
 				),
 			),
-			'order_processing' => array(
-				'label'      => __( 'Order received', 'connector-for-bluefox-email' ),
-				'group'      => 'replaces',
-				'what'       => __( 'Order confirmation with the ordered items and the total.', 'connector-for-bluefox-email' ),
-				'why'        => __( 'Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics.', 'connector-for-bluefox-email' ),
-				'when'       => __( 'When an order is paid or set to Processing.', 'connector-for-bluefox-email' ),
-				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
-				'type'       => 'transactional',
-				'module'     => 'order_emails',
-				'event'      => 'order_status_processing',
-				'button_url' => '{{{viewOrderUrl}}}',
-				'blocks'     => array( 'items' ),
-				'variables'  => $order_vars,
-				'defaults'   => array(
-					'subject' => __( 'We received your order #{{orderNumber}}', 'connector-for-bluefox-email' ),
-					'preview' => __( 'Thank you! We are preparing your order.', 'connector-for-bluefox-email' ),
-					'heading' => __( 'Thank you for your order!', 'connector-for-bluefox-email' ),
-					'intro'   => __( 'Hi {{DEFAULT billing.firstName "there"}}, we have received your order #{{orderNumber}} and are preparing it now.', 'connector-for-bluefox-email' ),
-					'button'  => __( 'View your order', 'connector-for-bluefox-email' ),
-					'footer'  => __( 'Questions about your order? Simply reply to this email.', 'connector-for-bluefox-email' ),
-				),
-			),
-			'order_completed'  => array(
-				'label'      => __( 'Order completed', 'connector-for-bluefox-email' ),
-				'group'      => 'replaces',
-				'what'       => __( 'Tells the customer that the order is complete, with the ordered items.', 'connector-for-bluefox-email' ),
-				'why'        => __( 'Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics.', 'connector-for-bluefox-email' ),
-				'when'       => __( 'When an order is set to Completed.', 'connector-for-bluefox-email' ),
-				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
-				'type'       => 'transactional',
-				'module'     => 'order_emails',
-				'event'      => 'order_status_completed',
-				'button_url' => '{{{viewOrderUrl}}}',
-				'blocks'     => array( 'items' ),
-				'variables'  => $order_vars,
-				'defaults'   => array(
-					'subject' => __( 'Your order #{{orderNumber}} is complete', 'connector-for-bluefox-email' ),
-					'preview' => __( 'Your order is on its way.', 'connector-for-bluefox-email' ),
-					'heading' => __( 'Your order is complete', 'connector-for-bluefox-email' ),
-					'intro'   => __( 'Hi {{DEFAULT billing.firstName "there"}}, good news: your order #{{orderNumber}} has been completed.', 'connector-for-bluefox-email' ),
-					'button'  => __( 'View your order', 'connector-for-bluefox-email' ),
-					'footer'  => __( 'Thank you for shopping with us!', 'connector-for-bluefox-email' ),
-				),
-			),
-			'first_order'      => array(
+			'first_order'    => array(
 				'label'      => __( 'First order thank-you', 'connector-for-bluefox-email' ),
 				'group'      => 'extra',
 				'what'       => __( 'A personal thank-you for a customer’s very first order.', 'connector-for-bluefox-email' ),
 				'why'        => __( 'Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email.', 'connector-for-bluefox-email' ),
-				'when'       => __( 'With the first paid order of an email address (guests included).', 'connector-for-bluefox-email' ),
+				'when'       => __( 'With the first paid order of an email address (guests included) – only to active subscribers of the chosen list (it is a marketing email).', 'connector-for-bluefox-email' ),
 				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
-				'type'       => 'transactional',
+				'type'       => 'triggered',
 				'module'     => 'order_emails',
 				'event'      => 'first_order',
 				'button_url' => '{{{siteUrl}}}',
@@ -136,29 +92,7 @@ final class Email_Templates {
 					'footer'  => __( 'Questions? Simply reply to this email.', 'connector-for-bluefox-email' ),
 				),
 			),
-			'customer_note'    => array(
-				'label'      => __( 'Note to customer', 'connector-for-bluefox-email' ),
-				'group'      => 'replaces',
-				'what'       => __( 'Delivers a note you write to the customer on an order.', 'connector-for-bluefox-email' ),
-				'why'        => __( 'Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics.', 'connector-for-bluefox-email' ),
-				'when'       => __( 'When you add a “Note to customer” on the order screen.', 'connector-for-bluefox-email' ),
-				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
-				'type'       => 'transactional',
-				'module'     => 'order_emails',
-				'event'      => 'order_note_customer',
-				'button_url' => '{{{viewOrderUrl}}}',
-				'blocks'     => array( 'note' ),
-				'variables'  => $order_vars . ', {{note}}',
-				'defaults'   => array(
-					'subject' => __( 'A note about your order #{{orderNumber}}', 'connector-for-bluefox-email' ),
-					'preview' => __( 'We added a note to your order.', 'connector-for-bluefox-email' ),
-					'heading' => __( 'A note about your order', 'connector-for-bluefox-email' ),
-					'intro'   => __( 'Hi {{DEFAULT billing.firstName "there"}}, we added the following note to your order #{{orderNumber}}:', 'connector-for-bluefox-email' ),
-					'button'  => __( 'View your order', 'connector-for-bluefox-email' ),
-					'footer'  => __( 'Questions? Simply reply to this email.', 'connector-for-bluefox-email' ),
-				),
-			),
-			'review_request'   => array(
+			'review_request' => array(
 				'label'      => __( 'Review request', 'connector-for-bluefox-email' ),
 				'group'      => 'extra',
 				'what'       => __( 'Asks the customer to review the products they bought.', 'connector-for-bluefox-email' ),
@@ -182,7 +116,7 @@ final class Email_Templates {
 					'footer'  => __( 'Thank you for helping us get better.', 'connector-for-bluefox-email' ),
 				),
 			),
-			'cart_reminder'    => array(
+			'cart_reminder'  => array(
 				'label'      => __( 'Abandoned cart reminder', 'connector-for-bluefox-email' ),
 				'group'      => 'extra',
 				'what'       => __( 'Reminds shoppers of the cart they left, with a button that restores it.', 'connector-for-bluefox-email' ),

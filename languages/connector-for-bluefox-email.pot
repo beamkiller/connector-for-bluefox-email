@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-17T13:42:15+00:00\n"
+"POT-Creation-Date: 2026-10-17T14:54:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -88,7 +88,7 @@ msgstr ""
 #: admin/class-admin-page.php:124
 #: modules/mailer/class-admin.php:119
 #: modules/sync/class-sync-tab.php:95
-#: modules/woo-events/class-settings-tab.php:322
+#: modules/woo-events/class-settings-tab.php:321
 msgid "Something went wrong."
 msgstr ""
 
@@ -129,7 +129,6 @@ msgid "Signup forms"
 msgstr ""
 
 #: admin/class-admin-page.php:195
-#: admin/views/tab-email-templates.php:168
 msgid "WooCommerce"
 msgstr ""
 
@@ -173,7 +172,7 @@ msgstr ""
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
 #: admin/class-coupon-tab.php:126
-#: includes/class-email-templates.php:408
+#: includes/class-email-templates.php:342
 #, php-format
 msgid "minimum order %s"
 msgstr ""
@@ -199,12 +198,12 @@ msgid "Email templates"
 msgstr ""
 
 #: admin/class-email-templates-tab.php:102
-#: includes/class-email-template-sync.php:49
+#: includes/class-email-template-sync.php:48
 msgid "Unknown email template."
 msgstr ""
 
 #: admin/class-email-templates-tab.php:107
-#: admin/views/tab-email-templates.php:55
+#: admin/views/tab-email-templates.php:48
 #: modules/woo-events/class-settings-tab.php:229
 msgid "Connect bluefox on the General tab first."
 msgstr ""
@@ -576,7 +575,7 @@ msgid "An unticked newsletter checkbox at checkout: directly below the billing e
 msgstr ""
 
 #: admin/views/tab-checkout.php:27
-#: admin/views/tab-email-templates.php:30
+#: admin/views/tab-email-templates.php:28
 #: admin/views/tab-form.php:21
 #: admin/views/tab-form.php:77
 msgid "Text"
@@ -595,7 +594,7 @@ msgid "Classic checkout and My Account only."
 msgstr ""
 
 #: admin/views/tab-checkout.php:41
-#: admin/views/tab-email-templates.php:238
+#: admin/views/tab-email-templates.php:215
 msgid "Subscriber list"
 msgstr ""
 
@@ -675,12 +674,12 @@ msgid "Discount amount"
 msgstr ""
 
 #: admin/views/tab-coupon.php:66
-#: modules/woo-events/views/tab-woo-events.php:258
+#: modules/woo-events/views/tab-woo-events.php:242
 msgid "% off the cart"
 msgstr ""
 
 #: admin/views/tab-coupon.php:67
-#: modules/woo-events/views/tab-woo-events.php:259
+#: modules/woo-events/views/tab-woo-events.php:243
 msgid "off the cart"
 msgstr ""
 
@@ -701,12 +700,12 @@ msgid "Restrictions"
 msgstr ""
 
 #: admin/views/tab-coupon.php:83
-#: modules/woo-events/views/tab-woo-events.php:283
+#: modules/woo-events/views/tab-woo-events.php:267
 msgid "Cannot be combined with other coupons"
 msgstr ""
 
 #: admin/views/tab-coupon.php:84
-#: modules/woo-events/views/tab-woo-events.php:284
+#: modules/woo-events/views/tab-woo-events.php:268
 msgid "Not valid on sale items"
 msgstr ""
 
@@ -805,241 +804,215 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:27
+#: admin/views/tab-email-templates.php:25
 #: modules/mailer/views/tab-mailer.php:118
 msgid "Subject"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:28
+#: admin/views/tab-email-templates.php:26
 msgid "Preview text"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:29
+#: admin/views/tab-email-templates.php:27
 #: admin/views/tab-form.php:57
 #: admin/views/tab-popup.php:37
 #: blocks/signup-form/index.js:90
 msgid "Heading"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:31
+#: admin/views/tab-email-templates.php:29
 #: blocks/signup-form/index.js:92
 msgid "Button label"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:32
+#: admin/views/tab-email-templates.php:30
 msgid "Small print"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:36
+#: admin/views/tab-email-templates.php:34
 msgid "Newsletter emails"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:37
+#: admin/views/tab-email-templates.php:35
 msgid "Sent when someone subscribes through the plugin’s forms or at checkout."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:40
-msgid "Order emails WooCommerce also sends"
-msgstr ""
-
-#: admin/views/tab-email-templates.php:41
-msgid "WooCommerce already sends these emails. Create one here to send the bluefox version instead: WooCommerce’s email for the same event is switched off, so customers get one email, in your design, with open and click statistics in bluefox."
-msgstr ""
-
-#: admin/views/tab-email-templates.php:44
+#: admin/views/tab-email-templates.php:38
 msgid "Extra emails WooCommerce does not send"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:45
-msgid "Additional emails that bring customers back. They do not replace anything."
+#: admin/views/tab-email-templates.php:39
+msgid "Emails that bring customers back. WooCommerce keeps sending its own order emails (confirmation, invoice, payment details) – these come on top."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:52
+#: admin/views/tab-email-templates.php:45
 msgid "Ready-made, mobile-friendly emails for everything this plugin sends. Adjust the texts and click “Create in bluefox”: the email is created in your bluefox account and selected where the plugin uses it, so there is nothing to copy. You can change the texts here later and send them to bluefox with “Update in bluefox”."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:61
-#: admin/views/tab-email-templates.php:66
+#: admin/views/tab-email-templates.php:54
+#: admin/views/tab-email-templates.php:59
 msgid "Design"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:63
+#: admin/views/tab-email-templates.php:56
 msgid "Design saved."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:70
+#: admin/views/tab-email-templates.php:63
 msgid "Match the WooCommerce emails"
 msgstr ""
 
 #. translators: %s: link to WooCommerce → Settings → Emails
-#: admin/views/tab-email-templates.php:75
+#: admin/views/tab-email-templates.php:68
 #, php-format
 msgid "Logo, colours, font and footer text from %s."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:76
+#: admin/views/tab-email-templates.php:69
 msgid "WooCommerce → Settings → Emails"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:84
+#: admin/views/tab-email-templates.php:77
 msgid "Use the signup form colours"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:85
+#: admin/views/tab-email-templates.php:78
 msgid "Colours from the Form tab, logo from the Customizer."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:88
+#: admin/views/tab-email-templates.php:81
 msgid "The design is copied into each email when it is created or updated. After changing it, click “Update in bluefox” on the emails you already created."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:89
+#: admin/views/tab-email-templates.php:82
 msgid "Save design"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:93
+#: admin/views/tab-email-templates.php:86
 msgid "Switch on a feature that sends emails (signup forms, welcome coupon, order or abandoned cart emails) to see its templates."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:127
+#: admin/views/tab-email-templates.php:118
 msgid "Not created yet"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:130
+#: admin/views/tab-email-templates.php:121
 msgid "In use"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:130
+#: admin/views/tab-email-templates.php:121
 msgid "Created, not in use"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:140
+#: admin/views/tab-email-templates.php:131
 msgid "Marketing"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:140
+#: admin/views/tab-email-templates.php:131
 msgid "Transactional"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:149
+#: admin/views/tab-email-templates.php:140
 msgid "The design changed since this email was last sent to bluefox. Click “Update in bluefox” to apply it."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:153
+#: admin/views/tab-email-templates.php:144
 msgid "Why use it"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:155
+#: admin/views/tab-email-templates.php:146
 msgid "When it is sent"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:157
-#: modules/woo-events/views/tab-woo-events.php:183
+#: admin/views/tab-email-templates.php:148
+#: modules/woo-events/views/tab-woo-events.php:170
 msgid "Email type"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:162
+#: admin/views/tab-email-templates.php:153
 msgid "Marketing (triggered): bluefox delivers it only to active subscribers of the chosen list, with an unsubscribe link."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:163
+#: admin/views/tab-email-templates.php:154
 msgid "Transactional: a service email every recipient gets, no unsubscribe link needed."
 msgstr ""
 
-#. translators: %s: WooCommerce email name
-#: admin/views/tab-email-templates.php:173
-#, php-format
-msgid "WooCommerce’s “%s” email is switched off: customers get this email instead."
-msgstr ""
-
-#. translators: %s: WooCommerce email name
-#: admin/views/tab-email-templates.php:176
-#, php-format
-msgid "WooCommerce sends its own “%s” email for this event."
-msgstr ""
-
-#: admin/views/tab-email-templates.php:182
+#: admin/views/tab-email-templates.php:159
 #: admin/views/tab-subscribers.php:71
 #: admin/views/tab-subscribers.php:103
 #: modules/woo-events/class-privacy.php:103
-#: modules/woo-events/views/tab-woo-events.php:190
-#: modules/woo-events/views/tab-woo-events.php:302
+#: modules/woo-events/views/tab-woo-events.php:174
+#: modules/woo-events/views/tab-woo-events.php:286
 msgid "Status"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:186
+#: admin/views/tab-email-templates.php:163
 msgid "Open"
 msgstr ""
 
 #. translators: %s: bluefox email ID
-#: admin/views/tab-email-templates.php:191
+#: admin/views/tab-email-templates.php:168
 #, php-format
 msgid "bluefox email ID: %s"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:196
+#: admin/views/tab-email-templates.php:173
 msgid "On “Create”"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:205
+#: admin/views/tab-email-templates.php:182
 msgid "Texts"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:220
+#: admin/views/tab-email-templates.php:197
 msgid "Variables"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:221
+#: admin/views/tab-email-templates.php:198
 msgid "usable in every text; the plugin fills them in when it sends the email."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:225
+#: admin/views/tab-email-templates.php:202
 msgid "Sender"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:228
+#: admin/views/tab-email-templates.php:205
 msgid "Project default sender"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:242
+#: admin/views/tab-email-templates.php:219
 msgid "— Load lists on the General tab —"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:252
+#: admin/views/tab-email-templates.php:229
 msgid "Double opt-in is switched on for this list with the new email."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:253
+#: admin/views/tab-email-templates.php:230
 msgid "Only active subscribers of this list receive the email."
 msgstr ""
 
-#: admin/views/tab-email-templates.php:262
+#: admin/views/tab-email-templates.php:239
 msgid "Use it"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:264
+#: admin/views/tab-email-templates.php:241
 msgid "Select the new email where the plugin needs it (recommended)"
 msgstr ""
 
-#. translators: %s: WooCommerce email name
-#: admin/views/tab-email-templates.php:269
-#, php-format
-msgid "Switch off WooCommerce’s “%s” email, so customers get only this one (recommended)"
-msgstr ""
-
-#: admin/views/tab-email-templates.php:280
+#: admin/views/tab-email-templates.php:249
 msgid "Create in bluefox"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:282
+#: admin/views/tab-email-templates.php:251
 msgid "Replace the version in bluefox"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:284
+#: admin/views/tab-email-templates.php:253
 msgid "Update in bluefox"
 msgstr ""
 
-#: admin/views/tab-email-templates.php:285
+#: admin/views/tab-email-templates.php:254
 msgid "Send me a test"
 msgstr ""
 
@@ -1330,7 +1303,7 @@ msgid "bluefox tag"
 msgstr ""
 
 #: admin/views/tab-form.php:187
-#: modules/woo-events/views/tab-woo-events.php:191
+#: modules/woo-events/views/tab-woo-events.php:175
 msgid "Actions"
 msgstr ""
 
@@ -1349,7 +1322,7 @@ msgstr ""
 #: admin/views/tab-form.php:197
 #: modules/integrations/views/map-row.php:20
 #: modules/integrations/views/rule-row.php:44
-#: modules/woo-events/views/tab-woo-events.php:123
+#: modules/woo-events/views/tab-woo-events.php:111
 msgid "Remove"
 msgstr ""
 
@@ -1442,7 +1415,7 @@ msgstr ""
 
 #: admin/views/tab-popup.php:34
 #: modules/mailer/views/tab-mailer.php:90
-#: modules/woo-events/views/tab-woo-events.php:101
+#: modules/woo-events/views/tab-woo-events.php:89
 msgid "Enabled"
 msgstr ""
 
@@ -1846,7 +1819,7 @@ msgstr ""
 #: includes/class-privacy.php:461
 #: modules/webhooks/views/tab-webhooks.php:115
 #: modules/woo-events/class-privacy.php:91
-#: modules/woo-events/views/tab-woo-events.php:299
+#: modules/woo-events/views/tab-woo-events.php:283
 msgid "Email"
 msgstr ""
 
@@ -2105,64 +2078,58 @@ msgstr ""
 msgid "Newsletter welcome coupon – %s"
 msgstr ""
 
-#: includes/class-email-template-sync.php:58
+#: includes/class-email-template-sync.php:57
 msgid "Choose the subscriber list of this triggered email."
 msgstr ""
 
-#: includes/class-email-template-sync.php:69
+#: includes/class-email-template-sync.php:68
 msgid "bluefox did not return the ID of the new email."
 msgstr ""
 
-#: includes/class-email-template-sync.php:103
-#: includes/class-email-template-sync.php:154
+#: includes/class-email-template-sync.php:102
+#: includes/class-email-template-sync.php:153
 msgid "This email has not been created in bluefox yet."
 msgstr ""
 
-#: includes/class-email-template-sync.php:110
+#: includes/class-email-template-sync.php:109
 msgid "The email no longer exists in bluefox. Create it again."
 msgstr ""
 
-#: includes/class-email-template-sync.php:115
+#: includes/class-email-template-sync.php:114
 msgid "This email was switched to bluefox’s visual editor, so it can only be edited in bluefox now."
 msgstr ""
 
-#: includes/class-email-template-sync.php:119
+#: includes/class-email-template-sync.php:118
 msgid "This email was changed in bluefox after it was created here. Updating it replaces those changes."
 msgstr ""
 
-#: includes/class-email-template-sync.php:174
+#: includes/class-email-template-sync.php:172
 msgid "Choose it as the double opt-in email of your list in bluefox."
 msgstr ""
 
 #. translators: %s: error message
-#: includes/class-email-template-sync.php:188
+#: includes/class-email-template-sync.php:186
 #, php-format
 msgid "The list could not be updated (%s): choose the email as its double opt-in email in bluefox."
 msgstr ""
 
-#: includes/class-email-template-sync.php:193
+#: includes/class-email-template-sync.php:191
 msgid "Double opt-in is on for the list, with this email and your thank-you page as the redirect link."
 msgstr ""
 
-#: includes/class-email-template-sync.php:200
+#: includes/class-email-template-sync.php:198
 msgid "Selected as the coupon email on the Coupon tab."
 msgstr ""
 
-#. translators: %s: WooCommerce email name, e.g. Processing order
-#: includes/class-email-template-sync.php:214
-#, php-format
-msgid "WooCommerce’s “%s” email is switched off for customers, so they get only this email."
-msgstr ""
-
-#: includes/class-email-template-sync.php:225
+#: includes/class-email-template-sync.php:216
 msgid "A rule for this event already exists: select the new email in it if you want to use it."
 msgstr ""
 
-#: includes/class-email-template-sync.php:239
+#: includes/class-email-template-sync.php:229
 msgid "The new email was selected in the existing rule for this event, and the rule was switched on."
 msgstr ""
 
-#: includes/class-email-template-sync.php:253
+#: includes/class-email-template-sync.php:242
 msgid "A rule that sends this email was added and switched on."
 msgstr ""
 
@@ -2256,329 +2223,221 @@ msgid "One welcome coupon per email address. {{terms}}"
 msgstr ""
 
 #: includes/class-email-templates.php:74
-msgid "Order received"
+msgid "First order thank-you"
 msgstr ""
 
 #: includes/class-email-templates.php:76
-msgid "Order confirmation with the ordered items and the total."
+msgid "A personal thank-you for a customer’s very first order."
 msgstr ""
 
 #: includes/class-email-templates.php:77
-#: includes/class-email-templates.php:99
-#: includes/class-email-templates.php:143
-msgid "Same content as WooCommerce’s email, but in your newsletter design, sent through bluefox from your own domain, with open and click statistics."
+msgid "Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email."
 msgstr ""
 
 #: includes/class-email-templates.php:78
-msgid "When an order is paid or set to Processing."
+msgid "With the first paid order of an email address (guests included) – only to active subscribers of the chosen list (it is a marketing email)."
 msgstr ""
 
 #: includes/class-email-templates.php:79
-#: includes/class-email-templates.php:101
-#: includes/class-email-templates.php:123
-#: includes/class-email-templates.php:145
 msgid "Adds an Order emails rule for this event."
 msgstr ""
 
 #: includes/class-email-templates.php:87
-msgid "We received your order #{{orderNumber}}"
-msgstr ""
-
-#: includes/class-email-templates.php:88
-msgid "Thank you! We are preparing your order."
-msgstr ""
-
-#: includes/class-email-templates.php:89
-msgid "Thank you for your order!"
-msgstr ""
-
-#: includes/class-email-templates.php:90
-msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we have received your order #{{orderNumber}} and are preparing it now."
-msgstr ""
-
-#: includes/class-email-templates.php:91
-#: includes/class-email-templates.php:113
-#: includes/class-email-templates.php:157
-msgid "View your order"
-msgstr ""
-
-#: includes/class-email-templates.php:92
-msgid "Questions about your order? Simply reply to this email."
-msgstr ""
-
-#: includes/class-email-templates.php:96
-msgid "Order completed"
-msgstr ""
-
-#: includes/class-email-templates.php:98
-msgid "Tells the customer that the order is complete, with the ordered items."
-msgstr ""
-
-#: includes/class-email-templates.php:100
-msgid "When an order is set to Completed."
-msgstr ""
-
-#: includes/class-email-templates.php:109
-msgid "Your order #{{orderNumber}} is complete"
-msgstr ""
-
-#: includes/class-email-templates.php:110
-msgid "Your order is on its way."
-msgstr ""
-
-#: includes/class-email-templates.php:111
-msgid "Your order is complete"
-msgstr ""
-
-#: includes/class-email-templates.php:112
-msgid "Hi {{DEFAULT billing.firstName \"there\"}}, good news: your order #{{orderNumber}} has been completed."
-msgstr ""
-
-#: includes/class-email-templates.php:114
-msgid "Thank you for shopping with us!"
-msgstr ""
-
-#: includes/class-email-templates.php:118
-msgid "First order thank-you"
-msgstr ""
-
-#: includes/class-email-templates.php:120
-msgid "A personal thank-you for a customer’s very first order."
-msgstr ""
-
-#: includes/class-email-templates.php:121
-msgid "Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email."
-msgstr ""
-
-#: includes/class-email-templates.php:122
-msgid "With the first paid order of an email address (guests included)."
-msgstr ""
-
-#: includes/class-email-templates.php:131
 msgid "Thank you for your first order!"
 msgstr ""
 
-#: includes/class-email-templates.php:132
+#: includes/class-email-templates.php:88
 msgid "A warm welcome from our team."
 msgstr ""
 
-#: includes/class-email-templates.php:133
+#: includes/class-email-templates.php:89
 msgid "Welcome to {{siteName}}!"
 msgstr ""
 
-#: includes/class-email-templates.php:134
+#: includes/class-email-templates.php:90
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, thank you for choosing us for your first order. We hope you love it."
 msgstr ""
 
-#: includes/class-email-templates.php:135
+#: includes/class-email-templates.php:91
 msgid "Visit the shop"
 msgstr ""
 
-#: includes/class-email-templates.php:136
-#: includes/class-email-templates.php:158
-#: includes/class-email-templates.php:206
+#: includes/class-email-templates.php:92
+#: includes/class-email-templates.php:140
 msgid "Questions? Simply reply to this email."
 msgstr ""
 
-#: includes/class-email-templates.php:140
-msgid "Note to customer"
-msgstr ""
-
-#: includes/class-email-templates.php:142
-msgid "Delivers a note you write to the customer on an order."
-msgstr ""
-
-#: includes/class-email-templates.php:144
-msgid "When you add a “Note to customer” on the order screen."
-msgstr ""
-
-#: includes/class-email-templates.php:153
-msgid "A note about your order #{{orderNumber}}"
-msgstr ""
-
-#: includes/class-email-templates.php:154
-msgid "We added a note to your order."
-msgstr ""
-
-#: includes/class-email-templates.php:155
-msgid "A note about your order"
-msgstr ""
-
-#: includes/class-email-templates.php:156
-msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we added the following note to your order #{{orderNumber}}:"
-msgstr ""
-
-#: includes/class-email-templates.php:162
+#: includes/class-email-templates.php:96
 msgid "Review request"
 msgstr ""
 
-#: includes/class-email-templates.php:164
+#: includes/class-email-templates.php:98
 msgid "Asks the customer to review the products they bought."
 msgstr ""
 
-#: includes/class-email-templates.php:165
+#: includes/class-email-templates.php:99
 msgid "More reviews build trust and bring more sales. WooCommerce does not ask for reviews by email."
 msgstr ""
 
-#: includes/class-email-templates.php:166
+#: includes/class-email-templates.php:100
 msgid "7 days after the order is completed – only to active subscribers of the chosen list (it is a marketing email)."
 msgstr ""
 
-#: includes/class-email-templates.php:167
+#: includes/class-email-templates.php:101
 msgid "Adds an Order emails rule with a 7-day delay."
 msgstr ""
 
-#: includes/class-email-templates.php:177
+#: includes/class-email-templates.php:111
 msgid "How did we do?"
 msgstr ""
 
-#: includes/class-email-templates.php:178
+#: includes/class-email-templates.php:112
 msgid "Your opinion helps other shoppers."
 msgstr ""
 
-#: includes/class-email-templates.php:179
+#: includes/class-email-templates.php:113
 msgid "How was your order?"
 msgstr ""
 
-#: includes/class-email-templates.php:180
+#: includes/class-email-templates.php:114
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we hope you are happy with your order #{{orderNumber}}. Would you take a minute to review the products?"
 msgstr ""
 
-#: includes/class-email-templates.php:181
+#: includes/class-email-templates.php:115
 msgid "Write a review"
 msgstr ""
 
-#: includes/class-email-templates.php:182
+#: includes/class-email-templates.php:116
 msgid "Thank you for helping us get better."
 msgstr ""
 
-#: includes/class-email-templates.php:186
+#: includes/class-email-templates.php:120
 msgid "Abandoned cart reminder"
 msgstr ""
 
-#: includes/class-email-templates.php:188
+#: includes/class-email-templates.php:122
 msgid "Reminds shoppers of the cart they left, with a button that restores it."
 msgstr ""
 
-#: includes/class-email-templates.php:189
+#: includes/class-email-templates.php:123
 msgid "Wins back sales that would otherwise be lost; can include a single-use recovery coupon. WooCommerce has no such email."
 msgstr ""
 
-#: includes/class-email-templates.php:190
+#: includes/class-email-templates.php:124
 msgid "When a cart has been left untouched for the idle time set on the Abandoned carts tab – only to active subscribers of the chosen list (it is a marketing email)."
 msgstr ""
 
-#: includes/class-email-templates.php:191
+#: includes/class-email-templates.php:125
 msgid "Adds an abandoned cart reminder on the Abandoned carts tab."
 msgstr ""
 
-#: includes/class-email-templates.php:201
+#: includes/class-email-templates.php:135
 msgid "You left something in your cart"
 msgstr ""
 
-#: includes/class-email-templates.php:202
+#: includes/class-email-templates.php:136
 msgid "Your cart is saved and waiting for you."
 msgstr ""
 
-#: includes/class-email-templates.php:203
+#: includes/class-email-templates.php:137
 msgid "Still thinking it over?"
 msgstr ""
 
-#: includes/class-email-templates.php:204
+#: includes/class-email-templates.php:138
 msgid "You left these items in your cart. We saved it for you, so you can finish your order with one click."
 msgstr ""
 
-#: includes/class-email-templates.php:205
+#: includes/class-email-templates.php:139
 msgid "Back to my cart"
 msgstr ""
 
 #. translators: unsubscribe link label in marketing emails
-#: includes/class-email-templates.php:318
+#: includes/class-email-templates.php:252
 msgid "Unsubscribe"
 msgstr ""
 
 #. translators: %s: template label, e.g. Welcome coupon
-#: includes/class-email-templates.php:340
+#: includes/class-email-templates.php:274
 #, php-format
 msgid "%s (Connector for bluefox.email)"
 msgstr ""
 
-#: includes/class-email-templates.php:356
+#: includes/class-email-templates.php:290
 msgid "Sample product"
 msgstr ""
 
-#: includes/class-email-templates.php:377
+#: includes/class-email-templates.php:311
 msgid "Your parcel ships tomorrow."
 msgstr ""
 
-#: includes/class-email-templates.php:403
+#: includes/class-email-templates.php:337
 msgid "Your coupon code"
 msgstr ""
 
 #. translators: %s: discount placeholder, e.g. 10%
-#: includes/class-email-templates.php:406
+#: includes/class-email-templates.php:340
 #, php-format
 msgid "%s off"
 msgstr ""
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:408
+#: includes/class-email-templates.php:342
 #, php-format
 msgid "Valid until %s"
 msgstr ""
 
 #. translators: %s: discount placeholder
-#: includes/class-email-templates.php:413
+#: includes/class-email-templates.php:347
 #, php-format
 msgid "Finish your order now and get %s off with this code:"
 msgstr ""
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:416
+#: includes/class-email-templates.php:350
 #, php-format
 msgid "Valid until %s. The link below applies it automatically."
 msgstr ""
 
-#: includes/class-email-templates.php:429
-#: modules/woo-events/views/tab-woo-events.php:301
+#: includes/class-email-templates.php:363
+#: modules/woo-events/views/tab-woo-events.php:285
 msgid "Total"
 msgstr ""
 
-#: includes/class-email-templates.php:477
+#: includes/class-email-templates.php:411
 msgid "Not used yet: choose it as the double opt-in email of your list in bluefox."
 msgstr ""
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:484
+#: includes/class-email-templates.php:418
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr ""
 
-#: includes/class-email-templates.php:493
+#: includes/class-email-templates.php:427
 msgid "In use: coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:497
+#: includes/class-email-templates.php:431
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:510
+#: includes/class-email-templates.php:444
 msgid "In use: abandoned cart reminder (on)."
 msgstr ""
 
-#: includes/class-email-templates.php:510
+#: includes/class-email-templates.php:444
 msgid "In use: Order emails rule (on)."
 msgstr ""
 
-#: includes/class-email-templates.php:511
+#: includes/class-email-templates.php:445
 msgid "Selected in a rule that is switched off."
 msgstr ""
 
-#: includes/class-email-templates.php:517
+#: includes/class-email-templates.php:451
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr ""
 
-#: includes/class-email-templates.php:518
+#: includes/class-email-templates.php:452
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr ""
 
@@ -3695,8 +3554,8 @@ msgid "No events received yet."
 msgstr ""
 
 #: modules/webhooks/views/tab-webhooks.php:114
-#: modules/woo-events/views/tab-woo-events.php:57
-#: modules/woo-events/views/tab-woo-events.php:182
+#: modules/woo-events/views/tab-woo-events.php:56
+#: modules/woo-events/views/tab-woo-events.php:169
 msgid "Event"
 msgstr ""
 
@@ -3731,7 +3590,7 @@ msgid "Cart total"
 msgstr ""
 
 #: modules/woo-events/class-privacy.php:107
-#: modules/woo-events/views/tab-woo-events.php:303
+#: modules/woo-events/views/tab-woo-events.php:287
 msgid "Last updated (UTC)"
 msgstr ""
 
@@ -3750,74 +3609,46 @@ msgid "Abandoned cart coupon – %s"
 msgstr ""
 
 #. translators: %s: order status name
-#: modules/woo-events/class-rules.php:71
+#: modules/woo-events/class-rules.php:56
 #, php-format
 msgid "Order status: %s"
 msgstr ""
 
-#: modules/woo-events/class-rules.php:73
+#: modules/woo-events/class-rules.php:58
 msgid "First paid order of a customer"
 msgstr ""
 
-#: modules/woo-events/class-rules.php:74
+#: modules/woo-events/class-rules.php:59
 msgid "Note to customer added"
 msgstr ""
 
-#: modules/woo-events/class-rules.php:75
+#: modules/woo-events/class-rules.php:60
 msgid "Review request (after the order is completed)"
 msgstr ""
 
-#: modules/woo-events/class-rules.php:76
+#: modules/woo-events/class-rules.php:61
 msgid "Abandoned cart"
 msgstr ""
 
-#: modules/woo-events/class-rules.php:87
-msgid "Processing order"
-msgstr ""
-
-#: modules/woo-events/class-rules.php:88
-msgid "Completed order"
-msgstr ""
-
-#: modules/woo-events/class-rules.php:89
-msgid "Order on-hold"
-msgstr ""
-
-#: modules/woo-events/class-rules.php:90
-msgid "Refunded order"
-msgstr ""
-
-#: modules/woo-events/class-rules.php:91
-msgid "Cancelled order"
-msgstr ""
-
-#: modules/woo-events/class-rules.php:92
-msgid "Failed order"
-msgstr ""
-
-#: modules/woo-events/class-rules.php:93
-msgid "Customer note"
-msgstr ""
-
-#: modules/woo-events/class-settings-tab.php:320
+#: modules/woo-events/class-settings-tab.php:319
 msgid "Loading…"
 msgstr ""
 
-#: modules/woo-events/class-settings-tab.php:321
+#: modules/woo-events/class-settings-tab.php:320
 msgid "Email lists refreshed."
 msgstr ""
 
-#: modules/woo-events/class-settings-tab.php:323
-#: modules/woo-events/views/tab-woo-events.php:73
+#: modules/woo-events/class-settings-tab.php:322
+#: modules/woo-events/views/tab-woo-events.php:72
 msgid "— Select an email —"
 msgstr ""
 
-#: modules/woo-events/class-settings-tab.php:324
-#: modules/woo-events/views/tab-woo-events.php:78
+#: modules/woo-events/class-settings-tab.php:323
+#: modules/woo-events/views/tab-woo-events.php:77
 msgid "(not found in bluefox)"
 msgstr ""
 
-#: modules/woo-events/class-settings-tab.php:325
+#: modules/woo-events/class-settings-tab.php:324
 msgid "Remove this rule?"
 msgstr ""
 
@@ -3829,235 +3660,215 @@ msgstr ""
 msgid "Triggered (marketing, active subscribers only)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:39
+#: modules/woo-events/views/tab-woo-events.php:38
 msgid "minutes"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:40
+#: modules/woo-events/views/tab-woo-events.php:39
 msgid "hours"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:41
-#: modules/woo-events/views/tab-woo-events.php:274
+#: modules/woo-events/views/tab-woo-events.php:40
+#: modules/woo-events/views/tab-woo-events.php:258
 msgid "days"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:83
-#: modules/woo-events/views/tab-woo-events.php:185
+#: modules/woo-events/views/tab-woo-events.php:82
+#: modules/woo-events/views/tab-woo-events.php:172
 msgid "Delay"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:84
+#: modules/woo-events/views/tab-woo-events.php:83
 msgid "Delay unit"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:95
-msgid "Replace"
-msgstr ""
-
-#: modules/woo-events/views/tab-woo-events.php:97
-msgid "Extra email"
-msgstr ""
-
-#: modules/woo-events/views/tab-woo-events.php:98
-msgid "Only a transactional email can replace it."
-msgstr ""
-
 #. translators: 1: date and time, 2: number of emails sent
-#: modules/woo-events/views/tab-woo-events.php:107
+#: modules/woo-events/views/tab-woo-events.php:95
 #, php-format
 msgid "Last sent: %1$s (%2$d total)"
 msgstr ""
 
 #. translators: 1: date and time, 2: error message
-#: modules/woo-events/views/tab-woo-events.php:115
+#: modules/woo-events/views/tab-woo-events.php:103
 #, php-format
 msgid "Last error (%1$s): %2$s"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:129
+#: modules/woo-events/views/tab-woo-events.php:117
 msgid "Carts are stored for logged-in customers and for guests once they type their email address at checkout. If the cart is not ordered within the idle time, the reminder is sent once, with a link ({{{cartUrl}}}) that restores the cart. Reminders are triggered emails (marketing, with an unsubscribe link), so bluefox only delivers them to active subscribers of the email’s list."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:131
+#: modules/woo-events/views/tab-woo-events.php:119
 msgid "Template data: cartUrl, items (name, quantity, total, sku, image), itemCount, cartTotal, currency, siteName, siteUrl; with the recovery coupon also couponCode, couponDiscount, couponExpiry, couponMinSpend."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:132
+#: modules/woo-events/views/tab-woo-events.php:120
 msgid "Put links in triple braces, e.g. href=\"{{{cartUrl}}}\": with two braces Handlebars HTML-escapes characters such as = and &, and link click tracking can break such URLs."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:135
-msgid "Send bluefox emails when something happens to an order. Every email is sent in the background, never during checkout, and each rule at most once per order."
+#: modules/woo-events/views/tab-woo-events.php:123
+msgid "Send extra bluefox emails when an order changes – for example a thank-you, a review request or a follow-up offer. WooCommerce keeps sending its own order emails (confirmation, invoice, payment details); these rules only add to them. Every email is sent in the background, never during checkout, and each rule at most once per order."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:136
-msgid "WooCommerce sends its own customer emails for some events (processing, completed, customer note …). Tick “Replace” in the WooCommerce column to switch WooCommerce’s email off, so the customer gets only the bluefox email. Without it the customer gets both. WooCommerce’s email comes back by itself whenever the rule is off or bluefox is not connected."
+#: modules/woo-events/views/tab-woo-events.php:125
+msgid "Use triggered (marketing) emails for these: bluefox delivers them only to active subscribers of the email’s list, with an unsubscribe link. Transactional emails reach every customer – use them only for service information WooCommerce does not send."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:138
-msgid "Transactional emails are service emails (order updates) and reach any customer. Triggered emails are marketing emails with an unsubscribe link: bluefox only delivers them to active subscribers of the email’s list. Use triggered emails for review requests."
-msgstr ""
-
-#: modules/woo-events/views/tab-woo-events.php:139
+#: modules/woo-events/views/tab-woo-events.php:126
 msgid "Template data (use them as {{orderNumber}}, {{#each items}}{{name}}{{/each}} …): orderId, orderNumber, orderStatus, orderDate, orderTotal, currency, paymentMethod, shippingMethod, customerNote, billing.firstName/lastName/company/city/country/phone, shipping.*, shippingAddressLines, items (name, quantity, total, sku, image), itemCount, couponCodes, viewOrderUrl, siteName, siteUrl, note (customer note emails)."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:140
+#: modules/woo-events/views/tab-woo-events.php:127
 msgid "Put links in triple braces, e.g. href=\"{{{viewOrderUrl}}}\": with two braces Handlebars HTML-escapes characters such as = and &, and link click tracking can break such URLs."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:145
+#: modules/woo-events/views/tab-woo-events.php:132
 msgid "Connect bluefox on the General tab to load your emails."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:152
+#: modules/woo-events/views/tab-woo-events.php:139
 msgid "Reminder email"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:152
+#: modules/woo-events/views/tab-woo-events.php:139
 msgid "Rules"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:166
+#: modules/woo-events/views/tab-woo-events.php:153
 msgid "No email in bluefox yet? Create a ready-made one from a template – the rule is added for you."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:169
+#: modules/woo-events/views/tab-woo-events.php:156
 msgid "Refresh email lists"
 msgstr ""
 
 #. translators: %s: date and time
-#: modules/woo-events/views/tab-woo-events.php:174
+#: modules/woo-events/views/tab-woo-events.php:161
 #, php-format
 msgid "Lists loaded: %s"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:184
+#: modules/woo-events/views/tab-woo-events.php:171
 msgid "bluefox email"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:187
-msgid "WooCommerce email"
-msgstr ""
-
-#: modules/woo-events/views/tab-woo-events.php:189
+#: modules/woo-events/views/tab-woo-events.php:173
 msgid "On"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:215
+#: modules/woo-events/views/tab-woo-events.php:199
 msgid "Add reminder"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:215
+#: modules/woo-events/views/tab-woo-events.php:199
 msgid "Add rule"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:217
+#: modules/woo-events/views/tab-woo-events.php:201
 msgid "The delay counts from the moment the cart is found idle. Add a second reminder with a longer delay for a follow-up."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:219
+#: modules/woo-events/views/tab-woo-events.php:203
 msgid "Review request: sent the set delay after the order is completed (e.g. 7 days). First paid order: the customer’s first processing/completed order by billing email (guests included)."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:225
+#: modules/woo-events/views/tab-woo-events.php:209
 msgid "Cart settings"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:228
+#: modules/woo-events/views/tab-woo-events.php:212
 msgid "Cart tracking"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:229
+#: modules/woo-events/views/tab-woo-events.php:213
 msgid "Store carts (only while a reminder is enabled)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:232
+#: modules/woo-events/views/tab-woo-events.php:216
 msgid "Opted-in shoppers only"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:234
+#: modules/woo-events/views/tab-woo-events.php:218
 msgid "Only track carts of people who opted in"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:235
+#: modules/woo-events/views/tab-woo-events.php:219
 msgid "Opted in = confirmed a newsletter signup made with this plugin (form, checkout or form plugin). When off, every cart with a known email is stored (bluefox still only delivers triggered reminders to active subscribers)."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:239
+#: modules/woo-events/views/tab-woo-events.php:223
 msgid "Idle time"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:240
+#: modules/woo-events/views/tab-woo-events.php:224
 msgid "minutes without changes before a cart counts as abandoned (checked every 15 minutes)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:243
+#: modules/woo-events/views/tab-woo-events.php:227
 msgid "Keep carts for"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:244
+#: modules/woo-events/views/tab-woo-events.php:228
 msgid "days (then expired; deleted after twice as long)"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:247
+#: modules/woo-events/views/tab-woo-events.php:231
 msgid "Recovery coupon"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:249
+#: modules/woo-events/views/tab-woo-events.php:233
 msgid "Add a single-use coupon to the reminder"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:250
+#: modules/woo-events/views/tab-woo-events.php:234
 msgid "Created when the reminder is sent, one per cart, usable once and only with the shopper’s email address. The restore link applies it automatically. Template data: {{couponCode}}, {{couponDiscount}}, {{couponExpiry}}, {{couponMinSpend}} – wrap them in {{#if couponCode}}…{{/if}}."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:254
+#: modules/woo-events/views/tab-woo-events.php:238
 msgid "Coupon discount"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:257
+#: modules/woo-events/views/tab-woo-events.php:241
 msgid "Discount type"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:264
+#: modules/woo-events/views/tab-woo-events.php:248
 msgid "Coupon valid for"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:265
+#: modules/woo-events/views/tab-woo-events.php:249
 msgid "days after the reminder"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:268
+#: modules/woo-events/views/tab-woo-events.php:252
 msgid "Coupon minimum order"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:269
+#: modules/woo-events/views/tab-woo-events.php:253
 msgid "0 = no minimum"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:272
+#: modules/woo-events/views/tab-woo-events.php:256
 msgid "Coupon cooldown"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:275
+#: modules/woo-events/views/tab-woo-events.php:259
 msgid "Stops shoppers from abandoning carts on purpose to collect discounts: within this period an email address gets at most one recovery coupon. A still unused one is shown again instead of creating a new one; after a redeemed one the reminder goes out without a coupon. 0 = a coupon for every reminder."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:279
+#: modules/woo-events/views/tab-woo-events.php:263
 msgid "Coupon code prefix"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:292
+#: modules/woo-events/views/tab-woo-events.php:276
 msgid "Recent carts"
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:294
+#: modules/woo-events/views/tab-woo-events.php:278
 msgid "No carts stored yet."
 msgstr ""
 
-#: modules/woo-events/views/tab-woo-events.php:300
+#: modules/woo-events/views/tab-woo-events.php:284
 msgid "Items"
 msgstr ""
 

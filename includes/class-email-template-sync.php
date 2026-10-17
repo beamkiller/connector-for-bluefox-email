@@ -40,10 +40,9 @@ final class Email_Template_Sync {
 	 * @param string $identity Sender identity ID ('' = project default).
 	 * @param string $list_id  List (triggered emails: required; confirmation: the list to use it on).
 	 * @param bool   $assign   Wire it up (coupon email, rule, double opt-in email).
-	 * @param bool   $replace  The new rule switches off WooCommerce's own email for the event (where it has one).
 	 * @return array|\WP_Error email_id, notes.
 	 */
-	public function create( string $key, array $texts, string $identity, string $list_id, bool $assign, bool $replace = true ) {
+	public function create( string $key, array $texts, string $identity, string $list_id, bool $assign ) {
 		$definition = Email_Templates::definitions()[ $key ] ?? null;
 		if ( null === $definition ) {
 			return new \WP_Error( 'cfbe_template_unknown', __( 'Unknown email template.', 'connector-for-bluefox-email' ) );
@@ -83,7 +82,7 @@ final class Email_Template_Sync {
 
 		return array(
 			'email_id' => $email_id,
-			'notes'    => $assign ? $this->assign( $key, $definition, $email_id, $payload['name'], $list_id, $replace ) : array(),
+			'notes'    => $assign ? $this->assign( $key, $definition, $email_id, $payload['name'], $list_id ) : array(),
 		);
 	}
 
@@ -165,10 +164,9 @@ final class Email_Template_Sync {
 	 * @param string $email_id   New email ID.
 	 * @param string $name       Email name.
 	 * @param string $list_id    List.
-	 * @param bool   $replace    Switch off WooCommerce's own email for the event.
 	 * @return string[] Notes for the admin.
 	 */
-	private function assign( string $key, array $definition, string $email_id, string $name, string $list_id, bool $replace ): array {
+	private function assign( string $key, array $definition, string $email_id, string $name, string $list_id ): array {
 		if ( 'confirm' === $key ) {
 			if ( '' === $list_id ) {
 				return array( __( 'Choose it as the double opt-in email of your list in bluefox.', 'connector-for-bluefox-email' ) );
@@ -203,16 +201,9 @@ final class Email_Template_Sync {
 		if ( empty( $definition['event'] ) ) {
 			return array();
 		}
-		$type    = (string) $definition['type'];
-		$event   = (string) $definition['event'];
-		$replace = $replace && Woo_Events\Rules::TYPE_TRANSACTIONAL === $type && isset( Woo_Events\Rules::WC_EMAILS[ $event ] );
+		$type  = (string) $definition['type'];
+		$event = (string) $definition['event'];
 		$this->remember_email( $type, $email_id, $name );
-
-		$replaced = '';
-		if ( $replace ) {
-			/* translators: %s: WooCommerce email name, e.g. Processing order */
-			$replaced = ' ' . sprintf( __( 'WooCommerce’s “%s” email is switched off for customers, so they get only this email.', 'connector-for-bluefox-email' ), Woo_Events\Rules::wc_email_titles()[ $event ] ?? $event );
-		}
 
 		$option   = Settings::option_name( Woo_Events\Module::AREA );
 		$settings = (array) get_option( $option, array() );
@@ -228,15 +219,14 @@ final class Email_Template_Sync {
 			$rules[ $i ]       = array_merge(
 				$rule,
 				array(
-					'type'       => $type,
-					'email_id'   => $email_id,
-					'enabled'    => true,
-					'replace_wc' => $replace,
+					'type'     => $type,
+					'email_id' => $email_id,
+					'enabled'  => true,
 				)
 			);
 			$settings['rules'] = $rules;
 			update_option( $option, $settings );
-			return array( __( 'The new email was selected in the existing rule for this event, and the rule was switched on.', 'connector-for-bluefox-email' ) . $replaced );
+			return array( __( 'The new email was selected in the existing rule for this event, and the rule was switched on.', 'connector-for-bluefox-email' ) );
 		}
 		$rules[]           = array(
 			'id'         => Woo_Events\Rules::new_id(),
@@ -246,11 +236,10 @@ final class Email_Template_Sync {
 			'delay'      => (int) ( $definition['delay'] ?? 0 ),
 			'delay_unit' => (string) ( $definition['delay_unit'] ?? 'minutes' ),
 			'enabled'    => true,
-			'replace_wc' => $replace,
 		);
 		$settings['rules'] = $rules;
 		update_option( $option, $settings );
-		return array( __( 'A rule that sends this email was added and switched on.', 'connector-for-bluefox-email' ) . $replaced );
+		return array( __( 'A rule that sends this email was added and switched on.', 'connector-for-bluefox-email' ) );
 	}
 
 	/**

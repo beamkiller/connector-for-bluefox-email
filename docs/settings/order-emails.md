@@ -15,10 +15,9 @@ Each row is one rule. Up to 50 rules (shared with the [Abandoned carts tab](aban
 | Column | Option key | Default for a new row | What it does |
 |---|---|---|---|
 | Event | `cfbe_woo_events[rules][n][event]` | *Order status: Completed* | `order_status_<status>` for every WooCommerce order status (custom statuses included), `first_order` (*First paid order of a customer*), `order_note_customer` (*Note to customer added*), `review_request` (*Review request (after the order is completed)*). |
-| Email type | `cfbe_woo_events[rules][n][type]` | `transactional` | *Transactional (service email, anyone)* or *Triggered (marketing, active subscribers only)*. |
+| Email type | `cfbe_woo_events[rules][n][type]` | `triggered` | *Transactional (service email, anyone)* or *Triggered (marketing, active subscribers only)*. |
 | bluefox email | `cfbe_woo_events[rules][n][email_id]` | empty | The bluefox email to send. An ID that belongs to the other email type is cleared. An ID no longer found in bluefox is kept and marked *(not found in bluefox)*. |
 | Delay | `cfbe_woo_events[rules][n][delay]`, `[delay_unit]` | `0` `minutes` | Wait before sending. Units: minutes, hours, days. Max. one year. |
-| WooCommerce email | `cfbe_woo_events[rules][n][replace_wc]` | off | **Replace “…”** switches WooCommerce's own customer email for the event off while the rule is on (transactional rules only; shown for events WooCommerce has an email for). Other events show *Extra email*. See [Replacing WooCommerce's emails](../features/order-emails.md#replacing-woocommerces-emails). |
 | On | `cfbe_woo_events[rules][n][enabled]` | on | A rule without an email is saved as off. |
 | Status | – | – | *Last sent: &lt;time&gt; (&lt;n&gt; total)* and *Last error (&lt;time&gt;): &lt;message&gt;*. |
 
@@ -26,6 +25,6 @@ Each rule also has an internal `id` (8–16 lowercase letters and digits) that k
 
 - Every email is sent in the background, never during checkout.
 - Each rule is sent at most once per order.
-- WooCommerce's own customer email for the event is sent too, unless **Replace** is ticked.
+- WooCommerce keeps sending its own order emails; the rules add to them.
 - **Review request** is sent the set delay after the order is completed (e.g. 7 days). Use a triggered email for it.
 - **First paid order** is the customer's first processing or completed order, matched by billing email (guests included).
