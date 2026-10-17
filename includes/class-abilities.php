@@ -62,6 +62,9 @@ final class Abilities {
 	 * Registers the ability category.
 	 */
 	public function register_category(): void {
+		if ( ! function_exists( 'wp_register_ability_category' ) ) {
+			return;
+		}
 		wp_register_ability_category(
 			self::CATEGORY,
 			array(
@@ -75,6 +78,9 @@ final class Abilities {
 	 * Registers the abilities.
 	 */
 	public function register_abilities(): void {
+		if ( ! function_exists( 'wp_register_ability' ) ) {
+			return;
+		}
 		$areas      = Settings::areas();
 		$permission = array( $this, 'can_manage' );
 

@@ -229,21 +229,27 @@ class Dispatcher {
 		if ( '' === $email ) {
 			return false;
 		}
-		$base = array(
-			'status'  => $paid,
-			'exclude' => array( (int) $order->get_id() ),
-			'limit'   => 1,
-			'return'  => 'ids',
-			'type'    => 'shop_order',
+		// Two results are enough: one of them may be this order.
+		$base        = array(
+			'status' => $paid,
+			'limit'  => 2,
+			'return' => 'ids',
+			'type'   => 'shop_order',
 		);
-		if ( call_user_func( $this->order_query, $base + array( 'billing_email' => $email ) ) ) {
+		$order_id    = (int) $order->get_id();
+		$has_another = function ( array $query ) use ( $order_id ): bool {
+			foreach ( (array) call_user_func( $this->order_query, $query ) as $id ) {
+				if ( (int) $id !== $order_id ) {
+					return true;
+				}
+			}
+			return false;
+		};
+		if ( $has_another( $base + array( 'billing_email' => $email ) ) ) {
 			return false;
 		}
 		$customer_id = (int) $order->get_customer_id();
-		if ( $customer_id > 0 && call_user_func( $this->order_query, $base + array( 'customer_id' => $customer_id ) ) ) {
-			return false;
-		}
-		return true;
+		return ! ( $customer_id > 0 && $has_another( $base + array( 'customer_id' => $customer_id ) ) );
 	}
 
 	/**
