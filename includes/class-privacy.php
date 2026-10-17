@@ -435,7 +435,7 @@ final class Privacy {
 		if ( ! current_user_can( Admin_Page::capability() ) ) {
 			wp_die( esc_html__( 'You are not allowed to do this.', 'connector-for-bluefox-email' ), '', array( 'response' => 403 ) );
 		}
-		$values                  = (array) get_option( Settings::option_name( 'api' ), array() );
+		$values                  = Settings::get( 'api' );
 		$old_mode                = Consent_Ip::mode();
 		$values[ self::SETTING ] = ! empty( $_POST[ self::SETTING ] );
 		$mode                    = isset( $_POST[ Consent_Ip::SETTING_MODE ] ) ? sanitize_key( wp_unslash( $_POST[ Consent_Ip::SETTING_MODE ] ) ) : Consent_Ip::DEFAULT_MODE;

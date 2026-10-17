@@ -132,10 +132,8 @@ final class Admin_Ajax {
 			return;
 		}
 
-		$secret                    = Settings::generate_secret();
-		$options                   = (array) get_option( Settings::option_name( 'api' ), array() );
-		$options['webhook_secret'] = $secret;
-		update_option( Settings::option_name( 'api' ), $options );
+		$secret = Settings::generate_secret();
+		Settings::update( 'api', array( 'webhook_secret' => $secret ) );
 
 		wp_send_json_success( array( 'secret' => $secret ) );
 	}

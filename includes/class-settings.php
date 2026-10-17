@@ -253,6 +253,18 @@ final class Settings {
 	}
 
 	/**
+	 * Saves some keys of an area from code. The complete area (defaults + stored + changes) is written: the
+	 * settings sanitizers read a missing checkbox as "off", so saving only the changed keys of a never-saved area
+	 * would switch its defaults off.
+	 *
+	 * @param string $area    Area.
+	 * @param array  $changes key => value.
+	 */
+	public static function update( string $area, array $changes ): bool {
+		return (bool) update_option( self::option_name( $area ), array_merge( self::get( $area ), $changes ) );
+	}
+
+	/**
 	 * Whether the API key comes from wp-config.php.
 	 */
 	public static function api_key_from_constant(): bool {

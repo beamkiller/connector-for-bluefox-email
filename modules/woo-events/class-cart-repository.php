@@ -162,7 +162,10 @@ class Cart_Repository {
 		if ( ! $existing && '' !== $email ) {
 			$other = $this->find_active( '', $email );
 			if ( $other && '' !== $session_key && '' !== (string) $other['session_key'] ) {
-				return 0; // An open cart of another session already uses this address.
+				if ( self::STATUS_OPEN === ( $other['status'] ?? '' ) ) {
+					return 0; // An open cart of another session already uses this address.
+				}
+				$other = null; // Its reminder went out already: this visit starts a new cart.
 			}
 			$existing = $other;
 		}

@@ -259,11 +259,11 @@ final class Webhooks_Tab {
 	 * @param string[] $events Selected events.
 	 */
 	private function save_events( array $events ): void {
-		$values = (array) get_option( Settings::option_name( Module::AREA ), array() );
+		$values = array();
 		foreach ( Module::EVENTS as $event ) {
 			$values[ 'event_' . $event ] = in_array( $event, $events, true );
 		}
-		update_option( Settings::option_name( Module::AREA ), $values );
+		Settings::update( Module::AREA, $values );
 	}
 
 	/**

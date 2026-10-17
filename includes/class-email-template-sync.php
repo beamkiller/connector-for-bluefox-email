@@ -194,9 +194,7 @@ final class Email_Template_Sync {
 		}
 
 		if ( 'welcome_coupon' === $key ) {
-			$coupon             = (array) get_option( Settings::option_name( 'coupon' ), array() );
-			$coupon['email_id'] = $email_id;
-			update_option( Settings::option_name( 'coupon' ), $coupon );
+			Settings::update( 'coupon', array( 'email_id' => $email_id ) );
 			return array( __( 'Selected as the coupon email on the Coupon tab.', 'connector-for-bluefox-email' ) );
 		}
 
@@ -207,8 +205,9 @@ final class Email_Template_Sync {
 		$event = (string) $definition['event'];
 		$this->remember_email( $type, $email_id, $name );
 
+		// The complete area is saved: a never-saved area would otherwise lose its defaults (e.g. cart tracking).
 		$option   = Settings::option_name( Woo_Events\Module::AREA );
-		$settings = (array) get_option( $option, array() );
+		$settings = Woo_Events\Module::settings();
 		$rules    = (array) ( $settings['rules'] ?? array() );
 		foreach ( $rules as $i => $rule ) {
 			if ( ! is_array( $rule ) || ( $rule['event'] ?? '' ) !== $event ) {
