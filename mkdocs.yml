@@ -1,0 +1,115 @@
+site_name: Connector for bluefox.email
+site_description: Documentation of the Connector for bluefox.email WordPress plugin – signup forms with double opt-in, WooCommerce opt-in and coupons, contact sync and email delivery.
+site_author: KREMONT s.r.o.
+site_url: https://beamkiller.github.io/connector-for-bluefox-email/
+repo_url: https://github.com/beamkiller/connector-for-bluefox-email
+repo_name: beamkiller/connector-for-bluefox-email
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; KREMONT s.r.o. – GPL-2.0-or-later. Not affiliated with bluefox.email.
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+theme:
+  name: material
+  logo: assets/images/logo.svg
+  favicon: assets/images/logo.svg
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - getting-started/index.md
+      - Install: getting-started/install.md
+      - Connect to bluefox.email: getting-started/connect.md
+      - Set up your bluefox list: getting-started/bluefox-list.md
+      - Switch on features: getting-started/features.md
+      - Thank-you and preferences pages: getting-started/pages.md
+      - Webhook: getting-started/webhook.md
+  - Features:
+      - features/index.md
+      - Signup forms: features/signup-forms.md
+      - Popup: features/popup.md
+      - Interests and tags: features/interests-tags.md
+      - Checkout opt-in: features/checkout-opt-in.md
+      - Welcome coupon: features/welcome-coupon.md
+      - Order emails: features/order-emails.md
+      - Abandoned cart emails: features/abandoned-carts.md
+      - Contact sync: features/contact-sync.md
+      - Email delivery: features/email-delivery.md
+      - Form plugin integrations: features/form-integrations.md
+      - Preferences page: features/preferences-page.md
+      - Inbound webhooks: features/inbound-webhooks.md
+      - AI agent access: features/ai-agent-access.md
+  - Settings reference:
+      - settings/index.md
+      - General: settings/general.md
+      - Form: settings/form.md
+      - Popup: settings/popup.md
+      - Checkout: settings/checkout.md
+      - Coupon: settings/coupon.md
+      - Contact sync: settings/contact-sync.md
+      - Email delivery: settings/email-delivery.md
+      - Emails: settings/emails.md
+      - Order emails: settings/order-emails.md
+      - Abandoned carts: settings/abandoned-carts.md
+      - Form integrations: settings/form-integrations.md
+      - Webhooks: settings/webhooks.md
+      - Shortcodes, Subscribers, Logs: settings/other-tabs.md
+      - Privacy: settings/privacy.md
+  - Developers:
+      - developers/index.md
+      - Hooks: developers/hooks.md
+      - Shortcodes and block: developers/shortcodes-block.md
+      - Email template data: developers/template-data.md
+      - REST API: developers/rest-api.md
+      - WP-CLI: developers/wp-cli.md
+  - Help:
+      - help/index.md
+      - Privacy and GDPR: help/privacy.md
+      - FAQ: help/faq.md
+      - Troubleshooting: help/troubleshooting.md
+      - Changelog: help/changelog.md

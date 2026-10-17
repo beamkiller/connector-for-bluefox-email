@@ -1,0 +1,26 @@
+# Thank-you and preferences pages
+
+## Thank-you page
+
+bluefox sends the visitor to the list's **Redirect link** after they confirm. Create that page in WordPress:
+
+1. Create a page, e.g. **Newsletter confirmed** with the slug `newsletter-confirmed`.
+2. Add the `[cfbe_thankyou]` shortcode (Shortcode block, or your page builder's shortcode element).
+3. If you use another URL than `/newsletter-confirmed/`, enter it as **Thank-you page URL** on the [Emails tab](../settings/emails.md).
+4. Set the same URL as the **Redirect link** of the bluefox list.
+
+The shortcode shows the *Confirmation successful* title and text from the Emails tab. `?cfbe=expired` and `?cfbe=error` in the URL switch to the other two messages. The popup is never shown on the thank-you page.
+
+## Preferences page
+
+Needs the **Subscription preferences page** switch (on by default).
+
+1. Create a page, e.g. **Newsletter preferences** with the slug `newsletter-preferences`.
+2. Add the `[cfbe_preferences]` shortcode.
+3. If you use another URL, enter it as **Preferences page URL** on the Emails tab.
+4. In bluefox set the project's **Custom subscription preferences URL** to this page.
+
+The "Unsubscribe" and "Pause" links of your newsletters now lead to this page. See [Preferences page](../features/preferences-page.md).
+
+!!! tip "Page caching"
+    Both pages work with page caching. The preferences page sends no-cache headers and defines `DONOTCACHEPAGE` whenever a token is present.

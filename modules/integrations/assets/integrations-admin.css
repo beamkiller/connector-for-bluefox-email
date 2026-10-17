@@ -1,0 +1,36 @@
+.cfbe-int {
+	margin: 0 0 24px;
+	padding: 4px 16px 8px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+}
+
+.cfbe-int-rule {
+	margin: 12px 0;
+	padding: 0 12px;
+	border-left: 4px solid #2271b1;
+	background: #f6f7f7;
+}
+
+.cfbe-int-rule .form-table th {
+	width: 180px;
+}
+
+.cfbe-int-map {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin-bottom: 6px;
+}
+
+.cfbe-int-warning {
+	margin: 6px 0 0;
+	padding: 6px 10px;
+	border-left: 4px solid #dba617;
+	background: #fcf9e8;
+}
+
+.cfbe-int-warning[hidden] {
+	display: none;
+}
