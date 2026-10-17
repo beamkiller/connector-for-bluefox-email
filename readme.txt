@@ -1,4 +1,4 @@
-=== Connector for bluefox.email – Newsletter & WooCommerce Emails ===
+=== Connector for bluefox.email – Newsletter and WooCommerce Emails ===
 Contributors: beamkiller
 Tags: newsletter, email marketing, woocommerce, double opt-in, transactional email
 Requires at least: 6.7

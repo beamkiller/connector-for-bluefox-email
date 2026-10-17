@@ -10,7 +10,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: connector-for-bluefox-email.php
-msgid "Connector for bluefox.email – Newsletter & WooCommerce Emails"
+msgid "Connector for bluefox.email – Newsletter and WooCommerce Emails"
 msgstr "Connector for bluefox.email – Hírlevél és WooCommerce e-mailek"
 
 #. Plugin URI of the plugin
