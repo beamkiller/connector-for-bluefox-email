@@ -9,6 +9,7 @@ namespace CFBE\Admin;
 
 use CFBE\Bluefox_Client;
 use CFBE\Email_Design;
+use CFBE\Email_Preview;
 use CFBE\Email_Template_Sync;
 use CFBE\Email_Templates;
 use CFBE\Form_Config;
@@ -102,14 +103,26 @@ final class Email_Templates_Tab {
 			wp_die( esc_html__( 'Unknown email template.', 'connector-for-bluefox-email' ), '', array( 'response' => 400 ) );
 		}
 
+		$do    = isset( $_POST['do'] ) ? sanitize_key( wp_unslash( $_POST['do'] ) ) : '';
+		$texts = Email_Templates::clean_texts( $key, isset( $_POST['texts'] ) && is_array( $_POST['texts'] ) ? wp_unslash( $_POST['texts'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized per field in clean_texts().
+
+		if ( 'preview' === $do ) {
+			// Rendered here: bluefox test sends leave the template data empty. Needs no connection.
+			$record = Email_Templates::record( $key );
+			$type   = (string) ( $record['type'] ?? ( isset( $_POST['email_type'] ) ? sanitize_key( wp_unslash( $_POST['email_type'] ) ) : '' ) );
+			$type   = in_array( $type, Email_Templates::types( $key ), true ) ? $type : '';
+			nocache_headers();
+			header( 'Content-Type: text/html; charset=utf-8' );
+			echo Email_Preview::html( $key, $texts, $type ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- The email document: admin texts are escaped in render(), sample values in Email_Preview::render().
+			exit;
+		}
+
 		$client = call_user_func( $this->client );
 		if ( ! $client instanceof Bluefox_Client ) {
 			$this->finish( $key, 'error', __( 'Connect bluefox on the General tab first.', 'connector-for-bluefox-email' ) );
 			return;
 		}
 
-		$do       = isset( $_POST['do'] ) ? sanitize_key( wp_unslash( $_POST['do'] ) ) : '';
-		$texts    = Email_Templates::clean_texts( $key, isset( $_POST['texts'] ) && is_array( $_POST['texts'] ) ? wp_unslash( $_POST['texts'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized per field in clean_texts().
 		$identity = isset( $_POST['identity'] ) ? (string) preg_replace( '/[^A-Za-z0-9]/', '', sanitize_text_field( wp_unslash( $_POST['identity'] ) ) ) : '';
 		$list_id  = isset( $_POST['list_id'] ) ? Form_Config::clean_list_id( sanitize_text_field( wp_unslash( $_POST['list_id'] ) ) ) : '';
 		$sync     = new Email_Template_Sync( $client );

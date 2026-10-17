@@ -50,8 +50,8 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 #: admin/class-coupon-tab.php:150
 #: admin/class-coupon-tab.php:208
 #: admin/class-coupon-tab.php:220
-#: admin/class-email-templates-tab.php:99
-#: admin/class-email-templates-tab.php:160
+#: admin/class-email-templates-tab.php:100
+#: admin/class-email-templates-tab.php:173
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
 #: modules/sync/class-sync-tab.php:262
@@ -166,7 +166,7 @@ msgstr "egyszer, csak a feliratkozó e-mail címével"
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
 #: admin/class-coupon-tab.php:126
-#: includes/class-email-templates.php:359
+#: includes/class-email-templates.php:367
 #, php-format
 msgid "minimum order %s"
 msgstr "minimum %s rendelés"
@@ -187,36 +187,36 @@ msgstr "akciós termékekre nem érvényes"
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr "Létrehozva: %1$s. Már megvolt: %2$s."
 
-#: admin/class-email-templates-tab.php:63
+#: admin/class-email-templates-tab.php:64
 msgid "Email templates"
 msgstr "E-mail sablonok"
 
-#: admin/class-email-templates-tab.php:102
+#: admin/class-email-templates-tab.php:103
 #: includes/class-email-template-sync.php:49
 msgid "Unknown email template."
 msgstr "Ismeretlen e-mail sablon."
 
-#: admin/class-email-templates-tab.php:107
+#: admin/class-email-templates-tab.php:122
 #: admin/views/tab-email-templates.php:48
 #: modules/woo-events/class-settings-tab.php:229
 msgid "Connect bluefox on the General tab first."
 msgstr "Előbb csatlakoztasd a bluefox-ot az Általános fülön."
 
-#: admin/class-email-templates-tab.php:125
+#: admin/class-email-templates-tab.php:138
 msgid "The email was created in bluefox."
 msgstr "Az e-mail létrejött a bluefox-ban."
 
-#: admin/class-email-templates-tab.php:135
+#: admin/class-email-templates-tab.php:148
 msgid "The email was updated in bluefox."
 msgstr "Az e-mail frissült a bluefox-ban."
 
 #. translators: %s: email address
-#: admin/class-email-templates-tab.php:147
+#: admin/class-email-templates-tab.php:160
 #, php-format
 msgid "A test was sent to %s with sample data."
 msgstr "Teszt elküldve ide: %s, mintaadatokkal."
 
-#: admin/class-email-templates-tab.php:151
+#: admin/class-email-templates-tab.php:164
 msgid "Unknown action."
 msgstr "Ismeretlen művelet."
 
@@ -624,6 +624,7 @@ msgid "Also offer the checkbox on My Account → Account details"
 msgstr "A jelölőnégyzet megjelenítése a Fiókom → Fiók adatai oldalon is"
 
 #: admin/views/tab-checkout.php:66
+#: admin/views/tab-email-templates.php:277
 msgid "Preview"
 msgstr "Előnézet"
 
@@ -1032,6 +1033,10 @@ msgstr "Frissítés a bluefox-ban"
 #: admin/views/tab-email-templates.php:275
 msgid "Send me a test"
 msgstr "Küldj nekem tesztet"
+
+#: admin/views/tab-email-templates.php:279
+msgid "Preview shows the email with sample data (name, order, products, coupon) in a new tab, using the texts above – also before saving them. A test sent by bluefox shows the layout only: bluefox fills in the data in real sends."
+msgstr "Az Előnézet új lapon mutatja az e-mailt mintaadatokkal (név, rendelés, termékek, kupon), a fenti szövegekkel – mentés előtt is. A bluefox által küldött teszt csak az elrendezést mutatja: az adatokat a bluefox a valódi küldéskor tölti ki."
 
 #: admin/views/tab-emails.php:22
 msgid "Thank-you page URL"
@@ -2480,82 +2485,86 @@ msgstr "%s (Connector for bluefox.email)"
 msgid "Sample product"
 msgstr "Mintatermék"
 
-#: includes/class-email-templates.php:328
+#: includes/class-email-templates.php:313
+msgid "Another sample product"
+msgstr "Másik minta termék"
+
+#: includes/class-email-templates.php:336
 msgid "Your parcel ships tomorrow."
 msgstr "A csomagod holnap indul."
 
-#: includes/class-email-templates.php:354
+#: includes/class-email-templates.php:362
 msgid "Your coupon code"
 msgstr "A kuponkódod"
 
 #. translators: %s: discount placeholder, e.g. 10%
-#: includes/class-email-templates.php:357
+#: includes/class-email-templates.php:365
 #, php-format
 msgid "%s off"
 msgstr "%s kedvezmény"
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:359
+#: includes/class-email-templates.php:367
 #, php-format
 msgid "Valid until %s"
 msgstr "Érvényes eddig: %s"
 
 #. translators: %s: discount placeholder
-#: includes/class-email-templates.php:364
+#: includes/class-email-templates.php:372
 #, php-format
 msgid "Finish your order now and get %s off with this code:"
 msgstr "Fejezd be most a rendelésedet, és ezzel a kóddal %s kedvezményt kapsz:"
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:367
+#: includes/class-email-templates.php:375
 #, php-format
 msgid "Valid until %s. The link below applies it automatically."
 msgstr "Érvényes eddig: %s. Az alábbi link automatikusan érvényesíti."
 
-#: includes/class-email-templates.php:374
+#: includes/class-email-templates.php:382
 msgid "Write a review"
 msgstr "Értékelés írása"
 
-#: includes/class-email-templates.php:388
+#: includes/class-email-templates.php:396
 #: modules/woo-events/views/tab-woo-events.php:285
 msgid "Total"
 msgstr "Összesen"
 
-#: includes/class-email-templates.php:436
+#: includes/class-email-templates.php:444
 msgid "Not used yet: choose it as the double opt-in email of your list in bluefox."
 msgstr "Még nincs használatban: állítsd be a listád dupla megerősítő (double opt-in) e-mailjeként a bluefox-ban."
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:443
+#: includes/class-email-templates.php:451
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr "Használatban: a(z) „%s” lista dupla megerősítő (double opt-in) e-mailje."
 
-#: includes/class-email-templates.php:452
+#: includes/class-email-templates.php:460
 msgid "In use: coupon email on the Coupon tab."
 msgstr "Használatban: kupon e-mail a Kupon fülön."
 
-#: includes/class-email-templates.php:456
+#: includes/class-email-templates.php:464
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr "Még nincs használatban: válaszd ki kupon e-mailként a Kupon fülön."
 
-#: includes/class-email-templates.php:469
+#: includes/class-email-templates.php:477
 msgid "In use: abandoned cart reminder (on)."
 msgstr "Használatban: elhagyott kosár emlékeztető (bekapcsolva)."
 
-#: includes/class-email-templates.php:469
+#: includes/class-email-templates.php:477
 msgid "In use: Order emails rule (on)."
 msgstr "Használatban: Rendelési e-mailek szabály (bekapcsolva)."
 
-#: includes/class-email-templates.php:470
+#: includes/class-email-templates.php:478
 msgid "Selected in a rule that is switched off."
 msgstr "Egy kikapcsolt szabályban van kiválasztva."
 
-#: includes/class-email-templates.php:476
+#: includes/class-email-templates.php:484
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr "Még nincs használatban: válaszd ki emlékeztetőként az Elhagyott kosarak fülön."
 
-#: includes/class-email-templates.php:477
+#: includes/class-email-templates.php:485
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr "Még nincs használatban: válaszd ki egy szabályban a Rendelési e-mailek fülön."
 

@@ -295,7 +295,7 @@ final class Email_Templates {
 	}
 
 	/**
-	 * Sample data for test sends.
+	 * Sample data for the preview and test sends.
 	 *
 	 * @param string $key Template key.
 	 */
@@ -305,6 +305,14 @@ final class Email_Templates {
 				'name'      => __( 'Sample product', 'connector-for-bluefox-email' ),
 				'quantity'  => 2,
 				'total'     => '24.00',
+				'image'     => '',
+				'url'       => home_url( '/' ),
+				'reviewUrl' => home_url( '/' ) . '#reviews',
+			),
+			array(
+				'name'      => __( 'Another sample product', 'connector-for-bluefox-email' ),
+				'quantity'  => 1,
+				'total'     => '9.90',
 				'image'     => '',
 				'url'       => home_url( '/' ),
 				'reviewUrl' => home_url( '/' ) . '#reviews',
@@ -320,14 +328,14 @@ final class Email_Templates {
 			'verifyLink'   => home_url( '/' ),
 			'orderNumber'  => '1001',
 			'orderDate'    => Dates::local_date( time() ),
-			'orderTotal'   => '24.00',
+			'orderTotal'   => '33.90',
 			'viewOrderUrl' => home_url( '/' ),
 			'billing'      => array( 'firstName' => 'Jane' ),
 			'items'        => $items,
-			'itemCount'    => 2,
+			'itemCount'    => 3,
 			'note'         => __( 'Your parcel ships tomorrow.', 'connector-for-bluefox-email' ),
 			'cartUrl'      => home_url( '/' ),
-			'cartTotal'    => '24.00',
+			'cartTotal'    => '33.90',
 			'couponCode'   => 'WELCOME-TEST1234',
 			'discount'     => '10%',
 			'expiry'       => Dates::local_date( time() + 30 * DAY_IN_SECONDS ),

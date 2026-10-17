@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-17T16:50:03+00:00\n"
+"POT-Creation-Date: 2026-10-17T17:43:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -56,8 +56,8 @@ msgstr ""
 #: admin/class-coupon-tab.php:150
 #: admin/class-coupon-tab.php:208
 #: admin/class-coupon-tab.php:220
-#: admin/class-email-templates-tab.php:99
-#: admin/class-email-templates-tab.php:160
+#: admin/class-email-templates-tab.php:100
+#: admin/class-email-templates-tab.php:173
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
 #: modules/sync/class-sync-tab.php:262
@@ -172,7 +172,7 @@ msgstr ""
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
 #: admin/class-coupon-tab.php:126
-#: includes/class-email-templates.php:359
+#: includes/class-email-templates.php:367
 #, php-format
 msgid "minimum order %s"
 msgstr ""
@@ -193,36 +193,36 @@ msgstr ""
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr ""
 
-#: admin/class-email-templates-tab.php:63
+#: admin/class-email-templates-tab.php:64
 msgid "Email templates"
 msgstr ""
 
-#: admin/class-email-templates-tab.php:102
+#: admin/class-email-templates-tab.php:103
 #: includes/class-email-template-sync.php:49
 msgid "Unknown email template."
 msgstr ""
 
-#: admin/class-email-templates-tab.php:107
+#: admin/class-email-templates-tab.php:122
 #: admin/views/tab-email-templates.php:48
 #: modules/woo-events/class-settings-tab.php:229
 msgid "Connect bluefox on the General tab first."
 msgstr ""
 
-#: admin/class-email-templates-tab.php:125
+#: admin/class-email-templates-tab.php:138
 msgid "The email was created in bluefox."
 msgstr ""
 
-#: admin/class-email-templates-tab.php:135
+#: admin/class-email-templates-tab.php:148
 msgid "The email was updated in bluefox."
 msgstr ""
 
 #. translators: %s: email address
-#: admin/class-email-templates-tab.php:147
+#: admin/class-email-templates-tab.php:160
 #, php-format
 msgid "A test was sent to %s with sample data."
 msgstr ""
 
-#: admin/class-email-templates-tab.php:151
+#: admin/class-email-templates-tab.php:164
 msgid "Unknown action."
 msgstr ""
 
@@ -630,6 +630,7 @@ msgid "Also offer the checkbox on My Account → Account details"
 msgstr ""
 
 #: admin/views/tab-checkout.php:66
+#: admin/views/tab-email-templates.php:277
 msgid "Preview"
 msgstr ""
 
@@ -1037,6 +1038,10 @@ msgstr ""
 
 #: admin/views/tab-email-templates.php:275
 msgid "Send me a test"
+msgstr ""
+
+#: admin/views/tab-email-templates.php:279
+msgid "Preview shows the email with sample data (name, order, products, coupon) in a new tab, using the texts above – also before saving them. A test sent by bluefox shows the layout only: bluefox fills in the data in real sends."
 msgstr ""
 
 #: admin/views/tab-emails.php:22
@@ -2486,82 +2491,86 @@ msgstr ""
 msgid "Sample product"
 msgstr ""
 
-#: includes/class-email-templates.php:328
+#: includes/class-email-templates.php:313
+msgid "Another sample product"
+msgstr ""
+
+#: includes/class-email-templates.php:336
 msgid "Your parcel ships tomorrow."
 msgstr ""
 
-#: includes/class-email-templates.php:354
+#: includes/class-email-templates.php:362
 msgid "Your coupon code"
 msgstr ""
 
 #. translators: %s: discount placeholder, e.g. 10%
-#: includes/class-email-templates.php:357
+#: includes/class-email-templates.php:365
 #, php-format
 msgid "%s off"
 msgstr ""
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:359
+#: includes/class-email-templates.php:367
 #, php-format
 msgid "Valid until %s"
 msgstr ""
 
 #. translators: %s: discount placeholder
-#: includes/class-email-templates.php:364
+#: includes/class-email-templates.php:372
 #, php-format
 msgid "Finish your order now and get %s off with this code:"
 msgstr ""
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:367
+#: includes/class-email-templates.php:375
 #, php-format
 msgid "Valid until %s. The link below applies it automatically."
 msgstr ""
 
-#: includes/class-email-templates.php:374
+#: includes/class-email-templates.php:382
 msgid "Write a review"
 msgstr ""
 
-#: includes/class-email-templates.php:388
+#: includes/class-email-templates.php:396
 #: modules/woo-events/views/tab-woo-events.php:285
 msgid "Total"
 msgstr ""
 
-#: includes/class-email-templates.php:436
+#: includes/class-email-templates.php:444
 msgid "Not used yet: choose it as the double opt-in email of your list in bluefox."
 msgstr ""
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:443
+#: includes/class-email-templates.php:451
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr ""
 
-#: includes/class-email-templates.php:452
+#: includes/class-email-templates.php:460
 msgid "In use: coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:456
+#: includes/class-email-templates.php:464
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:469
+#: includes/class-email-templates.php:477
 msgid "In use: abandoned cart reminder (on)."
 msgstr ""
 
-#: includes/class-email-templates.php:469
+#: includes/class-email-templates.php:477
 msgid "In use: Order emails rule (on)."
 msgstr ""
 
-#: includes/class-email-templates.php:470
+#: includes/class-email-templates.php:478
 msgid "Selected in a rule that is switched off."
 msgstr ""
 
-#: includes/class-email-templates.php:476
+#: includes/class-email-templates.php:484
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr ""
 
-#: includes/class-email-templates.php:477
+#: includes/class-email-templates.php:485
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr ""
 

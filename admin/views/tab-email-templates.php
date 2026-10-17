@@ -274,7 +274,9 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 							<button type="submit" name="do" value="update" class="button button-primary" <?php disabled( ! $cfbe_ready ); ?>><?php esc_html_e( 'Update in bluefox', 'connector-for-bluefox-email' ); ?></button>
 							<button type="submit" name="do" value="test" class="button" <?php disabled( ! $cfbe_ready ); ?>><?php esc_html_e( 'Send me a test', 'connector-for-bluefox-email' ); ?></button>
 						<?php endif; ?>
+						<button type="submit" name="do" value="preview" class="button" formtarget="_blank"><?php esc_html_e( 'Preview', 'connector-for-bluefox-email' ); ?></button>
 					</p>
+					<p class="description"><?php esc_html_e( 'Preview shows the email with sample data (name, order, products, coupon) in a new tab, using the texts above – also before saving them. A test sent by bluefox shows the layout only: bluefox fills in the data in real sends.', 'connector-for-bluefox-email' ); ?></p>
 				</form>
 			</div>
 		</details>

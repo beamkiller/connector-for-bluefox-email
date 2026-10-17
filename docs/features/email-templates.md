@@ -55,7 +55,8 @@ The design is copied into the email when it is **created** or **updated**. If yo
 |---|---|
 | **Create in bluefox** | Creates the email (HTML type) with the chosen **Sender** (empty = the project's default sender) and, for triggered emails, the **Subscriber list**. With **Use it** ticked (default) it is wired up as in the table above. |
 | **Update in bluefox** | Sends the edited texts to the existing email. |
-| **Send me a test** | bluefox sends the email to your own admin address, filled with sample data. |
+| **Preview** | Opens the email in a new tab, filled with sample data (name, order, products, coupon) and the texts as they are on the card – also before you save or create it. Nothing is sent. |
+| **Send me a test** | bluefox sends the email to your own admin address. bluefox test sends show the layout only: the variables (name, order number, products …) stay empty in tests and are filled in real sends. Use **Preview** to check the content. |
 
 ### Editing in two places
 
