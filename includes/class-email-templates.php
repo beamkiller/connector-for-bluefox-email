@@ -22,7 +22,7 @@ final class Email_Templates {
 
 	/**
 	 * Template definitions: key => label, group (newsletter | extra = emails WooCommerce does not send),
-	 * what / why / when / on_create (card texts), type, module, event (order email rule), delay (rule delay, in
+	 * what / why / when / on_create (card texts), type (default), types (the admin may choose; default: type only), module, event (order email rule), delay (rule delay, in
 	 * delay_unit), delay_unit, button_url, blocks, variables, defaults (texts).
 	 */
 	public static function definitions(): array {
@@ -75,9 +75,10 @@ final class Email_Templates {
 				'group'      => 'extra',
 				'what'       => __( 'A personal thank-you for a customer’s very first order.', 'connector-for-bluefox-email' ),
 				'why'        => __( 'Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email.', 'connector-for-bluefox-email' ),
-				'when'       => __( 'With the first paid order of an email address (guests included) – only to active subscribers of the chosen list (it is a marketing email).', 'connector-for-bluefox-email' ),
+				'when'       => __( 'With the first paid order of an email address (guests included).', 'connector-for-bluefox-email' ),
 				'on_create'  => __( 'Adds an Order emails rule for this event.', 'connector-for-bluefox-email' ),
 				'type'       => 'triggered',
+				'types'      => array( 'triggered', 'transactional' ),
 				'module'     => 'order_emails',
 				'event'      => 'first_order',
 				'button_url' => '{{{siteUrl}}}',
@@ -97,9 +98,10 @@ final class Email_Templates {
 				'group'      => 'extra',
 				'what'       => __( 'Asks the customer to review the products they bought.', 'connector-for-bluefox-email' ),
 				'why'        => __( 'More reviews build trust and bring more sales. WooCommerce does not ask for reviews by email.', 'connector-for-bluefox-email' ),
-				'when'       => __( '7 days after the order is completed – only to active subscribers of the chosen list (it is a marketing email).', 'connector-for-bluefox-email' ),
+				'when'       => __( '7 days after the order is completed.', 'connector-for-bluefox-email' ),
 				'on_create'  => __( 'Adds an Order emails rule with a 7-day delay.', 'connector-for-bluefox-email' ),
 				'type'       => 'triggered',
+				'types'      => array( 'triggered', 'transactional' ),
 				'module'     => 'order_emails',
 				'event'      => 'review_request',
 				'delay'      => 7,
@@ -141,6 +143,17 @@ final class Email_Templates {
 				),
 			),
 		);
+	}
+
+	/**
+	 * Email types the admin may choose for a template (the first is the default).
+	 *
+	 * @param string $key Template key.
+	 * @return string[]
+	 */
+	public static function types( string $key ): array {
+		$definition = self::definitions()[ $key ] ?? array();
+		return (array) ( $definition['types'] ?? array( (string) ( $definition['type'] ?? 'transactional' ) ) );
 	}
 
 	/**
@@ -222,9 +235,11 @@ final class Email_Templates {
 	 *
 	 * @param string $key   Template key.
 	 * @param array  $texts Texts (see texts()).
+	 * @param string $type  Email type ('' = the template's default); triggered emails get an unsubscribe link.
 	 */
-	public static function render( string $key, array $texts ): array {
+	public static function render( string $key, array $texts, string $type = '' ): array {
 		$definition = self::definitions()[ $key ];
+		$type       = '' !== $type ? $type : (string) $definition['type'];
 		$texts      = array_merge( $definition['defaults'], $texts );
 		$design     = Email_Design::get();
 		$colors     = (array) $design['colors'];
@@ -247,7 +262,7 @@ final class Email_Templates {
 			self::text( $texts['button'] )
 		);
 		$footer = '' !== trim( $texts['footer'] ) ? '<p style="margin:24px 0 0 0;font-size:13px;line-height:1.6;color:' . $colors['muted'] . ';">' . nl2br( self::text( $texts['footer'] ) ) . '</p>' : '';
-		$legal  = 'triggered' === $definition['type']
+		$legal  = 'triggered' === $type
 			/* translators: unsubscribe link label in marketing emails */
 			? '<br><a href="{{{unsubscribeLink}}}" style="color:' . $colors['footer'] . ';">' . esc_html__( 'Unsubscribe', 'connector-for-bluefox-email' ) . '</a>'
 			: '';

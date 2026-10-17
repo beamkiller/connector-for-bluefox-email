@@ -19,13 +19,20 @@ The cards are grouped:
 |---|---|---|---|
 | Double opt-in confirmation | transactional | Signup forms on | Double opt-in is switched on for the chosen list with this email, and your thank-you page becomes the list's redirect link. |
 | Welcome coupon | transactional | Welcome coupon on | Selected as **Coupon email ID** on the Coupon tab. |
-| First order thank-you | triggered | Order emails on | Rule *First paid order of a customer*. |
-| Review request | triggered | Order emails on | Rule *Review request*, 7 days after completion. |
+| First order thank-you | triggered or transactional (you choose) | Order emails on | Rule *First paid order of a customer*. |
+| Review request | triggered or transactional (you choose) | Order emails on | Rule *Review request*, 7 days after completion. |
 | Abandoned cart reminder | triggered | Abandoned cart emails on | Rule *Abandoned cart*, with the item list, restore button and – when switched on – the recovery coupon. |
 
 Rules: when a rule for the event already exists **without** an email, the new email is filled into it and the rule is switched on. When the existing rule already has an email, nothing is changed – select the new email there if you want it.
 
 **Triggered** emails are marketing emails: they belong to a subscriber list, only its active subscribers receive them, and they carry an unsubscribe link. Choose the list when you create them.
+
+For the **first order thank-you** and the **review request** you choose the **Email type** before creating:
+
+- **Marketing (triggered)** – the default. Only active subscribers of the chosen list get it, with an unsubscribe link. The safe choice when the email also promotes the shop.
+- **Transactional** – every customer gets it, subscribed or not, without an unsubscribe link. Keep the content about the order itself, without offers.
+
+The rule on the Order emails tab gets the same type. The abandoned cart reminder is always a marketing email.
 
 ## Texts
 

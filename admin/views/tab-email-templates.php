@@ -114,6 +114,9 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 		$cfbe_list   = (string) ( $cfbe_record['list_id'] ?? '' );
 		$cfbe_list   = '' !== $cfbe_list ? $cfbe_list : $cfbe_default;
 		$cfbe_id     = 'cfbe-template-' . $cfbe_key;
+		$cfbe_types  = Email_Templates::types( $cfbe_key );
+		$cfbe_type   = $cfbe_created ? (string) ( $cfbe_record['type'] ?? $cfbe_template['type'] ) : (string) $cfbe_template['type'];
+		$cfbe_choose = ! $cfbe_created && count( $cfbe_types ) > 1;
 		$cfbe_stale  = $cfbe_created && '' !== (string) ( $cfbe_record['design'] ?? '' ) && $cfbe_record['design'] !== $cfbe_hash;
 		$cfbe_status = __( 'Not created yet', 'connector-for-bluefox-email' );
 		$cfbe_class  = '';
@@ -128,7 +131,11 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 					<span class="cfbe-template__title"><?php echo esc_html( $cfbe_template['label'] ); ?></span>
 					<span class="cfbe-template__what"><?php echo esc_html( $cfbe_template['what'] ); ?></span>
 				</span>
-				<span class="cfbe-template__type is-<?php echo esc_attr( $cfbe_template['type'] ); ?>"><?php echo esc_html( 'triggered' === $cfbe_template['type'] ? __( 'Marketing', 'connector-for-bluefox-email' ) : __( 'Transactional', 'connector-for-bluefox-email' ) ); ?></span>
+				<?php if ( $cfbe_choose ) : ?>
+					<span class="cfbe-template__type"><?php esc_html_e( 'Marketing or transactional', 'connector-for-bluefox-email' ); ?></span>
+				<?php else : ?>
+					<span class="cfbe-template__type is-<?php echo esc_attr( $cfbe_type ); ?>"><?php echo esc_html( 'triggered' === $cfbe_type ? __( 'Marketing', 'connector-for-bluefox-email' ) : __( 'Transactional', 'connector-for-bluefox-email' ) ); ?></span>
+				<?php endif; ?>
 				<span class="cfbe-template__status <?php echo esc_attr( $cfbe_class ); ?>"><?php echo esc_html( $cfbe_status ); ?></span>
 			</summary>
 
@@ -145,16 +152,18 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 					<dd><?php echo esc_html( $cfbe_template['why'] ); ?></dd>
 					<dt><?php esc_html_e( 'When it is sent', 'connector-for-bluefox-email' ); ?></dt>
 					<dd><?php echo esc_html( $cfbe_template['when'] ); ?></dd>
-					<dt><?php esc_html_e( 'Email type', 'connector-for-bluefox-email' ); ?></dt>
-					<dd>
-						<?php
-						echo esc_html(
-							'triggered' === $cfbe_template['type']
-								? __( 'Marketing (triggered): bluefox delivers it only to active subscribers of the chosen list, with an unsubscribe link.', 'connector-for-bluefox-email' )
-								: __( 'Transactional: a service email every recipient gets, no unsubscribe link needed.', 'connector-for-bluefox-email' )
-						);
-						?>
-					</dd>
+					<?php if ( ! $cfbe_choose ) : ?>
+						<dt><?php esc_html_e( 'Email type', 'connector-for-bluefox-email' ); ?></dt>
+						<dd>
+							<?php
+							echo esc_html(
+								'triggered' === $cfbe_type
+									? __( 'Marketing (triggered): bluefox delivers it only to active subscribers of the chosen list, with an unsubscribe link.', 'connector-for-bluefox-email' )
+									: __( 'Transactional: a service email every recipient gets, no unsubscribe link needed.', 'connector-for-bluefox-email' )
+							);
+							?>
+						</dd>
+					<?php endif; ?>
 					<?php if ( $cfbe_created ) : ?>
 						<dt><?php esc_html_e( 'Status', 'connector-for-bluefox-email' ); ?></dt>
 						<dd>
@@ -210,7 +219,19 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 								</td>
 							</tr>
 						<?php endif; ?>
-						<?php if ( ! $cfbe_created && ( 'triggered' === $cfbe_template['type'] || 'confirm' === $cfbe_key ) ) : ?>
+						<?php if ( $cfbe_choose ) : ?>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Email type', 'connector-for-bluefox-email' ); ?></th>
+							<td>
+								<fieldset>
+									<legend class="screen-reader-text"><?php esc_html_e( 'Email type', 'connector-for-bluefox-email' ); ?></legend>
+									<label><input type="radio" name="email_type" value="triggered" checked> <strong><?php esc_html_e( 'Marketing (triggered)', 'connector-for-bluefox-email' ); ?></strong> – <?php esc_html_e( 'only active subscribers of the chosen list get it, with an unsubscribe link. The safe choice when the email also promotes the shop.', 'connector-for-bluefox-email' ); ?></label><br>
+									<label><input type="radio" name="email_type" value="transactional"> <strong><?php esc_html_e( 'Transactional', 'connector-for-bluefox-email' ); ?></strong> – <?php esc_html_e( 'every customer gets it, subscribed or not, without an unsubscribe link. Keep the content about the order itself, without offers.', 'connector-for-bluefox-email' ); ?></label>
+								</fieldset>
+							</td>
+						</tr>
+					<?php endif; ?>
+					<?php if ( ! $cfbe_created && ( in_array( 'triggered', $cfbe_types, true ) || 'confirm' === $cfbe_key ) ) : ?>
 							<tr>
 								<th scope="row"><label for="<?php echo esc_attr( $cfbe_id . '-list' ); ?>"><?php esc_html_e( 'Subscriber list', 'connector-for-bluefox-email' ); ?></label></th>
 								<td>
@@ -227,7 +248,7 @@ foreach ( $cfbe_groups as $cfbe_group => $cfbe_group_text ) :
 										echo esc_html(
 											'confirm' === $cfbe_key
 												? __( 'Double opt-in is switched on for this list with the new email.', 'connector-for-bluefox-email' )
-												: __( 'Only active subscribers of this list receive the email.', 'connector-for-bluefox-email' )
+												: ( $cfbe_choose ? __( 'Marketing emails only: its active subscribers receive the email.', 'connector-for-bluefox-email' ) : __( 'Only active subscribers of this list receive the email.', 'connector-for-bluefox-email' ) )
 										);
 										?>
 									</p>

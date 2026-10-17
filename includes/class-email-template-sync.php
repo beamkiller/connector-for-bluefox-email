@@ -40,15 +40,17 @@ final class Email_Template_Sync {
 	 * @param string $identity Sender identity ID ('' = project default).
 	 * @param string $list_id  List (triggered emails: required; confirmation: the list to use it on).
 	 * @param bool   $assign   Wire it up (coupon email, rule, double opt-in email).
+	 * @param string $type     Email type chosen by the admin ('' = the template's default; see Email_Templates::types()).
 	 * @return array|\WP_Error email_id, notes.
 	 */
-	public function create( string $key, array $texts, string $identity, string $list_id, bool $assign ) {
+	public function create( string $key, array $texts, string $identity, string $list_id, bool $assign, string $type = '' ) {
 		$definition = Email_Templates::definitions()[ $key ] ?? null;
 		if ( null === $definition ) {
 			return new \WP_Error( 'cfbe_template_unknown', __( 'Unknown email template.', 'connector-for-bluefox-email' ) );
 		}
-		$type    = (string) $definition['type'];
-		$payload = Email_Templates::render( $key, $texts );
+		$type               = in_array( $type, Email_Templates::types( $key ), true ) ? $type : (string) $definition['type'];
+		$definition['type'] = $type;
+		$payload            = Email_Templates::render( $key, $texts, $type );
 		if ( '' !== $identity ) {
 			$payload['senderIdentity'] = $identity;
 		}
@@ -118,7 +120,7 @@ final class Email_Template_Sync {
 			return new \WP_Error( 'cfbe_template_changed', __( 'This email was changed in bluefox after it was created here. Updating it replaces those changes.', 'connector-for-bluefox-email' ) );
 		}
 
-		$email   = Email_Templates::render( $key, $texts );
+		$email   = Email_Templates::render( $key, $texts, $type );
 		$updated = $this->client->update_email(
 			$type,
 			$id,
