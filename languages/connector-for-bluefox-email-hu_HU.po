@@ -10,9 +10,8 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: connector-for-bluefox-email.php
-#: includes/class-privacy.php:133
-msgid "Connector for bluefox.email"
-msgstr "Connector for bluefox.email"
+msgid "Connector for bluefox.email – Newsletter & WooCommerce Emails"
+msgstr "Connector for bluefox.email – Hírlevél és WooCommerce e-mailek"
 
 #. Plugin URI of the plugin
 #: connector-for-bluefox-email.php
@@ -2404,6 +2403,10 @@ msgstr "AI ügynökök olvashatják és módosíthatják ezeket a beállítások
 #: includes/class-privacy.php:118
 msgid "Newsletter coupon (personal data erased)"
 msgstr "Hírlevél kupon (személyes adatok törölve)"
+
+#: includes/class-privacy.php:133
+msgid "Connector for bluefox.email"
+msgstr "Connector for bluefox.email"
 
 #: includes/class-privacy.php:142
 msgid "Suggested text:"
