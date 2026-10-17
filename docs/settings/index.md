@@ -4,6 +4,8 @@ All settings are under **bluefox.email** in the wp-admin menu (`wp-admin/admin.p
 
 The tabs are grouped under five main tabs; the sub-tabs of the active group are shown as links below them:
 
+![Grouped settings navigation](../assets/images/settings-navigation.png)
+
 | Main tab | Sub-tabs |
 |---|---|
 | General | General |
