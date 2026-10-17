@@ -12,12 +12,14 @@ Start with **bluefox.email → Logs**. Most problems show up there as a bluefox 
 
 - Double opt-in must be **on** for the list in bluefox, with a confirmation email selected. The plugin never sends it itself. See [Set up your bluefox list](../getting-started/bluefox-list.md).
 - New bluefox projects are in a **sandbox** with a small daily limit and a sandbox sender address. Check the spam folder and the bluefox sending limits.
-- An address that was suppressed or bounced in bluefox is rejected (bluefox 405). The visitor sees the error message and the log says so.
+- An address that was suppressed or bounced in bluefox is rejected (bluefox 405). The visitor still sees the success message, so the form does not reveal it; the Subscribers tab shows the row as *Failed* and the log says so.
+- The confirmation email is re-sent at most once a day per mailbox. Repeated signups within a day do not send another one.
+- A form for a list created after the last **Load lists** subscribes to the default list. Click **Load lists** on the General tab.
 
 ## Confirmed, but no coupon
 
 1. Is the **Welcome coupon** feature on and a **Coupon email ID** set on the Coupon tab?
-2. Did the signup come through this plugin, and was the person new to the list? Existing and reactivated subscribers get no coupon.
+2. Did the signup come through this plugin, and was the person new to the list? Existing and reactivated subscribers get no coupon. With **One coupon per mailbox**, an alias (`name+tag@`, Gmail dots) of an address that already got a coupon gets none either.
 3. Is **Reward signups on list** set to another list than the one the form used?
 4. Has the confirmation been detected? Without a webhook it takes up to 15 minutes. Run `wp cfbe poll` to check pending signups now, and `wp cfbe status <email>` to see the local and bluefox status.
 
@@ -40,13 +42,19 @@ bluefox authenticates the project webhook with `Authorization: Bearer <API key>`
 
 Use **Send test event** and **Check status** on the Webhooks tab to test. Polling still confirms signups while the webhook is broken, only slower.
 
+## Behind Cloudflare or a proxy
+
+Behind Cloudflare, a load balancer or a reverse proxy every visitor reaches PHP from the proxy's address. The signup limits (5 per IP per 10 minutes) then hit all visitors at once, and consent records store the proxy's IP. Set **Privacy → Visitor IP address** to the header your proxy sets: *Cloudflare (CF-Connecting-IP)*, *Proxy / load balancer (X-Forwarded-For)* or *Proxy (X-Real-IP)*.
+
+Only choose a header that a trusted proxy in front of your server sets. If visitors can reach the server directly, they can send the header themselves and dodge the rate limits. For another header, use the [`cfbe_client_ip`](../developers/hooks.md#core) filter.
+
 ## Caching
 
 Forms are cache-safe: they contain no nonces and nothing visitor-specific. Still:
 
 - **JavaScript delay / combine.** Exclude `cfbe-form.js` and `cfbe-popup.js` from "Delay JavaScript execution" (WP Rocket) or similar options, or the popup and the form submit won't work until the visitor interacts with the page.
 - **Changed texts or the coupon value still show the old version.** Saving the Form, Popup or Coupon tab purges WP Rocket's cache automatically. Other cache plugins: purge manually, or hook `cfbe_purge_page_cache` (see [Hooks](../developers/hooks.md)).
-- **The REST API must not be cached.** Exclude `/wp-json/` from page caches and CDNs, or at least `/wp-json/cfbe/v1/`.
+- **The REST API must not be cached.** Exclude `/wp-json/` from page caches and CDNs, or at least `/wp-json/cfbe/v1/`. The form fetches a fresh fill-time token from `/wp-json/cfbe/v1/form-token`; a cached token expires after 2 hours and then every signup is silently dropped.
 - **Unstyled form for a moment.** Turn on **Form → Load CSS/JS on every page** when a page builder adds the form late.
 - The preferences page sends no-cache headers and defines `DONOTCACHEPAGE` when a token is present. If your CDN ignores those, exclude the page.
 

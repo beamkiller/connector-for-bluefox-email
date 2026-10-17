@@ -15,8 +15,13 @@ defined( 'ABSPATH' ) || exit;
  */
 class Subscription_Service {
 
-	const RETRY_HOOK   = 'cfbe_retry_subscribe';
-	const RETRY_DELAYS = array(
+	const RETRY_HOOK = 'cfbe_retry_subscribe';
+
+	// Every source together: signups per mailbox and hour, confirmation emails re-sent per mailbox and day.
+	const MAILBOX_LIMIT  = 3;
+	const MAILBOX_WINDOW = 3600;
+	const RESEND_WINDOW  = 86400;
+	const RETRY_DELAYS   = array(
 		1 => 300,
 		2 => 1800,
 		3 => 7200,
@@ -58,6 +63,13 @@ class Subscription_Service {
 	private $validator;
 
 	/**
+	 * Rate limiter.
+	 *
+	 * @var Rate_Limiter
+	 */
+	private $limiter;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Bluefox_Client|null   $client     Client (null when bluefox is not configured).
@@ -65,13 +77,15 @@ class Subscription_Service {
 	 * @param Jobs                  $jobs       Jobs.
 	 * @param Logger                $logger     Logger.
 	 * @param Signup_Validator|null $validator  Validator.
+	 * @param Rate_Limiter|null     $limiter    Rate limiter.
 	 */
-	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, ?Signup_Validator $validator = null ) {
+	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, ?Signup_Validator $validator = null, ?Rate_Limiter $limiter = null ) {
 		$this->client     = $client;
 		$this->repository = $repository;
 		$this->jobs       = $jobs;
 		$this->logger     = $logger;
 		$this->validator  = $validator ? $validator : new Signup_Validator();
+		$this->limiter    = $limiter ? $limiter : new Rate_Limiter();
 	}
 
 	/**
@@ -79,6 +93,20 @@ class Subscription_Service {
 	 */
 	public function register(): void {
 		add_action( self::RETRY_HOOK, array( $this, 'retry' ), 10, 3 );
+		add_action( 'cfbe_signup_confirmed', array( $this, 'on_confirmed' ), 5, 3 );
+	}
+
+	/**
+	 * `cfbe_signup_confirmed`: the confirmation proved who owns the address.
+	 *
+	 * @param string $email   Email address.
+	 * @param string $list_id List ID.
+	 * @param array  $row     Local signup row.
+	 */
+	public function on_confirmed( $email, $list_id, $row ): void {
+		if ( is_array( $row ) ) {
+			$this->apply_deferred( $row );
+		}
 	}
 
 	/**
@@ -86,7 +114,9 @@ class Subscription_Service {
 	 *
 	 * @param array  $input  email, name, interests, consent, consent_text, ip, order_id, place (placement tag),
 	 *                       list_id (trusted: checked by the caller; default list when empty), tags (extra tags),
-	 *                       fields (extra bluefox contact fields as flat keys), skip_form_rules (no interest/name rules).
+	 *                       fields (extra bluefox contact fields as flat keys), skip_form_rules (no interest/name rules),
+	 *                       owner_verified (the request comes from the address owner's own account: an existing
+	 *                       contact may be updated at once; otherwise changes wait for the confirmation).
 	 * @param string $source popup | shortcode | block | promo | checkout | integration slug.
 	 */
 	public function subscribe( array $input, string $source ): Subscribe_Result {
@@ -107,7 +137,11 @@ class Subscription_Service {
 			);
 		}
 
-		$data    = $validation['data'];
+		$data = $validation['data'];
+		if ( ! $this->limiter->hit( 'mailbox', Subscriber_Repository::mailbox( $data['email'] ), self::MAILBOX_LIMIT, self::MAILBOX_WINDOW ) ) {
+			$this->logger->warning( 'Signup rate limited (mailbox)', array( 'email' => $data['email'] ) );
+			return new Subscribe_Result( Subscribe_Result::RATE_LIMITED, __( 'Too many attempts, please try again later.', 'connector-for-bluefox-email' ), array(), 429 );
+		}
 		$tags    = Signup_Validator::tags_for( $data['interests'], $source, (string) ( $input['place'] ?? '' ) );
 		$tags    = array_values( array_unique( array_merge( $tags, Signup_Validator::clean_tags( (array) ( $input['tags'] ?? array() ) ) ) ) );
 		$list_id = self::list_id( (string) ( $input['list_id'] ?? '' ) );
@@ -130,7 +164,7 @@ class Subscription_Service {
 			)
 		);
 
-		return $this->sync( $data['email'], $data['name'], $tags, $source, 0, $is_new_row, $list_id, $fields );
+		return $this->sync( $data['email'], $data['name'], $tags, $source, 0, $is_new_row, $list_id, $fields, ! empty( $input['owner_verified'] ) );
 	}
 
 	/**
@@ -186,8 +220,9 @@ class Subscription_Service {
 	 * @param bool     $is_new_row Whether this request created the local row.
 	 * @param string   $list_id    bluefox list ID.
 	 * @param array    $fields     Extra contact fields.
+	 * @param bool     $verified   The address owner made the request (see subscribe()).
 	 */
-	private function sync( string $email, string $name, array $tags, string $source, int $attempt, bool $is_new_row, string $list_id, array $fields = array() ): Subscribe_Result {
+	private function sync( string $email, string $name, array $tags, string $source, int $attempt, bool $is_new_row, string $list_id, array $fields = array(), bool $verified = false ): Subscribe_Result {
 		if ( null === $this->client || '' === $list_id ) {
 			$this->logger->error( 'Subscribe skipped: bluefox is not configured', array( 'email' => $email ) );
 			return $this->finish( $email, $source, $this->rejected() );
@@ -220,11 +255,14 @@ class Subscription_Service {
 					// A retry found the signup already in bluefox (an earlier attempt went through): don't resend the DOI email.
 					return $this->finish( $email, $source, $this->message_result( Subscribe_Result::PENDING, 'msg_pending' ) );
 				}
-				$sent = $this->client->resend_verification( $list_id, $email );
-				if ( is_wp_error( $sent ) ) {
-					return $this->finish( $email, $source, $this->handle_error( $sent, $email, $source, $attempt ) );
+				// One confirmation email per mailbox and day, whoever asks.
+				if ( $this->limiter->hit( 'resend', Subscriber_Repository::mailbox( $email ), 1, self::RESEND_WINDOW ) ) {
+					$sent = $this->client->resend_verification( $list_id, $email );
+					if ( is_wp_error( $sent ) ) {
+						return $this->finish( $email, $source, $this->handle_error( $sent, $email, $source, $attempt ) );
+					}
 				}
-				$this->merge_contact( $email, $name, $tags, $fields );
+				$this->update_or_defer( $email, $name, $tags, $fields, $verified );
 				return $this->finish( $email, $source, $this->message_result( Subscribe_Result::RESENT, 'msg_pending' ) );
 
 			case 'active':
@@ -233,16 +271,27 @@ class Subscription_Service {
 				if ( 0 === $attempt && $is_new_row ) {
 					$this->repository->mark_existing( $email );
 				}
-				$this->merge_contact( $email, $name, $tags, $fields );
+				if ( $verified ) {
+					// Nobody else may change an active contact: there is no confirmation step left to prove ownership.
+					$this->merge_contact( $email, $name, $tags, $fields );
+				}
 				return $this->finish( $email, $source, $this->message_result( Subscribe_Result::ALREADY, 'msg_already' ) );
 
 			case 'unsubscribed':
 				// bluefox re-runs double opt-in: its confirmation email goes out again, the status stays unsubscribed until the click.
-				return $this->finish( $email, $source, $this->resubscribe( $email, $name, $tags, $source, $attempt, Subscribe_Result::PENDING, $list_id, $fields ) );
+				if ( ! $verified && ! $this->limiter->hit( 'resend', Subscriber_Repository::mailbox( $email ), 1, self::RESEND_WINDOW ) ) {
+					return $this->finish( $email, $source, $this->message_result( Subscribe_Result::RESENT, 'msg_pending' ) );
+				}
+				return $this->finish( $email, $source, $this->resubscribe( $email, $name, $tags, $source, $attempt, Subscribe_Result::PENDING, $list_id, $fields, $verified ) );
 
 			case 'paused':
 				// Paused never withdrew consent: bluefox makes them active at once, without an email. Not a new subscriber → no coupon.
-				return $this->finish( $email, $source, $this->resubscribe( $email, $name, $tags, $source, $attempt, Subscribe_Result::ALREADY, $list_id, $fields ) );
+				// Only the owner may do that; anyone else could switch a paused newsletter back on.
+				if ( ! $verified ) {
+					$this->repository->mark_existing( $email );
+					return $this->finish( $email, $source, $this->message_result( Subscribe_Result::ALREADY, 'msg_already' ) );
+				}
+				return $this->finish( $email, $source, $this->resubscribe( $email, $name, $tags, $source, $attempt, Subscribe_Result::ALREADY, $list_id, $fields, true ) );
 
 			default:
 				$this->logger->warning( 'Unknown bluefox subscriber status', array( 'status' => $status ) );
@@ -261,11 +310,12 @@ class Subscription_Service {
 	 * @param string   $code       Result code on success (PENDING: confirmation email sent; ALREADY: active again).
 	 * @param string   $list_id    bluefox list ID.
 	 * @param array    $fields     Extra contact fields.
+	 * @param bool     $verified   The address owner made the request.
 	 */
-	private function resubscribe( string $email, string $name, array $tags, string $source, int $attempt, string $code, string $list_id, array $fields = array() ): Subscribe_Result {
+	private function resubscribe( string $email, string $name, array $tags, string $source, int $attempt, string $code, string $list_id, array $fields = array(), bool $verified = false ): Subscribe_Result {
 		// No tags in the body: bluefox replaces them on an existing contact; merge_contact() adds ours.
 		$body = array( 'email' => $email );
-		if ( '' !== $name ) {
+		if ( '' !== $name && $verified ) {
 			$body['name'] = $name;
 		}
 		$added = $this->client->add_subscriber( $list_id, $body );
@@ -277,8 +327,38 @@ class Subscription_Service {
 			// Paused means they were active before, so a pending row can only be this signup (also on a retry).
 			$this->repository->mark_existing( $email );
 		}
-		$this->merge_contact( $email, $name, $tags, $fields );
+		$this->update_or_defer( $email, $name, $tags, $fields, $verified );
 		return $this->message_result( $code, Subscribe_Result::ALREADY === $code ? 'msg_already' : 'msg_pending' );
+	}
+
+	/**
+	 * Updates an existing contact now when the owner asked, otherwise after the confirmation (Reward_Service).
+	 *
+	 * @param string   $email    Email.
+	 * @param string   $name     Name.
+	 * @param string[] $tags     Tags to add.
+	 * @param array    $fields   Extra contact fields.
+	 * @param bool     $verified The address owner made the request.
+	 */
+	private function update_or_defer( string $email, string $name, array $tags, array $fields, bool $verified ): void {
+		if ( $verified ) {
+			$this->merge_contact( $email, $name, $tags, $fields );
+			return;
+		}
+		$this->repository->set_merge_pending( $email, true );
+	}
+
+	/**
+	 * After a confirmation: adds the name and tags of a signup that was waiting for it (see update_or_defer()).
+	 *
+	 * @param array $row Local signup row.
+	 */
+	public function apply_deferred( array $row ): void {
+		if ( null === $this->client || empty( $row['merge_pending'] ) ) {
+			return;
+		}
+		$this->merge_contact( (string) $row['email'], (string) ( $row['name'] ?? '' ), (array) ( $row['tags'] ?? array() ) );
+		$this->repository->set_merge_pending( (string) $row['email'], false );
 	}
 
 	/**
@@ -328,7 +408,8 @@ class Subscription_Service {
 		if ( 405 === $status ) {
 			$this->repository->mark_failed( $email, 'bluefox 405: ' . $error->get_error_message() );
 			$this->logger->warning( 'Signup rejected by bluefox (suppressed/bounced)', $ctx );
-			return $this->rejected( 422 );
+			// Visitors see the normal message: an error would tell anyone which addresses bounced or complained.
+			return new Subscribe_Result( Subscribe_Result::SUPPRESSED, (string) Settings::get( 'form', 'msg_pending' ) );
 		}
 
 		if ( self::is_transient( $error, $status ) ) {

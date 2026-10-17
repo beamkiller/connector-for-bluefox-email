@@ -60,16 +60,30 @@
 			interests: interests,
 			consent: field( form, 'consent' ).checked,
 			source: form.getAttribute( 'data-cfbe-source' ) || 'shortcode',
-			place: form.getAttribute( 'data-cfbe-place' ) || '',
 			cfbe_cfg: cfg ? cfg.value : '',
 			cfbe_hp: hp ? hp.value : '',
-			cfbe_elapsed: elapsed( form ),
 		};
 	}
 
-	// Ms since the form became visible; falls back to time since page load.
-	function elapsed( form ) {
-		return Math.round( form.cfbeShownAt ? now() - form.cfbeShownAt : now() );
+	// Fill-time token signed by the site (bot trap). Fetched when the form shows, so the page itself can be cached.
+	function fetchToken( form ) {
+		if ( form.cfbeTokenPromise ) {
+			return form.cfbeTokenPromise;
+		}
+		form.cfbeTokenPromise = fetch( config.tokenUrl, { credentials: 'same-origin', cache: 'no-store' } )
+			.then( function ( res ) {
+				return res.json();
+			} )
+			.then( function ( json ) {
+				form.cfbeToken = ( json && json.token ) || '';
+				form.cfbeTokenAt = now();
+				return form.cfbeToken;
+			} )
+			.catch( function () {
+				form.cfbeTokenPromise = null; // Try again on submit.
+				return '';
+			} );
+		return form.cfbeTokenPromise;
 	}
 
 	// Mirrors the server rules; the server stays the authority.
@@ -154,15 +168,19 @@
 
 		busy( form, true );
 
-		// The server silently drops submissions faster than minElapsed (bot trap). A real person who
-		// autofills and clicks quickly must not be dropped, so wait out the remainder first.
-		// wp_localize_script() stringifies values: "2500" + 200 would concatenate, so cast.
-		var wait = Math.max( 0, ( Number( config.minElapsed ) || 0 ) + 200 - data.cfbe_elapsed );
-		new Promise( function ( resolve ) {
-			setTimeout( resolve, wait );
-		} )
+		// The server silently drops a submission whose token is younger than minElapsed (bot trap). A real person
+		// who autofills and clicks quickly must not be dropped, so wait out the remainder first.
+		// wp_localize_script() stringifies values: "3000" + 300 would concatenate, so cast.
+		fetchToken( form )
 			.then( function () {
-				data.cfbe_elapsed = elapsed( form );
+				var age = form.cfbeTokenAt ? now() - form.cfbeTokenAt : 0;
+				var wait = Math.max( 0, ( Number( config.minElapsed ) || 0 ) + 300 - age );
+				return new Promise( function ( resolve ) {
+					setTimeout( resolve, wait );
+				} );
+			} )
+			.then( function () {
+				data.cfbe_token = form.cfbeToken || '';
 				return fetch( config.restUrl, {
 					method: 'POST',
 					credentials: 'same-origin',
@@ -202,6 +220,7 @@
 	function startTimer( form ) {
 		if ( ! form.cfbeShownAt ) {
 			form.cfbeShownAt = now();
+			fetchToken( form );
 		}
 	}
 
@@ -224,7 +243,7 @@
 			}
 		} );
 
-		// The fill-time clock starts when the form is actually visible (popup forms: on open).
+		// The fill-time token is fetched when the form is actually visible (popup forms: on open).
 		if ( form.getAttribute( 'data-cfbe-source' ) === 'popup' ) {
 			return;
 		}

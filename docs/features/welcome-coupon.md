@@ -9,11 +9,14 @@ New subscribers get a single-use WooCommerce coupon by email **after** they conf
 ## Rules
 
 - **One coupon per email address.** The lookup is by the normalised email; a second signup never creates a second coupon.
+- **One coupon per mailbox** (Coupon tab, **Email aliases**, on by default). Aliases such as `name+shop@example.com` and Gmail addresses written with dots (`j.ane@gmail.com`, also `googlemail.com`) count as the same mailbox. An alias of an address that already got a coupon gets none: its row becomes *Already subscribed (no coupon)* with a note.
 - **Only new subscribers who signed up through this plugin.** People who were already active on the list, came back from *paused*, or reached the list another way (bluefox import, bluefox's own form) get no coupon.
 - **Only after confirmation.** The status is read from the bluefox API before the coupon is created. Signups not confirmed within the **Confirmation deadline** (Emails tab, default 14 days) expire without a coupon.
 - **Only on the chosen list** if **Reward signups on list** is set; otherwise confirmed signups on any list qualify.
 
 Tell visitors in your offer: one welcome coupon per email address, redeemable in the cart.
+
+When a personal data erasure request is processed, unused welcome coupons of the address are deleted and used ones are anonymised. See [Privacy and GDPR](../help/privacy.md#export-and-erase-personal-data).
 
 ## The coupon
 

@@ -24,7 +24,7 @@ Without a token, or with an invalid or expired one, the page asks the visitor to
 
 - **The token is the credential.** bluefox signs it. The plugin reads the email address and project from it, checks that the project matches yours, and calls the bluefox API with the token itself – never with your API key. bluefox verifies the signature.
 - The token is never stored or logged. The page sends `Referrer-Policy: no-referrer`, so it does not leak to linked sites.
-- The buttons are plain HTML forms (no JavaScript). The change is a `POST` followed by a redirect, and changes are rate limited (20 per IP per 10 minutes).
+- The buttons are plain HTML forms (no JavaScript). The change is a `POST` followed by a redirect, and changes are rate limited (20 per IP per 10 minutes). Page views with a token are limited too (30 per IP per 10 minutes), because each one calls bluefox.
 - With a token the page sends no-cache headers and defines `DONOTCACHEPAGE`, so page caches do not store it.
 - The new status is also stored on the local signup row, so the **Subscribers** tab and the [abandoned cart](abandoned-carts.md) opt-in check know about it.
 

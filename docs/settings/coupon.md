@@ -20,6 +20,7 @@ The top of the tab shows an example of the coupon with the current settings, e.g
 | Restrictions → Not valid on sale items | `cfbe_coupon[exclude_sale_items]` | on | WooCommerce *Exclude sale items*. |
 | Restrictions → Also grants free shipping | `cfbe_coupon[free_shipping]` | off | WooCommerce *Allow free shipping*. |
 | Code prefix | `cfbe_coupon[code_prefix]` | `WELCOME-` | Uppercased; letters, digits and hyphens; max. 10 characters. 8 random characters are appended. |
+| Email aliases → One coupon per mailbox | `cfbe_coupon[one_per_mailbox]` | on | Aliases such as `name+shop@example.com` and Gmail addresses written with dots (`j.ane@gmail.com`) count as one address, so one person cannot collect several coupons. The alias's row gets the status *Already subscribed (no coupon)* with a note. Off: each address gets its own coupon. |
 
 ## "Your coupon expires soon" reminder
 

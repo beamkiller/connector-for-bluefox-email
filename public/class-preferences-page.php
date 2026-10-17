@@ -31,6 +31,7 @@ final class Preferences_Page {
 	const MONTHS     = array( 1, 3, 6 );
 	const DONE       = array( 'paused', 'unsubscribed', 'resubscribed', 'error', 'expired' );
 	const RATE_LIMIT = 20;
+	const VIEW_LIMIT = 30; // Page views with a token per IP and 10 minutes.
 
 	/**
 	 * Builds the token-authorised client for a project ID.
@@ -231,6 +232,11 @@ final class Preferences_Page {
 		$html = '';
 		if ( '' !== $done ) {
 			$html .= $this->done_notice( $done );
+		}
+
+		// Every view with a token calls bluefox and bypasses page caches: limit it like the buttons.
+		if ( ! $this->limiter->hit( 'prefs_view', Rate_Limiter::client_ip(), self::VIEW_LIMIT, 600 ) ) {
+			return $html . $this->notice( __( 'We can’t load your preferences right now. Please try again in a few minutes.', 'connector-for-bluefox-email' ), 'error' );
 		}
 
 		$client = ( $this->client_factory )( $token->project_id );

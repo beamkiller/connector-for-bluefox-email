@@ -76,6 +76,13 @@ $cfbe_lists  = List_Options::lists( (string) $cfbe_values['list_id'] );
 			<th scope="row"><label for="cfbe-prefix"><?php esc_html_e( 'Code prefix', 'connector-for-bluefox-email' ); ?></label></th>
 			<td><input type="text" class="small-text code" id="cfbe-prefix" maxlength="10" name="<?php echo esc_attr( $cfbe_name( 'code_prefix' ) ); ?>" value="<?php echo esc_attr( $cfbe_values['code_prefix'] ); ?>"></td>
 		</tr>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'Email aliases', 'connector-for-bluefox-email' ); ?></th>
+			<td>
+				<label><input type="checkbox" name="<?php echo esc_attr( $cfbe_name( 'one_per_mailbox' ) ); ?>" value="1" <?php checked( $cfbe_values['one_per_mailbox'] ); ?>> <?php esc_html_e( 'One coupon per mailbox', 'connector-for-bluefox-email' ); ?></label>
+				<p class="description"><?php esc_html_e( 'Aliases such as name+shop@example.com and Gmail addresses written with dots (j.ane@gmail.com) count as the same address, so one person cannot collect several coupons. Turn it off to give each address its own coupon.', 'connector-for-bluefox-email' ); ?></p>
+			</td>
+		</tr>
 	</table>
 
 	<h2><?php esc_html_e( '“Your coupon expires soon” reminder', 'connector-for-bluefox-email' ); ?></h2>

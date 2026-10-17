@@ -1,10 +1,11 @@
 # REST API
 
-The plugin registers three routes under the `cfbe/v1` namespace. All responses send `Cache-Control: no-store`.
+The plugin registers four routes under the `cfbe/v1` namespace. All responses send `Cache-Control: no-store`.
 
 | Route | Method | Used by | Auth |
 |---|---|---|---|
-| `/wp-json/cfbe/v1/subscribe` | POST | the signup forms and the popup | none (public); honeypot, time trap, rate limits |
+| `/wp-json/cfbe/v1/subscribe` | POST | the signup forms and the popup | none (public); honeypot, fill-time token, rate limits |
+| `/wp-json/cfbe/v1/form-token` | GET | the form script | none (public) |
 | `/wp-json/cfbe/v1/bluefox-hook` | POST | bluefox webhooks | Bearer API key or `X-CFBE-Secret` |
 | `/wp-json/cfbe/v1/cart-email` | POST | the classic checkout (abandoned carts) | `wp_rest` nonce |
 
@@ -19,18 +20,23 @@ The plugin registers three routes under the `cfbe/v1` namespace. All responses s
 | `name` | Name (optional, depending on the Form tab). |
 | `interests` | Array of interest tags (only configured tags are accepted). |
 | `consent` | `true` – the consent checkbox. |
-| `place` | Placement name (adds `placement-<name>`). |
-| `cfbe_cfg` | The signed list / tags configuration printed in the form. Unsigned or tampered values are ignored. |
+| `cfbe_cfg` | The signed form configuration printed in the form: list, extra tags and placement name (`placement-<name>` tag). Unsigned or tampered values are ignored. |
 | `cfbe_hp` | Honeypot; must be empty. |
-| `cfbe_elapsed` | Milliseconds since the form was shown. |
+| `cfbe_token` | Fill-time token from [`/form-token`](#form-token). |
 
 The consent text is never taken from the request: the plugin stores the text configured on the Form tab.
+
+A signed list only applies when it is one of the project's lists an admin has loaded (General tab, **Load lists**, remembered in the `cfbe_known_lists` option) or a list chosen in the settings (default, popup, checkout or coupon list). Otherwise the signup goes to the default list.
 
 Protection:
 
 - body larger than 4 KB → 413;
-- honeypot filled or `cfbe_elapsed` under 2500 ms → a fake success, nothing is stored;
-- more than 5 requests per IP in 10 minutes, or 3 per email address in an hour → 429.
+- honeypot filled, or `cfbe_token` missing, invalid, younger than 3 seconds or older than 2 hours → a fake success, nothing is stored;
+- more than 5 requests per IP in 10 minutes (IPv6: per /64 range) → 429;
+- more than 30 signups per minute for the whole site ([`cfbe_signup_site_limit`](hooks.md#signups-and-confirmation)) → 429;
+- more than 3 signups per mailbox in an hour → 429. This limit is applied by the signup service, so it covers every source: forms, checkout, My Account and form plugin integrations. *Mailbox* means the address lowercased, without a `+tag`, and for Gmail without dots (`googlemail.com` counts as `gmail.com`).
+
+The visitor IP comes from the **Visitor IP address** setting on the Privacy tab, then the [`cfbe_client_ip`](hooks.md#core) filter.
 
 Response:
 
@@ -40,15 +46,19 @@ Response:
 
 | `code` | `success` | Meaning |
 |---|---|---|
-| `pending` | true | Added; bluefox sends the confirmation email. |
-| `resent` | true | Was unconfirmed; bluefox re-sent the confirmation email. |
-| `already_active` | true | Already an active subscriber. |
-| `queued` | true | bluefox was unreachable; retried in the background. |
+| `pending` | true | Every successful outcome: new signup, already subscribed, confirmation re-sent, queued for retry, or a suppressed / bounced address. |
+| `already_active` | true | Already an active (or paused) subscriber. Only when **Form → Show the "Already subscribed" message** is on. |
 | `invalid` | false | Validation failed; `fields` maps field names to messages (HTTP 400). |
-| `rejected` | false | bluefox refused the address, or the plugin is not configured. |
+| `rejected` | false | The plugin is not configured, or another error. |
 | `rate_limited` | false | Too many attempts (HTTP 429). |
 
+The response is neutral on purpose, so the form never reveals who is subscribed. The internal codes (`resent`, `already_active`, `queued`, `suppressed`) are still passed to the [`cfbe_subscribed`](hooks.md#signups-and-confirmation) action.
+
 `message` is meant for the visitor: the success, already-subscribed and error texts come from the Form tab. Errors never disclose the reason bluefox gave.
+
+## Form token
+
+`GET /wp-json/cfbe/v1/form-token` returns `{ "token": "<time>.<signature>" }`, a fill-time token signed by the site (HMAC with the site's salt), sent with `Cache-Control: no-store`. The form script fetches it when the form becomes visible (popup: when it opens) and sends it as `cfbe_token`. If the visitor submits sooner than 3 seconds after the fetch, the script waits out the rest, so fast autofill is not dropped. Because the token is fetched at run time, forms keep working on cached pages.
 
 ## bluefox webhook
 
@@ -78,7 +88,7 @@ The webhook only queues work. The confirmation itself re-reads the subscriber's 
 
 ## Cart email
 
-`POST /wp-json/cfbe/v1/cart-email` – registered by the Abandoned cart emails module. On the classic checkout, the browser sends the email address the shopper typed (`email`, and `optin` for the newsletter checkbox) so the cart can be stored for a guest. It needs the `wp_rest` nonce in `X-WP-Nonce` and is limited to 20 requests per IP in 10 minutes. The block checkout does not use it.
+`POST /wp-json/cfbe/v1/cart-email` – registered by the Abandoned cart emails module. On the classic checkout, the browser sends the email address the shopper typed (`email`) so the cart can be stored for a guest. It needs the `wp_rest` nonce in `X-WP-Nonce` and is limited to 20 requests per IP in 10 minutes and 5 per mailbox in an hour (429). The block checkout does not use it.
 
 Response: `{ "stored": true|false }`.
 

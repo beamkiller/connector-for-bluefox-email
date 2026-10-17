@@ -19,7 +19,10 @@ defined( 'ABSPATH' ) || exit;
 final class Module {
 
 	const AREA = 'webhooks';
-	const JOB  = 'cfbe_webhook_process';
+
+	// Longest JSON payload handed to a background job as is.
+	const MAX_JOB_ARGS = 7000;
+	const JOB          = 'cfbe_webhook_process';
 
 	/**
 	 * Webhook config flags of the bluefox project webhook (PATCH /webhook).
@@ -127,8 +130,17 @@ final class Module {
 
 		Event_Log::add( $type, Event_Processor::email( $type, $payload ) );
 
-		if ( 0 === $this->plugin->jobs()->enqueue( self::JOB, array( $type, $payload ) ) ) {
-			// No Action Scheduler: the work is local only (meta + one row), so do it now.
+		// Action Scheduler refuses arguments over 8000 characters: a large body is cut to the fields we use.
+		if ( strlen( (string) wp_json_encode( $payload ) ) > self::MAX_JOB_ARGS ) {
+			$payload = Event_Processor::essentials( $payload );
+		}
+		try {
+			$queued = $this->plugin->jobs()->enqueue( self::JOB, array( $type, $payload ) );
+		} catch ( \Throwable $e ) {
+			$queued = 0;
+		}
+		if ( 0 === $queued ) {
+			// No Action Scheduler (or it refused the job): the work is local only (meta + one row), so do it now.
 			$this->run_job( $type, $payload );
 		}
 	}

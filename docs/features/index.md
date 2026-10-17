@@ -25,9 +25,13 @@ Every signup – form, popup, checkout or a third-party form – goes through th
 1. **Consent is recorded first.** The plugin stores a row in `{prefix}cfbe_subscribers` with the email, name, source, list, tags, the consent text, the (optionally anonymised) IP address and the time.
 2. **The contact is added to bluefox.** The plugin first looks the email up on the list:
     - not on the list → added without a status, so bluefox sends its double opt-in email;
-    - `unverified` → bluefox re-sends its confirmation email;
-    - `unsubscribed` → added again, bluefox runs double opt-in again;
-    - `active` → shown *Already subscribed*, tags and name are merged into the contact, no coupon;
-    - `paused` → made active again without an email, no coupon.
-3. **bluefox errors never lose a signup.** Network errors, rate limits and 5xx answers are retried in the background after 5 minutes, 30 minutes and 2 hours. A suppressed or bounced address (bluefox 405) is marked failed and the visitor sees the generic error message.
+    - `unverified` → the confirmation email is re-sent (at most once a day per mailbox); name and tags are applied after confirming;
+    - `unsubscribed` → added again, bluefox re-sends its confirmation email; name and tags are applied after confirming;
+    - `active` → nothing changes: no name or tag update, no coupon;
+    - `paused` → stays paused, nothing changes.
+
+    An unconfirmed request never changes an existing contact. Only when the address owner asks (a logged-in customer ordering with their own account email, or the My Account opt-in) is the contact updated at once, and a paused contact made active again.
+
+    The visitor sees the **Successful signup** message in every case, unless **Form → Show the "Already subscribed" message** is on. An address whose earlier signup expired or failed starts over as a new pending signup.
+3. **bluefox errors never lose a signup.** Network errors, rate limits and 5xx answers are retried in the background after 5 minutes, 30 minutes and 2 hours. A suppressed or bounced address (bluefox 405) is marked failed; the visitor sees the normal success message, so the form does not reveal it.
 4. **Confirmation is detected** by the [webhook](../getting-started/webhook.md) or by the 15-minute poll. The plugin re-reads the status from bluefox, marks the signup confirmed and fires `cfbe_signup_confirmed`. Unconfirmed signups expire after the **Confirmation deadline** (Emails tab, default 14 days).

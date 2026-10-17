@@ -16,14 +16,14 @@ defined( 'ABSPATH' ) || exit;
 final class Rest_Subscribe {
 
 	const ROUTE_NS    = 'cfbe/v1';
-	const MIN_ELAPSED = 2500;
+	const MIN_ELAPSED = Form_Config::MIN_FILL_SECONDS * 1000; // The form script waits this long (ms) after fetching its token.
 	const MAX_BODY    = 4096;
 	const SOURCES     = array( 'popup', 'shortcode', 'block', 'promo' );
 
-	const IP_LIMIT     = 5;
-	const IP_WINDOW    = 600;
-	const EMAIL_LIMIT  = 3;
-	const EMAIL_WINDOW = 3600;
+	const IP_LIMIT    = 5;
+	const IP_WINDOW   = 600;
+	const SITE_LIMIT  = 30; // Signups per minute for the whole site (filter `cfbe_signup_site_limit`).
+	const SITE_WINDOW = 60;
 
 	/**
 	 * Service.
@@ -79,6 +79,24 @@ final class Rest_Subscribe {
 				'permission_callback' => '__return_true',
 			)
 		);
+		register_rest_route(
+			self::ROUTE_NS,
+			'/form-token',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'token' ),
+				'permission_callback' => '__return_true', // Public: the token only proves when a form was shown.
+			)
+		);
+	}
+
+	/**
+	 * Fill-time token for the form script (never cached).
+	 */
+	public function token(): \WP_REST_Response {
+		$response = new \WP_REST_Response( array( 'token' => Form_Config::fill_token() ), 200 );
+		$response->header( 'Cache-Control', 'no-store, max-age=0' );
+		return $response;
 	}
 
 	/**
@@ -103,15 +121,15 @@ final class Rest_Subscribe {
 			);
 		}
 
-		// Bots: pretend success, store nothing.
+		// Bots: pretend success, store nothing. The fill-time token is signed by this site (see Form_Config).
 		$honeypot = (string) $request->get_param( 'cfbe_hp' );
-		$elapsed  = (int) $request->get_param( 'cfbe_elapsed' );
-		if ( '' !== $honeypot || $elapsed < self::MIN_ELAPSED ) {
+		$token_ok = Form_Config::fill_token_ok( $request->get_param( 'cfbe_token' ) );
+		if ( '' !== $honeypot || ! $token_ok ) {
 			$this->logger->info(
 				'Signup dropped by bot filter',
 				array(
 					'honeypot' => '' !== $honeypot,
-					'elapsed'  => $elapsed,
+					'token'    => $token_ok,
 				)
 			);
 			return $this->respond( new Subscribe_Result( Subscribe_Result::PENDING, (string) Settings::get( 'form', 'msg_pending' ) ) );
@@ -121,10 +139,17 @@ final class Rest_Subscribe {
 		if ( ! $this->limiter->hit( 'ip', $ip, self::IP_LIMIT, self::IP_WINDOW ) ) {
 			return $this->rate_limited();
 		}
-		$email = strtolower( sanitize_email( (string) $request->get_param( 'email' ) ) );
-		if ( '' !== $email && ! $this->limiter->hit( 'email', $email, self::EMAIL_LIMIT, self::EMAIL_WINDOW ) ) {
+		/**
+		 * Filters how many signups per minute the whole site accepts (protects the bluefox account from floods).
+		 *
+		 * @param int $limit Signups per minute.
+		 */
+		$site_limit = max( 1, (int) apply_filters( 'cfbe_signup_site_limit', self::SITE_LIMIT ) );
+		if ( ! $this->limiter->hit( 'site', 'all', $site_limit, self::SITE_WINDOW ) ) {
+			$this->logger->warning( 'Signup rate limited (whole site)', array( 'limit' => $site_limit ) );
 			return $this->rate_limited();
 		}
+		// The per-mailbox limit is applied by the signup service, for every source.
 
 		// List + extra tags only from a form config signed by this site (cached pages, no nonce).
 		$target = Form_Config::verify( $request->get_param( Form_Config::FIELD ) );
@@ -137,7 +162,7 @@ final class Rest_Subscribe {
 				'consent'      => $request->get_param( 'consent' ),
 				'consent_text' => self::consent_text(),
 				'ip'           => $ip,
-				'place'        => (string) $request->get_param( 'place' ),
+				'place'        => $target['place'],
 				'list_id'      => $target['list_id'],
 				'tags'         => $target['tags'],
 			),
@@ -162,6 +187,7 @@ final class Rest_Subscribe {
 	 * @param Subscribe_Result $result Result.
 	 */
 	private function respond( Subscribe_Result $result ): \WP_REST_Response {
+		$result   = $result->for_visitor( (string) Settings::get( 'form', 'msg_pending' ), (bool) Settings::get( 'form', 'reveal_subscribed' ) );
 		$response = new \WP_REST_Response( $result->to_array(), $result->http_status );
 		$response->header( 'Cache-Control', 'no-store, max-age=0' );
 		return $response;

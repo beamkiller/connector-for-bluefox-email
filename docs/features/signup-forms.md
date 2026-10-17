@@ -55,7 +55,12 @@ The **Shortcodes** tab in wp-admin has ready-to-copy examples (top bar, footer b
 
 ## List and tags per form
 
-A form can subscribe to another list than the default and add extra tags. The list and tags are **signed** into the form (HMAC with the site's salt), so visitors cannot change them in the browser. Unsigned values are ignored.
+A form can subscribe to another list than the default and add extra tags. The list, the tags and the placement name are **signed** into the form (HMAC with the site's salt), so visitors cannot change them in the browser. Unsigned values are ignored.
+
+A signed list is only used when it is one of your project's lists that an admin has loaded with **Load lists** on the General tab, or a list chosen in the settings (default, popup, checkout or coupon list). Any other list falls back to the default list.
+
+!!! tip "New bluefox list?"
+    After you create a list in bluefox and use it in a shortcode or block, click **Load lists** on the General tab once. Until then, signups from that form go to the default list.
 
 ## `{discount}` placeholder
 
@@ -67,17 +72,33 @@ The visitor sees one of the messages from the Form tab:
 
 | Situation | Message |
 |---|---|
-| New signup, confirmation email sent, or queued for retry | Successful signup |
-| Already an active subscriber | Already subscribed |
-| bluefox rejected the address or is not configured | Error |
+| New signup, confirmation email re-sent, queued for retry, already subscribed, or an address bluefox suppressed (bounced, complained) | Successful signup |
+| Already an active or paused subscriber, and **Show the "Already subscribed" message** is on | Already subscribed |
+| bluefox is not configured, or another error | Error |
+
+By default the form gives the same answer whether or not an address is on your list, so nobody can use it to find out who is subscribed. A suppressed address shows as `failed` on the Subscribers tab.
+
+Existing contacts are never changed by an unconfirmed request:
+
+| bluefox status | What happens |
+|---|---|
+| `active` | Nothing changes: no name or tag update, no coupon. |
+| `unverified` | The confirmation email is re-sent (at most once a day per mailbox). Name and tags are applied after the person confirms. |
+| `unsubscribed` | bluefox re-sends its confirmation email (at most once a day per mailbox). Name and tags are applied after the person confirms. |
+| `paused` | Stays paused; nothing changes. |
+
+The exception is a request made by the address owner: a logged-in customer ordering with their own account email, or the My Account opt-in. Then the contact is updated at once, and a paused contact is made active again.
+
+A new signup for an address whose earlier signup expired or failed starts over: the row goes back to pending with the new data and consent.
 
 ## Spam protection without nonces
 
 Public forms contain no nonces and nothing visitor-specific, so they work on cached pages. Instead:
 
 - a hidden **honeypot** field;
-- a **time trap** – submissions faster than 2.5 seconds are dropped (the bot still sees a success message);
-- **rate limits** – 5 submissions per IP per 10 minutes and 3 per email address per hour;
+- a **fill-time token** – when the form becomes visible, the script fetches a token signed by the site from `/wp-json/cfbe/v1/form-token` (never cached). Submissions without a valid token, or with one younger than 3 seconds or older than 2 hours, are dropped (the bot still sees a success message). The script waits out the rest of the 3 seconds for fast visitors, so this works on cached pages too;
+- **rate limits** – 5 submissions per IP per 10 minutes (IPv6: per /64 range), 30 signups per minute for the whole site, and 3 signups per mailbox per hour from any source (forms, checkout, My Account, form plugins). *Mailbox* ignores `+tag` aliases and, for Gmail, dots;
+- at most one confirmation email re-sent per mailbox per day;
 - a 4 KB request size limit.
 
 ## Accessibility

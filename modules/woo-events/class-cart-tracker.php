@@ -25,7 +25,6 @@ class Cart_Tracker {
 	const ROUTE_NS         = 'cfbe/v1';
 	const ROUTE            = '/cart-email';
 	const SESSION_EMAIL    = 'cfbe_cart_email';
-	const SESSION_OPTIN    = 'cfbe_cart_optin';
 	const SESSION_RESTORED = 'cfbe_restored_cart';
 	const JOB_SCAN         = 'cfbe_woo_events_cart_scan';
 	const JOB_CLEANUP      = 'cfbe_woo_events_cart_cleanup';
@@ -206,10 +205,9 @@ class Cart_Tracker {
 	 * Saves the current WooCommerce cart for its shopper (needs a known email).
 	 *
 	 * @param string|null $email Email (null = from the session / logged-in user).
-	 * @param bool        $optin The shopper ticked the newsletter checkbox.
 	 * @return int Cart row ID (0 = not stored).
 	 */
-	public function snapshot( ?string $email = null, bool $optin = false ): int {
+	public function snapshot( ?string $email = null ): int {
 		$wc = $this->enabled() && function_exists( 'WC' ) ? WC() : null;
 		if ( ! $wc || empty( $wc->cart ) || empty( $wc->session ) ) {
 			return 0;
@@ -227,8 +225,7 @@ class Cart_Tracker {
 		if ( ! is_email( $email ) ) {
 			return 0;
 		}
-		$optin = $optin || (bool) $wc->session->get( self::SESSION_OPTIN );
-		if ( ! $this->may_track( $email, $optin ) ) {
+		if ( ! $this->may_track( $email ) ) {
 			return 0;
 		}
 
@@ -265,13 +262,13 @@ class Cart_Tracker {
 	}
 
 	/**
-	 * Whether a shopper's cart may be stored ("only opted-in shoppers" setting).
+	 * Whether a shopper's cart may be stored ("only opted-in shoppers" setting): only a confirmed signup counts.
+	 * A newsletter box ticked on an unfinished checkout is not consent, and the browser could claim it for anyone.
 	 *
 	 * @param string $email Email.
-	 * @param bool   $optin Ticked the checkout newsletter checkbox.
 	 */
-	public function may_track( string $email, bool $optin ): bool {
-		if ( empty( Module::settings()['cart_optin_only'] ) || $optin ) {
+	public function may_track( string $email ): bool {
+		if ( empty( Module::settings()['cart_optin_only'] ) ) {
 			return true;
 		}
 		$row = $this->subscribers->find_by_email( $email );
@@ -347,9 +344,6 @@ class Cart_Tracker {
 						'type'     => 'string',
 						'required' => true,
 					),
-					'optin' => array(
-						'type' => 'boolean',
-					),
 				),
 			)
 		);
@@ -374,7 +368,9 @@ class Cart_Tracker {
 		if ( ! is_email( $email ) ) {
 			return new \WP_REST_Response( array( 'stored' => false ), 400 );
 		}
-		$optin = rest_sanitize_boolean( $request->get_param( 'optin' ) );
+		if ( ! $this->limiter->hit( 'cart_mailbox', \CFBE\Subscriber_Repository::mailbox( $email ), 5, 3600 ) ) {
+			return new \WP_REST_Response( array( 'stored' => false ), 429 );
+		}
 
 		// WooCommerce does not load the cart / session for REST requests by default.
 		if ( function_exists( 'wc_load_cart' ) ) {
@@ -385,9 +381,8 @@ class Cart_Tracker {
 			return new \WP_REST_Response( array( 'stored' => false ), 200 );
 		}
 		$wc->session->set( self::SESSION_EMAIL, $email );
-		$wc->session->set( self::SESSION_OPTIN, $optin );
 
-		return new \WP_REST_Response( array( 'stored' => $this->snapshot( $email, $optin ) > 0 ), 200 );
+		return new \WP_REST_Response( array( 'stored' => $this->snapshot( $email ) > 0 ), 200 );
 	}
 
 	/**

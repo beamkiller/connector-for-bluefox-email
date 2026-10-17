@@ -52,6 +52,7 @@ Tick **Users list → Show the bluefox status … in a column of the Users list*
 
 - bluefox sends one of the project's API keys as `Authorization: Bearer …`; the plugin compares it with your API key in constant time. If the server strips the header, the plugin also reads `REDIRECT_HTTP_AUTHORIZATION` and `apache_request_headers()`. See [Troubleshooting](../help/troubleshooting.md).
 - Requests are rate limited (60 per IP per minute) and limited to 64 KB.
+- Payloads longer than about 7000 characters are cut to the fields the plugin uses before they are queued. The background hooks then get a payload with `truncated: true`; `cfbe_webhook_received` (at request time) still gets the full body.
 - Webhook data is never trusted for confirmations: the plugin reads the subscriber's status from the bluefox API again before it acts.
 
 ## For developers

@@ -9,7 +9,7 @@ namespace CFBE;
 
 defined( 'ABSPATH' ) || exit;
 
-// The table name is built from $wpdb->prefix + a constant; WP 5.2 has no %i placeholder.
+// The table name is built from $wpdb->prefix + a constant (kept interpolated, like the client plugin's queries).
 // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery
 
 /**
@@ -63,6 +63,31 @@ class Subscriber_Repository {
 	}
 
 	/**
+	 * The mailbox an address delivers to: aliases (`name+tag@`) and Gmail's ignored dots and googlemail.com
+	 * collapse to one value. Used for rate limits and, optionally, for "one welcome coupon per mailbox".
+	 *
+	 * @param string $email Email address.
+	 */
+	public static function mailbox( string $email ): string {
+		$email = self::normalize_email( $email );
+		$at    = strrpos( $email, '@' );
+		if ( false === $at ) {
+			return $email;
+		}
+		$local  = substr( $email, 0, $at );
+		$domain = substr( $email, $at + 1 );
+		$plus   = strpos( $local, '+' );
+		if ( false !== $plus && $plus > 0 ) {
+			$local = substr( $local, 0, $plus );
+		}
+		if ( in_array( $domain, array( 'gmail.com', 'googlemail.com' ), true ) ) {
+			$local  = str_replace( '.', '', $local );
+			$domain = 'gmail.com';
+		}
+		return $local . '@' . $domain;
+	}
+
+	/**
 	 * Finds a row by email.
 	 *
 	 * @param string $email Email address.
@@ -77,7 +102,8 @@ class Subscriber_Repository {
 	}
 
 	/**
-	 * Inserts a pending signup; returns the existing row if the email is already stored.
+	 * Inserts a pending signup; returns the existing row if the email is already stored. An expired or failed
+	 * row starts over as a new pending signup with this request's data and consent.
 	 *
 	 * @param array $data Keys: email, name, source, list_id, tags, consent_text, consent_ip, order_id.
 	 * @return array|null Stored row.
@@ -85,6 +111,31 @@ class Subscriber_Repository {
 	public function insert_pending( array $data ): ?array {
 		$email    = self::normalize_email( (string) ( $data['email'] ?? '' ) );
 		$existing = $this->find_by_email( $email );
+		if ( $existing && in_array( $existing['status'] ?? '', array( self::STATUS_EXPIRED, self::STATUS_FAILED ), true ) ) {
+			$now = $this->now();
+			$this->db->update(
+				$this->table,
+				array(
+					'name'          => isset( $data['name'] ) ? (string) $data['name'] : null,
+					'source'        => (string) ( $data['source'] ?? '' ),
+					'list_id'       => (string) ( $data['list_id'] ?? '' ),
+					'tags'          => wp_json_encode( array_values( (array) ( $data['tags'] ?? array() ) ) ),
+					'status'        => self::STATUS_PENDING,
+					'consent_text'  => isset( $data['consent_text'] ) ? (string) $data['consent_text'] : null,
+					'consent_ip'    => isset( $data['consent_ip'] ) ? (string) $data['consent_ip'] : null,
+					'consent_at'    => $now,
+					'attempts'      => 0,
+					'last_error'    => null,
+					'merge_pending' => 0,
+					'created_at'    => $now,
+					'updated_at'    => $now,
+				),
+				array( 'email' => $email ),
+				array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s' ),
+				array( '%s' )
+			);
+			return $this->find_by_email( $email );
+		}
 		if ( $existing ) {
 			return $existing;
 		}
@@ -94,6 +145,7 @@ class Subscriber_Repository {
 			$this->table,
 			array(
 				'email'        => $email,
+				'mailbox'      => self::mailbox( $email ),
 				'name'         => isset( $data['name'] ) ? (string) $data['name'] : null,
 				'source'       => (string) ( $data['source'] ?? '' ),
 				'list_id'      => (string) ( $data['list_id'] ?? '' ),
@@ -106,7 +158,7 @@ class Subscriber_Repository {
 				'created_at'   => $now,
 				'updated_at'   => $now,
 			),
-			array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
+			array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
 		);
 
 		// A concurrent insert of the same email loses on the UNIQUE key; both callers get the stored row.
@@ -145,6 +197,60 @@ class Subscriber_Repository {
 				$this->now(),
 				self::normalize_email( $email ),
 				self::STATUS_PENDING
+			)
+		);
+	}
+
+	/**
+	 * Flags a signup whose name and tags wait for the confirmation: the address already existed in bluefox, and
+	 * an unconfirmed request must not change an existing contact.
+	 *
+	 * @param string $email Email address.
+	 * @param bool   $on    Flag.
+	 */
+	public function set_merge_pending( string $email, bool $on ): bool {
+		return false !== $this->db->update(
+			$this->table,
+			array( 'merge_pending' => $on ? 1 : 0 ),
+			array( 'email' => self::normalize_email( $email ) ),
+			array( '%d' ),
+			array( '%s' )
+		);
+	}
+
+	/**
+	 * Closes a confirmed signup without a coupon (e.g. an alias of an address that already got one).
+	 *
+	 * @param string $email  Email address.
+	 * @param string $reason Reason (shown on the Subscribers tab).
+	 */
+	public function skip_reward( string $email, string $reason ): bool {
+		return 1 === $this->db->query(
+			$this->db->prepare(
+				"UPDATE {$this->table} SET status = %s, last_error = %s, updated_at = %s WHERE email = %s AND status IN (%s, %s)",
+				self::STATUS_EXISTING,
+				$this->truncate( $reason ),
+				$this->now(),
+				self::normalize_email( $email ),
+				self::STATUS_PENDING,
+				self::STATUS_CONFIRMED
+			)
+		);
+	}
+
+	/**
+	 * Whether another address of the same mailbox already received a welcome coupon.
+	 *
+	 * @param string $email Email address.
+	 */
+	public function mailbox_rewarded( string $email ): bool {
+		$email = self::normalize_email( $email );
+		return null !== $this->db->get_var(
+			$this->db->prepare(
+				"SELECT id FROM {$this->table} WHERE mailbox = %s AND email <> %s AND ( status = %s OR coupon_id IS NOT NULL ) LIMIT 1",
+				self::mailbox( $email ),
+				$email,
+				self::STATUS_REWARDED
 			)
 		);
 	}

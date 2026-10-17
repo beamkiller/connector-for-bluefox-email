@@ -95,7 +95,7 @@ final class Form_Renderer {
 		$html .= '<div class="cfbe-hp" aria-hidden="true"><label>' . esc_html__( 'Website', 'connector-for-bluefox-email' ) . '<input type="text" name="cfbe_hp" value="" tabindex="-1" autocomplete="off"></label></div>';
 
 		// Signed list + tags (verified by the REST endpoint; unsigned values are ignored there).
-		$config = Form_Config::sign( $args['list'], $args['tags'] );
+		$config = Form_Config::sign( $args['list'], $args['tags'], (string) $args['place'] );
 		if ( '' !== $config ) {
 			$html .= '<input type="hidden" name="' . esc_attr( Form_Config::FIELD ) . '" value="' . esc_attr( $config ) . '">';
 		}

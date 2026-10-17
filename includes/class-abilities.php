@@ -412,7 +412,7 @@ final class Abilities {
 				'doi'  => ! empty( $list['doubleOptIn']['active'] ),
 			);
 		}
-		set_transient( Settings::LISTS_CACHE, $cache, DAY_IN_SECONDS );
+		Settings::remember_lists( $cache );
 		return $out;
 	}
 

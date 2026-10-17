@@ -78,3 +78,9 @@ Shown after submit. An empty value falls back to the default text.
 | Successful signup | `cfbe_form[msg_pending]` | *Thank you! We have sent you a confirmation email. Please click the link in it to complete your subscription.* |
 | Already subscribed | `cfbe_form[msg_already]` | *This email address is already subscribed to our newsletter.* |
 | Error | `cfbe_form[msg_error]` | *Sorry, we could not subscribe you right now. Please try again later.* |
+
+## Subscription status
+
+| Label | Option key | Default | What it does |
+|---|---|---|---|
+| Show the "Already subscribed" message | `cfbe_form[reveal_subscribed]` | off | Off: every successful signup shows **Successful signup**, so the form never reveals whether an address is on your list. On: subscribers who sign up again see **Already subscribed** – which also tells anyone who types their address. |

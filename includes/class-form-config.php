@@ -22,16 +22,22 @@ final class Form_Config {
 	const MAX_LEN   = 1024;
 	const SIG_CHARS = 32;
 
+	// Fill-time token: seconds a form must be open before it is sent, and how long a token stays valid.
+	const MIN_FILL_SECONDS = 3;
+	const MAX_FILL_SECONDS = 7200;
+
 	/**
 	 * Token for a list and tags; '' when there is nothing to target (default list, no tags).
 	 *
 	 * @param string   $list_id bluefox list ID ('' = default list).
 	 * @param string[] $tags    Extra tags.
+	 * @param string   $place   Placement name (becomes the `placement-<place>` tag).
 	 */
-	public static function sign( string $list_id, array $tags = array() ): string {
+	public static function sign( string $list_id, array $tags = array(), string $place = '' ): string {
 		$list_id = self::clean_list_id( $list_id );
 		$tags    = Signup_Validator::clean_tags( $tags );
-		if ( '' === $list_id && ! $tags ) {
+		$place   = Signup_Validator::place( $place );
+		if ( '' === $list_id && ! $tags && '' === $place ) {
 			return '';
 		}
 		$payload = self::base64url_encode(
@@ -39,6 +45,7 @@ final class Form_Config {
 				array(
 					'l' => $list_id,
 					't' => $tags,
+					'p' => $place,
 				)
 			)
 		);
@@ -49,12 +56,13 @@ final class Form_Config {
 	 * Verified targeting from a token.
 	 *
 	 * @param mixed $token Raw value from the request.
-	 * @return array{list_id: string, tags: string[]} Empty values when the token is missing or invalid.
+	 * @return array{list_id: string, tags: string[], place: string} Empty values when the token is missing or invalid.
 	 */
 	public static function verify( $token ): array {
 		$empty = array(
 			'list_id' => '',
 			'tags'    => array(),
+			'place'   => '',
 		);
 		if ( ! is_string( $token ) || '' === $token || strlen( $token ) > self::MAX_LEN || 1 !== substr_count( $token, '.' ) ) {
 			return $empty;
@@ -67,10 +75,61 @@ final class Form_Config {
 		if ( ! is_array( $data ) ) {
 			return $empty;
 		}
+		$list_id = self::clean_list_id( is_string( $data['l'] ?? null ) ? $data['l'] : '' );
+		if ( '' !== $list_id && ! isset( self::allowed_lists()[ $list_id ] ) ) {
+			// Signed, but not one of the project's lists an admin has seen (anyone who can preview a shortcode can sign).
+			$list_id = '';
+		}
 		return array(
-			'list_id' => self::clean_list_id( is_string( $data['l'] ?? null ) ? $data['l'] : '' ),
+			'list_id' => $list_id,
 			'tags'    => Signup_Validator::clean_tags( is_array( $data['t'] ?? null ) ? $data['t'] : array() ),
+			'place'   => is_string( $data['p'] ?? null ) ? Signup_Validator::place( $data['p'] ) : '',
 		);
+	}
+
+	/**
+	 * Lists a signed form may target: the project's lists loaded by an admin, plus the lists chosen in the settings.
+	 *
+	 * @return array<string, true>
+	 */
+	public static function allowed_lists(): array {
+		$known   = get_option( Settings::KNOWN_LISTS, array() );
+		$allowed = array_fill_keys( array_keys( array_merge( is_array( $known ) ? $known : array(), self::known_lists() ) ), true );
+		foreach ( array( array( 'api', 'list_id' ), array( 'popup', 'list_id' ), array( 'checkout', 'list_id' ), array( 'coupon', 'list_id' ) ) as $setting ) {
+			$id = self::clean_list_id( (string) Settings::get( $setting[0], $setting[1] ) );
+			if ( '' !== $id ) {
+				$allowed[ $id ] = true;
+			}
+		}
+		return $allowed;
+	}
+
+	/**
+	 * Fill-time token: when the form was shown, signed by this site. Fetched by the form script, so it works on
+	 * cached pages; a bot has to fetch one and wait before it can post.
+	 *
+	 * @param int|null $now Unix time.
+	 */
+	public static function fill_token( ?int $now = null ): string {
+		$time = (string) ( $now ?? time() );
+		return $time . '.' . substr( hash_hmac( 'sha256', 'fill|' . $time, wp_salt( 'nonce' ) ), 0, self::SIG_CHARS );
+	}
+
+	/**
+	 * Whether a fill-time token is genuine, at least MIN_FILL_SECONDS and at most MAX_FILL_SECONDS old.
+	 *
+	 * @param mixed    $token Raw value from the request.
+	 * @param int|null $now   Unix time.
+	 */
+	public static function fill_token_ok( $token, ?int $now = null ): bool {
+		if ( ! is_string( $token ) || ! preg_match( '/^(\d{1,12})\.([a-f0-9]{' . self::SIG_CHARS . '})$/', $token, $m ) ) {
+			return false;
+		}
+		if ( ! hash_equals( substr( hash_hmac( 'sha256', 'fill|' . $m[1], wp_salt( 'nonce' ) ), 0, self::SIG_CHARS ), $m[2] ) ) {
+			return false;
+		}
+		$age = ( $now ?? time() ) - (int) $m[1];
+		return $age >= self::MIN_FILL_SECONDS && $age <= self::MAX_FILL_SECONDS;
 	}
 
 	/**

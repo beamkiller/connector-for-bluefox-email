@@ -32,5 +32,7 @@ Click **Test connection**. A success message means the project ID and key work.
 
 Click **Load lists**, choose the **Default subscriber list** and click **Save Changes**. The list names are cached for a day. Forms, the popup, the checkout opt-in and form integrations use the default list unless you choose another one for them.
 
+Click **Load lists** again whenever you create a new list in bluefox that you use in a block or shortcode: a form may only target lists the plugin has loaded (or lists chosen in the settings). Otherwise its signups go to the default list.
+
 !!! warning "Turn on double opt-in"
     The plugin does not send confirmation emails itself. bluefox sends them when double opt-in is on for the list – see [Set up your bluefox list](bluefox-list.md). The list picker marks lists that have double opt-in on.

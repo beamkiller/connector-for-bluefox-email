@@ -25,13 +25,13 @@ Nothing is sent before you enter a project ID and API key.
 | Order meta | `_cfbe_optin`, `_cfbe_optin_at`, `_cfbe_optin_text`, `_cfbe_optin_ip`, `_cfbe_optin_result` (checkout opt-in) |
 | Table `{prefix}cfbe_carts` | abandoned cart tracking: email, cart contents, totals, status |
 | User meta | `cfbe_list_status`, `cfbe_bounced`, `cfbe_complained` (from inbound webhooks) |
-| Options | plugin log (last 200 entries), mailer delivery log (last 50), webhook event log (last 20). Email addresses are masked in all three. |
+| Options | plugin log (last 200 entries), mailer delivery log (last 50), webhook event log (last 20). Email addresses are masked in all three, also inside bluefox error messages. |
 
 The consent record proves that a person signed up: what they agreed to, when and from which form. bluefox.email's double opt-in confirmation is the main proof.
 
 ## IP address modes
 
-Every consent IP passes through one setting, **IP address with consent** on the Privacy tab:
+The visitor IP is read from the source chosen in **Visitor IP address** on the Privacy tab (the direct connection by default, or a trusted proxy header such as Cloudflare's). Every consent IP then passes through one setting, **IP address with consent**:
 
 | Mode | Stored value |
 |---|---|
@@ -59,9 +59,14 @@ The plugin registers exporters and erasers with **Tools → Export Personal Data
 - **Newsletter (bluefox.email)** – signup rows and the user's `cfbe_*` meta.
 - **bluefox.email abandoned carts** – stored carts of that email (with the abandoned cart feature on).
 
+The newsletter eraser also handles the WooCommerce coupons the plugin issued to the address (welcome and recovery coupons):
+
+- unused coupons are deleted;
+- used coupons are anonymised: the description is replaced, the email meta and the email restriction are removed, and the usage limit stays at the usage count, so the coupon cannot be used again.
+
 By default an erasure only deletes the data on your site. Turn on **Also delete the bluefox.email contact** on the Privacy tab to delete the contact in bluefox.email too (removed from every list, cannot be undone). Otherwise delete it in bluefox.email under **Contacts**.
 
-WooCommerce coupons and orders are not erased by the plugin; WooCommerce's own eraser handles orders.
+Orders are handled by WooCommerce's own eraser. When it anonymises an order (**Remove personal data from orders**), the plugin also removes the checkout opt-in consent IP (`_cfbe_optin_ip`).
 
 ## Consent rules built into the plugin
 

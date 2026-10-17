@@ -23,13 +23,10 @@
 			return;
 		}
 		var email = ( input.value || '' ).trim();
-		var optinEl = field( 'cfbe_newsletter' );
-		var optin = !! ( optinEl && optinEl.checked );
-		var key = email + '|' + ( optin ? 1 : 0 );
-		if ( ! EMAIL_RE.test( email ) || key === last ) {
+		if ( ! EMAIL_RE.test( email ) || email === last ) {
 			return;
 		}
-		last = key;
+		last = email;
 		fetch( cfbeCartCapture.url, {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -37,7 +34,7 @@
 				'Content-Type': 'application/json',
 				'X-WP-Nonce': cfbeCartCapture.nonce,
 			},
-			body: JSON.stringify( { email: email, optin: optin } ),
+			body: JSON.stringify( { email: email } ),
 		} ).catch( function () {} );
 	}
 
@@ -47,7 +44,7 @@
 	}
 
 	document.addEventListener( 'change', function ( e ) {
-		if ( e.target && ( e.target.id === 'billing_email' || e.target.id === 'cfbe_newsletter' ) ) {
+		if ( e.target && e.target.id === 'billing_email' ) {
 			schedule();
 		}
 	} );

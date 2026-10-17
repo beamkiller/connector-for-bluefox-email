@@ -92,8 +92,15 @@ class Logger {
 				$context[ $key ] = '[redacted]';
 			} elseif ( is_array( $value ) ) {
 				$context[ $key ] = self::redact( $value );
-			} elseif ( is_string( $value ) && false !== strpos( $value, '@' ) && preg_match( '/^[^@\s]+@[^@\s]+$/', $value ) ) {
-				$context[ $key ] = self::mask_email( $value );
+			} elseif ( is_string( $value ) && false !== strpos( $value, '@' ) ) {
+				// Whole values and addresses inside messages (bluefox errors quote the address).
+				$context[ $key ] = (string) preg_replace_callback(
+					'/[^\s<>"\'(),;:]+@[^\s<>"\'(),;:]+/',
+					static function ( $found ) {
+						return self::mask_email( $found[0] );
+					},
+					$value
+				);
 			}
 		}
 		return $context;

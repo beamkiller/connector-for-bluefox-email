@@ -19,6 +19,9 @@ final class Settings {
 
 	const LISTS_CACHE = 'cfbe_lists_cache';
 
+	// Lists seen in the bluefox project (id => name), kept after the cache expires: the allowlist for signed forms.
+	const KNOWN_LISTS = 'cfbe_known_lists';
+
 	const SECRET_LENGTH = 32;
 
 	/**
@@ -88,6 +91,8 @@ final class Settings {
 					'expiry_days'           => 30,
 					'minimum_amount'        => 0,
 					'individual_use'        => true,
+					// One welcome coupon per mailbox: name+tag@ aliases and Gmail dot variants count as one address.
+					'one_per_mailbox'       => true,
 					'exclude_sale_items'    => true,
 					'free_shipping'         => false,
 					'store_code_in_bluefox' => true,
@@ -148,6 +153,8 @@ final class Settings {
 					'privacy_url'       => '',
 					'msg_pending'       => 'Thank you! We have sent you a confirmation email. Please click the link in it to complete your subscription.',
 					'msg_already'       => 'This email address is already subscribed to our newsletter.',
+					// Off: every successful signup shows msg_pending, so the form never reveals who is subscribed.
+					'reveal_subscribed' => false,
 					'msg_error'         => 'Sorry, we could not subscribe you right now. Please try again later.',
 					// {discount} is replaced with the Coupon tab value (e.g. 10% / 20 EUR).
 					'heading'           => 'Subscribe to our newsletter',
@@ -186,6 +193,16 @@ final class Settings {
 		 * @param array $defaults Defaults.
 		 */
 		return (array) apply_filters( 'cfbe_settings_defaults_' . $area, $defaults );
+	}
+
+	/**
+	 * Stores freshly loaded lists: the 1-day cache for the pickers and the lasting allowlist.
+	 *
+	 * @param array<string, string> $lists List ID => name.
+	 */
+	public static function remember_lists( array $lists ): void {
+		set_transient( self::LISTS_CACHE, $lists, DAY_IN_SECONDS );
+		update_option( self::KNOWN_LISTS, $lists, false );
 	}
 
 	/**

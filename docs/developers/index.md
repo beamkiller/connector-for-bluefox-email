@@ -124,5 +124,5 @@ add_filter( 'cfbe_settings_tabs', function ( array $tabs ) {
 
 ## Logging and background jobs
 
-- The plugin logs to the **Logs** tab (and to the WooCommerce logger with source `cfbe` when WooCommerce is active). Email addresses are masked in log context.
+- The plugin logs to the **Logs** tab (and to the WooCommerce logger with source `cfbe` when WooCommerce is active). Email addresses are masked anywhere inside log context values, also inside bluefox error messages.
 - Background work runs through Action Scheduler when it is available (WooCommerce bundles it) and WP-Cron otherwise. See [Troubleshooting](../help/troubleshooting.md).

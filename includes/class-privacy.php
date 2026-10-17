@@ -60,6 +60,69 @@ final class Privacy {
 		add_filter( 'cfbe_sanitize_settings_api', array( $this, 'sanitize' ), 10, 3 );
 		add_filter( 'cfbe_settings_tabs', array( $this, 'add_tab' ) );
 		add_action( 'admin_post_' . self::SAVE_ACTION, array( $this, 'save' ) );
+		// WooCommerce's eraser ("Remove personal data from orders"): our consent record on the order goes too.
+		add_action( 'woocommerce_privacy_remove_order_personal_data', array( $this, 'erase_order' ) );
+	}
+
+	/**
+	 * Removes the checkout opt-in consent IP from an order being anonymised by WooCommerce.
+	 *
+	 * @param \WC_Order $order Order.
+	 */
+	public function erase_order( $order ): void {
+		if ( ! is_object( $order ) || ! is_callable( array( $order, 'delete_meta_data' ) ) ) {
+			return;
+		}
+		$order->delete_meta_data( Checkout_Optin::META_IP );
+		$order->save();
+	}
+
+	/**
+	 * Welcome and recovery coupons issued to an address: unused ones are deleted, used ones keep no trace of it.
+	 *
+	 * @param string $email Email address.
+	 * @return int Number of coupons changed.
+	 */
+	private function erase_coupons( string $email ): int {
+		if ( ! class_exists( '\WC_Coupon' ) || ! function_exists( 'get_posts' ) ) {
+			return 0;
+		}
+		$email = strtolower( trim( $email ) );
+		$ids   = get_posts(
+			array(
+				'post_type'      => 'shop_coupon',
+				'post_status'    => 'any',
+				'fields'         => 'ids',
+				'posts_per_page' => 100,
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Rare (personal data erasure only).
+				'meta_query'     => array(
+					'relation' => 'OR',
+					array(
+						'key'   => Coupon_Factory::META,
+						'value' => $email,
+					),
+					array(
+						'key'   => '_cfbe_cart_email',
+						'value' => $email,
+					),
+				),
+			)
+		);
+		foreach ( $ids as $id ) {
+			$coupon = new \WC_Coupon( (int) $id );
+			if ( 0 === (int) $coupon->get_usage_count() ) {
+				$coupon->delete( true );
+				continue;
+			}
+			// Used up (single use): no longer needs the address to stay locked.
+			$coupon->set_description( __( 'Newsletter coupon (personal data erased)', 'connector-for-bluefox-email' ) );
+			$coupon->set_email_restrictions( array() );
+			$coupon->set_usage_limit( max( 1, (int) $coupon->get_usage_count() ) );
+			$coupon->delete_meta_data( Coupon_Factory::META );
+			$coupon->delete_meta_data( '_cfbe_cart_email' );
+			$coupon->save();
+		}
+		return count( $ids );
 	}
 
 	/**
@@ -199,6 +262,8 @@ final class Privacy {
 		$retained = false;
 		$messages = array();
 
+		$removed = $this->erase_coupons( $email ) > 0 || $removed;
+
 		$user = get_user_by( 'email', $email );
 		if ( $user ) {
 			foreach ( array_keys( $this->user_meta( $email ) ) as $key ) {
@@ -245,6 +310,7 @@ final class Privacy {
 		$defaults[ self::SETTING ]                 = false;
 		$defaults[ Consent_Ip::SETTING_MODE ]      = Consent_Ip::DEFAULT_MODE;
 		$defaults[ Consent_Ip::SETTING_RETENTION ] = Consent_Ip::DEFAULT_RETENTION;
+		$defaults[ Rate_Limiter::SETTING_HEADER ]  = '';
 		return $defaults;
 	}
 
@@ -269,6 +335,8 @@ final class Privacy {
 
 		$clean[ Consent_Ip::SETTING_MODE ]      = in_array( $mode, Consent_Ip::MODES, true ) ? $mode : Consent_Ip::DEFAULT_MODE;
 		$clean[ Consent_Ip::SETTING_RETENTION ] = min( 120, absint( $input[ Consent_Ip::SETTING_RETENTION ] ?? $previous[ Consent_Ip::SETTING_RETENTION ] ?? Consent_Ip::DEFAULT_RETENTION ) );
+		$header                                 = (string) ( $input[ Rate_Limiter::SETTING_HEADER ] ?? $previous[ Rate_Limiter::SETTING_HEADER ] ?? '' );
+		$clean[ Rate_Limiter::SETTING_HEADER ]  = isset( Rate_Limiter::HEADERS[ $header ] ) ? $header : '';
 		return $clean;
 	}
 
@@ -324,6 +392,26 @@ final class Privacy {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row"><label for="cfbe-ip-header"><?php esc_html_e( 'Visitor IP address', 'connector-for-bluefox-email' ); ?></label></th>
+					<td>
+						<select id="cfbe-ip-header" name="<?php echo esc_attr( Rate_Limiter::SETTING_HEADER ); ?>">
+							<?php
+							foreach (
+								array(
+									''           => __( 'Direct connection (REMOTE_ADDR)', 'connector-for-bluefox-email' ),
+									'cloudflare' => __( 'Cloudflare (CF-Connecting-IP)', 'connector-for-bluefox-email' ),
+									'forwarded'  => __( 'Proxy / load balancer (X-Forwarded-For)', 'connector-for-bluefox-email' ),
+									'real_ip'    => __( 'Proxy (X-Real-IP)', 'connector-for-bluefox-email' ),
+								) as $cfbe_value => $cfbe_label
+							) :
+								?>
+								<option value="<?php echo esc_attr( $cfbe_value ); ?>" <?php selected( (string) Settings::get( 'api', Rate_Limiter::SETTING_HEADER ), $cfbe_value ); ?>><?php echo esc_html( $cfbe_label ); ?></option>
+							<?php endforeach; ?>
+						</select>
+						<p class="description"><?php esc_html_e( 'Used for rate limiting and the consent record. Behind Cloudflare or a proxy every visitor arrives from the proxy’s address, so the signup limits would hit everyone at once: choose the header your proxy sets. Only choose a header your server really receives from a trusted proxy, because visitors can send these headers themselves.', 'connector-for-bluefox-email' ); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><?php esc_html_e( 'Erase requests', 'connector-for-bluefox-email' ); ?></th>
 					<td>
 						<label>
@@ -354,6 +442,8 @@ final class Privacy {
 
 		$values[ Consent_Ip::SETTING_MODE ]      = in_array( $mode, Consent_Ip::MODES, true ) ? $mode : Consent_Ip::DEFAULT_MODE;
 		$values[ Consent_Ip::SETTING_RETENTION ] = isset( $_POST[ Consent_Ip::SETTING_RETENTION ] ) ? min( 120, absint( $_POST[ Consent_Ip::SETTING_RETENTION ] ) ) : Consent_Ip::DEFAULT_RETENTION;
+		$header                                  = isset( $_POST[ Rate_Limiter::SETTING_HEADER ] ) ? sanitize_key( wp_unslash( $_POST[ Rate_Limiter::SETTING_HEADER ] ) ) : '';
+		$values[ Rate_Limiter::SETTING_HEADER ]  = isset( Rate_Limiter::HEADERS[ $header ] ) ? $header : '';
 		update_option( Settings::option_name( 'api' ), $values );
 		( new Consent_Ip( $this->repository, new Jobs() ) )->mode_changed( $old_mode, Consent_Ip::mode() );
 

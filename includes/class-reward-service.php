@@ -149,6 +149,12 @@ class Reward_Service {
 			return;
 		}
 
+		if ( Settings::get( 'coupon', 'one_per_mailbox' ) && $this->repository->mailbox_rewarded( $email ) ) {
+			$this->repository->skip_reward( $email, 'Another address of this mailbox already received a welcome coupon.' );
+			$this->logger->info( 'Welcome coupon skipped: alias of a rewarded address', array( 'email' => $email ) );
+			return;
+		}
+
 		if ( ! $this->repository->claim_for_reward( $email ) ) {
 			return; // Another worker owns it.
 		}

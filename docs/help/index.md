@@ -7,7 +7,7 @@
 
 ## Where to look first
 
-1. **bluefox.email → Logs** in wp-admin shows the last 200 plugin log entries (API errors, retries, webhook decisions). Email addresses are masked and secrets are never written.
+1. **bluefox.email → Logs** in wp-admin shows the last 200 plugin log entries (API errors, retries, webhook decisions). Email addresses are masked (also inside bluefox error messages) and secrets are never written.
 2. With WooCommerce active, the same entries go to **WooCommerce → Status → Logs** under the source `cfbe`.
 3. **Tools → Scheduled Actions** (WooCommerce / Action Scheduler) lists the plugin's background jobs in the group `cfbe`.
 

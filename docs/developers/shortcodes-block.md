@@ -12,7 +12,7 @@ The full form directly on the page. Use the block in the block editor and the sh
 
     | Attribute | Type | Default | Description |
     |---|---|---|---|
-    | `list` | string | `""` | bluefox list ID. Empty = the default list from the General tab. The editor offers the cached lists. |
+    | `list` | string | `""` | bluefox list ID. Empty = the default list from the General tab. The editor offers the cached lists. Only lists loaded with **Load lists** or chosen in the settings are used; others fall back to the default list. |
     | `tags` | string | `""` | Extra bluefox tags, comma-separated. |
     | `heading` | string | `""` | Heading. Empty = the Form tab heading. |
     | `intro` | string | `""` | Intro text. Empty = the Form tab intro. |
@@ -30,7 +30,7 @@ The full form directly on the page. Use the block in the block editor and the sh
 
     | Attribute | Values | Default | Description |
     |---|---|---|---|
-    | `list` | list ID | General tab list | bluefox list to subscribe to. |
+    | `list` | list ID | General tab list | bluefox list to subscribe to. Must be a list loaded with **Load lists** on the General tab or chosen in the settings; otherwise the default list is used. |
     | `tags` | comma-separated | – | Extra bluefox tags (lowercase letters, digits, hyphens; max. 20). |
     | `variant` | `card`, `banner`, `plain` | Form tab (Style) | card: light card · banner: coloured band · plain: no decoration. |
     | `layout` | `stacked`, `inline` | Form tab | inline: fields in one row on wide screens. |
@@ -53,7 +53,7 @@ The full form directly on the page. Use the block in the block editor and the sh
     ```
 
 !!! info "Signed list and tags"
-    `list` and `tags` are signed into the form with an HMAC (field `cfbe_cfg`), so visitors cannot change them in the browser.
+    `list`, `tags` and `place` are signed into the form with an HMAC (field `cfbe_cfg`), so visitors cannot change them in the browser.
 
 ## Promo bar
 

@@ -21,7 +21,7 @@ The same rule table as on the [Order emails tab](order-emails.md), limited to th
 | Label | Option key | Default | What it does |
 |---|---|---|---|
 | Cart tracking | `cfbe_woo_events[cart_tracking]` | on | **Store carts (only while a reminder is enabled)**. |
-| Opted-in shoppers only | `cfbe_woo_events[cart_optin_only]` | on | Only tracks carts of people who confirmed a signup made with this plugin or ticked the checkout opt-in. When off, every cart with a known email is stored. |
+| Opted-in shoppers only | `cfbe_woo_events[cart_optin_only]` | on | Only tracks carts of people who confirmed a newsletter signup made with this plugin (form, checkout or form plugin). A ticked checkout box alone does not count. When off, every cart with a known email is stored. |
 | Idle time | `cfbe_woo_events[cart_idle_minutes]` | `60` | Minutes without changes before a cart counts as abandoned. 15–10080. Checked every 15 minutes. |
 | Keep carts for | `cfbe_woo_events[cart_expiry_days]` | `30` | Days, 1–365. Then the cart expires; it is deleted after twice as long. |
 | Recovery coupon | `cfbe_woo_events[cart_coupon]` | off | **Add a single-use coupon to the reminder**. Created when the reminder is sent, one per cart, only for the shopper's email. The restore link applies it automatically. |

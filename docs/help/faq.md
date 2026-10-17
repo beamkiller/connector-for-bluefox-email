@@ -14,15 +14,15 @@ Technically yes – if double opt-in is off on the list, bluefox makes the conta
 
 ## When is the welcome coupon created?
 
-Only after the subscriber confirms, once per email address, and only for people who were new to the list and signed up through this plugin. See [Welcome coupon](../features/welcome-coupon.md).
+Only after the subscriber confirms, once per email address (by default once per mailbox, see below), and only for people who were new to the list and signed up through this plugin. See [Welcome coupon](../features/welcome-coupon.md).
 
 ## Can people get a second coupon with another signup?
 
-Not with the same email address: the lookup is by the normalised address. A different address is a different person to the plugin; the coupon is locked to the address it was issued for.
+Not with the same email address: the lookup is by the normalised address. Aliases of the same mailbox (`name+tag@example.com`, Gmail addresses with dots or `googlemail.com`) get no second coupon while **Coupon → One coupon per mailbox** is on (the default). Any other address is a different person to the plugin; the coupon is locked to the address it was issued for.
 
 ## Does it work with page caching?
 
-Yes. Public forms contain no nonces and nothing visitor-specific. Spam is blocked with a honeypot, a time trap and rate limits. See [Troubleshooting → Caching](troubleshooting.md#caching).
+Yes. Public forms contain no nonces and nothing visitor-specific. Spam is blocked with a honeypot, a fill-time token the form fetches when it is shown (never cached) and rate limits. See [Troubleshooting → Caching](troubleshooting.md#caching).
 
 ## Does it work with the block checkout?
 

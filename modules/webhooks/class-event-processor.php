@@ -115,6 +115,34 @@ final class Event_Processor {
 	}
 
 	/**
+	 * The parts of a webhook body the plugin reads (for bodies too large for a background job).
+	 *
+	 * @param array $payload Decoded webhook body.
+	 */
+	public static function essentials( array $payload ): array {
+		$out = array();
+		if ( is_array( $payload['subscription'] ?? null ) ) {
+			$sub                 = $payload['subscription'];
+			$out['subscription'] = array(
+				'email'          => $sub['email'] ?? '',
+				'status'         => $sub['status'] ?? '',
+				'subscriberList' => array( '_id' => $sub['subscriberList']['_id'] ?? '' ),
+			);
+		}
+		if ( is_array( $payload['emailData'] ?? null ) ) {
+			$out['emailData'] = array_intersect_key( $payload['emailData'], array_flip( array( 'to', 'bounceType' ) ) );
+		}
+		if ( isset( $payload['bounceType'] ) ) {
+			$out['bounceType'] = $payload['bounceType'];
+		}
+		if ( isset( $payload['bounce']['bounceType'] ) ) {
+			$out['bounce'] = array( 'bounceType' => $payload['bounce']['bounceType'] );
+		}
+		$out['truncated'] = true;
+		return $out;
+	}
+
+	/**
 	 * Whether the type is a subscription event.
 	 *
 	 * @param string $type Event type.

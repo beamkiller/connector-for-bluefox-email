@@ -20,7 +20,9 @@ Carts are stored only while **Cart tracking** is on and at least one reminder is
 
 - **Logged-in customers** – on every cart change.
 - **Guests** – once they type their email address at checkout. On the classic checkout a small script sends the email to `POST /wp-json/cfbe/v1/cart-email`; on the checkout block the plugin listens to the Store API customer update.
-- **Opted-in shoppers only** (default on) – only people who confirmed a signup made with this plugin, or ticked the newsletter checkbox at checkout. When off, every cart with a known email is stored.
+- **Opted-in shoppers only** (default on) – only people who confirmed a newsletter signup made with this plugin (form, checkout or form plugin). A ticked but unconfirmed checkout box does not count. When off, every cart with a known email is stored.
+- A cart row is only updated by the shopper's own session. If an open cart of another session already uses the address, it is not stored again, so typing someone else's address cannot take over their cart.
+- `cart-email` requests are limited to 20 per IP per 10 minutes and 5 per mailbox per hour.
 
 Carts live in the `{prefix}cfbe_carts` table. The tab lists the 20 most recent ones.
 

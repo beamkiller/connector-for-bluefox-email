@@ -201,7 +201,7 @@ $cfbe_row = static function ( $cfbe_index, array $cfbe_rule ) use ( $cfbe_name, 
 			<th scope="row"><?php esc_html_e( 'Opted-in shoppers only', 'connector-for-bluefox-email' ); ?></th>
 			<td>
 				<label><input type="checkbox" name="<?php echo esc_attr( $cfbe_name( 'cart_optin_only' ) ); ?>" value="1" <?php checked( ! empty( $cfbe_values['cart_optin_only'] ) ); ?>> <?php esc_html_e( 'Only track carts of people who opted in', 'connector-for-bluefox-email' ); ?></label>
-				<p class="description"><?php esc_html_e( 'Opted in = confirmed a signup made with this plugin, or ticked the newsletter checkbox at checkout. When off, every cart with a known email is stored (bluefox still only delivers the reminder to active subscribers).', 'connector-for-bluefox-email' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Opted in = confirmed a newsletter signup made with this plugin (form, checkout or form plugin). When off, every cart with a known email is stored (bluefox still only delivers triggered reminders to active subscribers).', 'connector-for-bluefox-email' ); ?></p>
 			</td>
 		</tr>
 		<tr>

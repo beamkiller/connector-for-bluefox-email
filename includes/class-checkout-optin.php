@@ -329,14 +329,15 @@ final class Checkout_Optin {
 			}
 			$result = $this->service->subscribe(
 				array(
-					'email'        => (string) $order->get_billing_email(),
-					'name'         => self::order_name( $order ),
-					'consent'      => true,
-					'consent_text' => (string) $order->get_meta( self::META_TEXT ),
-					'ip'           => (string) $order->get_meta( self::META_IP ),
-					'order_id'     => (int) $order->get_id(),
-					'list_id'      => (string) Settings::get( 'checkout', 'list_id' ),
-					'tags'         => self::extra_tags(),
+					'email'          => (string) $order->get_billing_email(),
+					'name'           => self::order_name( $order ),
+					'consent'        => true,
+					'consent_text'   => (string) $order->get_meta( self::META_TEXT ),
+					'ip'             => (string) $order->get_meta( self::META_IP ),
+					'order_id'       => (int) $order->get_id(),
+					'list_id'        => (string) Settings::get( 'checkout', 'list_id' ),
+					'tags'           => self::extra_tags(),
+					'owner_verified' => self::ordered_by_owner( $order ),
 				),
 				'checkout'
 			);
@@ -411,6 +412,7 @@ final class Checkout_Optin {
 					'list_id'         => (string) Settings::get( 'checkout', 'list_id' ),
 					'tags'            => self::extra_tags(),
 					'skip_form_rules' => true,
+					'owner_verified'  => true, // Signed-in user, their own account address.
 				),
 				'account'
 			);
@@ -588,10 +590,25 @@ final class Checkout_Optin {
 	}
 
 	/**
-	 * Client IP for the consent record.
+	 * Client IP for the consent record: the same source as everywhere else in the plugin (WooCommerce's own helper
+	 * trusts X-Forwarded-For, which anyone can send).
 	 */
 	private static function client_ip(): string {
-		return Consent_Ip::prepare( class_exists( '\WC_Geolocation' ) ? (string) \WC_Geolocation::get_ip_address() : Rate_Limiter::client_ip() );
+		return Consent_Ip::prepare( Rate_Limiter::client_ip() );
+	}
+
+	/**
+	 * Whether a signed-in customer ordered with their own account address (then an existing contact may be updated).
+	 *
+	 * @param object $order Order.
+	 */
+	private static function ordered_by_owner( $order ): bool {
+		$user_id = is_callable( array( $order, 'get_customer_id' ) ) ? (int) $order->get_customer_id() : 0;
+		if ( $user_id <= 0 || ! function_exists( 'get_userdata' ) ) {
+			return false;
+		}
+		$user = get_userdata( $user_id );
+		return $user && '' !== (string) $user->user_email && strtolower( (string) $user->user_email ) === strtolower( (string) $order->get_billing_email() );
 	}
 
 	/**

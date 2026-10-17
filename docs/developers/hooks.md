@@ -14,7 +14,7 @@ All hooks are prefixed `cfbe_`. Hooks that belong to a module only fire while th
 | `cfbe_settings_areas` | `string[] $areas` | Settings areas; each is stored in option `cfbe_{area}`. |
 | `cfbe_settings_defaults_{area}` | `array $defaults` | Defaults of an area. They also define the allowed keys. |
 | `cfbe_sanitize_settings_{area}` | `array $clean`, `array $input`, `array $previous` | Sanitized values of an area before saving. |
-| `cfbe_client_ip` | `string $ip` (`REMOTE_ADDR`) | Visitor IP for rate limiting and consent records. Use it behind a proxy or Cloudflare. |
+| `cfbe_client_ip` | `string $ip` | Visitor IP for rate limiting and consent records, after the **Visitor IP address** setting on the Privacy tab (`REMOTE_ADDR` by default) has been applied. |
 
 ### Actions
 
@@ -30,8 +30,9 @@ All hooks are prefixed `cfbe_`. Hooks that belong to a module only fire while th
 
 | Hook | Type | Parameters | Description |
 |---|---|---|---|
-| `cfbe_subscribed` | action | `string $email`, `CFBE\Subscribe_Result $result`, `string $source` | After a signup was handed to bluefox, or failed. `$result->code` is `pending`, `resent`, `already_active`, `queued`, `invalid`, `rejected` or `rate_limited`; `$result->is_success()` tells whether the visitor saw a success message. |
+| `cfbe_subscribed` | action | `string $email`, `CFBE\Subscribe_Result $result`, `string $source` | After a signup was handed to bluefox, or failed. `$result->code` is `pending`, `resent`, `already_active`, `queued`, `suppressed` (bluefox 405: bounced or suppressed address), `invalid` or `rejected`; `$result->is_success()` tells whether the visitor saw a success message. The visitor gets a neutral version of the result (see [REST API](rest-api.md#subscribe)); this action gets the real code. Not fired when the per-mailbox rate limit stops a signup. |
 | `cfbe_signup_confirmed` | action | `string $email`, `string $list_id`, `array $row` | Once, when a signup made through the plugin is confirmed (double opt-in done, contact `active`). `$row` is the local row from `{prefix}cfbe_subscribers`. |
+| `cfbe_signup_site_limit` | filter | `int $limit` (default 30) | Signups per minute the `/subscribe` endpoint accepts for the whole site. |
 | `cfbe_checkout_subscriber_name` | filter | `string $name` ("First Last"), `string $first`, `string $last`, `WC_Order $order` | Subscriber name built from the billing name at checkout. |
 
 `$source` is one of `shortcode`, `block`, `promo`, `popup`, `checkout`, `account`, `cf7`, `wpforms`, `fluentforms`, `gravityforms`, `elementor`.
@@ -75,8 +76,8 @@ The mailer also fires the core hooks `wp_mail_succeeded` and `wp_mail_failed`, a
 | Action | Parameters | Description |
 |---|---|---|
 | `cfbe_webhook_received` | `string $type`, `array $payload` | Every authenticated project webhook event, during the HTTP request and before the core handling. Only queue work here; bluefox expects a fast response. Only fires while the **Inbound webhooks** feature is on. |
-| `cfbe_webhook_event` | `string $type`, `array $payload` | Every project webhook event, in a background job after the plugin has stored it. Needs the Inbound webhooks module. |
-| `cfbe_webhook_{$type}` | `array $payload` | One event type, e.g. `cfbe_webhook_bounce`, `cfbe_webhook_unsubscribe`, `cfbe_webhook_pause-subscription`. Needs the Inbound webhooks module. |
+| `cfbe_webhook_event` | `string $type`, `array $payload` | Every project webhook event, in a background job after the plugin has stored it. Needs the Inbound webhooks module. A payload longer than about 7000 characters (JSON) is cut to the fields the plugin uses before it is queued and then has `truncated: true`; use `cfbe_webhook_received` for the full body. |
+| `cfbe_webhook_{$type}` | `array $payload` | One event type, e.g. `cfbe_webhook_bounce`, `cfbe_webhook_unsubscribe`, `cfbe_webhook_pause-subscription`. Needs the Inbound webhooks module. Large payloads are cut as for `cfbe_webhook_event`. |
 
 Event types: `subscribe`, `resubscribe`, `unsubscribe`, `pause-subscription`, `bounce`, `complaint`, `click`, `open`, `sent`, `failed`. The payload is untrusted input.
 
@@ -88,12 +89,12 @@ Let shop managers manage the plugin:
 add_filter( 'cfbe_capability', fn() => 'manage_woocommerce' );
 ```
 
-Use the visitor IP from Cloudflare:
+Use the visitor IP from a proxy header the Privacy tab does not offer (Cloudflare, `X-Forwarded-For` and `X-Real-IP` are settings there). Only do this for a header your trusted proxy sets:
 
 ```php
 add_filter( 'cfbe_client_ip', function ( $ip ) {
-    $cf = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '';
-    return filter_var( $cf, FILTER_VALIDATE_IP ) ? $cf : $ip;
+    $client = $_SERVER['HTTP_TRUE_CLIENT_IP'] ?? '';
+    return filter_var( $client, FILTER_VALIDATE_IP ) ? $client : $ip;
 } );
 ```
 

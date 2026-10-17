@@ -38,9 +38,9 @@ A read-only log of signups stored in the `{prefix}cfbe_subscribers` table, 20 pe
 | Awaiting confirmation | bluefox sent the double opt-in email; not confirmed yet. |
 | Confirmed | Confirmed, no coupon (coupon off, other list, or not eligible). |
 | Coupon sent | Confirmed and the welcome coupon was sent. |
-| Expired | Not confirmed within the confirmation deadline. |
-| Failed | bluefox rejected the address, or retries ran out. |
-| Already subscribed (no coupon) | The address was already an active (or paused) subscriber. |
+| Expired | Not confirmed within the confirmation deadline. A new signup for the address starts over. |
+| Failed | bluefox rejected the address (e.g. suppressed or bounced, 405), or retries ran out. A new signup for the address starts over. |
+| Already subscribed (no coupon) | The address was already an active (or paused) subscriber, or – with **One coupon per mailbox** – another address of the same mailbox already got a coupon (see *Last error*). |
 
 A small *bluefox: paused / unsubscribed (time)* note shows later status changes reported by the preferences page or webhooks. For rows with a coupon, **Resend coupon email** sends the same code again.
 
@@ -50,6 +50,6 @@ Sources: Popup, Promo, Shortcode, Block, Checkout, My Account, Contact Form 7, W
 
 Tab id: `logs` · Always shown.
 
-The plugin's recent warnings and errors (all messages when WooCommerce is not active), up to 200 entries, stored in the `cfbe_log` option. Email addresses are masked and secrets are never logged. **Clear log** empties it.
+The plugin's recent warnings and errors (all messages when WooCommerce is not active), up to 200 entries, stored in the `cfbe_log` option. Email addresses are masked wherever they appear in a log value, also inside bluefox error messages, and secrets are never logged. **Clear log** empties it.
 
 With WooCommerce, the full log is under **WooCommerce → Status → Logs**, source `cfbe`.

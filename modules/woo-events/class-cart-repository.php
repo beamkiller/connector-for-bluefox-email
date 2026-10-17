@@ -157,7 +157,15 @@ class Cart_Repository {
 			$fields['email'] = $email;
 		}
 
-		$existing = $this->find_active( $session_key, $email );
+		// Only the shopper's own session updates a cart: typing someone else's address must not take over their row.
+		$existing = '' !== $session_key ? $this->find_active( $session_key, '' ) : null;
+		if ( ! $existing && '' !== $email ) {
+			$other = $this->find_active( '', $email );
+			if ( $other && '' !== $session_key && '' !== (string) $other['session_key'] ) {
+				return 0; // An open cart of another session already uses this address.
+			}
+			$existing = $other;
+		}
 		if ( $existing ) {
 			$this->db->update( $this->table, $fields, array( 'id' => (int) $existing['id'] ), self::formats( $fields ), array( '%d' ) );
 			return (int) $existing['id'];

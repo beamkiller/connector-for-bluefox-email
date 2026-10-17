@@ -10,7 +10,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: connector-for-bluefox-email.php
-#: includes/class-privacy.php:70
+#: includes/class-privacy.php:133
 msgid "Connector for bluefox.email"
 msgstr "Connector for bluefox.email"
 
@@ -51,7 +51,7 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 #: admin/class-coupon-tab.php:150
 #: admin/class-coupon-tab.php:208
 #: admin/class-coupon-tab.php:220
-#: includes/class-privacy.php:348
+#: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
 #: modules/sync/class-sync-tab.php:262
 #: modules/webhooks/class-webhooks-tab.php:274
@@ -66,7 +66,7 @@ msgstr "Add meg a Project ID-t és az API kulcsot."
 #: admin/class-admin-page.php:93
 #: admin/class-admin-page.php:94
 #: admin/class-admin-page.php:247
-#: includes/class-abilities.php:68
+#: includes/class-abilities.php:71
 #: modules/integrations/elementor/class-elementor-form-action.php:48
 #: modules/integrations/elementor/class-elementor-form-action.php:60
 msgid "bluefox.email"
@@ -669,75 +669,87 @@ msgstr "Ingyenes szállítást is ad"
 msgid "Code prefix"
 msgstr "Kód előtag"
 
-#: admin/views/tab-coupon.php:81
+#: admin/views/tab-coupon.php:80
+msgid "Email aliases"
+msgstr "E-mail aliasok"
+
+#: admin/views/tab-coupon.php:82
+msgid "One coupon per mailbox"
+msgstr "Postafiókonként egy kupon"
+
+#: admin/views/tab-coupon.php:83
+msgid "Aliases such as name+shop@example.com and Gmail addresses written with dots (j.ane@gmail.com) count as the same address, so one person cannot collect several coupons. Turn it off to give each address its own coupon."
+msgstr "Az olyan aliasok, mint a nev+bolt@example.com, és a pontokkal írt Gmail címek (j.ane@gmail.com) ugyanannak a címnek számítanak, így egy ember nem gyűjthet több kupont. Kapcsold ki, ha minden cím külön kupont kapjon."
+
+#: admin/views/tab-coupon.php:88
 msgid "“Your coupon expires soon” reminder"
 msgstr "„Hamarosan lejár a kuponod” emlékeztető"
 
-#: admin/views/tab-coupon.php:84
+#: admin/views/tab-coupon.php:91
 msgid "Coupon data in bluefox"
 msgstr "Kupon adatok a bluefoxban"
 
-#: admin/views/tab-coupon.php:86
+#: admin/views/tab-coupon.php:93
 msgid "Update the couponCode, couponExpires and couponUsed fields"
 msgstr "couponCode, couponExpires, couponUsed mezők frissítése"
 
-#: admin/views/tab-coupon.php:87
+#: admin/views/tab-coupon.php:94
 msgid "Create bluefox fields"
 msgstr "bluefox mezők létrehozása"
 
-#: admin/views/tab-coupon.php:91
+#: admin/views/tab-coupon.php:98
 msgid "Reminder before expiry (days)"
 msgstr "Emlékeztető lejárat előtt (nap)"
 
-#: admin/views/tab-coupon.php:96
+#: admin/views/tab-coupon.php:103
 msgid "Setup in bluefox (one-time):"
 msgstr "Beállítás a bluefoxban (egyszer kell):"
 
-#: admin/views/tab-coupon.php:98
+#: admin/views/tab-coupon.php:105
 msgid "Segments → new segment “Coupon expires soon”: couponUsed = false AND couponExpires within the next days:"
 msgstr "Segments → új szegmens „Kupon hamarosan lejár”: couponUsed = false ÉS couponExpires a következő napokon belül:"
 
-#: admin/views/tab-coupon.php:99
+#: admin/views/tab-coupon.php:106
 msgid "Automations → new automation: Enter segment “Coupon expires soon” (once per contact) → Send email."
 msgstr "Automations → új automatizmus: Enter segment „Kupon hamarosan lejár” (egyszer kontaktonként) → Send email."
 
-#: admin/views/tab-coupon.php:100
+#: admin/views/tab-coupon.php:107
 msgid "Available in the email: {{contact.couponCode}}, {{contact.name}}."
 msgstr "Az e-mailben használható: {{contact.couponCode}}, {{contact.name}}."
 
-#: admin/views/tab-coupon.php:106
+#: admin/views/tab-coupon.php:113
 msgid "Coupon email in bluefox"
 msgstr "Kupon e-mail a bluefox-ban"
 
-#: admin/views/tab-coupon.php:109
+#: admin/views/tab-coupon.php:116
 msgid "In bluefox, open Transactional emails and create a new email of type HTML (for example “Welcome coupon”). Set its subject, for example: Your {{discount}} welcome coupon."
 msgstr "A bluefox-ban nyisd meg a Transactional emails részt, és hozz létre egy új, HTML típusú e-mailt (pl. „Üdvözlő kupon”). Add meg a tárgyát, például: {{discount}} értékű üdvözlő kuponod."
 
-#: admin/views/tab-coupon.php:110
+#: admin/views/tab-coupon.php:117
 msgid "Paste the template below as the HTML content and adjust the texts and colours to your brand."
 msgstr "Másold be az alábbi sablont HTML tartalomként, és igazítsd a szövegeket és a színeket a márkádhoz."
 
-#: admin/views/tab-coupon.php:111
+#: admin/views/tab-coupon.php:118
 msgid "Save it, copy the email ID and paste it into “Coupon email ID” above."
 msgstr "Mentsd el, másold ki az e-mail ID-t, és illeszd be fent a „Kupon e-mail ID” mezőbe."
 
-#: admin/views/tab-coupon.php:113
+#: admin/views/tab-coupon.php:120
 msgid "Merge tags sent with the coupon email:"
 msgstr "A kupon e-maillel küldött változók:"
 
-#: admin/views/tab-coupon.php:119
+#: admin/views/tab-coupon.php:126
 msgid "Contact fields work too, e.g. {{contact.name}}. The coupon email is transactional (no unsubscribe link), so keep it about the coupon only."
 msgstr "A kontakt mezők is működnek, pl. {{contact.name}}. A kupon e-mail tranzakciós (nincs benne leiratkozó link), ezért csak a kuponról szóljon."
 
-#: admin/views/tab-coupon.php:124
+#: admin/views/tab-coupon.php:131
 msgid "Welcome coupon template"
 msgstr "Üdvözlő kupon sablon"
 
-#: admin/views/tab-coupon.php:125
+#: admin/views/tab-coupon.php:132
 msgid "Double opt-in confirmation template (set it as the confirmation email of the bluefox list; it must contain {{verifyLink}})"
 msgstr "Dupla megerősítés (double opt-in) sablon (állítsd be a bluefox lista megerősítő e-mailjeként; tartalmaznia kell a {{verifyLink}} változót)"
 
-#: admin/views/tab-coupon.php:136
+#: admin/views/tab-coupon.php:143
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
 #: modules/webhooks/views/tab-webhooks.php:99
@@ -1096,6 +1108,19 @@ msgstr "Sikeres feliratkozás"
 msgid "Already subscribed"
 msgstr "Már feliratkozott"
 
+#: admin/views/tab-form.php:239
+#: includes/class-privacy.php:467
+msgid "Subscription status"
+msgstr "Feliratkozási állapot"
+
+#: admin/views/tab-form.php:241
+msgid "Show the “Already subscribed” message"
+msgstr "A „Már feliratkoztál” üzenet megjelenítése"
+
+#: admin/views/tab-form.php:242
+msgid "Off: every successful signup shows the “Successful signup” message, so nobody can use the form to find out whether an address is on your list. On: subscribers who sign up again see “Already subscribed”, which also tells anyone who types their address."
+msgstr "Kikapcsolva: minden sikeres feliratkozás a „Sikeres feliratkozás” üzenetet mutatja, így senki sem tudhatja meg az űrlappal, hogy egy cím rajta van-e a listádon. Bekapcsolva: az újra feliratkozók a „Már feliratkoztál” üzenetet látják, ami bárkinek elárulja ezt, aki beírja a címüket."
+
 #: admin/views/tab-logs.php:13
 msgid "Recent warnings and errors of this plugin (all messages when WooCommerce is not active). Email addresses are masked and secrets are never logged."
 msgstr "A bővítmény legutóbbi figyelmeztetései és hibái (minden üzenet, ha a WooCommerce nem aktív). Az e-mail címek maszkolva jelennek meg, titkos adatok soha nem kerülnek a naplóba."
@@ -1168,7 +1193,7 @@ msgid "Interests field (if enabled on the Form tab)"
 msgstr "Érdeklődési kör mező (ha az Űrlap fülön be van kapcsolva)"
 
 #: admin/views/tab-popup.php:59
-#: includes/class-privacy.php:374
+#: includes/class-privacy.php:464
 #: blocks/signup-form/index.js:48
 msgid "bluefox list"
 msgstr "bluefox lista"
@@ -1545,7 +1570,7 @@ msgid "No subscribers match the filter yet."
 msgstr "Még nincs feliratkozó a szűrésnek megfelelően."
 
 #: admin/views/tab-subscribers.php:99
-#: includes/class-privacy.php:371
+#: includes/class-privacy.php:461
 #: modules/webhooks/views/tab-webhooks.php:115
 #: modules/woo-events/class-privacy.php:91
 #: modules/woo-events/views/tab-woo-events.php:268
@@ -1553,13 +1578,13 @@ msgid "Email"
 msgstr "E-mail"
 
 #: admin/views/tab-subscribers.php:100
-#: includes/class-privacy.php:372
+#: includes/class-privacy.php:462
 #: public/class-form-renderer.php:81
 msgid "Name"
 msgstr "Név"
 
 #: admin/views/tab-subscribers.php:102
-#: includes/class-privacy.php:375
+#: includes/class-privacy.php:465
 #: modules/sync/views/tab-sync.php:51
 msgid "Tags"
 msgstr "Címkék"
@@ -1612,102 +1637,102 @@ msgstr "Kupon e-mail újraküldése"
 msgid "Order #%d"
 msgstr "Rendelés #%d"
 
-#: includes/class-abilities.php:69
+#: includes/class-abilities.php:72
 msgid "Settings of the Connector for bluefox.email plugin: signup forms, popup, checkout opt-in, welcome coupon, emails and feature modules."
 msgstr "A Connector for bluefox.email bővítmény beállításai: feliratkozó űrlapok, felugró ablak, pénztári feliratkozás, üdvözlő kupon, e-mailek és funkciómodulok."
 
-#: includes/class-abilities.php:84
+#: includes/class-abilities.php:90
 msgid "Get bluefox settings"
 msgstr "bluefox beállítások lekérése"
 
-#: includes/class-abilities.php:85
+#: includes/class-abilities.php:91
 msgid "Returns the current settings of the Connector for bluefox.email plugin, grouped by area (api = connection and default list, form = signup form texts, fields and colours, popup = popup triggers and targeting, checkout = checkout opt-in, coupon = welcome coupon, emails = thank-you and preferences page texts, plus one area per enabled feature module), and the on/off state of every feature module. Read this before changing settings: the keys and value types shown are the ones cfbe/update-settings accepts. The API key and webhook secret are never returned."
 msgstr "Visszaadja a Connector for bluefox.email bővítmény jelenlegi beállításait területenként (api = kapcsolat és alapértelmezett lista, form = feliratkozó űrlap szövegei, mezői és színei, popup = felugró ablak indítói és célzása, checkout = pénztári feliratkozás, coupon = üdvözlő kupon, emails = köszönő- és beállítási oldal szövegei, továbbá bekapcsolt funkciómodulonként egy terület), valamint minden funkciómodul be/ki állapotát. Beállítás módosítása előtt ezt olvasd be: az itt látható kulcsokat és értéktípusokat fogadja a cfbe/update-settings. Az API kulcsot és a webhook titkos kulcsot sosem adja vissza."
 
-#: includes/class-abilities.php:93
+#: includes/class-abilities.php:99
 msgid "Only this area. Omit for all areas."
 msgstr "Csak ez a terület. Elhagyva minden terület."
 
-#: includes/class-abilities.php:103
+#: includes/class-abilities.php:109
 msgid "area => key => value."
 msgstr "terület => kulcs => érték."
 
-#: includes/class-abilities.php:107
+#: includes/class-abilities.php:113
 msgid "module => { label, description, enabled, available }."
 msgstr "modul => { label, description, enabled, available }."
 
-#: includes/class-abilities.php:120
+#: includes/class-abilities.php:126
 msgid "Update bluefox settings"
 msgstr "bluefox beállítások módosítása"
 
-#: includes/class-abilities.php:121
+#: includes/class-abilities.php:127
 msgid "Changes settings of one area of the Connector for bluefox.email plugin. Pass only the keys to change; the others keep their value. A list value (e.g. form.interests, woo_events.rules) replaces the whole list, so send the complete list. Values are validated like on the settings screen: invalid values fall back to a safe value, and the response lists every key whose saved value differs from what was sent (adjusted). Use cfbe/list-bluefox-lists to find list IDs and cfbe/list-bluefox-emails to find email IDs. The API key and webhook secret can only be changed in wp-admin."
 msgstr "A Connector for bluefox.email bővítmény egy beállítási területét módosítja. Csak a módosítandó kulcsokat add meg, a többi megtartja az értékét. A lista értékek (pl. form.interests, woo_events.rules) a teljes listát cserélik, ezért a teljes listát küldd. Az értékeket a beállítási oldallal azonos módon ellenőrzi: az érvénytelen érték biztonságos értékre áll vissza, és a válasz felsorol minden kulcsot, amelynek mentett értéke eltér a küldöttől (adjusted). A lista azonosítókat a cfbe/list-bluefox-lists, az e-mail azonosítókat a cfbe/list-bluefox-emails adja meg. Az API kulcs és a webhook titkos kulcs csak a wp-adminban módosítható."
 
-#: includes/class-abilities.php:129
+#: includes/class-abilities.php:135
 msgid "Settings area to change."
 msgstr "A módosítandó beállítási terület."
 
-#: includes/class-abilities.php:133
+#: includes/class-abilities.php:139
 msgid "key => new value, keys as returned by cfbe/get-settings."
 msgstr "kulcs => új érték, a cfbe/get-settings által visszaadott kulcsokkal."
 
-#: includes/class-abilities.php:151
+#: includes/class-abilities.php:157
 msgid "key => value actually saved, where it differs from the value sent."
 msgstr "kulcs => a ténylegesen mentett érték, ahol eltér a küldöttől."
 
-#: includes/class-abilities.php:164
+#: includes/class-abilities.php:170
 msgid "Switch bluefox features on or off"
 msgstr "bluefox funkciók be- és kikapcsolása"
 
-#: includes/class-abilities.php:165
+#: includes/class-abilities.php:171
 msgid "Switches feature modules of the Connector for bluefox.email plugin on or off (e.g. forms, checkout, coupon, sync, mailer, order_emails, abandoned_cart, integration_cf7, preferences, webhooks). Pass only the modules to change. A module whose required plugin (WooCommerce, a form plugin) is not active stays off. Settings areas of a newly enabled module appear from the next request."
 msgstr "A Connector for bluefox.email bővítmény funkciómoduljait kapcsolja be vagy ki (pl. forms, checkout, coupon, sync, mailer, order_emails, abandoned_cart, integration_cf7, preferences, webhooks). Csak a módosítandó modulokat add meg. Az a modul, amelynek szükséges bővítménye (WooCommerce, űrlap bővítmény) nem aktív, kikapcsolva marad. Az újonnan bekapcsolt modul beállítási területei a következő kéréstől jelennek meg."
 
-#: includes/class-abilities.php:172
+#: includes/class-abilities.php:178
 msgid "module => true (on) / false (off)."
 msgstr "modul => true (be) / false (ki)."
 
-#: includes/class-abilities.php:194
+#: includes/class-abilities.php:200
 msgid "List bluefox subscriber lists"
 msgstr "bluefox feliratkozói listák lekérése"
 
-#: includes/class-abilities.php:195
+#: includes/class-abilities.php:201
 msgid "Returns the subscriber lists of the connected bluefox project (id, name, whether double opt-in is on). Use an id as list_id in the api, popup, checkout or coupon settings."
 msgstr "Visszaadja a csatlakoztatott bluefox projekt feliratkozói listáit (azonosító, név, be van-e kapcsolva a dupla megerősítés). Az azonosítót list_id-ként használd az api, popup, checkout vagy coupon beállításokban."
 
-#: includes/class-abilities.php:217
+#: includes/class-abilities.php:223
 msgid "List bluefox emails"
 msgstr "bluefox e-mailek lekérése"
 
-#: includes/class-abilities.php:218
+#: includes/class-abilities.php:224
 msgid "Returns the transactional and triggered emails of the connected bluefox project (id, name). Use an id as coupon.email_id (transactional) or as email_id of an order email / abandoned cart rule (transactional or triggered, matching the rule type)."
 msgstr "Visszaadja a csatlakoztatott bluefox projekt tranzakciós és triggered e-mailjeit (azonosító, név). Az azonosítót coupon.email_id-ként (tranzakciós), vagy egy rendelési / elhagyott kosár szabály email_id-jaként használd (tranzakciós vagy triggered, a szabály típusának megfelelően)."
 
 #. translators: 1: setting keys, 2: settings area
-#: includes/class-abilities.php:308
+#: includes/class-abilities.php:314
 #, php-format
 msgid "Unknown settings %1$s in area %2$s. Call cfbe/get-settings for the valid keys."
 msgstr "Ismeretlen beállítás(ok): %1$s a(z) %2$s területen. Az érvényes kulcsokat a cfbe/get-settings adja meg."
 
 #. translators: %s: setting keys
-#: includes/class-abilities.php:317
+#: includes/class-abilities.php:323
 #, php-format
 msgid "%s can only be changed in wp-admin."
 msgstr "%s csak a wp-adminban módosítható."
 
 #. translators: 1: module slugs, 2: valid module slugs
-#: includes/class-abilities.php:368
+#: includes/class-abilities.php:374
 #, php-format
 msgid "Unknown modules %1$s. Valid modules: %2$s."
 msgstr "Ismeretlen modul(ok): %1$s. Érvényes modulok: %2$s."
 
-#: includes/class-abilities.php:453
+#: includes/class-abilities.php:459
 msgid "bluefox is not connected yet: set the project ID and API key on the General tab in wp-admin."
 msgstr "A bluefox még nincs csatlakoztatva: add meg a projekt azonosítót és az API kulcsot a wp-admin Általános fülén."
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:513
+#: includes/class-abilities.php:519
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr "Ismeretlen beállítási terület: „%1$s”. Érvényes területek: %2$s."
@@ -1721,28 +1746,28 @@ msgstr "A bluefox kapcsolat nincs beállítva (Project ID / API kulcs)."
 msgid "Privacy policy"
 msgstr "Adatkezelési tájékoztató"
 
-#: includes/class-checkout-optin.php:444
+#: includes/class-checkout-optin.php:446
 msgid "Newsletter: the customer subscribed, the confirmation email has been sent."
 msgstr "Hírlevél: a vásárló feliratkozott, a megerősítő e-mailt elküldtük."
 
-#: includes/class-checkout-optin.php:446
+#: includes/class-checkout-optin.php:448
 msgid "Newsletter: the customer is already a subscriber (no new coupon)."
 msgstr "Hírlevél: a vásárló már feliratkozó (nem kap új kupont)."
 
-#: includes/class-checkout-optin.php:448
+#: includes/class-checkout-optin.php:450
 msgid "Newsletter: bluefox is unavailable right now, the subscription will be retried later."
 msgstr "Hírlevél: a bluefox most nem érhető el, a feliratkozást később újrapróbáljuk."
 
-#: includes/class-checkout-optin.php:450
+#: includes/class-checkout-optin.php:452
 msgid "Newsletter: the subscription failed (details: bluefox.email → Logs)."
 msgstr "Hírlevél: a feliratkozás nem sikerült (részletek: bluefox.email → Naplók)."
 
-#: includes/class-checkout-optin.php:468
+#: includes/class-checkout-optin.php:470
 msgid "Newsletter:"
 msgstr "Hírlevél:"
 
 #. translators: %s: date and time of the consent
-#: includes/class-checkout-optin.php:472
+#: includes/class-checkout-optin.php:474
 #, php-format
 msgid "subscribed at checkout (%s)"
 msgstr "feliratkozott a pénztárban (%s)"
@@ -1885,209 +1910,234 @@ msgstr "AI ügynök hozzáférés (kísérleti)"
 msgid "Let AI agents read and change these settings through the WordPress Abilities API, e.g. with the MCP Adapter plugin. Administrators only; the API key is never exposed."
 msgstr "AI ügynökök olvashatják és módosíthatják ezeket a beállításokat a WordPress Abilities API-n keresztül, pl. az MCP Adapter bővítménnyel. Csak adminisztrátoroknak; az API kulcs sosem kerül ki."
 
-#: includes/class-privacy.php:79
+#: includes/class-privacy.php:118
+msgid "Newsletter coupon (personal data erased)"
+msgstr "Hírlevél kupon (személyes adatok törölve)"
+
+#: includes/class-privacy.php:142
 msgid "Suggested text:"
 msgstr "Javasolt szöveg:"
 
-#: includes/class-privacy.php:80
+#: includes/class-privacy.php:143
 msgid "When you subscribe to our newsletter (signup form, popup, checkout checkbox or another form on this site), we send your email address, your name if you give it, and tags describing your interests and where you signed up to bluefox.email, the email service we use to send our newsletters and service emails. bluefox.email sends you a confirmation email; you are only subscribed after you confirm."
 msgstr "Amikor feliratkozol a hírlevelünkre (feliratkozó űrlap, felugró ablak, pénztári jelölőnégyzet vagy más űrlap ezen a webhelyen), az e-mail címedet, a nevedet (ha megadod), valamint az érdeklődési köreidet és a feliratkozás helyét leíró címkéket elküldjük a bluefox.email részére, amely a hírleveleink és szolgáltatási e-mailjeink küldésére használt e-mail szolgáltatásunk. A bluefox.email megerősítő e-mailt küld neked; csak a megerősítés után leszel feliratkozva."
 
-#: includes/class-privacy.php:82
+#: includes/class-privacy.php:145
 msgid "If we have enabled it, we also keep the bluefox.email contact of our registered users and customers up to date with customer data (such as name, number of orders and total spent), and some emails sent by this site (for example order emails) are delivered through bluefox.email. bluefox.email informs us when an email bounces, is marked as spam, or when you unsubscribe or pause your subscription; we store this with your account on this site."
 msgstr "Ha bekapcsoltuk, a regisztrált felhasználóink és vásárlóink bluefox.email kontaktját vásárlói adatokkal (például név, rendelések száma és összes költés) is naprakészen tartjuk, és a webhely által küldött egyes e-maileket (például a rendelési e-maileket) a bluefox.email kézbesíti. A bluefox.email értesít minket, ha egy e-mail visszapattan, spamnek jelölik, vagy ha leiratkozol, illetve szünetelteted a feliratkozásodat; ezt a webhelyen lévő fiókodnál tároljuk."
 
 #. translators: 1: bluefox.email privacy policy URL, 2: bluefox.email terms URL
-#: includes/class-privacy.php:85
+#: includes/class-privacy.php:148
 #, php-format
 msgid "bluefox.email processes this data on our behalf. For where and how it stores data, see the <a href=\"%1$s\">bluefox.email privacy policy</a> and <a href=\"%2$s\">terms of use</a>."
 msgstr "A bluefox.email ezeket az adatokat a megbízásunkból kezeli. Arról, hogy hol és hogyan tárolja az adatokat, lásd a <a href=\"%1$s\">bluefox.email adatkezelési tájékoztatóját</a> és <a href=\"%2$s\">felhasználási feltételeit</a>."
 
-#: includes/class-privacy.php:89
+#: includes/class-privacy.php:152
 msgid "You can unsubscribe at any time with the link in every newsletter. You can ask us to export or erase the data stored on this site, and to delete your contact at bluefox.email."
 msgstr "Bármikor leiratkozhatsz a minden hírlevélben megtalálható linkkel. Kérheted az ezen a webhelyen tárolt adataid exportálását vagy törlését, valamint a kontaktod törlését a bluefox.email-nél."
 
-#: includes/class-privacy.php:100
+#: includes/class-privacy.php:163
 msgid "On this site we store your email address, name, the signup source and list, the text of the consent you gave and the time of your consent and confirmation, so that we can prove your consent. We do not store your IP address."
 msgstr "Ezen az oldalon tároljuk az e-mail címedet, a nevedet, a feliratkozás forrását és listáját, az általad elfogadott hozzájárulás szövegét, valamint a hozzájárulás és a megerősítés időpontját, hogy igazolni tudjuk a hozzájárulásodat. Az IP-címedet nem tároljuk."
 
-#: includes/class-privacy.php:103
+#: includes/class-privacy.php:166
 msgid "On this site we store your email address, name, the signup source and list, the text of the consent you gave, your IP address and the time of your consent and confirmation, so that we can prove your consent."
 msgstr "Ezen az oldalon tároljuk az e-mail címedet, a nevedet, a feliratkozás forrását és listáját, az általad elfogadott hozzájárulás szövegét, az IP-címedet, valamint a hozzájárulás és a megerősítés időpontját, hogy igazolni tudjuk a hozzájárulásodat."
 
-#: includes/class-privacy.php:106
+#: includes/class-privacy.php:169
 msgid "On this site we store your email address, name, the signup source and list, the text of the consent you gave, a shortened (anonymised) form of your IP address and the time of your consent and confirmation, so that we can prove your consent."
 msgstr "Ezen az oldalon tároljuk az e-mail címedet, a nevedet, a feliratkozás forrását és listáját, az általad elfogadott hozzájárulás szövegét, az IP-címed rövidített (anonimizált) formáját, valamint a hozzájárulás és a megerősítés időpontját, hogy igazolni tudjuk a hozzájárulásodat."
 
 #. translators: %d: number of months
-#: includes/class-privacy.php:111
+#: includes/class-privacy.php:174
 #, php-format
 msgid "The IP address is erased after %d month."
 msgid_plural "The IP address is erased after %d months."
 msgstr[0] "Az IP-címet %d hónap után töröljük."
 msgstr[1] "Az IP-címet %d hónap után töröljük."
 
-#: includes/class-privacy.php:113
+#: includes/class-privacy.php:176
 msgid "If we give you a welcome coupon, its code, expiry date and whether it was used are also stored in bluefox.email."
 msgstr "Ha üdvözlő kupont adunk, annak kódját, lejárati idejét és felhasználását is tároljuk a bluefox.email rendszerében."
 
-#: includes/class-privacy.php:124
-#: includes/class-privacy.php:138
+#: includes/class-privacy.php:187
+#: includes/class-privacy.php:201
 msgid "Newsletter (bluefox.email)"
 msgstr "Hírlevél (bluefox.email)"
 
-#: includes/class-privacy.php:158
+#: includes/class-privacy.php:221
 msgid "Newsletter signup"
 msgstr "Hírlevél feliratkozás"
 
-#: includes/class-privacy.php:159
+#: includes/class-privacy.php:222
 msgid "Newsletter signup and consent records stored by Connector for bluefox.email."
 msgstr "A Connector for bluefox.email által tárolt hírlevél feliratkozások és hozzájárulási nyilvántartások."
 
-#: includes/class-privacy.php:176
+#: includes/class-privacy.php:239
 msgid "Newsletter status"
 msgstr "Hírlevél állapot"
 
-#: includes/class-privacy.php:177
+#: includes/class-privacy.php:240
 msgid "Subscription, bounce and complaint status reported by bluefox.email."
 msgstr "A bluefox.email által jelzett feliratkozási, visszapattanási és panasz állapot."
 
-#: includes/class-privacy.php:214
+#: includes/class-privacy.php:279
 msgid "The contact was deleted from bluefox.email (all lists)."
 msgstr "A kontakt törölve a bluefox.email-ből (minden listáról)."
 
-#: includes/class-privacy.php:216
+#: includes/class-privacy.php:281
 msgid "No contact with this email address exists in bluefox.email."
 msgstr "Ezzel az e-mail címmel nincs kontakt a bluefox.email-ben."
 
 #. translators: %s: error message
-#: includes/class-privacy.php:221
+#: includes/class-privacy.php:286
 #, php-format
 msgid "The contact could not be deleted from bluefox.email (%s). Delete it there manually or run the eraser again."
 msgstr "A kontaktot nem sikerült törölni a bluefox.email-ből (%s). Töröld ott kézzel, vagy futtasd újra a törlést."
 
-#: includes/class-privacy.php:227
+#: includes/class-privacy.php:292
 msgid "Only the data stored on this site was erased. The contact in bluefox.email was not deleted: delete it in bluefox.email (Contacts), or turn on “Also delete the bluefox.email contact” on the plugin’s Privacy tab."
 msgstr "Csak az ezen a webhelyen tárolt adatok lettek törölve. A bluefox.email kontakt nem lett törölve: töröld a bluefox.email-ben (Contacts), vagy kapcsold be a bővítmény Adatvédelem fülén „A bluefox.email kontakt törlése is” beállítást."
 
-#: includes/class-privacy.php:283
+#: includes/class-privacy.php:351
 msgid "Privacy"
 msgstr "Adatvédelem"
 
-#: includes/class-privacy.php:298
+#: includes/class-privacy.php:366
 msgid "Anonymised (recommended): the last part is removed, e.g. 203.0.113.0"
 msgstr "Anonimizált (ajánlott): az utolsó része törlődik, pl. 203.0.113.0"
 
-#: includes/class-privacy.php:299
+#: includes/class-privacy.php:367
 msgid "Full IP address"
 msgstr "Teljes IP-cím"
 
-#: includes/class-privacy.php:300
+#: includes/class-privacy.php:368
 msgid "Do not store IP addresses"
 msgstr "Ne tároljon IP-címet"
 
-#: includes/class-privacy.php:303
+#: includes/class-privacy.php:371
 msgid "The plugin adds suggested text to Settings → Privacy (policy guide) and handles Tools → Export / Erase Personal Data for newsletter signups and the bluefox status stored with users."
 msgstr "A bővítmény javasolt szöveget ad a Beállítások → Adatvédelem (szabályzat útmutató) oldalhoz, és kezeli az Eszközök → Személyes adatok exportálása / törlése kéréseket a hírlevél feliratkozásokra és a felhasználóknál tárolt bluefox állapotra."
 
-#: includes/class-privacy.php:309
+#: includes/class-privacy.php:377
 msgid "IP address with consent"
 msgstr "IP-cím a hozzájárulással"
 
-#: includes/class-privacy.php:316
+#: includes/class-privacy.php:384
 msgid "Stored with every signup (forms, checkout, form plugins) as part of the proof of consent. bluefox.email’s double opt-in confirmation is the main proof; the IP is optional extra evidence and personal data under the GDPR."
 msgstr "Minden feliratkozásnál (űrlapok, pénztár, űrlap bővítmények) a hozzájárulás igazolásának része. A fő bizonyíték a bluefox.email dupla megerősítése; az IP-cím opcionális kiegészítő bizonyíték, és a GDPR szerint személyes adat."
 
-#: includes/class-privacy.php:320
+#: includes/class-privacy.php:388
 msgid "Erase IP addresses after"
 msgstr "IP-címek törlése ennyi idő után"
 
-#: includes/class-privacy.php:322
+#: includes/class-privacy.php:390
 msgid "months"
 msgstr "hónap"
 
-#: includes/class-privacy.php:323
+#: includes/class-privacy.php:391
 msgid "A daily job removes older IP addresses from signup records and checkout orders. 0 = keep them as long as the record exists."
 msgstr "Egy napi feladat törli a régebbi IP-címeket a feliratkozási rekordokból és a pénztári rendelésekből. 0 = a rekord élettartamáig megmaradnak."
 
-#: includes/class-privacy.php:327
+#: includes/class-privacy.php:395
+msgid "Visitor IP address"
+msgstr "Látogató IP-címe"
+
+#: includes/class-privacy.php:401
+msgid "Direct connection (REMOTE_ADDR)"
+msgstr "Közvetlen kapcsolat (REMOTE_ADDR)"
+
+#: includes/class-privacy.php:402
+msgid "Cloudflare (CF-Connecting-IP)"
+msgstr "Cloudflare (CF-Connecting-IP)"
+
+#: includes/class-privacy.php:403
+msgid "Proxy / load balancer (X-Forwarded-For)"
+msgstr "Proxy / terheléselosztó (X-Forwarded-For)"
+
+#: includes/class-privacy.php:404
+msgid "Proxy (X-Real-IP)"
+msgstr "Proxy (X-Real-IP)"
+
+#: includes/class-privacy.php:411
+msgid "Used for rate limiting and the consent record. Behind Cloudflare or a proxy every visitor arrives from the proxy’s address, so the signup limits would hit everyone at once: choose the header your proxy sets. Only choose a header your server really receives from a trusted proxy, because visitors can send these headers themselves."
+msgstr "A gyakoriságkorláthoz és a hozzájárulás rögzítéséhez használjuk. Cloudflare vagy proxy mögött minden látogató a proxy címéről érkezik, így a feliratkozási korlát egyszerre mindenkit érintene: válaszd azt a fejlécet, amelyet a proxyd beállít. Csak olyan fejlécet válassz, amelyet a szervered valóban egy megbízható proxytól kap, mert ezeket a látogatók maguk is elküldhetik."
+
+#: includes/class-privacy.php:415
 msgid "Erase requests"
 msgstr "Törlési kérések"
 
-#: includes/class-privacy.php:331
+#: includes/class-privacy.php:419
 msgid "Also delete the bluefox.email contact"
 msgstr "A bluefox.email kontakt törlése is"
 
-#: includes/class-privacy.php:333
+#: includes/class-privacy.php:421
 msgid "When an erasure request is processed, the contact is deleted in bluefox.email too (removed from every list, cannot be undone). When off, only the data on this site is erased."
 msgstr "Törlési kérés feldolgozásakor a kontakt a bluefox.email-ben is törlődik (minden listáról, nem visszavonható). Kikapcsolva csak az ezen a webhelyen lévő adatok törlődnek."
 
-#: includes/class-privacy.php:373
+#: includes/class-privacy.php:463
 msgid "Signup source"
 msgstr "Feliratkozás forrása"
 
-#: includes/class-privacy.php:376
+#: includes/class-privacy.php:466
 msgid "Signup status"
 msgstr "Feliratkozás állapota"
 
-#: includes/class-privacy.php:377
-msgid "Subscription status"
-msgstr "Feliratkozási állapot"
-
-#: includes/class-privacy.php:378
+#: includes/class-privacy.php:468
 msgid "Consent text"
 msgstr "Hozzájárulás szövege"
 
-#: includes/class-privacy.php:379
+#: includes/class-privacy.php:469
 msgid "Consent IP address"
 msgstr "Hozzájárulás IP-címe"
 
-#: includes/class-privacy.php:380
+#: includes/class-privacy.php:470
 msgid "Consent time (UTC)"
 msgstr "Hozzájárulás ideje (UTC)"
 
-#: includes/class-privacy.php:381
+#: includes/class-privacy.php:471
 msgid "Confirmation time (UTC)"
 msgstr "Megerősítés ideje (UTC)"
 
-#: includes/class-privacy.php:382
+#: includes/class-privacy.php:472
 msgid "Welcome coupon ID"
 msgstr "Üdvözlő kupon ID"
 
-#: includes/class-privacy.php:383
+#: includes/class-privacy.php:473
 msgid "Order ID"
 msgstr "Rendelés ID"
 
-#: includes/class-privacy.php:384
+#: includes/class-privacy.php:474
 msgid "Created (UTC)"
 msgstr "Létrehozva (UTC)"
 
-#: includes/class-privacy.php:385
+#: includes/class-privacy.php:475
 msgid "Subscription status changed (UTC)"
 msgstr "Feliratkozási állapot változása (UTC)"
 
-#: includes/class-rest-subscribe.php:91
+#: includes/class-rest-subscribe.php:109
 msgid "Request too large."
 msgstr "Túl nagy kérés."
 
-#: includes/class-rest-subscribe.php:99
+#: includes/class-rest-subscribe.php:117
 msgid "Invalid request."
 msgstr "Érvénytelen kérés."
 
-#: includes/class-rest-subscribe.php:100
+#: includes/class-rest-subscribe.php:118
 msgid "Unknown source."
 msgstr "Ismeretlen forrás."
 
-#: includes/class-rest-subscribe.php:174
+#: includes/class-rest-subscribe.php:200
+#: includes/class-subscription-service.php:143
 msgid "Too many attempts, please try again later."
 msgstr "Túl sok próbálkozás, kérjük, próbáld újra később."
 
-#: includes/class-reward-service.php:217
+#: includes/class-reward-service.php:223
 msgid "No coupon has been created for this email address yet."
 msgstr "Ehhez az e-mail címhez még nem készült kupon."
 
 #: includes/class-signup-validator.php:33
-#: public/class-assets.php:60
+#: public/class-assets.php:61
 msgid "Please enter a valid email address."
 msgstr "Kérjük, adj meg egy érvényes e-mail címet."
 
@@ -2096,12 +2146,12 @@ msgid "The name can be at most 100 characters long."
 msgstr "A név legfeljebb 100 karakter lehet."
 
 #: includes/class-signup-validator.php:42
-#: public/class-assets.php:61
+#: public/class-assets.php:62
 msgid "Please enter your name."
 msgstr "Kérjük, add meg a neved."
 
 #: includes/class-signup-validator.php:50
-#: public/class-assets.php:62
+#: public/class-assets.php:63
 msgid "Please choose at least one topic."
 msgstr "Kérjük, válassz legalább egy témát."
 
@@ -2109,8 +2159,8 @@ msgstr "Kérjük, válassz legalább egy témát."
 msgid "You must give your consent to subscribe."
 msgstr "A feliratkozáshoz el kell fogadnod a hozzájárulást."
 
-#: includes/class-subscription-service.php:104
-#: public/class-assets.php:64
+#: includes/class-subscription-service.php:134
+#: public/class-assets.php:65
 msgid "Please correct the highlighted fields."
 msgstr "Kérjük, javítsd a hibásan kitöltött mezőket."
 
@@ -2904,15 +2954,15 @@ msgstr "Még nem érkezett esemény."
 msgid "Event"
 msgstr "Esemény"
 
-#: modules/woo-events/class-cart-tracker.php:451
+#: modules/woo-events/class-cart-tracker.php:446
 msgid "This cart link is no longer valid."
 msgstr "Ez a kosár link már nem érvényes."
 
-#: modules/woo-events/class-dispatcher.php:326
+#: modules/woo-events/class-dispatcher.php:332
 msgid "The order has no valid billing email."
 msgstr "A rendelésnek nincs érvényes számlázási e-mail címe."
 
-#: modules/woo-events/class-dispatcher.php:422
+#: modules/woo-events/class-dispatcher.php:428
 msgid "The bluefox connection is not configured."
 msgstr "A bluefox kapcsolat nincs beállítva."
 
@@ -3142,8 +3192,8 @@ msgid "Only track carts of people who opted in"
 msgstr "Csak a hozzájárulást adók kosarainak követése"
 
 #: modules/woo-events/views/tab-woo-events.php:204
-msgid "Opted in = confirmed a signup made with this plugin, or ticked the newsletter checkbox at checkout. When off, every cart with a known email is stored (bluefox still only delivers the reminder to active subscribers)."
-msgstr "Hozzájárulást adott = megerősített egy ezzel a bővítménnyel tett feliratkozást, vagy bepipálta a hírlevél jelölőnégyzetet a pénztárban. Kikapcsolva minden ismert e-mail címhez tartozó kosár tárolódik (a bluefox az emlékeztetőt így is csak aktív feliratkozóknak kézbesíti)."
+msgid "Opted in = confirmed a newsletter signup made with this plugin (form, checkout or form plugin). When off, every cart with a known email is stored (bluefox still only delivers triggered reminders to active subscribers)."
+msgstr "Feliratkozott = megerősített egy ezzel a bővítménnyel indított hírlevél-feliratkozást (űrlap, pénztár vagy űrlap bővítmény). Kikapcsolva minden ismert e-mail címhez tartozó kosarat tárolunk (a bluefox a triggered emlékeztetőt így is csak aktív feliratkozóknak kézbesíti)."
 
 #: modules/woo-events/views/tab-woo-events.php:208
 msgid "Idle time"
@@ -3225,11 +3275,11 @@ msgstr "Tételek"
 msgid "Total"
 msgstr "Összesen"
 
-#: public/class-assets.php:63
+#: public/class-assets.php:64
 msgid "Please accept the consent to subscribe."
 msgstr "A feliratkozáshoz el kell fogadnod a hozzájárulást."
 
-#: public/class-assets.php:65
+#: public/class-assets.php:66
 msgid "Sending…"
 msgstr "Küldés…"
 
@@ -3249,93 +3299,94 @@ msgstr "Weboldal"
 msgid "– Select –"
 msgstr "– Válassz –"
 
-#: public/class-preferences-page.php:225
+#: public/class-preferences-page.php:226
 msgid "Open this page with the “Unsubscribe” or “Pause” link at the bottom of our newsletters."
 msgstr "Ezt az oldalt a hírleveleink alján lévő „Leiratkozás” vagy „Szüneteltetés” linkkel tudod megnyitni."
 
-#: public/class-preferences-page.php:226
-#: public/class-preferences-page.php:241
+#: public/class-preferences-page.php:227
+#: public/class-preferences-page.php:247
 msgid "This link is invalid or has expired. Please use the link at the bottom of our latest newsletter."
 msgstr "Ez a link érvénytelen vagy lejárt. Kérjük, használd a legutóbbi hírlevelünk alján lévő linket."
 
-#: public/class-preferences-page.php:244
+#: public/class-preferences-page.php:239
+#: public/class-preferences-page.php:250
 msgid "We can’t load your preferences right now. Please try again in a few minutes."
 msgstr "A beállításaidat most nem tudjuk betölteni. Kérjük, próbáld újra pár perc múlva."
 
 #. translators: %s: email address
-#: public/class-preferences-page.php:259
+#: public/class-preferences-page.php:265
 #, php-format
 msgid "Email address: %s"
 msgstr "E-mail cím: %s"
 
-#: public/class-preferences-page.php:266
+#: public/class-preferences-page.php:272
 msgid "You are subscribed to our newsletter."
 msgstr "Feliratkoztál a hírlevelünkre."
 
-#: public/class-preferences-page.php:268
-#: public/class-preferences-page.php:279
+#: public/class-preferences-page.php:274
+#: public/class-preferences-page.php:285
 msgid "Unsubscribe from the newsletter"
 msgstr "Leiratkozom a hírlevélről"
 
 #. translators: %s: date
-#: public/class-preferences-page.php:275
+#: public/class-preferences-page.php:281
 #, php-format
 msgid "Your newsletter is paused until %s"
 msgstr "A hírlevél szünetel eddig: %s"
 
-#: public/class-preferences-page.php:276
+#: public/class-preferences-page.php:282
 msgid "Your newsletter is paused."
 msgstr "A hírlevél szünetel."
 
-#: public/class-preferences-page.php:278
+#: public/class-preferences-page.php:284
 msgid "Resume now"
 msgstr "Kérem újra most"
 
-#: public/class-preferences-page.php:282
+#: public/class-preferences-page.php:288
 msgid "We don’t send newsletters to this address."
 msgstr "Erre a címre nem küldünk hírlevelet."
 
-#: public/class-preferences-page.php:283
+#: public/class-preferences-page.php:289
 msgid "Subscribe again"
 msgstr "Újra feliratkozom"
 
-#: public/class-preferences-page.php:286
+#: public/class-preferences-page.php:292
 msgid "Your subscription is not confirmed yet. Please click the button in the confirmation email."
 msgstr "A feliratkozásod még nincs megerősítve. Kérjük, kattints a megerősítő e-mailben kapott gombra."
 
-#: public/class-preferences-page.php:289
+#: public/class-preferences-page.php:295
 msgid "This email address is not subscribed to our newsletter."
 msgstr "Ez az e-mail cím nincs feliratkozva a hírlevelünkre."
 
-#: public/class-preferences-page.php:318
+#: public/class-preferences-page.php:324
 msgid "Take a break"
 msgstr "Szünetet tartanék"
 
 #. translators: %d: number of months
-#: public/class-preferences-page.php:322
+#: public/class-preferences-page.php:328
 #, php-format
 msgid "For %d month"
 msgid_plural "For %d months"
 msgstr[0] "%d hónapig"
 msgstr[1] "%d hónapig"
 
-#: public/class-preferences-page.php:327
+#: public/class-preferences-page.php:333
 msgid "Pause"
 msgstr "Szüneteltetem"
 
-#: public/class-preferences-page.php:362
+#: public/class-preferences-page.php:368
 msgid "Done. We won’t send you newsletters for the chosen period; after that they resume automatically."
 msgstr "Rendben, a megadott ideig nem küldünk hírlevelet. Utána automatikusan újra megkapod."
 
-#: public/class-preferences-page.php:363
+#: public/class-preferences-page.php:369
 msgid "You have unsubscribed and won’t receive our newsletter at this address any more. You will still get emails about your orders."
 msgstr "Leiratkoztál, erre a címre többé nem küldünk hírlevelet. A rendeléseiddel kapcsolatos e-maileket továbbra is megkapod."
 
-#: public/class-preferences-page.php:364
+#: public/class-preferences-page.php:370
 msgid "Thank you, you will receive our newsletter again!"
 msgstr "Köszönjük, újra megkapod a hírlevelünket!"
 
-#: public/class-preferences-page.php:365
+#: public/class-preferences-page.php:371
 msgid "The change could not be saved. Please try again in a few minutes."
 msgstr "A módosítás most nem sikerült. Kérjük, próbáld újra pár perc múlva."
 

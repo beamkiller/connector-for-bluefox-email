@@ -119,7 +119,7 @@ final class Admin_Ajax {
 				'doi'  => ! empty( $list['doubleOptIn']['active'] ),
 			);
 		}
-		set_transient( Settings::LISTS_CACHE, $cache, DAY_IN_SECONDS );
+		Settings::remember_lists( $cache );
 
 		wp_send_json_success( array( 'lists' => $out ) );
 	}

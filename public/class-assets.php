@@ -55,6 +55,7 @@ final class Assets {
 	public static function config(): array {
 		return array(
 			'restUrl'    => esc_url_raw( rest_url( 'cfbe/v1/subscribe' ) ),
+			'tokenUrl'   => esc_url_raw( rest_url( 'cfbe/v1/form-token' ) ),
 			'minElapsed' => \CFBE\Rest_Subscribe::MIN_ELAPSED,
 			'i18n'       => array(
 				'emailInvalid'      => __( 'Please enter a valid email address.', 'connector-for-bluefox-email' ),

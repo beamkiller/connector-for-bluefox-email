@@ -235,6 +235,13 @@ $cfbe_rows   = $cfbe_values['interests'] ? $cfbe_values['interests'] : array(
 				<td><textarea class="large-text" rows="2" id="cfbe-<?php echo esc_attr( $cfbe_key ); ?>" name="<?php echo esc_attr( $cfbe_name( $cfbe_key ) ); ?>"><?php echo esc_textarea( $cfbe_values[ $cfbe_key ] ); ?></textarea></td>
 			</tr>
 		<?php endforeach; ?>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'Subscription status', 'connector-for-bluefox-email' ); ?></th>
+			<td>
+				<label><input type="checkbox" name="<?php echo esc_attr( $cfbe_name( 'reveal_subscribed' ) ); ?>" value="1" <?php checked( $cfbe_values['reveal_subscribed'] ); ?>> <?php esc_html_e( 'Show the “Already subscribed” message', 'connector-for-bluefox-email' ); ?></label>
+				<p class="description"><?php esc_html_e( 'Off: every successful signup shows the “Successful signup” message, so nobody can use the form to find out whether an address is on your list. On: subscribers who sign up again see “Already subscribed”, which also tells anyone who types their address.', 'connector-for-bluefox-email' ); ?></p>
+			</td>
+		</tr>
 	</table>
 	<?php submit_button(); ?>
 </form>
