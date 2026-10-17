@@ -58,4 +58,4 @@ Its options, tables, user meta and pending jobs are removed. Issued WooCommerce 
 
 ## Is this an official bluefox.email plugin?
 
-No. It is developed by KREMONT s.r.o. and is not affiliated with bluefox.email.
+No. It is developed by [Peter Kulcsár](https://www.linkedin.com/in/peterkulcsar/) and is not affiliated with bluefox.email.

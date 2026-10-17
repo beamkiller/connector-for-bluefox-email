@@ -73,4 +73,4 @@ This plugin sends data to the external **bluefox.email API** (`https://api.bluef
 
 GPL-2.0-or-later. See [LICENSE](LICENSE).
 
-Developed by KREMONT s.r.o. This plugin is not developed by or affiliated with bluefox.email.
+Developed by [Peter Kulcsár](https://www.linkedin.com/in/peterkulcsar/). This plugin is not developed by or affiliated with bluefox.email.

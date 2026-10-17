@@ -26,8 +26,13 @@ msgstr "A WordPress és a WooCommerce összekapcsolása a bluefox.email szolgál
 
 #. Author of the plugin
 #: connector-for-bluefox-email.php
-msgid "KREMONT s.r.o."
-msgstr "KREMONT s.r.o."
+msgid "Peter Kulcsár"
+msgstr "Peter Kulcsár"
+
+#. Author URI of the plugin
+#: connector-for-bluefox-email.php
+msgid "https://www.linkedin.com/in/peterkulcsar/"
+msgstr "https://www.linkedin.com/in/peterkulcsar/"
 
 #. translators: %s: comma separated field names
 #: admin/class-admin-ajax.php:78

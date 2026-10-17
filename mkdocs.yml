@@ -1,11 +1,11 @@
 site_name: Connector for bluefox.email
 site_description: Documentation of the Connector for bluefox.email WordPress plugin – signup forms with double opt-in, WooCommerce opt-in and coupons, contact sync and email delivery.
-site_author: KREMONT s.r.o.
+site_author: Peter Kulcsár
 site_url: https://beamkiller.github.io/connector-for-bluefox-email/
 repo_url: https://github.com/beamkiller/connector-for-bluefox-email
 repo_name: beamkiller/connector-for-bluefox-email
 edit_uri: edit/main/docs/
-copyright: Copyright &copy; KREMONT s.r.o. – GPL-2.0-or-later. Not affiliated with bluefox.email.
+copyright: Copyright &copy; Peter Kulcsár – GPL-2.0-or-later. Not affiliated with bluefox.email.
 
 validation:
   omitted_files: warn
