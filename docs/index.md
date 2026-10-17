@@ -1,4 +1,4 @@
-# Connector for bluefox.email – Newsletter and WooCommerce Emails
+# Connector for bluefox.email – Newsletter and WooCommerce Marketing
 
 Connector for bluefox.email links your WordPress site and WooCommerce store to your [bluefox.email](https://bluefox.email) account. Every feature is a module you switch on or off, so the plugin only loads what you use.
 
