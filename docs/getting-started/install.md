@@ -22,6 +22,10 @@
 
 On activation the plugin creates its table `{prefix}cfbe_subscribers` (signups and consent records). The abandoned cart feature adds `{prefix}cfbe_carts` the first time it loads.
 
+## Language
+
+The plugin speaks **English and Hungarian** out of the box. On a site whose language is **Magyar** (Settings → General → Site Language) everything – admin screens, forms, popup, emails created from the templates – is in Hungarian. See [Which languages are included?](../help/faq.md#which-languages-are-included)
+
 ## Requirements
 
 - WordPress 6.7 or newer, PHP 8.1 or newer.

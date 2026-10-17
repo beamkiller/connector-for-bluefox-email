@@ -58,6 +58,10 @@ Connector for bluefox.email links your WordPress site and WooCommerce store to y
 
 * On WordPress 6.9 and later the settings can be registered as abilities: an AI agent connected through the MCP Adapter plugin can read and change them in plain language ("show the popup after 15 seconds", "switch on the checkout opt-in"). Only administrators can use them, every value goes through the same validation as the settings screens, and the API key and webhook secret are never shown or changed.
 
+**Translations**
+
+* English and a complete Hungarian (magyar) translation are included: set the site language to Magyar and the admin screens, forms, popup and ready-made emails are in Hungarian.
+
 This plugin is not developed by or affiliated with bluefox.email.
 
 == External services ==
@@ -105,6 +109,10 @@ Yes. Public forms contain no nonces and do not depend on the visitor; spam is bl
 = Can an AI agent change the settings? =
 
 Yes, on WordPress 6.9 or later, once you switch on the experimental **AI agent access** feature on the General tab (it is off by default). The plugin then registers the abilities `cfbe/get-settings`, `cfbe/update-settings`, `cfbe/set-modules`, `cfbe/list-bluefox-lists`, `cfbe/list-bluefox-emails`, `cfbe/list-email-templates`, `cfbe/create-email-template`, `cfbe/update-email-template`, `cfbe/send-test-email` and `cfbe/set-email-design`. With the MCP Adapter plugin they are available to MCP clients such as Claude, signed in as an administrator (for example with an application password). The API key and webhook secret can only be set in wp-admin.
+
+= Is it available in Hungarian? =
+
+Yes. The complete Hungarian translation ships with the plugin. Set Settings → General → Site Language to Magyar; texts you have already saved on the settings tabs stay as you saved them.
 
 = Can I use my own email templates? =
 

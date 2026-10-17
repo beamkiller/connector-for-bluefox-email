@@ -29,7 +29,7 @@ Every feature is a module you switch on or off, so the plugin only loads what yo
 - **Inbound webhooks** – bluefox subscription, bounce and complaint events stored in WordPress, with developer hooks.
 - **AI agent access (experimental)** – read and change the settings through the WordPress Abilities API, for example with the MCP Adapter plugin.
 - **Privacy tools** – consent records, IP address modes and retention, personal data export and erasure.
-- Page-cache friendly (no nonces in public forms), accessible markup, English and Hungarian translations.
+- Page-cache friendly (no nonces in public forms), accessible markup, English and a complete **Hungarian (magyar) translation** included – set the site language to Magyar and the plugin, its forms and its ready-made emails are in Hungarian.
 
 ## Requirements
 

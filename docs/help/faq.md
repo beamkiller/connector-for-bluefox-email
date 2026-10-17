@@ -50,7 +50,19 @@ Yes, on WordPress 6.9 or later, after you switch on **AI agent access (experimen
 
 ## Which languages are included?
 
-English and Hungarian. All texts are translatable with the text domain `connector-for-bluefox-email` (for example with Loco Translate). The texts you enter on the settings tabs are stored as you type them.
+**English and Hungarian (magyar).** The Hungarian translation is complete and ships with the plugin (`languages/connector-for-bluefox-email-hu_HU.mo` and the JavaScript translations), so there is nothing to download.
+
+To use it, set **Settings → General → Site Language** to **Magyar** (or a user's **Language** in their profile, for wp-admin only). Then:
+
+| Part | In Hungarian |
+|---|---|
+| wp-admin: all tabs, help texts, notices | ✅ |
+| Signup form, popup, promo bar – default texts and messages | ✅ |
+| Checkout opt-in label, preferences page, thank-you page texts | ✅ |
+| Ready-made emails on the Email templates tab (subject, texts, buttons) | ✅ prefilled in Hungarian |
+| Abilities for AI agents (names and descriptions) | ✅ |
+
+Texts you have already saved on the settings tabs stay as you saved them – change them there or reset them to the default. Every text is translatable with the text domain `connector-for-bluefox-email`, so other languages can be added with Loco Translate or a `.po` file.
 
 ## What happens when I delete the plugin?
 

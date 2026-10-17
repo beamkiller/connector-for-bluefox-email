@@ -28,7 +28,8 @@ Connector for bluefox.email links your WordPress site and WooCommerce store to y
 | WooCommerce | optional, 9.0 or newer – HPOS and the block checkout are supported |
 | bluefox.email | an account with a project and an API key |
 
-Translations: English and Hungarian are bundled.
+!!! success "Magyar fordítás – Hungarian translation included"
+    The complete Hungarian translation ships with the plugin: wp-admin, the signup form and popup, the checkout opt-in, the preferences page and the ready-made email texts. Set **Settings → General → Site Language** to **Magyar** and the plugin is in Hungarian – nothing to download. See [Languages](help/faq.md#which-languages-are-included).
 
 ## Where to start
 
