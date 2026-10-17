@@ -33,7 +33,11 @@ The coupon description is *Newsletter welcome coupon – email*. Meta `_cfbe_wel
 
 ## The coupon email
 
-The coupon is sent with a **bluefox transactional email** that you design in bluefox:
+The coupon is sent with a **bluefox transactional email**. The quickest way: on the [Email templates](email-templates.md) tab, open **Welcome coupon** and click **Create in bluefox** – the email is created and selected as the coupon email. This is how it arrives (real email from a test shop, WooCommerce email design):
+
+![Welcome coupon email with the coupon code, discount and expiry date](../assets/images/email-welcome-coupon.png){ width="460" }
+
+To design your own instead:
 
 1. In bluefox create a transactional email of type HTML (e.g. *Welcome coupon*), subject for example `Your {{discount}} welcome coupon`.
 2. Paste the **Welcome coupon template** from the Coupon tab (also in `templates/emails/welcome-coupon.html`) and adjust it.

@@ -34,6 +34,22 @@ For the **first order thank-you** and the **review request** you choose the **Em
 
 The rule on the Order emails tab gets the same type. The abandoned cart reminder is always a marketing email.
 
+## Examples
+
+Real emails created with these templates and sent from a test shop (WooCommerce email design, so the green comes from the shop's WooCommerce base colour):
+
+<div class="grid" markdown>
+
+![Welcome coupon email](../assets/images/email-welcome-coupon.png)
+
+![Abandoned cart reminder with recovery coupon](../assets/images/email-cart-reminder.png)
+
+![First order thank-you](../assets/images/email-first-order.png)
+
+![Review request with a review button per product](../assets/images/email-review-request.png)
+
+</div>
+
 ## Texts
 
 Each card has six texts, prefilled in the site language: **Subject**, **Preview text**, **Heading**, **Text**, **Button label** and **Small print**. The variables listed on the card work in every text, e.g. `Your order #{{orderNumber}}` or `Hi {{DEFAULT billing.firstName "there"}}`. The layout, the data blocks (items, coupon box, note), the button link and the unsubscribe link are added by the plugin.

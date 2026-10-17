@@ -8,6 +8,16 @@ Send extra bluefox emails when an order changes – a thank-you, a review reques
 
 WooCommerce keeps sending its own order emails (confirmation, invoice, payment details). These rules come on top and never replace them.
 
+Two of them, created from the [Email templates](email-templates.md) tab and sent for a real test order:
+
+<div class="grid" markdown>
+
+![First order thank-you email: Welcome to the shop, with a Visit the shop button](../assets/images/email-first-order.png)
+
+![Review request email: the ordered product with its own Write a review button](../assets/images/email-review-request.png)
+
+</div>
+
 ## Rules
 
 Each row on the tab is a rule: **Event** → **Email type** → **bluefox email**, with an optional **Delay** and an **On** checkbox. Up to 50 rules (shared with the abandoned cart reminders).

@@ -48,7 +48,11 @@ Carts live in the `{prefix}cfbe_carts` table. The tab lists the 20 most recent o
 - applies the recovery coupon, if there is a usable one, and pre-fills the guest's checkout email with the cart's address;
 - redirects to the cart page. An invalid or used link shows *This cart link is no longer valid.*
 
-The link is the credential (32 random characters) and is rate limited.
+The link is the credential (32 random characters) and is rate limited. The visitor who opens it takes over the cart, so a restored cart is not reminded again.
+
+This is how a reminder with the recovery coupon arrives (real email from a test shop):
+
+![Abandoned cart reminder with the cart items, the recovery coupon box and the Back to my cart button](../assets/images/email-cart-reminder.png){ width="460" }
 
 ## Recovery coupon
 
