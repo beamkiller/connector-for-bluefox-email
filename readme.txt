@@ -16,7 +16,7 @@ Connector for bluefox.email links your WordPress site and WooCommerce store to y
 
 **Ready-made emails**
 
-* One click creates mobile-friendly emails in bluefox.email for everything the plugin sends – double opt-in confirmation, welcome coupon, order emails, review request, abandoned cart reminder – and wires them up. They match your WooCommerce email design (logo, colours, font, footer) or your signup form colours. Edit the texts in WordPress, update them later, or keep designing them in bluefox.
+* One click creates mobile-friendly emails in bluefox.email for everything the plugin sends – double opt-in confirmation, welcome coupon, first order thank-you, review request, abandoned cart reminder – and wires them up. They match your WooCommerce email design (logo, colours, font, footer) or your signup form colours. Edit the texts in WordPress, update them later, or keep designing them in bluefox.
 
 **Signup forms**
 

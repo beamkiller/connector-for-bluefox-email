@@ -55,6 +55,12 @@ All hooks are prefixed `cfbe_`. Hooks that belong to a module only fire while th
 |---|---|---|
 | `cfbe_woo_events_data` | `array $data`, `string $event`, `WC_Order` or `array` `$order_or_cart` | Template data of an order or abandoned cart email. For `abandoned_cart` the third parameter is the cart row (array). See [Email template data](template-data.md#order-emails). |
 
+## Email templates
+
+| Filter | Parameters | Description |
+|---|---|---|
+| `cfbe_email_design` | `array $design` – `colors` (primary, button_text, accent, text, muted, border, card, page, body, footer), `font`, `logo` (url, width, align), `footer` (HTML) | Design of the ready-made emails on the [Email templates](../features/email-templates.md#design) tab, taken from WooCommerce's email settings or the Form tab. Applied when an email is created or updated in bluefox. |
+
 ## Contact sync
 
 | Filter | Parameters | Description |
