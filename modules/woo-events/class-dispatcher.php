@@ -358,6 +358,32 @@ class Dispatcher {
 	}
 
 	/**
+	 * Whether the email placed an order (paid or on hold) since a moment.
+	 *
+	 * @param string $email Email.
+	 * @param string $since UTC datetime (MySQL format); '' = unknown.
+	 */
+	private function ordered_since( string $email, string $since ): bool {
+		$time = '' !== $since ? strtotime( $since . ' UTC' ) : false;
+		if ( false === $time ) {
+			return false;
+		}
+		$paid = function_exists( 'wc_get_is_paid_statuses' ) ? (array) wc_get_is_paid_statuses() : array( 'processing', 'completed' );
+		$ids  = call_user_func(
+			$this->order_query,
+			array(
+				'billing_email' => strtolower( trim( $email ) ),
+				'date_created'  => '>=' . $time,
+				'status'        => array_values( array_unique( array_merge( $paid, array( 'on-hold' ) ) ) ),
+				'limit'         => 1,
+				'return'        => 'ids',
+				'type'          => 'shop_order',
+			)
+		);
+		return ! empty( $ids );
+	}
+
+	/**
 	 * Job: sends one abandoned cart reminder.
 	 *
 	 * @param array $payload rule, cart, attempt.
@@ -371,6 +397,12 @@ class Dispatcher {
 		$cart = $this->carts->find( (int) ( $payload['cart'] ?? 0 ) );
 		// Ordered / recovered / expired meanwhile: no reminder.
 		if ( ! $cart || Cart_Repository::STATUS_SENT !== ( $cart['status'] ?? '' ) || ! is_email( (string) $cart['email'] ) ) {
+			return;
+		}
+		// Bought anyway, through a path that didn't close the cart (another browser, an admin or phone order).
+		if ( $this->ordered_since( (string) $cart['email'], (string) ( $cart['created_at'] ?? '' ) ) ) {
+			$this->carts->transition( $cart, Cart_Repository::STATUS_ORDERED );
+			$this->logger->info( 'Woo emails: abandoned cart reminder skipped, the shopper ordered meanwhile', array( 'cart' => (int) $cart['id'] ) );
 			return;
 		}
 		$result = $this->deliver( $rule, (string) $cart['email'], $this->builder->for_cart( $cart ) + $this->cart_coupon_data( $cart ) );

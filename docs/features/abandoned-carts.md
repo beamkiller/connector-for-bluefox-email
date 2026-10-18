@@ -30,7 +30,9 @@ Carts live in the `{prefix}cfbe_carts` table. The tab lists the 20 most recent o
 
 1. Every 15 minutes a background job looks for carts with no change for the **Idle time** (default 60 minutes, 15–10080).
 2. An idle cart is marked `sent` and its reminders are queued with their delays. Each cart is reminded once.
-3. Just before sending, the cart is checked again. If the shopper ordered in the meantime, nothing is sent.
+3. Just before sending, the cart is checked again. If the shopper ordered in the meantime, nothing is sent. This includes orders placed another way after the cart was stored (another browser, or an order created in the admin): the cart is then marked `ordered`.
+
+A cart the shopper has just bought is not stored again. When the same email ordered (or recovered) a cart with exactly the same products and quantities within the last 7 days, a copy of that cart left in another browser does not count as abandoned. A different cart is tracked as usual.
 
 | Cart status | Meaning |
 |---|---|

@@ -35,6 +35,11 @@ class Cart_Repository {
 
 	const TOKEN_LENGTH = 32;
 
+	// A new cart identical to one the same email ordered within this many days is not stored: it is the stale
+	// copy left in another browser (e.g. the cart was recovered from the reminder elsewhere). WooCommerce guest
+	// sessions live 2 days, so a week covers every leftover session.
+	const REBUY_WINDOW_DAYS = 7;
+
 	/**
 	 * Database (wpdb or a test double).
 	 *
@@ -173,6 +178,9 @@ class Cart_Repository {
 			$this->db->update( $this->table, $fields, array( 'id' => (int) $existing['id'] ), self::formats( $fields ), array( '%d' ) );
 			return (int) $existing['id'];
 		}
+		if ( '' !== $email && $this->bought_recently( $email, (array) ( $data['items'] ?? array() ) ) ) {
+			return 0; // The same cart was just bought: a leftover copy in another session, not an abandoned cart.
+		}
 
 		$fields += array(
 			'email'      => $email,
@@ -182,6 +190,50 @@ class Cart_Repository {
 		);
 		$ok      = $this->db->insert( $this->table, $fields, self::formats( $fields ) );
 		return $ok ? (int) ( $this->db->insert_id ?? 0 ) : 0;
+	}
+
+	/**
+	 * Whether the email ordered (or recovered) a cart with exactly these items within REBUY_WINDOW_DAYS.
+	 *
+	 * @param string $email Email.
+	 * @param array  $items Item list (Cart_Tracker::items()).
+	 */
+	public function bought_recently( string $email, array $items ): bool {
+		$signature = self::signature( $items );
+		if ( '' === $signature ) {
+			return false;
+		}
+		$rows = $this->db->get_results(
+			$this->db->prepare(
+				"SELECT cart FROM {$this->table} WHERE email = %s AND status IN ('ordered','recovered') AND updated_at >= %s ORDER BY updated_at DESC LIMIT 5",
+				self::normalize_email( $email ),
+				gmdate( 'Y-m-d H:i:s', time() - self::REBUY_WINDOW_DAYS * DAY_IN_SECONDS )
+			),
+			ARRAY_A
+		);
+		foreach ( is_array( $rows ) ? $rows : array() as $row ) {
+			$bought = json_decode( (string) ( $row['cart'] ?? '' ), true );
+			if ( is_array( $bought ) && self::signature( $bought ) === $signature ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Order-independent fingerprint of a cart: product, variation and quantity of every line.
+	 *
+	 * @param array $items Item list.
+	 */
+	public static function signature( array $items ): string {
+		$lines = array();
+		foreach ( $items as $item ) {
+			if ( is_array( $item ) ) {
+				$lines[] = absint( $item['product_id'] ?? 0 ) . ':' . absint( $item['variation_id'] ?? 0 ) . ':' . max( 1, (int) ( $item['quantity'] ?? 1 ) );
+			}
+		}
+		sort( $lines );
+		return implode( ',', $lines );
 	}
 
 	/**
