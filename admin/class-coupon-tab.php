@@ -89,8 +89,10 @@ final class Coupon_Tab {
 		$clean['minimum_amount'] = max( 0.0, (float) str_replace( ',', '.', (string) ( $input['minimum_amount'] ?? 0 ) ) );
 		$clean['expiry_days']    = min( 365, max( 1, (int) ( $input['expiry_days'] ?? 30 ) ) );
 		$clean['reminder_days']  = min( 30, max( 1, (int) ( $input['reminder_days'] ?? 5 ) ) );
-		$prefix                  = strtoupper( (string) preg_replace( '/[^A-Za-z0-9-]/', '', (string) ( $input['code_prefix'] ?? '' ) ) );
-		$clean['code_prefix']    = substr( $prefix, 0, 10 );
+		// Saved from code without this key (Settings::update() merges the stored values in): keep what is stored.
+		$clean['reminder_email_id'] = array_key_exists( 'reminder_email_id', $input ) ? (string) preg_replace( '/[^A-Za-z0-9]/', '', (string) $input['reminder_email_id'] ) : (string) ( $previous['reminder_email_id'] ?? '' );
+		$prefix                     = strtoupper( (string) preg_replace( '/[^A-Za-z0-9-]/', '', (string) ( $input['code_prefix'] ?? '' ) ) );
+		$clean['code_prefix']       = substr( $prefix, 0, 10 );
 		return $clean;
 	}
 

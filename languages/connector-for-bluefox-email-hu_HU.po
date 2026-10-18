@@ -47,9 +47,9 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:312
-#: admin/class-coupon-tab.php:150
-#: admin/class-coupon-tab.php:208
-#: admin/class-coupon-tab.php:220
+#: admin/class-coupon-tab.php:152
+#: admin/class-coupon-tab.php:210
+#: admin/class-coupon-tab.php:222
 #: admin/class-email-templates-tab.php:100
 #: admin/class-email-templates-tab.php:173
 #: includes/class-privacy.php:436
@@ -148,40 +148,40 @@ msgid "The discount amount must be greater than 0; the default value has been re
 msgstr "A kedvezmény mértéke 0-nál nagyobb kell legyen; az alapértéket állítottuk vissza."
 
 #. translators: %s: discount, e.g. 10%
-#: admin/class-coupon-tab.php:119
+#: admin/class-coupon-tab.php:121
 #, php-format
 msgid "%s discount"
 msgstr "%s kedvezmény"
 
 #. translators: %d: days
-#: admin/class-coupon-tab.php:121
+#: admin/class-coupon-tab.php:123
 #, php-format
 msgid "valid for %d days"
 msgstr "%d napig érvényes"
 
-#: admin/class-coupon-tab.php:122
+#: admin/class-coupon-tab.php:124
 msgid "single use, only with the subscriber's email address"
 msgstr "egyszer, csak a feliratkozó e-mail címével"
 
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
-#: admin/class-coupon-tab.php:126
-#: includes/class-email-templates.php:367
+#: admin/class-coupon-tab.php:128
+#: includes/class-email-templates.php:392
 #, php-format
 msgid "minimum order %s"
 msgstr "minimum %s rendelés"
 
-#: admin/class-coupon-tab.php:129
+#: admin/class-coupon-tab.php:131
 #: includes/class-coupon-data.php:64
 msgid "cannot be combined with other coupons"
 msgstr "más kuponnal nem vonható össze"
 
-#: admin/class-coupon-tab.php:132
+#: admin/class-coupon-tab.php:134
 msgid "not valid for sale items"
 msgstr "akciós termékekre nem érvényes"
 
 #. translators: 1: created field names, 2: existing field names
-#: admin/class-coupon-tab.php:166
+#: admin/class-coupon-tab.php:168
 #: modules/sync/class-sync-tab.php:197
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
@@ -645,6 +645,7 @@ msgid "ID of the bluefox transactional email that delivers the coupon (see “Co
 msgstr "Annak a bluefox tranzakciós e-mailnek az ID-ja, amely a kupont kézbesíti (lásd lent: „Kupon e-mail a bluefox-ban”). Enélkül nem megy ki kupon."
 
 #: admin/views/tab-coupon.php:46
+#: admin/views/tab-coupon.php:131
 msgid "No email yet? Create one from a template."
 msgstr "Még nincs e-mailed? Hozz létre egyet sablonból."
 
@@ -744,55 +745,51 @@ msgstr "bluefox mezők létrehozása"
 msgid "Reminder before expiry (days)"
 msgstr "Emlékeztető lejárat előtt (nap)"
 
-#: admin/views/tab-coupon.php:116
-msgid "Setup in bluefox (one-time):"
-msgstr "Beállítás a bluefoxban (egyszer kell):"
+#: admin/views/tab-coupon.php:115
+msgid "Reminder email ID"
+msgstr "Emlékeztető e-mail ID"
 
 #: admin/views/tab-coupon.php:118
-msgid "Segments → new segment “Coupon expires soon”: couponUsed = false AND couponExpires within the next days:"
-msgstr "Segments → új szegmens „Kupon hamarosan lejár”: couponUsed = false ÉS couponExpires a következő napokon belül:"
+msgid "ID of a bluefox triggered (marketing) email on your newsletter list. Leave it empty for no reminder. Every hour the plugin checks the unused welcome coupons and sends this email once for each coupon that expires within the days above, between 9:00 and 20:00 site time. bluefox delivers it only to active subscribers, with an unsubscribe link."
+msgstr "A hírlevél listádhoz tartozó bluefox triggered (marketing) e-mail azonosítója. Üresen hagyva nincs emlékeztető. A bővítmény óránként megnézi a fel nem használt üdvözlő kuponokat, és minden kuponhoz, amely a fenti napon belül lejár, egyszer elküldi ezt az e-mailt, 9 és 20 óra között (a webhely ideje szerint). A bluefox csak aktív feliratkozónak kézbesíti, leiratkozó linkkel."
 
-#: admin/views/tab-coupon.php:119
-msgid "Automations → new automation: Enter segment “Coupon expires soon” (once per contact) → Send email."
-msgstr "Automations → új automatizmus: Enter segment „Kupon hamarosan lejár” (egyszer kontaktonként) → Send email."
+#: admin/views/tab-coupon.php:132
+msgid "Available in the email: {{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}} (days left), {{minSpend}}, {{terms}}, {{name}}, {{shopName}}, {{shopUrl}}, {{unsubscribeLink}}."
+msgstr "Az e-mailben használható: {{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}} (hány nap van hátra), {{minSpend}}, {{terms}}, {{name}}, {{shopName}}, {{shopUrl}}, {{unsubscribeLink}}."
 
-#: admin/views/tab-coupon.php:120
-msgid "Available in the email: {{contact.couponCode}}, {{contact.name}}."
-msgstr "Az e-mailben használható: {{contact.couponCode}}, {{contact.name}}."
-
-#: admin/views/tab-coupon.php:126
+#: admin/views/tab-coupon.php:139
 msgid "Coupon email in bluefox"
 msgstr "Kupon e-mail a bluefox-ban"
 
-#: admin/views/tab-coupon.php:129
+#: admin/views/tab-coupon.php:142
 msgid "In bluefox, open Transactional emails and create a new email of type HTML (for example “Welcome coupon”). Set its subject, for example: Your {{discount}} welcome coupon."
 msgstr "A bluefox-ban nyisd meg a Transactional emails részt, és hozz létre egy új, HTML típusú e-mailt (pl. „Üdvözlő kupon”). Add meg a tárgyát, például: {{discount}} értékű üdvözlő kuponod."
 
-#: admin/views/tab-coupon.php:130
+#: admin/views/tab-coupon.php:143
 msgid "Paste the template below as the HTML content and adjust the texts and colours to your brand."
 msgstr "Másold be az alábbi sablont HTML tartalomként, és igazítsd a szövegeket és a színeket a márkádhoz."
 
-#: admin/views/tab-coupon.php:131
+#: admin/views/tab-coupon.php:144
 msgid "Save it, copy the email ID and paste it into “Coupon email ID” above."
 msgstr "Mentsd el, másold ki az e-mail ID-t, és illeszd be fent a „Kupon e-mail ID” mezőbe."
 
-#: admin/views/tab-coupon.php:133
+#: admin/views/tab-coupon.php:146
 msgid "Merge tags sent with the coupon email:"
 msgstr "A kupon e-maillel küldött változók:"
 
-#: admin/views/tab-coupon.php:139
+#: admin/views/tab-coupon.php:152
 msgid "Contact fields work too, e.g. {{contact.name}}. The coupon email is transactional (no unsubscribe link), so keep it about the coupon only."
 msgstr "A kontakt mezők is működnek, pl. {{contact.name}}. A kupon e-mail tranzakciós (nincs benne leiratkozó link), ezért csak a kuponról szóljon."
 
-#: admin/views/tab-coupon.php:144
+#: admin/views/tab-coupon.php:157
 msgid "Welcome coupon template"
 msgstr "Üdvözlő kupon sablon"
 
-#: admin/views/tab-coupon.php:145
+#: admin/views/tab-coupon.php:158
 msgid "Double opt-in confirmation template (set it as the confirmation email of the bluefox list; it must contain {{verifyLink}})"
 msgstr "Dupla megerősítés (double opt-in) sablon (állítsd be a bluefox lista megerősítő e-mailjeként; tartalmaznia kell a {{verifyLink}} változót)"
 
-#: admin/views/tab-coupon.php:156
+#: admin/views/tab-coupon.php:169
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
 #: modules/webhooks/views/tab-webhooks.php:99
@@ -2243,15 +2240,19 @@ msgstr "A dupla megerősítés be van kapcsolva a listánál, ezzel az e-maillel
 msgid "Selected as the coupon email on the Coupon tab."
 msgstr "Kiválasztva kupon e-mailként a Kupon fülön."
 
-#: includes/class-email-template-sync.php:217
+#: includes/class-email-template-sync.php:203
+msgid "Selected as the reminder email on the Coupon tab. Reminders start with the next hourly check."
+msgstr "Kiválasztva emlékeztető e-mailként a Kupon fülön. Az emlékeztetők a következő óránkénti ellenőrzéssel indulnak."
+
+#: includes/class-email-template-sync.php:222
 msgid "A rule for this event already exists: select the new email in it if you want to use it."
 msgstr "Erre az eseményre már létezik szabály: ha az új e-mailt szeretnéd használni, válaszd ki benne."
 
-#: includes/class-email-template-sync.php:230
+#: includes/class-email-template-sync.php:235
 msgid "The new email was selected in the existing rule for this event, and the rule was switched on."
 msgstr "Az új e-mail kiválasztásra került az eseményhez tartozó meglévő szabályban, és a szabály bekapcsolt."
 
-#: includes/class-email-template-sync.php:243
+#: includes/class-email-template-sync.php:248
 msgid "A rule that sends this email was added and switched on."
 msgstr "Hozzáadtunk és bekapcsoltunk egy szabályt, amely ezt az e-mailt küldi."
 
@@ -2345,226 +2346,274 @@ msgid "One welcome coupon per email address. {{terms}}"
 msgstr "E-mail címenként egy üdvözlő kupon. {{terms}}"
 
 #: includes/class-email-templates.php:74
+msgid "Coupon expiry reminder"
+msgstr "Kupon lejárati emlékeztető"
+
+#: includes/class-email-templates.php:76
+msgid "Reminds a subscriber that their welcome coupon is about to expire."
+msgstr "Emlékezteti a feliratkozót, hogy hamarosan lejár az üdvözlő kuponja."
+
+#: includes/class-email-templates.php:77
+msgid "Many coupons are forgotten: a timely reminder turns them into orders."
+msgstr "Sok kupon feledésbe merül: egy jókor érkező emlékeztető rendeléssé alakítja őket."
+
+#: includes/class-email-templates.php:78
+msgid "Once per coupon, the set number of days before an unused welcome coupon expires (Coupon tab) – only to active subscribers of the chosen list (it is a marketing email)."
+msgstr "Kuponként egyszer, a beállított számú nappal a fel nem használt üdvözlő kupon lejárata előtt (Kupon fül) – csak a kiválasztott lista aktív feliratkozóinak (ez marketing e-mail)."
+
+#: includes/class-email-templates.php:79
+msgid "Selects it as the reminder email on the Coupon tab."
+msgstr "Kiválasztja emlékeztető e-mailként a Kupon fülön."
+
+#: includes/class-email-templates.php:86
+msgid "Your {{discount}} coupon expires soon"
+msgstr "Hamarosan lejár a {{discount}} kedvezményes kuponod"
+
+#: includes/class-email-templates.php:87
+msgid "Only {{daysLeft}} days left to use your code {{couponCode}}."
+msgstr "Már csak {{daysLeft}} napig használhatod a {{couponCode}} kódot."
+
+#: includes/class-email-templates.php:88
+msgid "Don’t miss your discount, {{DEFAULT name \"friend\"}}!"
+msgstr "Ne hagyd veszni a kedvezményt, {{DEFAULT name \"barátunk\"}}!"
+
+#: includes/class-email-templates.php:89
+msgid "Just a friendly reminder: your welcome coupon is valid until {{expiry}} – only {{daysLeft}} days left to use it. Enter the code in the cart, using the same email address you subscribed with."
+msgstr "Szeretnénk emlékeztetni: az üdvözlő kuponod {{expiry}}-ig érvényes – már csak {{daysLeft}} napod van felhasználni. A kódot a kosárban add meg, ugyanazzal az e-mail címmel, amellyel feliratkoztál."
+
+#: includes/class-email-templates.php:90
+msgid "Use my coupon"
+msgstr "Felhasználom a kupont"
+
+#: includes/class-email-templates.php:95
 msgid "First order thank-you"
 msgstr "Köszönet az első rendelésért"
 
-#: includes/class-email-templates.php:76
+#: includes/class-email-templates.php:97
 msgid "A personal thank-you for a customer’s very first order."
 msgstr "Személyes köszönet a vásárló legelső rendeléséért."
 
-#: includes/class-email-templates.php:77
+#: includes/class-email-templates.php:98
 msgid "Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email."
 msgstr "Az első vásárlók szívesen látottnak érzik magukat, és nagyobb eséllyel térnek vissza. A WooCommerce-ben nincs ilyen e-mail."
 
-#: includes/class-email-templates.php:78
+#: includes/class-email-templates.php:99
 msgid "With the first paid order of an email address (guests included)."
 msgstr "Egy e-mail cím első fizetett rendelésekor (vendégeknél is)."
 
-#: includes/class-email-templates.php:79
+#: includes/class-email-templates.php:100
 msgid "Adds an Order emails rule for this event."
 msgstr "Ehhez az eseményhez egy szabályt ad hozzá a Rendelési e-mailek fülön."
 
-#: includes/class-email-templates.php:88
+#: includes/class-email-templates.php:109
 msgid "Thank you for your first order!"
 msgstr "Köszönjük az első rendelésedet!"
 
-#: includes/class-email-templates.php:89
+#: includes/class-email-templates.php:110
 msgid "A warm welcome from our team."
 msgstr "Szeretettel üdvözöl a csapatunk."
 
-#: includes/class-email-templates.php:90
+#: includes/class-email-templates.php:111
 msgid "Welcome to {{siteName}}!"
 msgstr "Üdvözlünk a(z) {{siteName}} oldalon!"
 
-#: includes/class-email-templates.php:91
+#: includes/class-email-templates.php:112
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, thank you for choosing us for your first order. We hope you love it."
 msgstr "Kedves {{DEFAULT billing.firstName \"Vásárlónk\"}}! Köszönjük, hogy első rendelésedhez minket választottál. Reméljük, nagyon elégedett leszel."
 
-#: includes/class-email-templates.php:92
-#: includes/class-email-templates.php:117
+#: includes/class-email-templates.php:113
+#: includes/class-email-templates.php:138
 msgid "Visit the shop"
 msgstr "Irány a bolt"
 
-#: includes/class-email-templates.php:93
-#: includes/class-email-templates.php:142
+#: includes/class-email-templates.php:114
+#: includes/class-email-templates.php:163
 msgid "Questions? Simply reply to this email."
 msgstr "Kérdésed van? Egyszerűen válaszolj erre az e-mailre."
 
-#: includes/class-email-templates.php:97
+#: includes/class-email-templates.php:118
 msgid "Review request"
 msgstr "Értékelés kérése"
 
-#: includes/class-email-templates.php:99
+#: includes/class-email-templates.php:120
 msgid "Asks the customer to review the products they bought."
 msgstr "Megkéri a vásárlót, hogy értékelje a megvásárolt termékeket."
 
-#: includes/class-email-templates.php:100
+#: includes/class-email-templates.php:121
 msgid "More reviews build trust and bring more sales. WooCommerce does not ask for reviews by email."
 msgstr "Több értékelés több bizalmat és több eladást hoz. A WooCommerce nem kér értékelést e-mailben."
 
-#: includes/class-email-templates.php:101
+#: includes/class-email-templates.php:122
 msgid "7 days after the order is completed."
 msgstr "7 nappal a rendelés teljesítése után."
 
-#: includes/class-email-templates.php:102
+#: includes/class-email-templates.php:123
 msgid "Adds an Order emails rule with a 7-day delay."
 msgstr "Egy 7 napos késleltetésű szabályt ad hozzá a Rendelési e-mailek fülön."
 
-#: includes/class-email-templates.php:113
+#: includes/class-email-templates.php:134
 msgid "How did we do?"
 msgstr "Hogy voltál velünk elégedett?"
 
-#: includes/class-email-templates.php:114
+#: includes/class-email-templates.php:135
 msgid "Your opinion helps other shoppers."
 msgstr "A véleményed más vásárlóknak is segít."
 
-#: includes/class-email-templates.php:115
+#: includes/class-email-templates.php:136
 msgid "How was your order?"
 msgstr "Milyen volt a rendelésed?"
 
-#: includes/class-email-templates.php:116
+#: includes/class-email-templates.php:137
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we hope you are happy with your order #{{orderNumber}}. Would you take a minute to review the products?"
 msgstr "Kedves {{DEFAULT billing.firstName \"Vásárlónk\"}}! Reméljük, elégedett vagy a rendeléseddel (#{{orderNumber}}). Szánnál egy percet a termékek értékelésére?"
 
-#: includes/class-email-templates.php:118
+#: includes/class-email-templates.php:139
 msgid "Thank you for helping us get better."
 msgstr "Köszönjük, hogy segítesz nekünk fejlődni."
 
-#: includes/class-email-templates.php:122
+#: includes/class-email-templates.php:143
 msgid "Abandoned cart reminder"
 msgstr "Elhagyott kosár emlékeztető"
 
-#: includes/class-email-templates.php:124
+#: includes/class-email-templates.php:145
 msgid "Reminds shoppers of the cart they left, with a button that restores it."
 msgstr "Emlékezteti a vásárlókat az otthagyott kosarukra, egy gombbal, amely visszaállítja azt."
 
-#: includes/class-email-templates.php:125
+#: includes/class-email-templates.php:146
 msgid "Wins back sales that would otherwise be lost; can include a single-use recovery coupon. WooCommerce has no such email."
 msgstr "Visszahozza az egyébként elveszett eladásokat; tartalmazhat egyszer használható visszaszerző kupont. A WooCommerce-ben nincs ilyen e-mail."
 
-#: includes/class-email-templates.php:126
+#: includes/class-email-templates.php:147
 msgid "When a cart has been left untouched for the idle time set on the Abandoned carts tab – only to active subscribers of the chosen list (it is a marketing email)."
 msgstr "Amikor egy kosár az Elhagyott kosarak fülön beállított tétlenségi ideig érintetlen marad – csak a kiválasztott lista aktív feliratkozóinak (ez marketing e-mail)."
 
-#: includes/class-email-templates.php:127
+#: includes/class-email-templates.php:148
 msgid "Adds an abandoned cart reminder on the Abandoned carts tab."
 msgstr "Egy elhagyott kosár emlékeztetőt ad hozzá az Elhagyott kosarak fülön."
 
-#: includes/class-email-templates.php:137
+#: includes/class-email-templates.php:158
 msgid "You left something in your cart"
 msgstr "Valamit a kosaradban felejtettél"
 
-#: includes/class-email-templates.php:138
+#: includes/class-email-templates.php:159
 msgid "Your cart is saved and waiting for you."
 msgstr "A kosaradat elmentettük, vár rád."
 
-#: includes/class-email-templates.php:139
+#: includes/class-email-templates.php:160
 msgid "Still thinking it over?"
 msgstr "Még gondolkodsz rajta?"
 
-#: includes/class-email-templates.php:140
+#: includes/class-email-templates.php:161
 msgid "You left these items in your cart. We saved it for you, so you can finish your order with one click."
 msgstr "Ezeket a termékeket a kosaradban hagytad. Elmentettük neked, így egy kattintással befejezheted a rendelést."
 
-#: includes/class-email-templates.php:141
+#: includes/class-email-templates.php:162
 msgid "Back to my cart"
 msgstr "Vissza a kosaramhoz"
 
 #. translators: unsubscribe link label in marketing emails
-#: includes/class-email-templates.php:267
+#: includes/class-email-templates.php:288
 msgid "Unsubscribe"
 msgstr "Leiratkozás"
 
 #. translators: %s: template label, e.g. Welcome coupon
-#: includes/class-email-templates.php:289
+#: includes/class-email-templates.php:310
 #, php-format
 msgid "%s (Connector for bluefox.email)"
 msgstr "%s (Connector for bluefox.email)"
 
-#: includes/class-email-templates.php:305
+#: includes/class-email-templates.php:326
 msgid "Sample product"
 msgstr "Mintatermék"
 
-#: includes/class-email-templates.php:313
+#: includes/class-email-templates.php:334
 msgid "Another sample product"
 msgstr "Másik minta termék"
 
-#: includes/class-email-templates.php:336
+#: includes/class-email-templates.php:357
 msgid "Your parcel ships tomorrow."
 msgstr "A csomagod holnap indul."
 
-#: includes/class-email-templates.php:362
+#: includes/class-email-templates.php:387
 msgid "Your coupon code"
 msgstr "A kuponkódod"
 
 #. translators: %s: discount placeholder, e.g. 10%
-#: includes/class-email-templates.php:365
+#: includes/class-email-templates.php:390
 #, php-format
 msgid "%s off"
 msgstr "%s kedvezmény"
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:367
+#: includes/class-email-templates.php:392
 #, php-format
 msgid "Valid until %s"
 msgstr "Érvényes eddig: %s"
 
 #. translators: %s: discount placeholder
-#: includes/class-email-templates.php:372
+#: includes/class-email-templates.php:397
 #, php-format
 msgid "Finish your order now and get %s off with this code:"
 msgstr "Fejezd be most a rendelésedet, és ezzel a kóddal %s kedvezményt kapsz:"
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:375
+#: includes/class-email-templates.php:400
 #, php-format
 msgid "Valid until %s. The link below applies it automatically."
 msgstr "Érvényes eddig: %s. Az alábbi link automatikusan érvényesíti."
 
-#: includes/class-email-templates.php:382
+#: includes/class-email-templates.php:407
 msgid "Write a review"
 msgstr "Értékelés írása"
 
-#: includes/class-email-templates.php:396
+#: includes/class-email-templates.php:421
 #: modules/woo-events/views/tab-woo-events.php:285
 msgid "Total"
 msgstr "Összesen"
 
-#: includes/class-email-templates.php:444
+#: includes/class-email-templates.php:469
 msgid "Not used yet: choose it as the double opt-in email of your list in bluefox."
 msgstr "Még nincs használatban: állítsd be a listád dupla megerősítő (double opt-in) e-mailjeként a bluefox-ban."
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:451
+#: includes/class-email-templates.php:476
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr "Használatban: a(z) „%s” lista dupla megerősítő (double opt-in) e-mailje."
 
-#: includes/class-email-templates.php:460
+#: includes/class-email-templates.php:485
 msgid "In use: coupon email on the Coupon tab."
 msgstr "Használatban: kupon e-mail a Kupon fülön."
 
-#: includes/class-email-templates.php:464
+#: includes/class-email-templates.php:489
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr "Még nincs használatban: válaszd ki kupon e-mailként a Kupon fülön."
 
-#: includes/class-email-templates.php:477
+#: includes/class-email-templates.php:498
+msgid "In use: reminder email on the Coupon tab."
+msgstr "Használatban: emlékeztető e-mail a Kupon fülön."
+
+#: includes/class-email-templates.php:502
+msgid "Not used yet: select it as the reminder email on the Coupon tab."
+msgstr "Még nincs használatban: válaszd ki emlékeztető e-mailként a Kupon fülön."
+
+#: includes/class-email-templates.php:515
 msgid "In use: abandoned cart reminder (on)."
 msgstr "Használatban: elhagyott kosár emlékeztető (bekapcsolva)."
 
-#: includes/class-email-templates.php:477
+#: includes/class-email-templates.php:515
 msgid "In use: Order emails rule (on)."
 msgstr "Használatban: Rendelési e-mailek szabály (bekapcsolva)."
 
-#: includes/class-email-templates.php:478
+#: includes/class-email-templates.php:516
 msgid "Selected in a rule that is switched off."
 msgstr "Egy kikapcsolt szabályban van kiválasztva."
 
-#: includes/class-email-templates.php:484
+#: includes/class-email-templates.php:522
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr "Még nincs használatban: válaszd ki emlékeztetőként az Elhagyott kosarak fülön."
 
-#: includes/class-email-templates.php:485
+#: includes/class-email-templates.php:523
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr "Még nincs használatban: válaszd ki egy szabályban a Rendelési e-mailek fülön."
 
@@ -3698,7 +3747,7 @@ msgstr "Visszaállítottuk a kosaradat. Az e-mailben kapott kedvezménykód csak
 msgid "The order has no valid billing email."
 msgstr "A rendelésnek nincs érvényes számlázási e-mail címe."
 
-#: modules/woo-events/class-dispatcher.php:428
+#: modules/woo-events/class-dispatcher.php:460
 msgid "The bluefox connection is not configured."
 msgstr "A bluefox kapcsolat nincs beállítva."
 

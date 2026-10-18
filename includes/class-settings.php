@@ -97,6 +97,8 @@ final class Settings {
 					'free_shipping'         => false,
 					'store_code_in_bluefox' => true,
 					'reminder_days'         => 5,
+					// bluefox triggered email of the “coupon expires soon” reminder ('' = off).
+					'reminder_email_id'     => '',
 				);
 				break;
 			case 'checkout':

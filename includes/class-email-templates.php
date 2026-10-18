@@ -28,7 +28,7 @@ final class Email_Templates {
 	public static function definitions(): array {
 		$order_vars = '{{orderNumber}}, {{orderDate}}, {{orderTotal}}, {{billing.firstName}}, {{paymentMethod}}, {{shippingMethod}}, {{siteName}}';
 		return array(
-			'confirm'        => array(
+			'confirm'         => array(
 				'label'      => __( 'Double opt-in confirmation', 'connector-for-bluefox-email' ),
 				'group'      => 'newsletter',
 				'what'       => __( 'Asks a new subscriber to confirm their email address (double opt-in).', 'connector-for-bluefox-email' ),
@@ -49,7 +49,7 @@ final class Email_Templates {
 					'footer'  => __( 'If you did not sign up, simply ignore this email: you will not be subscribed.', 'connector-for-bluefox-email' ),
 				),
 			),
-			'welcome_coupon' => array(
+			'welcome_coupon'  => array(
 				'label'      => __( 'Welcome coupon', 'connector-for-bluefox-email' ),
 				'group'      => 'newsletter',
 				'what'       => __( 'Delivers the welcome coupon code to a new subscriber.', 'connector-for-bluefox-email' ),
@@ -70,7 +70,28 @@ final class Email_Templates {
 					'footer'  => __( 'One welcome coupon per email address. {{terms}}', 'connector-for-bluefox-email' ),
 				),
 			),
-			'first_order'    => array(
+			'coupon_reminder' => array(
+				'label'      => __( 'Coupon expiry reminder', 'connector-for-bluefox-email' ),
+				'group'      => 'newsletter',
+				'what'       => __( 'Reminds a subscriber that their welcome coupon is about to expire.', 'connector-for-bluefox-email' ),
+				'why'        => __( 'Many coupons are forgotten: a timely reminder turns them into orders.', 'connector-for-bluefox-email' ),
+				'when'       => __( 'Once per coupon, the set number of days before an unused welcome coupon expires (Coupon tab) – only to active subscribers of the chosen list (it is a marketing email).', 'connector-for-bluefox-email' ),
+				'on_create'  => __( 'Selects it as the reminder email on the Coupon tab.', 'connector-for-bluefox-email' ),
+				'type'       => 'triggered',
+				'module'     => 'coupon',
+				'button_url' => '{{{shopUrl}}}',
+				'blocks'     => array( 'coupon' ),
+				'variables'  => '{{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}}, {{minSpend}}, {{name}}, {{shopName}}',
+				'defaults'   => array(
+					'subject' => __( 'Your {{discount}} coupon expires soon', 'connector-for-bluefox-email' ),
+					'preview' => __( 'Only {{daysLeft}} days left to use your code {{couponCode}}.', 'connector-for-bluefox-email' ),
+					'heading' => __( 'Don’t miss your discount, {{DEFAULT name "friend"}}!', 'connector-for-bluefox-email' ),
+					'intro'   => __( 'Just a friendly reminder: your welcome coupon is valid until {{expiry}} – only {{daysLeft}} days left to use it. Enter the code in the cart, using the same email address you subscribed with.', 'connector-for-bluefox-email' ),
+					'button'  => __( 'Use my coupon', 'connector-for-bluefox-email' ),
+					'footer'  => '{{terms}}', // The issued coupon's conditions, one sentence.
+				),
+			),
+			'first_order'     => array(
 				'label'      => __( 'First order thank-you', 'connector-for-bluefox-email' ),
 				'group'      => 'extra',
 				'what'       => __( 'A personal thank-you for a customer’s very first order.', 'connector-for-bluefox-email' ),
@@ -93,7 +114,7 @@ final class Email_Templates {
 					'footer'  => __( 'Questions? Simply reply to this email.', 'connector-for-bluefox-email' ),
 				),
 			),
-			'review_request' => array(
+			'review_request'  => array(
 				'label'      => __( 'Review request', 'connector-for-bluefox-email' ),
 				'group'      => 'extra',
 				'what'       => __( 'Asks the customer to review the products they bought.', 'connector-for-bluefox-email' ),
@@ -118,7 +139,7 @@ final class Email_Templates {
 					'footer'  => __( 'Thank you for helping us get better.', 'connector-for-bluefox-email' ),
 				),
 			),
-			'cart_reminder'  => array(
+			'cart_reminder'   => array(
 				'label'      => __( 'Abandoned cart reminder', 'connector-for-bluefox-email' ),
 				'group'      => 'extra',
 				'what'       => __( 'Reminds shoppers of the cart they left, with a button that restores it.', 'connector-for-bluefox-email' ),
@@ -345,6 +366,10 @@ final class Email_Templates {
 			$base['couponDiscount'] = '10%';
 			$base['couponExpiry']   = $base['expiry'];
 		}
+		if ( 'coupon_reminder' === $key ) {
+			$base['daysLeft'] = 5;
+			$base['expiry']   = Dates::local_date( time() + 5 * DAY_IN_SECONDS );
+		}
 		return $base;
 	}
 
@@ -462,6 +487,19 @@ final class Email_Templates {
 				);
 			}
 			$unused['text'] = __( 'Not used yet: select it as the coupon email on the Coupon tab.', 'connector-for-bluefox-email' );
+			$unused['url']  = $tab_url( 'coupon' );
+			return $unused;
+		}
+
+		if ( 'coupon_reminder' === $key ) {
+			if ( (string) Settings::get( 'coupon', 'reminder_email_id' ) === $email_id ) {
+				return array(
+					'used' => true,
+					'text' => __( 'In use: reminder email on the Coupon tab.', 'connector-for-bluefox-email' ),
+					'url'  => $tab_url( 'coupon' ),
+				);
+			}
+			$unused['text'] = __( 'Not used yet: select it as the reminder email on the Coupon tab.', 'connector-for-bluefox-email' );
 			$unused['url']  = $tab_url( 'coupon' );
 			return $unused;
 		}

@@ -111,15 +111,28 @@ $cfbe_lists  = List_Options::lists( (string) $cfbe_values['list_id'] );
 			<th scope="row"><label for="cfbe-reminder"><?php esc_html_e( 'Reminder before expiry (days)', 'connector-for-bluefox-email' ); ?></label></th>
 			<td><input type="number" min="1" max="30" class="small-text" id="cfbe-reminder" name="<?php echo esc_attr( $cfbe_name( 'reminder_days' ) ); ?>" value="<?php echo esc_attr( (string) $cfbe_values['reminder_days'] ); ?>"></td>
 		</tr>
+		<tr>
+			<th scope="row"><label for="cfbe-reminder-email"><?php esc_html_e( 'Reminder email ID', 'connector-for-bluefox-email' ); ?></label></th>
+			<td>
+				<input type="text" class="regular-text code" id="cfbe-reminder-email" name="<?php echo esc_attr( $cfbe_name( 'reminder_email_id' ) ); ?>" value="<?php echo esc_attr( (string) $cfbe_values['reminder_email_id'] ); ?>">
+				<p class="description"><?php esc_html_e( 'ID of a bluefox triggered (marketing) email on your newsletter list. Leave it empty for no reminder. Every hour the plugin checks the unused welcome coupons and sends this email once for each coupon that expires within the days above, between 9:00 and 20:00 site time. bluefox delivers it only to active subscribers, with an unsubscribe link.', 'connector-for-bluefox-email' ); ?>
+					<a href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							array(
+								'tab'      => 'email_templates',
+								'template' => 'coupon_reminder',
+							),
+							admin_url( 'admin.php?page=' . \CFBE\Admin\Admin_Page::SLUG )
+						) . '#cfbe-template-coupon_reminder'
+					);
+					?>
+					"><?php esc_html_e( 'No email yet? Create one from a template.', 'connector-for-bluefox-email' ); ?></a></p>
+				<p class="description"><?php esc_html_e( 'Available in the email: {{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}} (days left), {{minSpend}}, {{terms}}, {{name}}, {{shopName}}, {{shopUrl}}, {{unsubscribeLink}}.', 'connector-for-bluefox-email' ); ?></p>
+			</td>
+		</tr>
 	</table>
-	<div class="cfbe-guide">
-		<p><strong><?php esc_html_e( 'Setup in bluefox (one-time):', 'connector-for-bluefox-email' ); ?></strong></p>
-		<ol>
-			<li><?php esc_html_e( 'Segments → new segment “Coupon expires soon”: couponUsed = false AND couponExpires within the next days:', 'connector-for-bluefox-email' ); ?> <strong><?php echo esc_html( (string) $cfbe_values['reminder_days'] ); ?></strong>.</li>
-			<li><?php esc_html_e( 'Automations → new automation: Enter segment “Coupon expires soon” (once per contact) → Send email.', 'connector-for-bluefox-email' ); ?></li>
-			<li><?php esc_html_e( 'Available in the email: {{contact.couponCode}}, {{contact.name}}.', 'connector-for-bluefox-email' ); ?></li>
-		</ol>
-	</div>
 	<?php submit_button(); ?>
 </form>
 

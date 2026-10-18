@@ -198,6 +198,11 @@ final class Email_Template_Sync {
 			return array( __( 'Selected as the coupon email on the Coupon tab.', 'connector-for-bluefox-email' ) );
 		}
 
+		if ( 'coupon_reminder' === $key ) {
+			Settings::update( 'coupon', array( 'reminder_email_id' => $email_id ) );
+			return array( __( 'Selected as the reminder email on the Coupon tab. Reminders start with the next hourly check.', 'connector-for-bluefox-email' ) );
+		}
+
 		if ( empty( $definition['event'] ) ) {
 			return array();
 		}

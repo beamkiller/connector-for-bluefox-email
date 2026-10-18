@@ -19,6 +19,7 @@ The cards are grouped:
 |---|---|---|---|
 | Double opt-in confirmation | transactional | Signup forms on | Double opt-in is switched on for the chosen list with this email, and your thank-you page becomes the list's redirect link. |
 | Welcome coupon | transactional | Welcome coupon on | Selected as **Coupon email ID** on the Coupon tab. |
+| Coupon expiry reminder | triggered | Welcome coupon on | Selected as **Reminder email ID** on the Coupon tab: unused welcome coupons get it once, *Reminder before expiry* days before they expire. |
 | First order thank-you | triggered or transactional (you choose) | Order emails on | Rule *First paid order of a customer*. |
 | Review request | triggered or transactional (you choose) | Order emails on | Rule *Review request*, 7 days after completion. The email lists the ordered products, each with a **Write a review** button that opens the product page on its Reviews tab (no prices). |
 | Abandoned cart reminder | triggered | Abandoned cart emails on | Rule *Abandoned cart*, with the item list, restore button and – when switched on – the recovery coupon. |

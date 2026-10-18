@@ -240,6 +240,11 @@ final class Plugin {
 		$this->rewards = new Reward_Service( $this->client, $this->repository, $this->jobs, $this->logger, new Coupon_Factory() );
 		$this->rewards->register();
 		( new Rest_Webhook( $this->rewards, $this->repository, new Rate_Limiter(), $this->logger ) )->register();
+		$reminder = null;
+		if ( Modules::enabled( 'coupon' ) ) {
+			$reminder = new Coupon_Reminder( $this->client, $this->repository, $this->jobs, $this->logger, new Coupon_Factory() );
+			$reminder->register();
+		}
 		if ( class_exists( Privacy::class ) ) {
 			( new Privacy( $this->repository ) )->register();
 		}
@@ -290,7 +295,7 @@ final class Plugin {
 		}
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			\WP_CLI::add_command( 'cfbe', new CLI_Command( $this->rewards, $this->repository, $this->client ) );
+			\WP_CLI::add_command( 'cfbe', new CLI_Command( $this->rewards, $this->repository, $this->client, $reminder ) );
 		}
 	}
 

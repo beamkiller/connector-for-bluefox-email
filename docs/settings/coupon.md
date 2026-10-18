@@ -27,7 +27,8 @@ The top of the tab shows an example of the coupon with the current settings, e.g
 | Label | Option key | Default | What it does |
 |---|---|---|---|
 | Coupon data in bluefox | `cfbe_coupon[store_code_in_bluefox]` | on | **Update the couponCode, couponExpires and couponUsed fields** on the bluefox contact. **Create bluefox fields** creates `name`, `couponCode`, `couponExpires` and `couponUsed` if missing. |
-| Reminder before expiry (days) | `cfbe_coupon[reminder_days]` | `5` | 1–30. Only used in the setup guide shown below it; the reminder itself is a bluefox segment and automation. |
+| Reminder before expiry (days) | `cfbe_coupon[reminder_days]` | `5` | 1–30. Unused welcome coupons get the reminder email this many calendar days before their last day (site time). |
+| Reminder email ID | `cfbe_coupon[reminder_email_id]` | empty | The bluefox triggered (marketing) email sent as the reminder, once per coupon, between 9:00 and 20:00 site time. Empty = no reminder. **Create** on the *Coupon expiry reminder* template fills it in. See [Welcome coupon](../features/welcome-coupon.md#your-coupon-expires-soon-reminder). |
 
 ## Templates
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * WP-CLI: wp cfbe poll | status <email> | resend-coupon <email>.
+ * WP-CLI: wp cfbe poll | status <email> | resend-coupon <email> | remind-coupons.
  *
  * @package CFBE
  */
@@ -36,16 +36,41 @@ final class CLI_Command {
 	private $client;
 
 	/**
+	 * Coupon expiry reminder (null when the coupon module is off).
+	 *
+	 * @var Coupon_Reminder|null
+	 */
+	private $reminder;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Reward_Service        $rewards    Reward service.
 	 * @param Subscriber_Repository $repository Repository.
 	 * @param Bluefox_Client|null   $client     Client.
+	 * @param Coupon_Reminder|null  $reminder   Coupon expiry reminder.
 	 */
-	public function __construct( Reward_Service $rewards, Subscriber_Repository $repository, ?Bluefox_Client $client ) {
+	public function __construct( Reward_Service $rewards, Subscriber_Repository $repository, ?Bluefox_Client $client, ?Coupon_Reminder $reminder = null ) {
 		$this->rewards    = $rewards;
 		$this->repository = $repository;
 		$this->client     = $client;
+		$this->reminder   = $reminder;
+	}
+
+	/**
+	 * Sends the due coupon expiry reminders now (also outside the 9–20 h window).
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp cfbe remind-coupons
+	 *
+	 * @subcommand remind-coupons
+	 */
+	public function remind_coupons(): void {
+		if ( null === $this->reminder || ! $this->reminder->enabled() ) {
+			\WP_CLI::error( 'Reminders are off: set the reminder email ID on the Coupon tab (and connect bluefox).' );
+		}
+		\WP_CLI::success( sprintf( '%d reminder(s) sent.', $this->reminder->run( true ) ) );
 	}
 
 	/**

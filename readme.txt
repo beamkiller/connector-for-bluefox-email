@@ -16,7 +16,7 @@ Connector for bluefox.email links your WordPress site and WooCommerce store to y
 
 **Ready-made emails**
 
-* One click creates mobile-friendly emails in bluefox.email for everything the plugin sends – double opt-in confirmation, welcome coupon, first order thank-you, review request, abandoned cart reminder – and wires them up. They match your WooCommerce email design (logo, colours, font, footer) or your signup form colours. Edit the texts in WordPress, update them later, or keep designing them in bluefox.
+* One click creates mobile-friendly emails in bluefox.email for everything the plugin sends – double opt-in confirmation, welcome coupon, coupon expiry reminder, first order thank-you, review request, abandoned cart reminder – and wires them up. They match your WooCommerce email design (logo, colours, font, footer) or your signup form colours. Edit the texts in WordPress, update them later, or keep designing them in bluefox.
 
 **Signup forms**
 
@@ -29,6 +29,7 @@ Connector for bluefox.email links your WordPress site and WooCommerce store to y
 
 * Newsletter opt-in checkbox on the checkout – classic and block checkout – and optionally on My Account.
 * Welcome coupon: a single-use coupon locked to the subscriber's email address, created only after they confirm their subscription, one per email address.
+* Coupon expiry reminder: subscribers who have not used their welcome coupon get one reminder email a few days before it expires.
 * Order emails: send your own bluefox transactional or triggered emails on order status changes, first purchase, customer notes and review requests. WooCommerce keeps sending its own order emails – these come on top.
 * Abandoned cart emails: remind shoppers of carts they left, with a restore link and an optional single-use recovery coupon.
 * Compatible with High-Performance Order Storage (HPOS).
@@ -72,6 +73,7 @@ What is sent and when:
 
 * When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name (if given), tags and the list they subscribe to.
 * When the Welcome coupon module confirms a signup: the subscription status is read and the coupon email is sent with the coupon code, value and expiry date.
+* When a welcome coupon is about to expire unused (and a reminder email is set): the reminder email is sent to that subscriber with the same coupon details.
 * When the Contact sync module is on: the user and customer fields you enable (for example name, order count, total spent, last order date).
 * When the Email delivery module is on: every email sent with `wp_mail()` (recipients, subject, body, attachments) is sent to bluefox.email for delivery.
 * When order or abandoned cart emails are on: order or cart details used in the email (order number, items, totals, customer name and address).

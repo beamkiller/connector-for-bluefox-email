@@ -51,12 +51,19 @@ If creating the coupon or sending the email fails, the job is retried every 10 m
 
 ## "Your coupon expires soon" reminder
 
-With **Coupon data in bluefox** on (default), the plugin writes `couponCode`, `couponExpires` and `couponUsed` to the bluefox contact. `couponUsed` follows WooCommerce: it is set when an order with the coupon is placed and cleared when that order is cancelled.
+The plugin reminds subscribers who have not used their welcome coupon yet, once, a few days before it expires.
 
-Build the reminder in bluefox:
+1. On the [Email templates](email-templates.md) tab, click **Create** on *Coupon expiry reminder* and choose your newsletter list. The email is selected as **Reminder email ID** on the Coupon tab.
+2. Set **Reminder before expiry (days)** (default 5).
 
-1. **Segments → new segment** "Coupon expires soon": `couponUsed = false` AND `couponExpires` within the next *N* days (the **Reminder before expiry** value, default 5).
-2. **Automations → new automation**: *Enter segment "Coupon expires soon"* (once per contact) → *Send email*.
-3. In the email use `{{contact.couponCode}}` and `{{contact.name}}`.
+How it works:
 
-Click **Create bluefox fields** to create the `name`, `couponCode`, `couponExpires` and `couponUsed` fields.
+- Every hour the plugin looks for welcome coupons that expire within that many days and have not been used (WooCommerce usage count 0).
+- Each one gets the reminder **once**. It is a triggered (marketing) email: bluefox delivers it only to active subscribers of the email's list and adds the unsubscribe link, so people who unsubscribed or paused the newsletter never get it.
+- Reminders go out between 9:00 and 20:00 site time.
+- A failed send is retried every hour, up to 3 times.
+- `wp cfbe remind-coupons` sends the due reminders right away (also outside the daytime window).
+
+The email gets the coupon email's data plus `{{daysLeft}}`. See [Email template data](../developers/template-data.md#coupon-expiry-reminder). Leave **Reminder email ID** empty to switch the reminder off.
+
+**Coupon data in bluefox** (on by default) also writes `couponCode`, `couponExpires` and `couponUsed` to the bluefox contact, for your own campaigns and segments. `couponUsed` follows WooCommerce: it is set when an order with the coupon is placed and cleared when that order is cancelled. Click **Create bluefox fields** to create the `name`, `couponCode`, `couponExpires` and `couponUsed` fields.

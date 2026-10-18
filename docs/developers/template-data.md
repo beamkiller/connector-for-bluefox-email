@@ -51,6 +51,22 @@ A transactional email sent by the plugin after the signup is confirmed (**Coupon
 
 Example template: `templates/emails/welcome-coupon.html`.
 
+## Coupon expiry reminder
+
+A triggered (marketing) email sent by the plugin once per unused welcome coupon, *Reminder before expiry* days before it expires (**Reminder email ID** on the [Coupon tab](../settings/coupon.md)). bluefox delivers it only to active subscribers and fills in `{{{unsubscribeLink}}}`.
+
+It gets every variable of the welcome coupon email above, plus:
+
+| Variable | Description | Example |
+|---|---|---|
+| `{{daysLeft}}` | Whole days until the coupon expires, at least 1 | `5` |
+
+```handlebars
+<p>Hi {{DEFAULT name "there"}}, only {{daysLeft}} days left to use your {{discount}} coupon <strong>{{couponCode}}</strong> (valid until {{expiry}}).</p>
+<a href="{{{shopUrl}}}">Use my coupon</a>
+<p><a href="{{{unsubscribeLink}}}">Unsubscribe</a></p>
+```
+
 ## Order emails
 
 Sent on the events of the [Order emails](../features/order-emails.md) rules, as a transactional or triggered bluefox email. Every order event gets:
