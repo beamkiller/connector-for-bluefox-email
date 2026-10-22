@@ -59,6 +59,13 @@ class Reward_Service {
 	private $factory;
 
 	/**
+	 * Excluded user roles.
+	 *
+	 * @var Excluded_Roles
+	 */
+	private $excluded;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Bluefox_Client|null   $client     Client.
@@ -66,13 +73,15 @@ class Reward_Service {
 	 * @param Jobs                  $jobs       Jobs.
 	 * @param Logger                $logger     Logger.
 	 * @param Coupon_Factory        $factory    Coupon factory.
+	 * @param Excluded_Roles|null   $excluded   Excluded user roles.
 	 */
-	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, Coupon_Factory $factory ) {
+	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, Coupon_Factory $factory, ?Excluded_Roles $excluded = null ) {
 		$this->client     = $client;
 		$this->repository = $repository;
 		$this->jobs       = $jobs;
 		$this->logger     = $logger;
 		$this->factory    = $factory;
+		$this->excluded   = $excluded ?? new Excluded_Roles();
 	}
 
 	/**
@@ -152,6 +161,12 @@ class Reward_Service {
 		if ( Settings::get( 'coupon', 'one_per_mailbox' ) && $this->repository->mailbox_rewarded( $email ) ) {
 			$this->repository->skip_reward( $email, 'Another address of this mailbox already received a welcome coupon.' );
 			$this->logger->info( 'Welcome coupon skipped: alias of a rewarded address', array( 'email' => $email ) );
+			return;
+		}
+
+		if ( $this->excluded->email_excluded( $email ) ) {
+			$this->repository->skip_reward( $email, 'Excluded user role (Coupon tab).' );
+			$this->logger->info( 'Welcome coupon skipped: excluded user role', array( 'email' => $email ) );
 			return;
 		}
 

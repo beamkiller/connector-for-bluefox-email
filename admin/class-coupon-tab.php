@@ -91,8 +91,13 @@ final class Coupon_Tab {
 		$clean['reminder_days']  = min( 30, max( 1, (int) ( $input['reminder_days'] ?? 5 ) ) );
 		// Saved from code without this key (Settings::update() merges the stored values in): keep what is stored.
 		$clean['reminder_email_id'] = array_key_exists( 'reminder_email_id', $input ) ? (string) preg_replace( '/[^A-Za-z0-9]/', '', (string) $input['reminder_email_id'] ) : (string) ( $previous['reminder_email_id'] ?? '' );
-		$prefix                     = strtoupper( (string) preg_replace( '/[^A-Za-z0-9-]/', '', (string) ( $input['code_prefix'] ?? '' ) ) );
-		$clean['code_prefix']       = substr( $prefix, 0, 10 );
+		// The form always sends the key (hidden empty item); saved from code without it: keep what is stored.
+		$roles                     = array_key_exists( 'excluded_roles', $input ) ? (array) $input['excluded_roles'] : (array) ( $previous['excluded_roles'] ?? array() );
+		$roles                     = array_filter( array_map( 'sanitize_key', $roles ) );
+		$clean['excluded_roles']   = $roles ? array_values( array_intersect( $roles, array_keys( wp_roles()->get_names() ) ) ) : array();
+		$clean['excluded_message'] = sanitize_text_field( (string) ( $input['excluded_message'] ?? ( $previous['excluded_message'] ?? '' ) ) );
+		$prefix                    = strtoupper( (string) preg_replace( '/[^A-Za-z0-9-]/', '', (string) ( $input['code_prefix'] ?? '' ) ) );
+		$clean['code_prefix']      = substr( $prefix, 0, 10 );
 		return $clean;
 	}
 

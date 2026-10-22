@@ -237,13 +237,15 @@ final class Plugin {
 		$this->subscription->register();
 		( new Rest_Subscribe( $this->subscription, new Rate_Limiter(), $this->logger ) )->register();
 
-		$this->rewards = new Reward_Service( $this->client, $this->repository, $this->jobs, $this->logger, new Coupon_Factory() );
+		$excluded      = new Excluded_Roles();
+		$this->rewards = new Reward_Service( $this->client, $this->repository, $this->jobs, $this->logger, new Coupon_Factory(), $excluded );
 		$this->rewards->register();
 		( new Rest_Webhook( $this->rewards, $this->repository, new Rate_Limiter(), $this->logger ) )->register();
 		$reminder = null;
 		if ( Modules::enabled( 'coupon' ) ) {
-			$reminder = new Coupon_Reminder( $this->client, $this->repository, $this->jobs, $this->logger, new Coupon_Factory() );
+			$reminder = new Coupon_Reminder( $this->client, $this->repository, $this->jobs, $this->logger, new Coupon_Factory(), null, $excluded );
 			$reminder->register();
+			$excluded->register();
 		}
 		if ( class_exists( Privacy::class ) ) {
 			( new Privacy( $this->repository ) )->register();

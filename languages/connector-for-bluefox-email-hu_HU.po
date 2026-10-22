@@ -47,9 +47,9 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:312
-#: admin/class-coupon-tab.php:152
-#: admin/class-coupon-tab.php:210
-#: admin/class-coupon-tab.php:222
+#: admin/class-coupon-tab.php:157
+#: admin/class-coupon-tab.php:215
+#: admin/class-coupon-tab.php:227
 #: admin/class-email-templates-tab.php:100
 #: admin/class-email-templates-tab.php:173
 #: includes/class-privacy.php:436
@@ -148,40 +148,40 @@ msgid "The discount amount must be greater than 0; the default value has been re
 msgstr "A kedvezmény mértéke 0-nál nagyobb kell legyen; az alapértéket állítottuk vissza."
 
 #. translators: %s: discount, e.g. 10%
-#: admin/class-coupon-tab.php:121
+#: admin/class-coupon-tab.php:126
 #, php-format
 msgid "%s discount"
 msgstr "%s kedvezmény"
 
 #. translators: %d: days
-#: admin/class-coupon-tab.php:123
+#: admin/class-coupon-tab.php:128
 #, php-format
 msgid "valid for %d days"
 msgstr "%d napig érvényes"
 
-#: admin/class-coupon-tab.php:124
+#: admin/class-coupon-tab.php:129
 msgid "single use, only with the subscriber's email address"
 msgstr "egyszer, csak a feliratkozó e-mail címével"
 
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
-#: admin/class-coupon-tab.php:128
+#: admin/class-coupon-tab.php:133
 #: includes/class-email-templates.php:392
 #, php-format
 msgid "minimum order %s"
 msgstr "minimum %s rendelés"
 
-#: admin/class-coupon-tab.php:131
+#: admin/class-coupon-tab.php:136
 #: includes/class-coupon-data.php:64
 msgid "cannot be combined with other coupons"
 msgstr "más kuponnal nem vonható össze"
 
-#: admin/class-coupon-tab.php:134
+#: admin/class-coupon-tab.php:139
 msgid "not valid for sale items"
 msgstr "akciós termékekre nem érvényes"
 
 #. translators: 1: created field names, 2: existing field names
-#: admin/class-coupon-tab.php:168
+#: admin/class-coupon-tab.php:173
 #: modules/sync/class-sync-tab.php:197
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
@@ -645,7 +645,7 @@ msgid "ID of the bluefox transactional email that delivers the coupon (see “Co
 msgstr "Annak a bluefox tranzakciós e-mailnek az ID-ja, amely a kupont kézbesíti (lásd lent: „Kupon e-mail a bluefox-ban”). Enélkül nem megy ki kupon."
 
 #: admin/views/tab-coupon.php:46
-#: admin/views/tab-coupon.php:131
+#: admin/views/tab-coupon.php:150
 msgid "No email yet? Create one from a template."
 msgstr "Még nincs e-mailed? Hozz létre egyet sablonból."
 
@@ -710,86 +710,107 @@ msgid "Also grants free shipping"
 msgstr "Ingyenes szállítást is ad"
 
 #: admin/views/tab-coupon.php:89
+msgid "Excluded user roles"
+msgstr "Kizárt felhasználói szerepkörök"
+
+#: admin/views/tab-coupon.php:97
+msgid "Members of these roles (for example wholesale customers or resellers) can subscribe, but get no welcome coupon and no reminder. Both the account email and the billing email are checked, also when they subscribe as a guest. A coupon issued earlier is rejected in the cart when it belongs to such an account or is used while logged in with such a role. Hold Ctrl/Cmd to select several."
+msgstr "Ezeknek a szerepköröknek a tagjai (például nagykereskedelmi vásárlók vagy viszonteladók) feliratkozhatnak, de nem kapnak üdvözlő kupont és emlékeztetőt. A bővítmény a fiók e-mail címét és a számlázási e-mail címet is figyeli, vendégként feliratkozva is. A korábban kiadott kupont a kosár elutasítja, ha ilyen fiókhoz tartozik, vagy ilyen szerepkörrel bejelentkezve használnák. Ctrl/Cmd + kattintással több is kijelölhető."
+
+#: admin/views/tab-coupon.php:101
+msgid "Cart message for excluded roles"
+msgstr "Hibaüzenet a kosárban (kizárt szerepkör)"
+
+#: admin/views/tab-coupon.php:103
+#: includes/class-excluded-roles.php:51
+msgid "The welcome coupon cannot be used with this account."
+msgstr "Az üdvözlő kupon ehhez a fiókhoz nem használható."
+
+#: admin/views/tab-coupon.php:104
+msgid "Shown when an excluded customer tries to redeem a welcome coupon. Leave empty for the default text."
+msgstr "Ezt látja a vásárló, ha kizárt szerepkörrel próbálja beváltani az üdvözlő kupont. Üresen hagyva az alapszöveg jelenik meg."
+
+#: admin/views/tab-coupon.php:108
 msgid "Code prefix"
 msgstr "Kód előtag"
 
-#: admin/views/tab-coupon.php:93
+#: admin/views/tab-coupon.php:112
 msgid "Email aliases"
 msgstr "E-mail aliasok"
 
-#: admin/views/tab-coupon.php:95
+#: admin/views/tab-coupon.php:114
 msgid "One coupon per mailbox"
 msgstr "Postafiókonként egy kupon"
 
-#: admin/views/tab-coupon.php:96
+#: admin/views/tab-coupon.php:115
 msgid "Aliases such as name+shop@example.com and Gmail addresses written with dots (j.ane@gmail.com) count as the same address, so one person cannot collect several coupons. Turn it off to give each address its own coupon."
 msgstr "Az olyan aliasok, mint a nev+bolt@example.com, és a pontokkal írt Gmail címek (j.ane@gmail.com) ugyanannak a címnek számítanak, így egy ember nem gyűjthet több kupont. Kapcsold ki, ha minden cím külön kupont kapjon."
 
-#: admin/views/tab-coupon.php:101
+#: admin/views/tab-coupon.php:120
 msgid "“Your coupon expires soon” reminder"
 msgstr "„Hamarosan lejár a kuponod” emlékeztető"
 
-#: admin/views/tab-coupon.php:104
+#: admin/views/tab-coupon.php:123
 msgid "Coupon data in bluefox"
 msgstr "Kupon adatok a bluefoxban"
 
-#: admin/views/tab-coupon.php:106
+#: admin/views/tab-coupon.php:125
 msgid "Update the couponCode, couponExpires and couponUsed fields"
 msgstr "couponCode, couponExpires, couponUsed mezők frissítése"
 
-#: admin/views/tab-coupon.php:107
+#: admin/views/tab-coupon.php:126
 msgid "Create bluefox fields"
 msgstr "bluefox mezők létrehozása"
 
-#: admin/views/tab-coupon.php:111
+#: admin/views/tab-coupon.php:130
 msgid "Reminder before expiry (days)"
 msgstr "Emlékeztető lejárat előtt (nap)"
 
-#: admin/views/tab-coupon.php:115
+#: admin/views/tab-coupon.php:134
 msgid "Reminder email ID"
 msgstr "Emlékeztető e-mail ID"
 
-#: admin/views/tab-coupon.php:118
+#: admin/views/tab-coupon.php:137
 msgid "ID of a bluefox triggered (marketing) email on your newsletter list. Leave it empty for no reminder. Every hour the plugin checks the unused welcome coupons and sends this email once for each coupon that expires within the days above, between 9:00 and 20:00 site time. bluefox delivers it only to active subscribers, with an unsubscribe link."
 msgstr "A hírlevél listádhoz tartozó bluefox triggered (marketing) e-mail azonosítója. Üresen hagyva nincs emlékeztető. A bővítmény óránként megnézi a fel nem használt üdvözlő kuponokat, és minden kuponhoz, amely a fenti napon belül lejár, egyszer elküldi ezt az e-mailt, 9 és 20 óra között (a webhely ideje szerint). A bluefox csak aktív feliratkozónak kézbesíti, leiratkozó linkkel."
 
-#: admin/views/tab-coupon.php:132
+#: admin/views/tab-coupon.php:151
 msgid "Available in the email: {{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}} (days left), {{minSpend}}, {{terms}}, {{name}}, {{shopName}}, {{shopUrl}}, {{unsubscribeLink}}."
 msgstr "Az e-mailben használható: {{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}} (hány nap van hátra), {{minSpend}}, {{terms}}, {{name}}, {{shopName}}, {{shopUrl}}, {{unsubscribeLink}}."
 
-#: admin/views/tab-coupon.php:139
+#: admin/views/tab-coupon.php:158
 msgid "Coupon email in bluefox"
 msgstr "Kupon e-mail a bluefox-ban"
 
-#: admin/views/tab-coupon.php:142
+#: admin/views/tab-coupon.php:161
 msgid "In bluefox, open Transactional emails and create a new email of type HTML (for example “Welcome coupon”). Set its subject, for example: Your {{discount}} welcome coupon."
 msgstr "A bluefox-ban nyisd meg a Transactional emails részt, és hozz létre egy új, HTML típusú e-mailt (pl. „Üdvözlő kupon”). Add meg a tárgyát, például: {{discount}} értékű üdvözlő kuponod."
 
-#: admin/views/tab-coupon.php:143
+#: admin/views/tab-coupon.php:162
 msgid "Paste the template below as the HTML content and adjust the texts and colours to your brand."
 msgstr "Másold be az alábbi sablont HTML tartalomként, és igazítsd a szövegeket és a színeket a márkádhoz."
 
-#: admin/views/tab-coupon.php:144
+#: admin/views/tab-coupon.php:163
 msgid "Save it, copy the email ID and paste it into “Coupon email ID” above."
 msgstr "Mentsd el, másold ki az e-mail ID-t, és illeszd be fent a „Kupon e-mail ID” mezőbe."
 
-#: admin/views/tab-coupon.php:146
+#: admin/views/tab-coupon.php:165
 msgid "Merge tags sent with the coupon email:"
 msgstr "A kupon e-maillel küldött változók:"
 
-#: admin/views/tab-coupon.php:152
+#: admin/views/tab-coupon.php:171
 msgid "Contact fields work too, e.g. {{contact.name}}. The coupon email is transactional (no unsubscribe link), so keep it about the coupon only."
 msgstr "A kontakt mezők is működnek, pl. {{contact.name}}. A kupon e-mail tranzakciós (nincs benne leiratkozó link), ezért csak a kuponról szóljon."
 
-#: admin/views/tab-coupon.php:157
+#: admin/views/tab-coupon.php:176
 msgid "Welcome coupon template"
 msgstr "Üdvözlő kupon sablon"
 
-#: admin/views/tab-coupon.php:158
+#: admin/views/tab-coupon.php:177
 msgid "Double opt-in confirmation template (set it as the confirmation email of the bluefox list; it must contain {{verifyLink}})"
 msgstr "Dupla megerősítés (double opt-in) sablon (állítsd be a bluefox lista megerősítő e-mailjeként; tartalmaznia kell a {{verifyLink}} változót)"
 
-#: admin/views/tab-coupon.php:169
+#: admin/views/tab-coupon.php:188
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
 #: modules/webhooks/views/tab-webhooks.php:99
@@ -2917,7 +2938,7 @@ msgstr "Ismeretlen forrás."
 msgid "Too many attempts, please try again later."
 msgstr "Túl sok próbálkozás, kérjük, próbáld újra később."
 
-#: includes/class-reward-service.php:223
+#: includes/class-reward-service.php:238
 msgid "No coupon has been created for this email address yet."
 msgstr "Ehhez az e-mail címhez még nem készült kupon."
 

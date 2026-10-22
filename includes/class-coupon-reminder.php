@@ -69,6 +69,13 @@ class Coupon_Reminder {
 	private $finder;
 
 	/**
+	 * Excluded user roles.
+	 *
+	 * @var Excluded_Roles
+	 */
+	private $excluded;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Bluefox_Client|null   $client     Client (null when not configured).
@@ -77,14 +84,16 @@ class Coupon_Reminder {
 	 * @param Logger                $logger     Logger.
 	 * @param Coupon_Factory        $factory    Coupon factory.
 	 * @param callable|null         $finder     Due coupon finder.
+	 * @param Excluded_Roles|null   $excluded   Excluded user roles.
 	 */
-	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, Coupon_Factory $factory, ?callable $finder = null ) {
+	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, Coupon_Factory $factory, ?callable $finder = null, ?Excluded_Roles $excluded = null ) {
 		$this->client     = $client;
 		$this->repository = $repository;
 		$this->jobs       = $jobs;
 		$this->logger     = $logger;
 		$this->factory    = $factory;
 		$this->finder     = $finder ?? array( $this, 'find_due' );
+		$this->excluded   = $excluded ?? new Excluded_Roles();
 	}
 
 	/**
@@ -146,6 +155,10 @@ class Coupon_Reminder {
 	public function remind( int $coupon_id, int $now ): bool {
 		$email = Subscriber_Repository::normalize_email( (string) get_post_meta( $coupon_id, Coupon_Factory::META, true ) );
 		if ( '' === $email || '' !== (string) get_post_meta( $coupon_id, self::SENT_META, true ) ) {
+			return false;
+		}
+		if ( $this->excluded->email_excluded( $email ) ) {
+			update_post_meta( $coupon_id, self::SENT_META, 'excluded' ); // Excluded role: the cart rejects it anyway.
 			return false;
 		}
 		$details = $this->factory->details( $coupon_id );

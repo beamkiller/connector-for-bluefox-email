@@ -19,7 +19,7 @@ Every feature is a module you switch on or off, so the plugin only loads what yo
 - **Signup forms** – block, `[cfbe_form]` shortcode, compact `[cfbe_promo]` bar and a popup with scroll, delay, exit-intent and page-view triggers, page targeting and frequency rules. Double opt-in is handled by your bluefox list.
 - **Tags and interests** – every signup is tagged by source and placement; an optional interests field adds one tag per choice.
 - **Checkout opt-in** – an unticked newsletter checkbox on the classic and block checkout, and optionally on My Account.
-- **Welcome coupon** – a single-use WooCommerce coupon locked to the subscriber's email, created only after they confirm, one per email address (and by default one per mailbox).
+- **Welcome coupon** – a single-use WooCommerce coupon locked to the subscriber's email, created only after they confirm, one per email address (and by default one per mailbox), with an expiry reminder and optional excluded user roles (e.g. wholesale customers).
 - **Order emails** – your own bluefox emails on order status changes, first paid order, customer notes and review requests.
 - **Abandoned cart emails** – reminders with a restore link and an optional single-use recovery coupon.
 - **Contact sync** – user and customer data (order count, total spent, last order date, …) on bluefox contacts for segmentation, with bulk backfill and WP-CLI.

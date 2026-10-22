@@ -99,6 +99,10 @@ final class Settings {
 					'reminder_days'         => 5,
 					// bluefox triggered email of the “coupon expires soon” reminder ('' = off).
 					'reminder_email_id'     => '',
+					// Members of these roles (e.g. wholesale customers) get no welcome coupon and cannot redeem one.
+					'excluded_roles'        => array(),
+					// Cart error for them ('' = the translated default, Excluded_Roles::message()).
+					'excluded_message'      => '',
 				);
 				break;
 			case 'checkout':

@@ -86,6 +86,25 @@ $cfbe_lists  = List_Options::lists( (string) $cfbe_values['list_id'] );
 			</td>
 		</tr>
 		<tr>
+			<th scope="row"><label for="cfbe-excluded-roles"><?php esc_html_e( 'Excluded user roles', 'connector-for-bluefox-email' ); ?></label></th>
+			<td>
+				<input type="hidden" name="<?php echo esc_attr( $cfbe_name( 'excluded_roles' ) ); ?>[]" value="">
+				<select multiple size="6" id="cfbe-excluded-roles" name="<?php echo esc_attr( $cfbe_name( 'excluded_roles' ) ); ?>[]">
+					<?php foreach ( wp_roles()->get_names() as $cfbe_role => $cfbe_role_name ) : ?>
+						<option value="<?php echo esc_attr( $cfbe_role ); ?>" <?php selected( in_array( $cfbe_role, (array) $cfbe_values['excluded_roles'], true ) ); ?>><?php echo esc_html( translate_user_role( $cfbe_role_name ) ); ?></option>
+					<?php endforeach; ?>
+				</select>
+				<p class="description"><?php esc_html_e( 'Members of these roles (for example wholesale customers or resellers) can subscribe, but get no welcome coupon and no reminder. Both the account email and the billing email are checked, also when they subscribe as a guest. A coupon issued earlier is rejected in the cart when it belongs to such an account or is used while logged in with such a role. Hold Ctrl/Cmd to select several.', 'connector-for-bluefox-email' ); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><label for="cfbe-excluded-message"><?php esc_html_e( 'Cart message for excluded roles', 'connector-for-bluefox-email' ); ?></label></th>
+			<td>
+				<input type="text" class="large-text" id="cfbe-excluded-message" name="<?php echo esc_attr( $cfbe_name( 'excluded_message' ) ); ?>" value="<?php echo esc_attr( $cfbe_values['excluded_message'] ); ?>" placeholder="<?php echo esc_attr__( 'The welcome coupon cannot be used with this account.', 'connector-for-bluefox-email' ); ?>">
+				<p class="description"><?php esc_html_e( 'Shown when an excluded customer tries to redeem a welcome coupon. Leave empty for the default text.', 'connector-for-bluefox-email' ); ?></p>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row"><label for="cfbe-prefix"><?php esc_html_e( 'Code prefix', 'connector-for-bluefox-email' ); ?></label></th>
 			<td><input type="text" class="small-text code" id="cfbe-prefix" maxlength="10" name="<?php echo esc_attr( $cfbe_name( 'code_prefix' ) ); ?>" value="<?php echo esc_attr( $cfbe_values['code_prefix'] ); ?>"></td>
 		</tr>

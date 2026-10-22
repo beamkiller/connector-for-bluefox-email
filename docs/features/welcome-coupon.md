@@ -13,6 +13,7 @@ New subscribers get a single-use WooCommerce coupon by email **after** they conf
 - **Only new subscribers who signed up through this plugin.** People who were already active on the list, came back from *paused*, or reached the list another way (bluefox import, bluefox's own form) get no coupon.
 - **Only after confirmation.** The status is read from the bluefox API before the coupon is created. Signups not confirmed within the **Confirmation deadline** (Emails tab, default 14 days) expire without a coupon.
 - **Only on the chosen list** if **Reward signups on list** is set; otherwise confirmed signups on any list qualify.
+- **Not for excluded user roles** (Coupon tab, **Excluded user roles**, none by default). See below.
 
 Tell visitors in your offer: one welcome coupon per email address, redeemable in the cart.
 
@@ -48,6 +49,19 @@ Merge tags: `{{couponCode}}`, `{{discount}}`, `{{expiry}}`, `{{minSpend}}`, `{{t
 The coupon email is transactional (no unsubscribe link). Keep it about the coupon only.
 
 If creating the coupon or sending the email fails, the job is retried every 10 minutes, up to 5 attempts. Admins can resend the coupon email (same code) from the **Subscribers** tab or with `wp cfbe resend-coupon <email>`.
+
+## Excluded user roles
+
+Wholesale customers, resellers or partners often have their own prices and should not get the welcome discount. Select their roles under **Excluded user roles** on the [Coupon tab](../settings/coupon.md).
+
+- **They can still subscribe** and receive your newsletters. The visitor sees the usual message; there is no coupon and no coupon email. Their row gets the status *Already subscribed (no coupon)* with the note *Excluded user role (Coupon tab).*
+- **Matched by email, also for guests.** The plugin checks the signup address against the account email and the billing email of every member of the excluded roles, with the same alias and Gmail-dot rule as above. A reseller who subscribes without logging in is recognised too.
+- **No expiry reminder** for their coupons.
+- **Rejected in the cart and at checkout**, for coupons issued before the role was given: a welcome coupon is not valid when it belongs to such an address or when the shopper is logged in with an excluded role. The message is **Cart message for excluded roles** (default *The welcome coupon cannot be used with this account.*).
+- Only welcome coupons created by the plugin are affected, never your other coupons.
+- **Limit:** someone who uses an address that is not on any excluded account, without logging in, cannot be recognised.
+
+The members' addresses are loaded with one query and cached; the cache is refreshed when a user's role or billing email changes, so large customer bases are no problem.
 
 ## "Your coupon expires soon" reminder
 

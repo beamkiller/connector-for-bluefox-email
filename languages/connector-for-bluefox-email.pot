@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-18T20:54:37+00:00\n"
+"POT-Creation-Date: 2026-10-22T18:57:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -53,9 +53,9 @@ msgstr ""
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:312
-#: admin/class-coupon-tab.php:152
-#: admin/class-coupon-tab.php:210
-#: admin/class-coupon-tab.php:222
+#: admin/class-coupon-tab.php:157
+#: admin/class-coupon-tab.php:215
+#: admin/class-coupon-tab.php:227
 #: admin/class-email-templates-tab.php:100
 #: admin/class-email-templates-tab.php:173
 #: includes/class-privacy.php:436
@@ -154,40 +154,40 @@ msgid "The discount amount must be greater than 0; the default value has been re
 msgstr ""
 
 #. translators: %s: discount, e.g. 10%
-#: admin/class-coupon-tab.php:121
+#: admin/class-coupon-tab.php:126
 #, php-format
 msgid "%s discount"
 msgstr ""
 
 #. translators: %d: days
-#: admin/class-coupon-tab.php:123
+#: admin/class-coupon-tab.php:128
 #, php-format
 msgid "valid for %d days"
 msgstr ""
 
-#: admin/class-coupon-tab.php:124
+#: admin/class-coupon-tab.php:129
 msgid "single use, only with the subscriber's email address"
 msgstr ""
 
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
-#: admin/class-coupon-tab.php:128
+#: admin/class-coupon-tab.php:133
 #: includes/class-email-templates.php:392
 #, php-format
 msgid "minimum order %s"
 msgstr ""
 
-#: admin/class-coupon-tab.php:131
+#: admin/class-coupon-tab.php:136
 #: includes/class-coupon-data.php:64
 msgid "cannot be combined with other coupons"
 msgstr ""
 
-#: admin/class-coupon-tab.php:134
+#: admin/class-coupon-tab.php:139
 msgid "not valid for sale items"
 msgstr ""
 
 #. translators: 1: created field names, 2: existing field names
-#: admin/class-coupon-tab.php:168
+#: admin/class-coupon-tab.php:173
 #: modules/sync/class-sync-tab.php:197
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
@@ -651,7 +651,7 @@ msgid "ID of the bluefox transactional email that delivers the coupon (see “Co
 msgstr ""
 
 #: admin/views/tab-coupon.php:46
-#: admin/views/tab-coupon.php:131
+#: admin/views/tab-coupon.php:150
 msgid "No email yet? Create one from a template."
 msgstr ""
 
@@ -716,86 +716,107 @@ msgid "Also grants free shipping"
 msgstr ""
 
 #: admin/views/tab-coupon.php:89
-msgid "Code prefix"
+msgid "Excluded user roles"
 msgstr ""
 
-#: admin/views/tab-coupon.php:93
-msgid "Email aliases"
-msgstr ""
-
-#: admin/views/tab-coupon.php:95
-msgid "One coupon per mailbox"
-msgstr ""
-
-#: admin/views/tab-coupon.php:96
-msgid "Aliases such as name+shop@example.com and Gmail addresses written with dots (j.ane@gmail.com) count as the same address, so one person cannot collect several coupons. Turn it off to give each address its own coupon."
+#: admin/views/tab-coupon.php:97
+msgid "Members of these roles (for example wholesale customers or resellers) can subscribe, but get no welcome coupon and no reminder. Both the account email and the billing email are checked, also when they subscribe as a guest. A coupon issued earlier is rejected in the cart when it belongs to such an account or is used while logged in with such a role. Hold Ctrl/Cmd to select several."
 msgstr ""
 
 #: admin/views/tab-coupon.php:101
-msgid "“Your coupon expires soon” reminder"
+msgid "Cart message for excluded roles"
+msgstr ""
+
+#: admin/views/tab-coupon.php:103
+#: includes/class-excluded-roles.php:51
+msgid "The welcome coupon cannot be used with this account."
 msgstr ""
 
 #: admin/views/tab-coupon.php:104
-msgid "Coupon data in bluefox"
+msgid "Shown when an excluded customer tries to redeem a welcome coupon. Leave empty for the default text."
 msgstr ""
 
-#: admin/views/tab-coupon.php:106
-msgid "Update the couponCode, couponExpires and couponUsed fields"
+#: admin/views/tab-coupon.php:108
+msgid "Code prefix"
 msgstr ""
 
-#: admin/views/tab-coupon.php:107
-msgid "Create bluefox fields"
+#: admin/views/tab-coupon.php:112
+msgid "Email aliases"
 msgstr ""
 
-#: admin/views/tab-coupon.php:111
-msgid "Reminder before expiry (days)"
+#: admin/views/tab-coupon.php:114
+msgid "One coupon per mailbox"
 msgstr ""
 
 #: admin/views/tab-coupon.php:115
+msgid "Aliases such as name+shop@example.com and Gmail addresses written with dots (j.ane@gmail.com) count as the same address, so one person cannot collect several coupons. Turn it off to give each address its own coupon."
+msgstr ""
+
+#: admin/views/tab-coupon.php:120
+msgid "“Your coupon expires soon” reminder"
+msgstr ""
+
+#: admin/views/tab-coupon.php:123
+msgid "Coupon data in bluefox"
+msgstr ""
+
+#: admin/views/tab-coupon.php:125
+msgid "Update the couponCode, couponExpires and couponUsed fields"
+msgstr ""
+
+#: admin/views/tab-coupon.php:126
+msgid "Create bluefox fields"
+msgstr ""
+
+#: admin/views/tab-coupon.php:130
+msgid "Reminder before expiry (days)"
+msgstr ""
+
+#: admin/views/tab-coupon.php:134
 msgid "Reminder email ID"
 msgstr ""
 
-#: admin/views/tab-coupon.php:118
+#: admin/views/tab-coupon.php:137
 msgid "ID of a bluefox triggered (marketing) email on your newsletter list. Leave it empty for no reminder. Every hour the plugin checks the unused welcome coupons and sends this email once for each coupon that expires within the days above, between 9:00 and 20:00 site time. bluefox delivers it only to active subscribers, with an unsubscribe link."
 msgstr ""
 
-#: admin/views/tab-coupon.php:132
+#: admin/views/tab-coupon.php:151
 msgid "Available in the email: {{couponCode}}, {{discount}}, {{expiry}}, {{daysLeft}} (days left), {{minSpend}}, {{terms}}, {{name}}, {{shopName}}, {{shopUrl}}, {{unsubscribeLink}}."
 msgstr ""
 
-#: admin/views/tab-coupon.php:139
+#: admin/views/tab-coupon.php:158
 msgid "Coupon email in bluefox"
 msgstr ""
 
-#: admin/views/tab-coupon.php:142
+#: admin/views/tab-coupon.php:161
 msgid "In bluefox, open Transactional emails and create a new email of type HTML (for example “Welcome coupon”). Set its subject, for example: Your {{discount}} welcome coupon."
 msgstr ""
 
-#: admin/views/tab-coupon.php:143
+#: admin/views/tab-coupon.php:162
 msgid "Paste the template below as the HTML content and adjust the texts and colours to your brand."
 msgstr ""
 
-#: admin/views/tab-coupon.php:144
+#: admin/views/tab-coupon.php:163
 msgid "Save it, copy the email ID and paste it into “Coupon email ID” above."
 msgstr ""
 
-#: admin/views/tab-coupon.php:146
+#: admin/views/tab-coupon.php:165
 msgid "Merge tags sent with the coupon email:"
 msgstr ""
 
-#: admin/views/tab-coupon.php:152
+#: admin/views/tab-coupon.php:171
 msgid "Contact fields work too, e.g. {{contact.name}}. The coupon email is transactional (no unsubscribe link), so keep it about the coupon only."
 msgstr ""
 
-#: admin/views/tab-coupon.php:157
+#: admin/views/tab-coupon.php:176
 msgid "Welcome coupon template"
 msgstr ""
 
-#: admin/views/tab-coupon.php:158
+#: admin/views/tab-coupon.php:177
 msgid "Double opt-in confirmation template (set it as the confirmation email of the bluefox list; it must contain {{verifyLink}})"
 msgstr ""
 
-#: admin/views/tab-coupon.php:169
+#: admin/views/tab-coupon.php:188
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
 #: modules/webhooks/views/tab-webhooks.php:99
@@ -2923,7 +2944,7 @@ msgstr ""
 msgid "Too many attempts, please try again later."
 msgstr ""
 
-#: includes/class-reward-service.php:223
+#: includes/class-reward-service.php:238
 msgid "No coupon has been created for this email address yet."
 msgstr ""
 
