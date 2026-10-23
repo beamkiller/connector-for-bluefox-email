@@ -14,6 +14,8 @@ These are fields on the bluefox contact, not `data` keys. bluefox drops values o
 | `{{contact.couponCode}}`, `{{contact.couponExpires}}`, `{{contact.couponUsed}}` | welcome coupon (with **Coupon data in bluefox** on) | `WELCOME-K7M2QX9P` |
 | `{{contact.firstName}}`, `{{contact.orderCount}}`, `{{contact.totalSpent}}` … | [contact sync](../features/contact-sync.md) | |
 
+Date fields hold ISO values: `couponExpires` is a UTC instant (the end of the coupon's last day on the site clock), the contact sync dates (`registeredAt`, `firstOrderDate`, `lastOrderDate`) are plain `YYYY-MM-DD` days. Show them in the reader's format with bluefox's [`FORMAT_DATE`](https://bluefox.email/docs/email-personalization#date-formatting) helper, for example `{{FORMAT_DATE contact.couponExpires locale="en-GB" dateStyle="long" timeZone="Europe/London"}}`. For `couponExpires` set `timeZone` to your shop's time zone (the default is UTC); for the plain days leave it out, so the day does not shift. The `data` keys of the plugin's own emails (such as `{{expiry}}`) are already formatted with the site's date format.
+
 The contact sync fields are `name`, `firstName`, `lastName`, `wpUserId`, `wpRole`, `registeredAt`, `orderCount`, `totalSpent`, `lastOrderDate`, `lastOrderTotal`, `firstOrderDate`, `billingCountry`, `billingCity`, `purchasedCategories` and `customerType`. Their bluefox names can be changed on the [Contact sync tab](../settings/contact-sync.md), except `name`.
 
 ## Confirmation email

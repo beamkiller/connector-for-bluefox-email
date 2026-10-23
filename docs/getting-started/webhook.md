@@ -22,5 +22,9 @@ bluefox sends one of the project's API keys as `Authorization: Bearer …`. The 
 
 Instead of the project webhook you can add a **Webhook** step to a bluefox "Contact added" automation: `POST` to the webhook URL with **Pass Contact Data** on and a custom header `X-CFBE-Secret` set to the **Webhook secret** shown on the Webhooks tab. This only confirms signups; it carries no other events. **New secret** generates a new secret – update the automation header afterwards.
 
+## Retries
+
+If the endpoint does not answer with a 2xx status within 10 seconds, bluefox retries the delivery up to 3 times (after 1, 5 and 10 minutes), both for the project webhook and for an automation webhook step. The plugin answers at once and does the work in the background, and a repeated delivery never creates a second coupon or email. Polling still covers events that were dropped after the last retry.
+
 !!! info "Webhook data is never trusted"
     A webhook only queues a check. Before marking a signup confirmed or creating a coupon, the plugin reads the subscriber's status from the bluefox API again.
