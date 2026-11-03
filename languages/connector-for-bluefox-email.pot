@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-03T11:55:45+00:00\n"
+"POT-Creation-Date: 2026-11-03T12:06:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -863,7 +863,7 @@ msgstr ""
 #: admin/views/tab-coupon.php:188
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
-#: modules/webhooks/views/tab-webhooks.php:99
+#: modules/webhooks/views/tab-webhooks.php:100
 msgid "Copy"
 msgstr ""
 
@@ -1479,7 +1479,7 @@ msgstr ""
 
 #: admin/views/tab-logs.php:24
 #: modules/mailer/views/tab-mailer.php:116
-#: modules/webhooks/views/tab-webhooks.php:113
+#: modules/webhooks/views/tab-webhooks.php:114
 msgid "Time"
 msgstr ""
 
@@ -1907,7 +1907,7 @@ msgstr ""
 
 #: admin/views/tab-subscribers.php:99
 #: includes/class-privacy.php:461
-#: modules/webhooks/views/tab-webhooks.php:115
+#: modules/webhooks/views/tab-webhooks.php:116
 #: modules/woo-events/class-privacy.php:91
 #: modules/woo-events/views/tab-woo-events.php:283
 msgid "Email"
@@ -3642,7 +3642,7 @@ msgid "Webhook saved in bluefox."
 msgstr ""
 
 #: modules/webhooks/class-webhooks-tab.php:105
-msgid "Test event sent. Reload this page to see it in the list below."
+msgid "bluefox sent the test event. It will not appear below: bluefox test events do not carry the API key yet, so this site rejects them."
 msgstr ""
 
 #: modules/webhooks/class-webhooks-tab.php:132
@@ -3768,39 +3768,43 @@ msgstr ""
 msgid "Registering replaces the project webhook in bluefox (a project has one) with this URL, the selected events and your API key as the secret."
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:81
+#: modules/webhooks/views/tab-webhooks.php:77
+msgid "Test events: bluefox does not send the API key with them yet, so this site rejects them (Logs: “Webhook rejected: bad secret”) and they do not appear under Last received events. Real events carry the key. To test end to end, subscribe with your own address and confirm it."
+msgstr ""
+
+#: modules/webhooks/views/tab-webhooks.php:82
 msgid "Users list"
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:85
+#: modules/webhooks/views/tab-webhooks.php:86
 msgid "Show the bluefox status (subscription, bounce, complaint) in a column of the Users list"
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:93
+#: modules/webhooks/views/tab-webhooks.php:94
 msgid "Automation webhook secret (legacy)"
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:96
+#: modules/webhooks/views/tab-webhooks.php:97
 msgid "Webhook secret"
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:100
+#: modules/webhooks/views/tab-webhooks.php:101
 msgid "New secret"
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:101
+#: modules/webhooks/views/tab-webhooks.php:102
 msgid "Add it as the X-CFBE-Secret header in the Webhook step of the bluefox “Contact added” automation."
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:106
+#: modules/webhooks/views/tab-webhooks.php:107
 msgid "Last received events"
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:108
+#: modules/webhooks/views/tab-webhooks.php:109
 msgid "No events received yet."
 msgstr ""
 
-#: modules/webhooks/views/tab-webhooks.php:114
+#: modules/webhooks/views/tab-webhooks.php:115
 #: modules/woo-events/views/tab-woo-events.php:56
 #: modules/woo-events/views/tab-woo-events.php:169
 msgid "Event"

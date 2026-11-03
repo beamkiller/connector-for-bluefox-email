@@ -74,6 +74,7 @@ defined( 'ABSPATH' ) || exit;
 					<button type="button" class="button-link" id="cfbe-webhook-refresh"><?php esc_html_e( 'Check status', 'connector-for-bluefox-email' ); ?></button>
 					<p class="cfbe-result" id="cfbe-webhook-result" aria-live="polite"></p>
 					<p class="description"><?php esc_html_e( 'Registering replaces the project webhook in bluefox (a project has one) with this URL, the selected events and your API key as the secret.', 'connector-for-bluefox-email' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Test events: bluefox does not send the API key with them yet, so this site rejects them (Logs: “Webhook rejected: bad secret”) and they do not appear under Last received events. Real events carry the key. To test end to end, subscribe with your own address and confirm it.', 'connector-for-bluefox-email' ); ?></p>
 				<?php endif; ?>
 			</td>
 		</tr>
