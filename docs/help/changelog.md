@@ -18,4 +18,8 @@ First public release.
 - Own subscription preferences page and inbound bluefox webhooks.
 - Privacy tools: visitor IP source for Cloudflare and proxies, IP address modes, retention, personal data exporters and erasers (including issued coupons and the checkout consent IP), masked email addresses in logs.
 - AI agent access through the WordPress Abilities API (experimental, off by default).
+- Redirect link check: a warning with a one-click fix when a used bluefox list sends confirmed subscribers to another site's thank-you page.
+- Thank-you page opened with bluefox's `?token=` is never cached, indexed or leaked in the `Referer` header.
+- Coupon expiry reminder runs under a lock, so overlapping runs never send a reminder twice.
+- *Settings* link on the Plugins screen.
 - English and Hungarian translations.

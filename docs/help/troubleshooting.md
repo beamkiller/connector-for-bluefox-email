@@ -40,7 +40,10 @@ bluefox authenticates the project webhook with `Authorization: Bearer <API key>`
 - **Security plugins / firewalls** may block `POST /wp-json/cfbe/v1/bluefox-hook` or REST requests without a logged-in user. Allow that route.
 - **The legacy automation step** sends `X-CFBE-Secret` instead. After **New secret** you must update the header in the bluefox automation.
 
-Use **Send test event** and **Check status** on the Webhooks tab to test. Polling still confirms signups while the webhook is broken, only slower.
+Use **Check status** on the Webhooks tab to test. Polling still confirms signups while the webhook is broken, only slower.
+
+!!! note "Test events carry no API key"
+    bluefox's test events (**Send test event** on the Webhooks tab, or *Test webhook* in bluefox) are sent without the `Authorization` header. The plugin rejects them with 401 and logs *Webhook rejected: bad secret*, even though bluefox reports them as delivered. Real events carry the key and are accepted. To test end to end, subscribe with a real address and confirm it: the `subscribe` event then appears under **Last received events**.
 
 ## Behind Cloudflare or a proxy
 

@@ -13,6 +13,16 @@ The thank-you page and preferences page texts. See [Thank-you and preferences pa
 | Thank-you page URL | `cfbe_emails[thankyou_url]` | empty = `/newsletter-confirmed/` | Where visitors land after confirming. Set the same URL as the **Redirect link** of the bluefox list. The popup is never shown on this page. |
 | Confirmation deadline (days) | `cfbe_emails[pending_expiry_days]` | `14` | 1–60. A signup not confirmed within this time expires: it no longer counts as pending and never receives a welcome coupon. |
 
+### Redirect link check {#redirect-link-check}
+
+The plugin checks the bluefox lists it uses (default list, popup, checkout, coupon and form integration lists) about once an hour. When a list has double opt-in on but its **Redirect link** is not this site's thank-you page – or it has none, so bluefox shows its own confirmation message – every plugin screen shows a warning naming the list and where it points now.
+
+**Use this site's thank-you page** sets the redirect link of those lists to the URL above. The confirmation email and confirmation texts of the list stay as they are. If another site (for example a staging copy) uses the same list, fixing it here moves the redirect to this site.
+
+### Token on the thank-you page
+
+After the confirmation bluefox opens the thank-you page with `?token=…`: a signed token that can only read that subscriber's own contact and list status, for 7 days. A page opened with such a token is sent with `Cache-Control: no-store`, `Referrer-Policy: no-referrer` and `X-Robots-Tag: noindex, nofollow`, and page-cache plugins are told not to cache it (`DONOTCACHEPAGE`).
+
 ### Thank-you page texts – [cfbe_thankyou]
 
 Each state has a title and a text. An empty value falls back to the default. The texts allow basic HTML (`wp_kses_post`).

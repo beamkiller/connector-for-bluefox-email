@@ -74,6 +74,7 @@ final class Admin_Page {
 		add_action( 'admin_init', array( $this->settings, 'register' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'admin_post_cfbe_clear_log', array( $this, 'clear_log' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( CFBE_FILE ), array( $this, 'action_links' ) );
 		foreach ( Settings::areas() as $area ) {
 			// options.php checks manage_options by default; use our (filterable) capability.
 			add_filter(
@@ -83,6 +84,25 @@ final class Admin_Page {
 				}
 			);
 		}
+	}
+
+	/**
+	 * "Settings" link first in the plugin's row on the Plugins screen.
+	 *
+	 * @param array $links Action links.
+	 * @return array
+	 */
+	public function action_links( $links ): array {
+		$links = (array) $links;
+		if ( ! current_user_can( self::capability() ) ) {
+			return $links;
+		}
+		$settings = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( admin_url( 'admin.php?page=' . self::SLUG ) ),
+			esc_html__( 'Settings', 'connector-for-bluefox-email' )
+		);
+		return array( 'settings' => $settings ) + $links;
 	}
 
 	/**
@@ -246,6 +266,10 @@ final class Admin_Page {
 
 		echo '<div class="wrap cfbe-admin"><h1>' . esc_html__( 'bluefox.email', 'connector-for-bluefox-email' ) . '</h1>';
 		settings_errors();
+		/**
+		 * Fires above the plugin's tabs, for notices about the bluefox setup.
+		 */
+		do_action( 'cfbe_admin_notices' );
 		$groups = self::grouped( $tabs );
 		$labels = self::group_labels();
 		$active = array();

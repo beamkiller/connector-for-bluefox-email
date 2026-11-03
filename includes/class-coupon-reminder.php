@@ -25,6 +25,8 @@ class Coupon_Reminder {
 	const MAX_TRIES  = 3;
 	const FROM_HOUR  = 9; // Site time: no reminders at night.
 	const UNTIL_HOUR = 20;
+	const LOCK       = 'cfbe_reminder_lock';
+	const LOCK_TTL   = 10 * MINUTE_IN_SECONDS; // Longer than a batch of sends; a crashed run frees it after this.
 
 	/**
 	 * Client (null when not configured).
@@ -76,6 +78,13 @@ class Coupon_Reminder {
 	private $excluded;
 
 	/**
+	 * Lock against overlapping runs (WP-Cron fired twice, WP-CLI next to the scheduled job).
+	 *
+	 * @var Run_Lock
+	 */
+	private $lock;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param Bluefox_Client|null   $client     Client (null when not configured).
@@ -85,8 +94,9 @@ class Coupon_Reminder {
 	 * @param Coupon_Factory        $factory    Coupon factory.
 	 * @param callable|null         $finder     Due coupon finder.
 	 * @param Excluded_Roles|null   $excluded   Excluded user roles.
+	 * @param Run_Lock|null         $lock       Run lock.
 	 */
-	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, Coupon_Factory $factory, ?callable $finder = null, ?Excluded_Roles $excluded = null ) {
+	public function __construct( ?Bluefox_Client $client, Subscriber_Repository $repository, Jobs $jobs, Logger $logger, Coupon_Factory $factory, ?callable $finder = null, ?Excluded_Roles $excluded = null, ?Run_Lock $lock = null ) {
 		$this->client     = $client;
 		$this->repository = $repository;
 		$this->jobs       = $jobs;
@@ -94,6 +104,7 @@ class Coupon_Reminder {
 		$this->factory    = $factory;
 		$this->finder     = $finder ?? array( $this, 'find_due' );
 		$this->excluded   = $excluded ?? new Excluded_Roles();
+		$this->lock       = $lock ?? new Run_Lock( self::LOCK, self::LOCK_TTL );
 	}
 
 	/**
@@ -133,16 +144,24 @@ class Coupon_Reminder {
 		if ( true !== $force && ! self::daytime( $now ) ) {
 			return 0;
 		}
-		$days = max( 1, (int) Settings::get( 'coupon', 'reminder_days' ) );
-		$sent = 0;
-		// Calendar days on the site's clock: a coupon is due once its last day is at most $days days away.
-		$until = Dates::end_of_day_in( $days, $now );
-		foreach ( (array) call_user_func( $this->finder, $now, $until, self::BATCH ) as $coupon_id ) {
-			if ( $this->remind( (int) $coupon_id, $now ) ) {
-				++$sent;
-			}
+		// Two overlapping runs could both see a coupon as not yet reminded and send it twice.
+		if ( ! $this->lock->acquire( $now ) ) {
+			return 0;
 		}
-		return $sent;
+		try {
+			$days = max( 1, (int) Settings::get( 'coupon', 'reminder_days' ) );
+			$sent = 0;
+			// Calendar days on the site's clock: a coupon is due once its last day is at most $days days away.
+			$until = Dates::end_of_day_in( $days, $now );
+			foreach ( (array) call_user_func( $this->finder, $now, $until, self::BATCH ) as $coupon_id ) {
+				if ( $this->remind( (int) $coupon_id, $now ) ) {
+					++$sent;
+				}
+			}
+			return $sent;
+		} finally {
+			$this->lock->release();
+		}
 	}
 
 	/**
@@ -210,17 +229,16 @@ class Coupon_Reminder {
 	public function find_due( int $now, int $until, int $limit ): array {
 		$ids = get_posts(
 			array(
-				'post_type'        => 'shop_coupon',
-				'post_status'      => 'publish',
-				'fields'           => 'ids',
-				'posts_per_page'   => $limit,
-				'no_found_rows'    => true,
-				'suppress_filters' => true,
-				'orderby'          => 'meta_value_num',
-				'meta_key'         => 'date_expires', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-				'order'            => 'ASC',
+				'post_type'      => 'shop_coupon',
+				'post_status'    => 'publish',
+				'fields'         => 'ids',
+				'posts_per_page' => $limit,
+				'no_found_rows'  => true,
+				'orderby'        => 'meta_value_num',
+				'meta_key'       => 'date_expires', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'order'          => 'ASC',
 				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Hourly background job, small batch.
-				'meta_query'       => array(
+				'meta_query'     => array(
 					'relation' => 'AND',
 					array(
 						'key'     => Coupon_Factory::META,

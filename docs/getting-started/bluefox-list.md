@@ -6,7 +6,9 @@ Configure each list you use once in bluefox:
 
 1. **Turn on double opt-in** for the list.
 2. **Confirmation email** – create a transactional email (type HTML) in your language and choose it as the list's confirmation email. It must contain the `{{verifyLink}}` merge tag. A ready-made template is on the plugin's **Coupon** tab (*Double opt-in confirmation template*) and in the plugin folder at `templates/emails/confirm-subscription.html`.
-3. **Redirect link** – set it to your thank-you page, by default `https://your-site.example/newsletter-confirmed/`. Use the same URL as **Thank-you page URL** on the plugin's [Emails tab](../settings/emails.md). bluefox opens it as a plain link without parameters, so it is a generic "thank you" page.
+3. **Redirect link** – set it to your thank-you page, by default `https://your-site.example/newsletter-confirmed/`. Use the same URL as **Thank-you page URL** on the plugin's [Emails tab](../settings/emails.md). Creating the confirmation email on the [Email templates](../features/email-templates.md) tab sets it for you. bluefox appends `?token=…` (a signed, read-only token for that subscriber, valid for 7 days); the plugin keeps that page out of caches and search engines and does not pass the URL on to other sites.
+
+    The redirect link belongs to the list, so every site that uses the list shares it. If it points somewhere else – an old test site, a staging copy – the plugin shows a warning on its settings screens with a **Use this site's thank-you page** button. See [Emails tab](../settings/emails.md#redirect-link-check).
 4. **Custom subscription preferences URL** (project settings) – if you use the [preferences page](../features/preferences-page.md), set it to that page, by default `https://your-site.example/newsletter-preferences/`.
 
 ## Contact fields

@@ -10,7 +10,7 @@ The webhook endpoint is always registered. To register it in bluefox:
 1. Make sure the **Inbound webhooks** switch is on (default) and open the **Webhooks** tab.
 2. Choose the events. **Subscriptions** is needed for confirmations and status tracking; **Bounces** and **Spam complaints** are on by default; **Opens**, **Clicks**, **Sent emails** and **Failed sends** can mean many requests.
 3. Click **Save Changes**, then **Register webhook in bluefox**. This replaces the project webhook in bluefox (a project has one) with this URL, the selected events and your API key as its secret.
-4. Use **Send test event** and **Check status** to verify. Received events appear under **Last received events**.
+4. Use **Check status** to verify the configuration. Received events appear under **Last received events**. bluefox's test events carry no API key, so the plugin rejects them (see [Troubleshooting](../help/troubleshooting.md#webhook-returns-401)); a real signup and confirmation is the reliable test.
 
 The site must be reachable from the internet. A local or password-protected site cannot receive webhooks – polling still works there.
 

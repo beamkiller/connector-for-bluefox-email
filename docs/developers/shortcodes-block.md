@@ -89,7 +89,7 @@ The offer badge is shown when it is switched on on the Form tab.
 
 ## Thank-you page
 
-`[cfbe_thankyou]` – the message after the double opt-in confirmation. The state comes from the `?cfbe=` URL parameter: none → *confirmed*, `expired` → expired link, `error` → error. The texts are edited on the [Emails tab](../settings/emails.md).
+`[cfbe_thankyou]` – the message after the double opt-in confirmation. The state comes from the `?cfbe=` URL parameter: none → *confirmed*, `expired` → expired link, `error` → error. The texts are edited on the [Emails tab](../settings/emails.md). bluefox's `?token=` parameter is ignored by the shortcode; it only switches off caching for the page (see [Emails tab](../settings/emails.md#token-on-the-thank-you-page)).
 
 | Attribute | Values | Default | Description |
 |---|---|---|---|

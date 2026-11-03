@@ -10,8 +10,8 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: connector-for-bluefox-email.php
-msgid "Connector for bluefox.email – Newsletter and WooCommerce Marketing"
-msgstr "Connector for bluefox.email – Hírlevél és WooCommerce marketing"
+msgid "Connector for bluefox.email – Newsletter, Transactional Emails and WooCommerce Marketing"
+msgstr "Connector for bluefox.email – Hírlevél, tranzakciós e-mailek és WooCommerce marketing"
 
 #. Plugin URI of the plugin
 #: connector-for-bluefox-email.php
@@ -46,12 +46,13 @@ msgid "Connected: %1$s (%2$s)"
 msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:146
-#: admin/class-admin-page.php:312
+#: admin/class-admin-page.php:336
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
 #: admin/class-email-templates-tab.php:100
 #: admin/class-email-templates-tab.php:173
+#: admin/class-redirect-check.php:246
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
 #: modules/sync/class-sync-tab.php:262
@@ -64,73 +65,77 @@ msgstr "Nincs jogosultságod ehhez a művelethez."
 msgid "Enter the Project ID and the API key."
 msgstr "Add meg a Project ID-t és az API kulcsot."
 
-#: admin/class-admin-page.php:93
-#: admin/class-admin-page.php:94
-#: admin/class-admin-page.php:247
+#: admin/class-admin-page.php:103
+msgid "Settings"
+msgstr "Beállítások"
+
+#: admin/class-admin-page.php:113
+#: admin/class-admin-page.php:114
+#: admin/class-admin-page.php:267
 #: includes/class-abilities.php:71
 #: modules/integrations/elementor/class-elementor-form-action.php:48
 #: modules/integrations/elementor/class-elementor-form-action.php:60
 msgid "bluefox.email"
 msgstr "bluefox.email"
 
-#: admin/class-admin-page.php:123
+#: admin/class-admin-page.php:143
 #: modules/mailer/class-admin.php:118
 #: modules/sync/class-sync-tab.php:94
 msgid "Working…"
 msgstr "Folyamatban…"
 
-#: admin/class-admin-page.php:124
+#: admin/class-admin-page.php:144
 #: modules/mailer/class-admin.php:119
 #: modules/sync/class-sync-tab.php:95
 #: modules/woo-events/class-settings-tab.php:321
 msgid "Something went wrong."
 msgstr "Hiba történt."
 
-#: admin/class-admin-page.php:125
+#: admin/class-admin-page.php:145
 msgid "Copied!"
 msgstr "Másolva!"
 
-#: admin/class-admin-page.php:126
+#: admin/class-admin-page.php:146
 msgid "Lists loaded."
 msgstr "Listák betöltve."
 
-#: admin/class-admin-page.php:127
+#: admin/class-admin-page.php:147
 msgid "double opt-in"
 msgstr "dupla megerősítés"
 
-#: admin/class-admin-page.php:128
+#: admin/class-admin-page.php:148
 msgid "Generate a new webhook secret? You will also have to update the header in the bluefox automation!"
 msgstr "Új webhook titok generálása? A bluefox automatizmus fejlécét is frissíteni kell!"
 
-#: admin/class-admin-page.php:142
-#: admin/class-admin-page.php:193
+#: admin/class-admin-page.php:162
+#: admin/class-admin-page.php:213
 #: admin/views/tab-popup.php:30
 msgid "General"
 msgstr "Általános"
 
-#: admin/class-admin-page.php:147
-#: admin/class-admin-page.php:197
+#: admin/class-admin-page.php:167
+#: admin/class-admin-page.php:217
 msgid "Subscribers"
 msgstr "Feliratkozók"
 
-#: admin/class-admin-page.php:152
+#: admin/class-admin-page.php:172
 msgid "Logs"
 msgstr "Naplók"
 
-#: admin/class-admin-page.php:194
+#: admin/class-admin-page.php:214
 #: includes/class-modules.php:87
 msgid "Signup forms"
 msgstr "Feliratkozó űrlapok"
 
-#: admin/class-admin-page.php:195
+#: admin/class-admin-page.php:215
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: admin/class-admin-page.php:196
+#: admin/class-admin-page.php:216
 msgid "Integrations"
 msgstr "Integrációk"
 
-#: admin/class-admin-page.php:198
+#: admin/class-admin-page.php:218
 msgid "More"
 msgstr "Egyéb"
 
@@ -197,6 +202,7 @@ msgid "Unknown email template."
 msgstr "Ismeretlen e-mail sablon."
 
 #: admin/class-email-templates-tab.php:122
+#: admin/class-redirect-check.php:253
 #: admin/views/tab-email-templates.php:48
 #: modules/woo-events/class-settings-tab.php:229
 msgid "Connect bluefox on the General tab first."
@@ -238,6 +244,44 @@ msgstr "Felugró ablak"
 #: admin/class-popup-tab.php:98
 msgid "Turn on at least one display trigger. The scroll trigger has been re-enabled."
 msgstr "Legalább egy megjelenítési feltételt kapcsolj be. A görgetés feltételt visszakapcsoltuk."
+
+#. translators: %s: list names
+#: admin/class-redirect-check.php:202
+#, php-format
+msgid "Confirmed subscribers of %s now land on this site’s thank-you page."
+msgstr "A(z) %s lista megerősített feliratkozói mostantól ennek az oldalnak a köszönőoldalára érkeznek."
+
+#. translators: %s: list names or error message
+#: admin/class-redirect-check.php:209
+#, php-format
+msgid "The redirect link could not be updated in bluefox (%s). Set it in the list’s double opt-in settings in bluefox."
+msgstr "Az átirányítási link nem frissíthető a bluefoxban (%s). Állítsa be a lista dupla megerősítéses (double opt-in) beállításaiban a bluefoxban."
+
+#: admin/class-redirect-check.php:219
+msgid "Confirmed subscribers are not sent to this site’s thank-you page"
+msgstr "A megerősített feliratkozók nem ennek az oldalnak a köszönőoldalára kerülnek"
+
+#. translators: %s: list name
+#: admin/class-redirect-check.php:224
+#, php-format
+msgid "“%s” shows bluefox’s own confirmation message."
+msgstr "A(z) „%s” lista a bluefox saját megerősítő üzenetét mutatja."
+
+#. translators: 1: list name, 2: URL
+#: admin/class-redirect-check.php:226
+#, php-format
+msgid "“%1$s” redirects to %2$s"
+msgstr "A(z) „%1$s” lista ide irányít át: %2$s"
+
+#. translators: %s: thank-you page URL
+#: admin/class-redirect-check.php:231
+#, php-format
+msgid "This site’s thank-you page is %s. If another site (for example a staging copy) uses the same list, fixing it here moves the redirect to this site."
+msgstr "Ennek az oldalnak a köszönőoldala: %s. Ha egy másik oldal (például egy staging másolat) ugyanezt a listát használja, az itteni javítás ide helyezi át az átirányítást."
+
+#: admin/class-redirect-check.php:236
+msgid "Use this site’s thank-you page"
+msgstr "Ennek az oldalnak a köszönőoldalát használja"
 
 #: admin/class-shortcodes-tab.php:32
 msgid "Shortcodes"

@@ -45,7 +45,7 @@ Tick **Users list → Show the bluefox status … in a column of the Users list*
 
 ## Test
 
-- **Send test event** – choose a **Test event type** and let bluefox post a test event to your site.
+- **Send test event** – choose a **Test event type** and let bluefox post a test event to your site. bluefox sends test events without the API key, so the plugin rejects them; see [Troubleshooting](../help/troubleshooting.md#webhook-returns-401).
 - **Check status** – reads the webhook from bluefox and warns if it uses another API key than the one configured here (then the site would reject the events: register it again).
 
 ## Security
