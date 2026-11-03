@@ -1,4 +1,4 @@
-# Connector for bluefox.email – Newsletter, Transactional Emails and WooCommerce Marketing
+# Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails
 
 A WordPress plugin that connects your site and WooCommerce store to [bluefox.email](https://bluefox.email): signup forms with double opt-in, a WooCommerce checkout opt-in with a welcome coupon, order and abandoned cart emails, contact sync and `wp_mail()` delivery.
 

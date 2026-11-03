@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:          Connector for bluefox.email – Newsletter, Transactional Emails and WooCommerce Marketing
+ * Plugin Name:          Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails
  * Plugin URI:           https://wordpress.org/plugins/connector-for-bluefox-email/
  * Description:          Connect WordPress and WooCommerce to bluefox.email: signup forms with double opt-in, checkout opt-in, welcome coupons, contact sync, WooCommerce emails and wp_mail delivery.
  * Version:              1.0.0
