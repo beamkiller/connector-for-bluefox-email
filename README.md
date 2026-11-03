@@ -6,6 +6,8 @@ Every feature is a module you switch on or off, so the plugin only loads what yo
 
 **Documentation: https://beamkiller.github.io/connector-for-bluefox-email/**
 
+Magyar leírás: [Bluefox.email – Plugin leírás](https://nifty-juice-eec.notion.site/Bluefox-email-Plugin-le-r-s-3fcb3c4f1a9a80f3b899d3e6913014e8)
+
 <p>
   <img src="docs/assets/images/form-card.png" alt="Signup form, card style" width="380">
   <img src="docs/assets/images/popup.png" alt="Signup popup" width="300">
