@@ -142,10 +142,6 @@ The plugin does not require one. New bluefox.email projects start in a sandbox w
 
 No, but they make it instant. Without the bluefox webhook the plugin checks pending signups every 15 minutes. With it, the welcome coupon goes out within seconds of the confirmation. The site must be reachable from the internet to receive webhooks.
 
-= Why does a "Send test event" not appear under the received events? =
-
-bluefox's test events do not carry the API key yet, so the plugin rejects them. Real events carry the key and are accepted. Test with a real signup and confirmation instead.
-
 = Does the plugin track me or phone home? =
 
 No. It only talks to the bluefox.email API with the project ID and API key you entered (see External services). There is no tracking, no upsell and no locked feature.

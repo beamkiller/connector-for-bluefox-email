@@ -857,7 +857,7 @@ msgstr "Dupla megerősítés (double opt-in) sablon (állítsd be a bluefox list
 #: admin/views/tab-coupon.php:188
 #: admin/views/tab-shortcodes.php:24
 #: modules/webhooks/views/tab-webhooks.php:26
-#: modules/webhooks/views/tab-webhooks.php:100
+#: modules/webhooks/views/tab-webhooks.php:99
 msgid "Copy"
 msgstr "Másolás"
 
@@ -1473,7 +1473,7 @@ msgstr "Még nincs naplóbejegyzés."
 
 #: admin/views/tab-logs.php:24
 #: modules/mailer/views/tab-mailer.php:116
-#: modules/webhooks/views/tab-webhooks.php:114
+#: modules/webhooks/views/tab-webhooks.php:113
 msgid "Time"
 msgstr "Idő"
 
@@ -1901,7 +1901,7 @@ msgstr "Még nincs feliratkozó a szűrésnek megfelelően."
 
 #: admin/views/tab-subscribers.php:99
 #: includes/class-privacy.php:461
-#: modules/webhooks/views/tab-webhooks.php:116
+#: modules/webhooks/views/tab-webhooks.php:115
 #: modules/woo-events/class-privacy.php:91
 #: modules/woo-events/views/tab-woo-events.php:283
 msgid "Email"
@@ -3636,8 +3636,8 @@ msgid "Webhook saved in bluefox."
 msgstr "Webhook elmentve a bluefox-ban."
 
 #: modules/webhooks/class-webhooks-tab.php:105
-msgid "bluefox sent the test event. It will not appear below: bluefox test events do not carry the API key yet, so this site rejects them."
-msgstr "A bluefox elküldte a teszt eseményt. A lenti listában nem fog megjelenni: a bluefox teszt eseményei egyelőre nem tartalmazzák az API kulcsot, ezért ez az oldal elutasítja őket."
+msgid "Test event sent. Reload this page to see it in the list below."
+msgstr "Teszt esemény elküldve. Töltsd újra az oldalt, hogy lásd a lenti listában."
 
 #: modules/webhooks/class-webhooks-tab.php:132
 msgid "Subscriptions (subscribe, resubscribe, unsubscribe, pause)"
@@ -3762,43 +3762,39 @@ msgstr "Állapot ellenőrzése"
 msgid "Registering replaces the project webhook in bluefox (a project has one) with this URL, the selected events and your API key as the secret."
 msgstr "A regisztráció lecseréli a bluefox projekt webhookját (projektenként egy van) erre az URL-re, a kiválasztott eseményekre, titokként pedig az API kulcsodra."
 
-#: modules/webhooks/views/tab-webhooks.php:77
-msgid "Test events: bluefox does not send the API key with them yet, so this site rejects them (Logs: “Webhook rejected: bad secret”) and they do not appear under Last received events. Real events carry the key. To test end to end, subscribe with your own address and confirm it."
-msgstr "Teszt események: a bluefox egyelőre nem küldi velük az API kulcsot, ezért ez az oldal elutasítja őket (Naplók: „Webhook rejected: bad secret”), és nem jelennek meg a Legutóbb fogadott események között. A valódi események tartalmazzák a kulcsot. A teljes folyamat teszteléséhez iratkozz fel a saját címeddel, és erősítsd meg."
-
-#: modules/webhooks/views/tab-webhooks.php:82
+#: modules/webhooks/views/tab-webhooks.php:81
 msgid "Users list"
 msgstr "Felhasználók lista"
 
-#: modules/webhooks/views/tab-webhooks.php:86
+#: modules/webhooks/views/tab-webhooks.php:85
 msgid "Show the bluefox status (subscription, bounce, complaint) in a column of the Users list"
 msgstr "A bluefox állapot (feliratkozás, visszapattanás, panasz) megjelenítése egy oszlopban a Felhasználók listában"
 
-#: modules/webhooks/views/tab-webhooks.php:94
+#: modules/webhooks/views/tab-webhooks.php:93
 msgid "Automation webhook secret (legacy)"
 msgstr "Automatizmus webhook titok (régi)"
 
-#: modules/webhooks/views/tab-webhooks.php:97
+#: modules/webhooks/views/tab-webhooks.php:96
 msgid "Webhook secret"
 msgstr "Webhook titok"
 
-#: modules/webhooks/views/tab-webhooks.php:101
+#: modules/webhooks/views/tab-webhooks.php:100
 msgid "New secret"
 msgstr "Új titok"
 
-#: modules/webhooks/views/tab-webhooks.php:102
+#: modules/webhooks/views/tab-webhooks.php:101
 msgid "Add it as the X-CFBE-Secret header in the Webhook step of the bluefox “Contact added” automation."
 msgstr "A bluefox „Contact added” automatizmus Webhook lépésében X-CFBE-Secret fejlécként kell megadni."
 
-#: modules/webhooks/views/tab-webhooks.php:107
+#: modules/webhooks/views/tab-webhooks.php:106
 msgid "Last received events"
 msgstr "Legutóbb fogadott események"
 
-#: modules/webhooks/views/tab-webhooks.php:109
+#: modules/webhooks/views/tab-webhooks.php:108
 msgid "No events received yet."
 msgstr "Még nem érkezett esemény."
 
-#: modules/webhooks/views/tab-webhooks.php:115
+#: modules/webhooks/views/tab-webhooks.php:114
 #: modules/woo-events/views/tab-woo-events.php:56
 #: modules/woo-events/views/tab-woo-events.php:169
 msgid "Event"

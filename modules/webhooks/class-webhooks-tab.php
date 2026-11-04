@@ -102,7 +102,7 @@ final class Webhooks_Tab {
 			array(
 				'i18n' => array(
 					'registered' => __( 'Webhook saved in bluefox.', 'connector-for-bluefox-email' ),
-					'sent'       => __( 'bluefox sent the test event. It will not appear below: bluefox test events do not carry the API key yet, so this site rejects them.', 'connector-for-bluefox-email' ),
+					'sent'       => __( 'Test event sent. Reload this page to see it in the list below.', 'connector-for-bluefox-email' ),
 				),
 			)
 		);

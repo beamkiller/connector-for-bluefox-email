@@ -29,7 +29,7 @@ The event checkboxes choose which events are requested when you register the web
 | Button | What it does |
 |---|---|
 | Register webhook in bluefox | Saves the selected events and replaces the project webhook in bluefox (a project has one) with this URL, these events and your API key as the secret. |
-| Send test event | Asks bluefox to send a test event of the chosen type: `subscribe`, `resubscribe`, `unsubscribe`, `pause-subscription`, `bounce`, `complaint`, `open`, `click`, `sent` or `failed`. bluefox sends test events without the API key, so the plugin rejects them (401, *bad secret* in the log) and they do not appear below; see [Troubleshooting](../help/troubleshooting.md#webhook-returns-401). |
+| Send test event | Asks bluefox to send a test event of the chosen type: `subscribe`, `resubscribe`, `unsubscribe`, `pause-subscription`, `bounce`, `complaint`, `open`, `click`, `sent` or `failed`. Reload the page to see it below. If it fails, the message shows the HTTP status or the redirect target; see [Troubleshooting](../help/troubleshooting.md#webhook-returns-401). |
 | Check status | Shows the webhook currently registered in bluefox. |
 
 ## Automation webhook secret (legacy)
