@@ -2176,28 +2176,28 @@ msgstr "A bluefox kapcsolat nincs beállítva (Project ID / API kulcs)."
 msgid "Privacy policy"
 msgstr "Adatkezelési tájékoztató"
 
-#: includes/class-checkout-optin.php:446
+#: includes/class-checkout-optin.php:448
 msgid "Newsletter: the customer subscribed, the confirmation email has been sent."
 msgstr "Hírlevél: a vásárló feliratkozott, a megerősítő e-mailt elküldtük."
 
-#: includes/class-checkout-optin.php:448
+#: includes/class-checkout-optin.php:450
 msgid "Newsletter: the customer is already a subscriber (no new coupon)."
 msgstr "Hírlevél: a vásárló már feliratkozó (nem kap új kupont)."
 
-#: includes/class-checkout-optin.php:450
+#: includes/class-checkout-optin.php:452
 msgid "Newsletter: bluefox is unavailable right now, the subscription will be retried later."
 msgstr "Hírlevél: a bluefox most nem érhető el, a feliratkozást később újrapróbáljuk."
 
-#: includes/class-checkout-optin.php:452
+#: includes/class-checkout-optin.php:454
 msgid "Newsletter: the subscription failed (details: bluefox.email → Logs)."
 msgstr "Hírlevél: a feliratkozás nem sikerült (részletek: bluefox.email → Naplók)."
 
-#: includes/class-checkout-optin.php:470
+#: includes/class-checkout-optin.php:472
 msgid "Newsletter:"
 msgstr "Hírlevél:"
 
 #. translators: %s: date and time of the consent
-#: includes/class-checkout-optin.php:474
+#: includes/class-checkout-optin.php:476
 #, php-format
 msgid "subscribed at checkout (%s)"
 msgstr "feliratkozott a pénztárban (%s)"
@@ -3800,11 +3800,19 @@ msgstr "Még nem érkezett esemény."
 msgid "Event"
 msgstr "Esemény"
 
-#: modules/woo-events/class-cart-tracker.php:446
+#: modules/woo-events/class-cart-tracker.php:453
+msgid "Restore the cart from your email? It replaces the items currently in your cart."
+msgstr "Visszaállítod a kosarat az e-mailből? A kosaradban lévő termékek helyére kerül."
+
+#: modules/woo-events/class-cart-tracker.php:455
+msgid "Restore my cart"
+msgstr "Kosár visszaállítása"
+
+#: modules/woo-events/class-cart-tracker.php:465
 msgid "This cart link is no longer valid."
 msgstr "Ez a kosár link már nem érvényes."
 
-#: modules/woo-events/class-cart-tracker.php:526
+#: modules/woo-events/class-cart-tracker.php:587
 msgid "Your cart is back. The discount code from the email works only with the email address the reminder was sent to: sign in with that address or check out as a guest to use it."
 msgstr "Visszaállítottuk a kosaradat. Az e-mailben kapott kedvezménykód csak azzal az e-mail címmel használható, amelyre az emlékeztetőt küldtük: jelentkezz be azzal a címmel, vagy vásárolj vendégként a használatához."
 

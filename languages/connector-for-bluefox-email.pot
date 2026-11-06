@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-04T08:20:15+00:00\n"
+"POT-Creation-Date: 2026-11-06T21:34:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -2182,28 +2182,28 @@ msgstr ""
 msgid "Privacy policy"
 msgstr ""
 
-#: includes/class-checkout-optin.php:446
+#: includes/class-checkout-optin.php:448
 msgid "Newsletter: the customer subscribed, the confirmation email has been sent."
 msgstr ""
 
-#: includes/class-checkout-optin.php:448
+#: includes/class-checkout-optin.php:450
 msgid "Newsletter: the customer is already a subscriber (no new coupon)."
 msgstr ""
 
-#: includes/class-checkout-optin.php:450
+#: includes/class-checkout-optin.php:452
 msgid "Newsletter: bluefox is unavailable right now, the subscription will be retried later."
 msgstr ""
 
-#: includes/class-checkout-optin.php:452
+#: includes/class-checkout-optin.php:454
 msgid "Newsletter: the subscription failed (details: bluefox.email → Logs)."
 msgstr ""
 
-#: includes/class-checkout-optin.php:470
+#: includes/class-checkout-optin.php:472
 msgid "Newsletter:"
 msgstr ""
 
 #. translators: %s: date and time of the consent
-#: includes/class-checkout-optin.php:474
+#: includes/class-checkout-optin.php:476
 #, php-format
 msgid "subscribed at checkout (%s)"
 msgstr ""
@@ -3806,11 +3806,19 @@ msgstr ""
 msgid "Event"
 msgstr ""
 
-#: modules/woo-events/class-cart-tracker.php:446
+#: modules/woo-events/class-cart-tracker.php:453
+msgid "Restore the cart from your email? It replaces the items currently in your cart."
+msgstr ""
+
+#: modules/woo-events/class-cart-tracker.php:455
+msgid "Restore my cart"
+msgstr ""
+
+#: modules/woo-events/class-cart-tracker.php:465
 msgid "This cart link is no longer valid."
 msgstr ""
 
-#: modules/woo-events/class-cart-tracker.php:526
+#: modules/woo-events/class-cart-tracker.php:587
 msgid "Your cart is back. The discount code from the email works only with the email address the reminder was sent to: sign in with that address or check out as a guest to use it."
 msgstr ""
 

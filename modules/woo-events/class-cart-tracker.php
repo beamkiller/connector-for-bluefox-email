@@ -22,6 +22,7 @@ defined( 'ABSPATH' ) || exit;
 class Cart_Tracker {
 
 	const QUERY_VAR        = 'cfbe_cart';
+	const CONFIRM_VAR      = 'cfbe_confirm';
 	const ROUTE_NS         = 'cfbe/v1';
 	const ROUTE            = '/cart-email';
 	const SESSION_EMAIL    = 'cfbe_cart_email';
@@ -441,12 +442,72 @@ class Cart_Tracker {
 		if ( '' === $token ) {
 			return;
 		}
+		// Opened in another browser than the one that saved the cart: replacing this visitor's cart (and pre-filling
+		// a guest's checkout email) needs one click on a button that carries a nonce bound to their own session.
+		self::start_guest_session(); // Notices and the confirmation nonce need a WooCommerce session, also for new guests.
+		if ( $this->needs_confirmation( $token ) && ! self::confirmed( $token ) ) {
+			if ( function_exists( 'wc_add_notice' ) ) {
+				wc_add_notice(
+					sprintf(
+						'%1$s <a href="%2$s" class="button wc-forward">%3$s</a>',
+						esc_html__( 'Restore the cart from your email? It replaces the items currently in your cart.', 'connector-for-bluefox-email' ),
+						esc_url( self::confirm_url( $token ) ),
+						esc_html__( 'Restore my cart', 'connector-for-bluefox-email' )
+					),
+					'notice'
+				);
+			}
+			wp_safe_redirect( wc_get_cart_url() );
+			exit;
+		}
 		$ok = $this->limiter->hit( 'cart_restore', Rate_Limiter::client_ip(), 30, 600 ) && $this->restore( $token );
 		if ( ! $ok && function_exists( 'wc_add_notice' ) ) {
 			wc_add_notice( __( 'This cart link is no longer valid.', 'connector-for-bluefox-email' ), 'notice' );
 		}
 		wp_safe_redirect( wc_get_cart_url() );
 		exit;
+	}
+
+	/**
+	 * Whether restoring needs the visitor's confirmation: the cart is restorable and was saved by another session.
+	 *
+	 * @param string $token Token.
+	 */
+	public function needs_confirmation( string $token ): bool {
+		$cart = $this->carts->find_by_token( $token );
+		if ( ! self::restorable( $cart ) || ! function_exists( 'WC' ) || empty( WC()->session ) ) {
+			return false; // restore() reports it as no longer valid.
+		}
+		$own = (string) ( $cart['session_key'] ?? '' );
+		return '' === $own || (string) WC()->session->get_customer_id() !== $own;
+	}
+
+	/**
+	 * Starts the WooCommerce session cookie for a guest who has none yet (WooCommerce only does it on add to cart).
+	 */
+	private static function start_guest_session(): void {
+		if ( function_exists( 'WC' ) && ! empty( WC()->session ) && method_exists( WC()->session, 'has_session' ) && ! WC()->session->has_session() ) {
+			WC()->session->set_customer_session_cookie( true );
+		}
+	}
+
+	/**
+	 * Restore link with the confirmation nonce of the current visitor's session.
+	 *
+	 * @param string $token Token.
+	 */
+	public static function confirm_url( string $token ): string {
+		return add_query_arg( self::CONFIRM_VAR, wp_create_nonce( self::CONFIRM_VAR . '_' . $token ), self::restore_url( $token ) );
+	}
+
+	/**
+	 * Whether the request carries a valid confirmation nonce for this token.
+	 *
+	 * @param string $token Token.
+	 */
+	public static function confirmed( string $token ): bool {
+		$nonce = isset( $_GET[ self::CONFIRM_VAR ] ) ? sanitize_key( wp_unslash( $_GET[ self::CONFIRM_VAR ] ) ) : '';
+		return '' !== $nonce && false !== wp_verify_nonce( $nonce, self::CONFIRM_VAR . '_' . $token );
 	}
 
 	/**

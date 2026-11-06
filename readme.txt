@@ -85,7 +85,7 @@ This plugin connects to the **bluefox.email API** (`https://api.bluefox.email`),
 
 What is sent and when:
 
-* When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name (if given), tags and the list they subscribe to.
+* When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name (if given), tags and the list they subscribe to, plus the values of any form fields you map to bluefox contact fields in the form integration settings.
 * When the Welcome coupon module confirms a signup: the subscription status is read and the coupon email is sent with the coupon code, value and expiry date.
 * When a welcome coupon is about to expire unused (and a reminder email is set): the reminder email is sent to that subscriber with the same coupon details.
 * When the Contact sync module is on: the user and customer fields you enable (for example name, order count, total spent, last order date).
