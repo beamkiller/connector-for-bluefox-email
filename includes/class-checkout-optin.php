@@ -376,8 +376,10 @@ final class Checkout_Optin {
 	 * @param int $user_id User ID.
 	 */
 	public function save_account( $user_id ): void {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce checks save-account-details-nonce before firing this action.
-		if ( empty( $_POST[ self::FIELD ] ) ) {
+		// Same nonce WooCommerce verified for this form (field name, or _wpnonce as WooCommerce also accepts).
+		$field = isset( $_POST['save-account-details-nonce'] ) ? 'save-account-details-nonce' : '_wpnonce';
+		$nonce = isset( $_POST[ $field ] ) ? sanitize_key( wp_unslash( $_POST[ $field ] ) ) : '';
+		if ( empty( $_POST[ self::FIELD ] ) || ! wp_verify_nonce( $nonce, 'save_account_details' ) || (int) get_current_user_id() !== (int) $user_id ) {
 			return;
 		}
 		$user = get_userdata( (int) $user_id );

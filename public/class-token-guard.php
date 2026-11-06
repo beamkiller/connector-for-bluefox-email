@@ -7,6 +7,8 @@
 
 namespace CFBE\Frontend;
 
+use CFBE\Settings;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -47,7 +49,7 @@ final class Token_Guard {
 	 * Sends the protective headers before output.
 	 */
 	public function on_template_redirect(): void {
-		if ( ! self::applies() ) {
+		if ( ! self::applies() || ! Plugin_Page::is_current( Settings::thankyou_url(), Thankyou_Shortcode::TAG ) ) {
 			return;
 		}
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {

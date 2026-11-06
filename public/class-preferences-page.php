@@ -92,7 +92,7 @@ final class Preferences_Page {
 	public function on_template_redirect(): void {
 		// phpcs:disable WordPress.Security.NonceVerification -- the bluefox token is the credential (see class doc).
 		$has_token = isset( $_GET['token'] ) || isset( $_POST['cfbe_token'] );
-		if ( ! $has_token ) {
+		if ( ! $has_token || ! Plugin_Page::is_current( Settings::preferences_url(), self::TAG ) ) {
 			return;
 		}
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
