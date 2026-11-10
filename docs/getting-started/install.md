@@ -1,8 +1,16 @@
 # Install
 
+=== "From WordPress.org"
+
+    1. In wp-admin go to **Plugins → Add New**.
+    2. Search for **bluefox** and click **Install Now** on *Connector for bluefox.email*.
+    3. Click **Activate**.
+
+    Plugin page: [https://wordpress.org/plugins/connector-for-bluefox-email/](https://wordpress.org/plugins/connector-for-bluefox-email/). Updates arrive like any other plugin.
+
 === "From a zip file"
 
-    1. Download the latest zip from [GitHub](https://github.com/beamkiller/connector-for-bluefox-email) (**Releases**, or **Code → Download ZIP**).
+    1. Download the zip from [WordPress.org](https://wordpress.org/plugins/connector-for-bluefox-email/) (**Download**) or from [GitHub](https://github.com/beamkiller/connector-for-bluefox-email) (**Code → Download ZIP**).
     2. In wp-admin go to **Plugins → Add New → Upload Plugin**, choose the zip and click **Install Now**.
     3. Click **Activate**.
 
@@ -15,10 +23,6 @@
     ```
 
     The repository root is the plugin itself; there is no build step.
-
-=== "From WordPress.org"
-
-    The plugin is planned for the WordPress.org plugin directory. Once it is listed, search for **Connector for bluefox.email** under **Plugins → Add New**.
 
 On activation the plugin creates its table `{prefix}cfbe_subscribers` (signups and consent records). The abandoned cart feature adds `{prefix}cfbe_carts` the first time it loads.
 

@@ -4,6 +4,8 @@ A WordPress plugin that connects your site and WooCommerce store to [bluefox.ema
 
 Every feature is a module you switch on or off, so the plugin only loads what you use.
 
+**WordPress.org: https://wordpress.org/plugins/connector-for-bluefox-email/**
+
 **Documentation: https://beamkiller.github.io/connector-for-bluefox-email/**
 
 Magyar leírás: [Bluefox.email – Plugin leírás](https://nifty-juice-eec.notion.site/Bluefox-email-Plugin-le-r-s-3fcb3c4f1a9a80f3b899d3e6913014e8)
@@ -44,7 +46,7 @@ Magyar leírás: [Bluefox.email – Plugin leírás](https://nifty-juice-eec.not
 
 ## Install
 
-**From WordPress.org** – planned. Once listed, search for *Connector for bluefox.email* under **Plugins → Add New**.
+**From WordPress.org** (recommended) – in wp-admin go to **Plugins → Add New**, search for *bluefox*, then **Install Now** and **Activate**. Plugin page: https://wordpress.org/plugins/connector-for-bluefox-email/
 
 **From a zip** – download the zip from [Releases](https://github.com/beamkiller/connector-for-bluefox-email/releases) (or **Code → Download ZIP**), then upload it under **Plugins → Add New → Upload Plugin** and activate it.
 
