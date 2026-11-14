@@ -3,7 +3,7 @@
  * Plugin Name:          Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails
  * Plugin URI:           https://wordpress.org/plugins/connector-for-bluefox-email/
  * Description:          Connect WordPress and WooCommerce to bluefox.email: signup forms with double opt-in, checkout opt-in, welcome coupons, contact sync, WooCommerce emails and wp_mail delivery.
- * Version:              1.1.0-beta.1
+ * Version:              1.1.0-beta.2
  * Requires at least:    6.7
  * Requires PHP:         8.1
  * Author:               Peter Kulcsár - KREMONT s.r.o.
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CFBE_VERSION', '1.1.0-beta.1' );
+define( 'CFBE_VERSION', '1.1.0-beta.2' );
 define( 'CFBE_FILE', __FILE__ );
 define( 'CFBE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CFBE_URL', plugin_dir_url( __FILE__ ) );

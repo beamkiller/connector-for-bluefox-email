@@ -407,6 +407,64 @@ final class Bluefox_Setup {
 	}
 
 	/**
+	 * The setup status as data (the General tab's table), for the `cfbe/get-bluefox-setup` ability.
+	 *
+	 * @param Bluefox_Client $client Client.
+	 * @param bool           $fresh  Read bluefox anew instead of the ten-minute cache.
+	 * @return array|\WP_Error
+	 */
+	public function report( Bluefox_Client $client, bool $fresh = false ) {
+		if ( $fresh ) {
+			self::flush();
+		}
+		$state = $this->state( $client );
+		if ( isset( $state['error'] ) ) {
+			return new \WP_Error( 'cfbe_bluefox_error', $state['error'], array( 'status' => 502 ) );
+		}
+		$thankyou = Settings::thankyou_url();
+		$plugin   = (string) ( Email_Templates::record( 'confirm' )['email_id'] ?? '' );
+		$lists    = array();
+		foreach ( self::list_rows( $state['lists'], Redirect_Check::used_list_ids(), $state['emails'], $thankyou ) as $id => $row ) {
+			$lists[] = array(
+				'id'            => (string) $id,
+				'name'          => $row['name'],
+				'found'         => $row['found'],
+				'ready'         => $row['ok'],
+				'double_opt_in' => $row['active'],
+				'email_id'      => $row['email_id'],
+				'email_ok'      => $row['email_ok'],
+				'redirect'      => $row['redirect'],
+				'redirect_ok'   => $row['redirect_ok'],
+				'suggested'     => self::default_email( $row, $state['emails'] ),
+			);
+		}
+		$emails = array();
+		foreach ( $state['emails'] as $id => $email ) {
+			$emails[] = array(
+				'id'             => (string) $id,
+				'name'           => $email['name'],
+				'can_confirm'    => $email['verify'],
+				'from_templates' => '' !== $plugin && (string) $id === $plugin,
+			);
+		}
+		$preferences = null;
+		if ( self::prefs_on() ) {
+			$expected    = Settings::preferences_url();
+			$preferences = array(
+				'expected' => $expected,
+				'current'  => $state['prefs_url'],
+				'ready'    => '' !== $state['prefs_url'] && Redirect_Check::same_url( $state['prefs_url'], $expected ),
+			);
+		}
+		return array(
+			'thankyou_url' => $thankyou,
+			'lists'        => $lists,
+			'emails'       => $emails,
+			'preferences'  => $preferences,
+		);
+	}
+
+	/**
 	 * Applies the chosen settings.
 	 *
 	 * @param Bluefox_Client $client  Client.
@@ -420,13 +478,25 @@ final class Bluefox_Setup {
 			'failed' => array(),
 		);
 		$used    = Redirect_Check::used_list_ids();
+		$cached  = get_transient( self::CACHE );
+		$known   = is_array( $cached ) && is_array( $cached['emails'] ?? null ) ? $cached['emails'] : array();
 		$choices = array_filter(
 			$choices,
-			static function ( $email_id, $list_id ) use ( $used ): bool {
-				return '' !== $email_id && in_array( (string) $list_id, $used, true );
-			},
-			ARRAY_FILTER_USE_BOTH
+			static function ( $email_id ): bool {
+				return '' !== $email_id;
+			}
 		);
+		foreach ( $choices as $list_id => $email_id ) {
+			if ( ! in_array( (string) $list_id, $used, true ) ) {
+				/* translators: %s: list ID */
+				$result['failed'][] = sprintf( __( 'List %s is not used by the plugin (default list, popup, checkout, coupon or form integrations): skipped.', 'connector-for-bluefox-email' ), $list_id );
+				unset( $choices[ $list_id ] );
+			} elseif ( isset( $known[ $email_id ] ) && ! $known[ $email_id ]['verify'] ) {
+				/* translators: %s: email name */
+				$result['failed'][] = sprintf( __( '“%s” has no {{verifyLink}}, so bluefox would reject it as a confirmation email: skipped.', 'connector-for-bluefox-email' ), $known[ $email_id ]['name'] );
+				unset( $choices[ $list_id ] );
+			}
+		}
 
 		$rows = array();
 		if ( $choices ) {
@@ -453,7 +523,8 @@ final class Bluefox_Setup {
 			}
 		}
 
-		if ( $prefs && self::prefs_on() ) {
+		$prefs_set = is_array( $cached ) && isset( $cached['prefs_url'] ) && '' !== $cached['prefs_url'] && Redirect_Check::same_url( (string) $cached['prefs_url'], Settings::preferences_url() );
+		if ( $prefs && self::prefs_on() && ! $prefs_set ) {
 			$updated = $client->update_project( array( 'customSubscriptionPreferencesUrl' => Settings::preferences_url() ) );
 			if ( is_wp_error( $updated ) ) {
 				/* translators: %s: error message */

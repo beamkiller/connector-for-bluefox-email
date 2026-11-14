@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-14T05:33:22+00:00\n"
+"POT-Creation-Date: 2026-11-14T05:48:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:335
-#: admin/class-bluefox-setup.php:480
+#: admin/class-bluefox-setup.php:551
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
@@ -284,33 +284,45 @@ msgstr ""
 msgid "Unsubscribe and pause links lead to %s"
 msgstr ""
 
+#. translators: %s: list ID
+#: admin/class-bluefox-setup.php:492
+#, php-format
+msgid "List %s is not used by the plugin (default list, popup, checkout, coupon or form integrations): skipped."
+msgstr ""
+
+#. translators: %s: email name
+#: admin/class-bluefox-setup.php:496
+#, php-format
+msgid "“%s” has no {{verifyLink}}, so bluefox would reject it as a confirmation email: skipped."
+msgstr ""
+
 #. translators: 1: list name, 2: error message
-#: admin/class-bluefox-setup.php:448
+#: admin/class-bluefox-setup.php:518
 #, php-format
 msgid "“%1$s”: %2$s"
 msgstr ""
 
 #. translators: %s: list name
-#: admin/class-bluefox-setup.php:451
+#: admin/class-bluefox-setup.php:521
 #, php-format
 msgid "Double opt-in of “%s” is on, with the chosen email and this site’s thank-you page."
 msgstr ""
 
 #. translators: %s: error message
-#: admin/class-bluefox-setup.php:460
+#: admin/class-bluefox-setup.php:531
 #, php-format
 msgid "Preferences page: %s"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:462
+#: admin/class-bluefox-setup.php:533
 msgid "Unsubscribe and pause links now lead to this site’s preferences page."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:467
+#: admin/class-bluefox-setup.php:538
 msgid "Nothing to change: bluefox is already set up like this."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:494
+#: admin/class-bluefox-setup.php:565
 #: admin/class-email-templates-tab.php:125
 #: admin/class-redirect-check.php:253
 #: admin/views/tab-email-templates.php:48
@@ -2138,190 +2150,218 @@ msgstr ""
 msgid "Returns the current settings of the Connector for bluefox.email plugin, grouped by area (api = connection and default list, form = signup form texts, fields and colours, popup = popup triggers and targeting, checkout = checkout opt-in, coupon = welcome coupon, emails = thank-you and preferences page texts, plus one area per enabled feature module), and the on/off state of every feature module. Read this before changing settings: the keys and value types shown are the ones cfbe/update-settings accepts. The API key and webhook secret are never returned."
 msgstr ""
 
-#: includes/class-abilities.php:99
+#: includes/class-abilities.php:100
 msgid "Only this area. Omit for all areas."
 msgstr ""
 
-#: includes/class-abilities.php:109
+#: includes/class-abilities.php:110
 msgid "area => key => value."
 msgstr ""
 
-#: includes/class-abilities.php:113
+#: includes/class-abilities.php:114
 msgid "module => { label, description, enabled, available }."
 msgstr ""
 
-#: includes/class-abilities.php:126
+#: includes/class-abilities.php:127
 msgid "Update bluefox settings"
 msgstr ""
 
-#: includes/class-abilities.php:127
+#: includes/class-abilities.php:128
 msgid "Changes settings of one area of the Connector for bluefox.email plugin. Pass only the keys to change; the others keep their value. A list value (e.g. form.interests, woo_events.rules) replaces the whole list, so send the complete list. Values are validated like on the settings screen: invalid values fall back to a safe value, and the response lists every key whose saved value differs from what was sent (adjusted). Use cfbe/list-bluefox-lists to find list IDs and cfbe/list-bluefox-emails to find email IDs. The API key and webhook secret can only be changed in wp-admin."
 msgstr ""
 
-#: includes/class-abilities.php:135
+#: includes/class-abilities.php:136
 msgid "Settings area to change."
 msgstr ""
 
-#: includes/class-abilities.php:139
+#: includes/class-abilities.php:140
 msgid "key => new value, keys as returned by cfbe/get-settings."
 msgstr ""
 
-#: includes/class-abilities.php:157
+#: includes/class-abilities.php:158
 msgid "key => value actually saved, where it differs from the value sent."
 msgstr ""
 
-#: includes/class-abilities.php:170
+#: includes/class-abilities.php:171
 msgid "Switch bluefox features on or off"
 msgstr ""
 
-#: includes/class-abilities.php:171
+#: includes/class-abilities.php:172
 msgid "Switches feature modules of the Connector for bluefox.email plugin on or off (e.g. forms, checkout, coupon, sync, mailer, order_emails, abandoned_cart, integration_cf7, preferences, webhooks). Pass only the modules to change. A module whose required plugin (WooCommerce, a form plugin) is not active stays off. Settings areas of a newly enabled module appear from the next request."
 msgstr ""
 
-#: includes/class-abilities.php:178
+#: includes/class-abilities.php:179
 msgid "module => true (on) / false (off)."
 msgstr ""
 
-#: includes/class-abilities.php:200
+#: includes/class-abilities.php:201
 msgid "List bluefox subscriber lists"
 msgstr ""
 
-#: includes/class-abilities.php:201
-msgid "Returns the subscriber lists of the connected bluefox project (id, name, whether double opt-in is on). Use an id as list_id in the api, popup, checkout or coupon settings."
+#: includes/class-abilities.php:202
+msgid "Returns the subscriber lists of the connected bluefox project (id, name, whether double opt-in is on, its confirmation email ID and redirect link). Use an id as list_id in the api, popup, checkout or coupon settings."
 msgstr ""
 
-#: includes/class-abilities.php:223
+#: includes/class-abilities.php:226
 msgid "List bluefox emails"
 msgstr ""
 
-#: includes/class-abilities.php:224
+#: includes/class-abilities.php:227
 msgid "Returns the transactional and triggered emails of the connected bluefox project (id, name). Use an id as coupon.email_id (transactional) or as email_id of an order email / abandoned cart rule (transactional or triggered, matching the rule type)."
 msgstr ""
 
-#: includes/class-abilities.php:251
+#: includes/class-abilities.php:260
+msgid "Check the bluefox setup"
+msgstr ""
+
+#: includes/class-abilities.php:261
+msgid "Returns the bluefox-side settings the plugin relies on (\"bluefox setup\" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site's thank-you page (ready = all three); the project's transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); and, with the preferences page on, whether unsubscribe links lead to this site's preferences page. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true."
+msgstr ""
+
+#: includes/class-abilities.php:269
+msgid "Read bluefox anew instead of the ten-minute cache. Default false."
+msgstr ""
+
+#: includes/class-abilities.php:292
+msgid "Apply the bluefox setup"
+msgstr ""
+
+#: includes/class-abilities.php:293
+msgid "Changes settings in the connected bluefox project (\"Apply in bluefox\" on the General tab). For each list in lists (list ID => transactional email ID, see cfbe/get-bluefox-setup): double opt-in on with that confirmation email (it must contain {{verifyLink}}) and this site's thank-you page as redirect link; the list's confirmation title and message are kept. Only lists the plugin uses are changed. preferences true sets the project's custom subscription preferences URL to this site's preferences page (preferences page feature on). Returns what was done, what failed, and the setup afterwards."
+msgstr ""
+
+#: includes/class-abilities.php:301
+msgid "List ID => confirmation email ID."
+msgstr ""
+
+#: includes/class-abilities.php:306
+msgid "Point unsubscribe and pause links to this site's preferences page. Default false."
+msgstr ""
+
+#: includes/class-abilities.php:335
 msgid "Texts to use: subject, preview, heading, intro, button, footer (Handlebars variables such as {{orderNumber}} work). Omitted texts keep their current value."
 msgstr ""
 
-#: includes/class-abilities.php:258
+#: includes/class-abilities.php:342
 msgid "Template key, see cfbe/list-email-templates."
 msgstr ""
 
-#: includes/class-abilities.php:264
+#: includes/class-abilities.php:348
 msgid "List bluefox email templates"
 msgstr ""
 
-#: includes/class-abilities.php:265
+#: includes/class-abilities.php:349
 msgid "Returns the ready-made emails of the Email templates tab whose feature is on: key, label, what it is, why use it, when it is sent, the email types the admin may choose (triggered = marketing, only active subscribers of a list, with an unsubscribe link; transactional = every recipient), its texts, whether it was created in bluefox, where it is used and whether its design is older than the current one. Also returns the design source (woocommerce or form) and the sender identities of the bluefox project."
 msgstr ""
 
-#: includes/class-abilities.php:284
+#: includes/class-abilities.php:368
 msgid "Create a bluefox email from a template"
 msgstr ""
 
-#: includes/class-abilities.php:285
+#: includes/class-abilities.php:369
 msgid "Creates a ready-made email in the connected bluefox project (\"Create in bluefox\" on the Email templates tab) and, unless assign is false, selects it where the plugin uses it: confirmation = double opt-in email of the list, welcome_coupon = coupon email, order and cart emails = an Order emails / Abandoned carts rule. Triggered (marketing) emails need list_id (see cfbe/list-bluefox-lists). WooCommerce keeps sending its own order emails."
 msgstr ""
 
-#: includes/class-abilities.php:295
+#: includes/class-abilities.php:379
 msgid "Email type, only where the template allows a choice (default: the first allowed type)."
 msgstr ""
 
-#: includes/class-abilities.php:299
+#: includes/class-abilities.php:383
 msgid "Subscriber list: required for triggered emails; for the confirmation email the list that gets double opt-in."
 msgstr ""
 
-#: includes/class-abilities.php:303
+#: includes/class-abilities.php:387
 msgid "Sender identity ID from cfbe/list-email-templates. Omit for the project default sender."
 msgstr ""
 
-#: includes/class-abilities.php:307
+#: includes/class-abilities.php:391
 msgid "Select the new email where the plugin uses it. Default true."
 msgstr ""
 
-#: includes/class-abilities.php:332
+#: includes/class-abilities.php:416
 msgid "Update a bluefox email from its template"
 msgstr ""
 
-#: includes/class-abilities.php:333
+#: includes/class-abilities.php:417
 msgid "Sends new texts and the current design to an email created from a template (\"Update in bluefox\"). Refuses with cfbe_template_changed when the email was changed in bluefox after the plugin last wrote it: ask the admin before repeating with force true, which replaces those changes. Emails switched to the bluefox visual editor are never overwritten."
 msgstr ""
 
-#: includes/class-abilities.php:342
+#: includes/class-abilities.php:426
 msgid "Replace changes made in bluefox. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:363
+#: includes/class-abilities.php:447
 msgid "Send a test of a template email"
 msgstr ""
 
-#: includes/class-abilities.php:364
+#: includes/class-abilities.php:448
 msgid "Has bluefox send a created template email, filled with sample data, to the email address of the signed-in admin (\"Send me a test\"). It cannot send to any other address."
 msgstr ""
 
-#: includes/class-abilities.php:389
+#: includes/class-abilities.php:473
 msgid "Set the design of the template emails"
 msgstr ""
 
-#: includes/class-abilities.php:390
+#: includes/class-abilities.php:474
 msgid "Chooses the design of the ready-made emails: woocommerce = logo, colours, font and footer from WooCommerce → Settings → Emails (needs WooCommerce); form = the signup form colours. Emails already created keep their design until cfbe/update-email-template is run for them."
 msgstr ""
 
-#: includes/class-abilities.php:409
+#: includes/class-abilities.php:493
 msgid "Created templates whose design differs from the new one."
 msgstr ""
 
 #. translators: 1: setting keys, 2: settings area
-#: includes/class-abilities.php:495
+#: includes/class-abilities.php:579
 #, php-format
 msgid "Unknown settings %1$s in area %2$s. Call cfbe/get-settings for the valid keys."
 msgstr ""
 
 #. translators: %s: setting keys
-#: includes/class-abilities.php:504
+#: includes/class-abilities.php:588
 #, php-format
 msgid "%s can only be changed in wp-admin."
 msgstr ""
 
 #. translators: 1: module slugs, 2: valid module slugs
-#: includes/class-abilities.php:555
+#: includes/class-abilities.php:639
 #, php-format
 msgid "Unknown modules %1$s. Valid modules: %2$s."
 msgstr ""
 
-#: includes/class-abilities.php:699
+#: includes/class-abilities.php:828
 msgid "This email was already created in bluefox: use cfbe/update-email-template to change it."
 msgstr ""
 
 #. translators: %s: allowed email types
-#: includes/class-abilities.php:706
+#: includes/class-abilities.php:835
 #, php-format
 msgid "This template can only be created as: %s."
 msgstr ""
 
-#: includes/class-abilities.php:765
+#: includes/class-abilities.php:894
 msgid "The signed-in user has no email address."
 msgstr ""
 
-#: includes/class-abilities.php:781
+#: includes/class-abilities.php:910
 msgid "Design must be woocommerce or form."
 msgstr ""
 
-#: includes/class-abilities.php:784
+#: includes/class-abilities.php:913
 msgid "WooCommerce is not active, so its email design cannot be used."
 msgstr ""
 
 #. translators: %s: template keys
-#: includes/class-abilities.php:813
+#: includes/class-abilities.php:942
 #, php-format
 msgid "Unknown template or its feature is off. Available: %s."
 msgstr ""
 
-#: includes/class-abilities.php:830
+#: includes/class-abilities.php:959
 msgid "bluefox is not connected yet: set the project ID and API key on the General tab in wp-admin."
 msgstr ""
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:890
+#: includes/class-abilities.php:1019
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr ""

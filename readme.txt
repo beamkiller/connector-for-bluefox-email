@@ -166,6 +166,7 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 * Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
 * Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
 * Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
+* AI agent access: new abilities cfbe/get-bluefox-setup and cfbe/apply-bluefox-setup; cfbe/list-bluefox-lists also returns each list's confirmation email and redirect link; abilities with only optional input run without input.
 
 = 1.0.0 =
 * First public release.

@@ -91,6 +91,7 @@ final class Abilities {
 				'description'         => __( 'Returns the current settings of the Connector for bluefox.email plugin, grouped by area (api = connection and default list, form = signup form texts, fields and colours, popup = popup triggers and targeting, checkout = checkout opt-in, coupon = welcome coupon, emails = thank-you and preferences page texts, plus one area per enabled feature module), and the on/off state of every feature module. Read this before changing settings: the keys and value types shown are the ones cfbe/update-settings accepts. The API key and webhook secret are never returned.', 'connector-for-bluefox-email' ),
 				'category'            => self::CATEGORY,
 				'input_schema'        => array(
+					'default'              => array(), // Lets the ability run without input.
 					'type'                 => 'object',
 					'properties'           => array(
 						'area' => array(
@@ -198,16 +199,18 @@ final class Abilities {
 			'cfbe/list-bluefox-lists',
 			array(
 				'label'               => __( 'List bluefox subscriber lists', 'connector-for-bluefox-email' ),
-				'description'         => __( 'Returns the subscriber lists of the connected bluefox project (id, name, whether double opt-in is on). Use an id as list_id in the api, popup, checkout or coupon settings.', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Returns the subscriber lists of the connected bluefox project (id, name, whether double opt-in is on, its confirmation email ID and redirect link). Use an id as list_id in the api, popup, checkout or coupon settings.', 'connector-for-bluefox-email' ),
 				'category'            => self::CATEGORY,
 				'output_schema'       => array(
 					'type'  => 'array',
 					'items' => array(
 						'type'       => 'object',
 						'properties' => array(
-							'id'   => array( 'type' => 'string' ),
-							'name' => array( 'type' => 'string' ),
-							'doi'  => array( 'type' => 'boolean' ),
+							'id'       => array( 'type' => 'string' ),
+							'name'     => array( 'type' => 'string' ),
+							'doi'      => array( 'type' => 'boolean' ),
+							'email_id' => array( 'type' => 'string' ),
+							'redirect' => array( 'type' => 'string' ),
 						),
 					),
 				),
@@ -236,7 +239,88 @@ final class Abilities {
 			)
 		);
 
+		$this->register_setup_abilities( $permission );
 		$this->register_template_abilities( $permission );
+	}
+
+	/**
+	 * Registers the bluefox setup abilities (the "bluefox setup" section of the General tab).
+	 *
+	 * @param callable $permission Permission callback.
+	 */
+	private function register_setup_abilities( $permission ): void {
+		$result = array(
+			'type'  => 'array',
+			'items' => array( 'type' => 'string' ),
+		);
+
+		wp_register_ability(
+			'cfbe/get-bluefox-setup',
+			array(
+				'label'               => __( 'Check the bluefox setup', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Returns the bluefox-side settings the plugin relies on ("bluefox setup" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site\'s thank-you page (ready = all three); the project\'s transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); and, with the preferences page on, whether unsubscribe links lead to this site\'s preferences page. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'default'              => array(), // Lets the ability run without input.
+					'type'                 => 'object',
+					'properties'           => array(
+						'fresh' => array(
+							'type'        => 'boolean',
+							'description' => __( 'Read bluefox anew instead of the ten-minute cache. Default false.', 'connector-for-bluefox-email' ),
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'thankyou_url' => array( 'type' => 'string' ),
+						'lists'        => array( 'type' => 'array' ),
+						'emails'       => array( 'type' => 'array' ),
+						'preferences'  => array( 'type' => array( 'object', 'null' ) ),
+					),
+				),
+				'execute_callback'    => array( $this, 'get_setup' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( true, true ),
+			)
+		);
+
+		wp_register_ability(
+			'cfbe/apply-bluefox-setup',
+			array(
+				'label'               => __( 'Apply the bluefox setup', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Changes settings in the connected bluefox project ("Apply in bluefox" on the General tab). For each list in lists (list ID => transactional email ID, see cfbe/get-bluefox-setup): double opt-in on with that confirmation email (it must contain {{verifyLink}}) and this site\'s thank-you page as redirect link; the list\'s confirmation title and message are kept. Only lists the plugin uses are changed. preferences true sets the project\'s custom subscription preferences URL to this site\'s preferences page (preferences page feature on). Returns what was done, what failed, and the setup afterwards.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'default'              => array(), // Lets the ability run without input.
+					'type'                 => 'object',
+					'properties'           => array(
+						'lists'       => array(
+							'type'                 => 'object',
+							'description'          => __( 'List ID => confirmation email ID.', 'connector-for-bluefox-email' ),
+							'additionalProperties' => array( 'type' => 'string' ),
+						),
+						'preferences' => array(
+							'type'        => 'boolean',
+							'description' => __( 'Point unsubscribe and pause links to this site\'s preferences page. Default false.', 'connector-for-bluefox-email' ),
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'done'   => $result,
+						'failed' => $result,
+						'setup'  => array( 'type' => 'object' ),
+					),
+				),
+				'execute_callback'    => array( $this, 'apply_setup' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( false, true ),
+			)
+		);
 	}
 
 	/**
@@ -588,13 +672,58 @@ final class Abilities {
 			}
 			$cache[ $id ] = (string) ( $list['name'] ?? $id );
 			$out[]        = array(
-				'id'   => $id,
-				'name' => $cache[ $id ],
-				'doi'  => ! empty( $list['doubleOptIn']['active'] ),
+				'id'       => $id,
+				'name'     => $cache[ $id ],
+				'doi'      => ! empty( $list['doubleOptIn']['active'] ),
+				'email_id' => (string) ( $list['doubleOptIn']['emailId'] ?? '' ),
+				'redirect' => (string) ( $list['doubleOptIn']['redirectLink'] ?? '' ),
 			);
 		}
 		Settings::remember_lists( $cache );
 		return $out;
+	}
+
+	/**
+	 * `cfbe/get-bluefox-setup`.
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function get_setup( $input = array() ) {
+		$client = $this->client();
+		if ( is_wp_error( $client ) ) {
+			return $client;
+		}
+		$input = is_array( $input ) ? $input : array();
+		return ( new Admin\Bluefox_Setup( $this->client ) )->report( $client, ! empty( $input['fresh'] ) );
+	}
+
+	/**
+	 * `cfbe/apply-bluefox-setup`.
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function apply_setup( $input = array() ) {
+		$client = $this->client();
+		if ( is_wp_error( $client ) ) {
+			return $client;
+		}
+		$input   = is_array( $input ) ? $input : array();
+		$choices = array();
+		foreach ( (array) ( $input['lists'] ?? array() ) as $list_id => $email_id ) {
+			$choices[ Form_Config::clean_list_id( (string) $list_id ) ] = Form_Config::clean_list_id( (string) $email_id );
+		}
+		unset( $choices[''] );
+		$setup = new Admin\Bluefox_Setup( $this->client );
+		$setup->state( $client ); // Knows which emails can confirm, so a wrong one is refused before bluefox.
+		$result = $setup->apply( $client, $choices, ! empty( $input['preferences'] ) );
+		$after  = $setup->report( $client );
+		return array(
+			'done'   => $result['done'],
+			'failed' => $result['failed'],
+			'setup'  => is_wp_error( $after ) ? array() : $after,
+		);
 	}
 
 	/**

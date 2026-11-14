@@ -8,6 +8,7 @@ Beta for testing: install the zip from the [GitHub pre-release](https://github.c
 - Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
 - Fix: creating the double opt-in email on the [Email templates](../features/email-templates.md) tab cleared the list's confirmation title and message in bluefox.
 - Email templates: the double opt-in email's *In use* status now reflects which lists really use it in bluefox (with a link to **bluefox setup** when none does), and the email is marked *(from Email templates)* in the bluefox setup.
+- [AI agent access](../features/ai-agent-access.md) *(beta 2)*: new abilities `cfbe/get-bluefox-setup` and `cfbe/apply-bluefox-setup`; `cfbe/list-bluefox-lists` also returns each list's confirmation email and redirect link; `cfbe/get-settings` and the setup abilities run without input (they failed with *input is not of type object* before).
 
 ## 1.0.0
 
