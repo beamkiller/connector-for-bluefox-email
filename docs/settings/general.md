@@ -13,7 +13,7 @@ See [Connect to bluefox.email](../getting-started/connect.md) for a walkthrough.
 | Project ID | `cfbe_api[project_id]` | empty | Your bluefox project ID (*Project Settings → Integrations*). Only letters and digits are kept. |
 | API key | `cfbe_api[api_key]` | empty | bluefox API key (*Project Settings → API Keys & Domain Whitelist*). A password field: the stored key is never shown, and an empty field on save keeps the stored key. Disabled with *Defined in wp-config.php* when the `CFBE_BLUEFOX_API_KEY` constant is set – the constant always wins. |
 | Connection → **Test connection** | – | – | Checks the saved project ID and key against the bluefox API. Save first. |
-| Default subscriber list | `cfbe_api[list_id]` | empty | The list used by forms, the popup, the checkout opt-in and form integrations unless they choose another one. **Load lists** fetches your lists (cached for a day) and marks the ones with double opt-in on. A list ID that is not among the loaded lists is rejected and the previous value kept. The loaded lists are also remembered in the `cfbe_known_lists` option: a block or shortcode may only target these lists or a list chosen in the settings (see [Signup forms](../features/signup-forms.md#list-and-tags-per-form)). |
+| Default subscriber list | `cfbe_api[list_id]` | empty | The list used by forms, the popup, the checkout opt-in and form integrations unless they choose another one. **Load lists** fetches your lists (cached for a day, and refreshed whenever the [bluefox setup](#bluefox-setup) check runs) and marks the ones with double opt-in on. When the cache has expired, the selects show the names saved at the last load. A list ID that is not among the loaded lists is rejected and the previous value kept. The loaded lists are also remembered in the `cfbe_known_lists` option: a block or shortcode may only target these lists or a list chosen in the settings (see [Signup forms](../features/signup-forms.md#list-and-tags-per-form)). |
 
 `cfbe_api[webhook_secret]` is stored here too but shown on the [Webhooks tab](webhooks.md). A missing or malformed secret is regenerated on save (32 letters and digits). The IP and erase settings of the [Privacy tab](privacy.md) are also stored in `cfbe_api`.
 
@@ -36,3 +36,16 @@ Each switch loads one module. A module that is off loads no code and shows no ta
 | AI agent access (experimental) | `cfbe_modules[abilities]` | off | Registers the plugin's abilities for AI agents. Needs WordPress 6.9+. See [AI agent access](../features/ai-agent-access.md). |
 
 A switch whose requirement is missing is disabled and shows *Requires WooCommerce.*, *Requires WordPress 6.9 or later.* or *(not active)*. If it was on, it stays saved as on and works again when the requirement returns.
+
+## bluefox setup
+
+*Since 1.1.0.* Below the features, the General tab checks the settings that live in your bluefox project and fixes them with one click. Each row shows a status – **Ready**, **Off**, or what is wrong.
+
+| Row | Ready when | **Apply in bluefox** sets |
+|---|---|---|
+| Double opt-in of "*list*" – one row per list the plugin uses (default list, popup, checkout, coupon, form integrations) | double opt-in is on, the confirmation email contains `{{verifyLink}}` and the redirect link is this site's [thank-you page](emails.md) | double opt-in on, the **Confirmation email** you choose, and the thank-you page as redirect link. The list's confirmation title and message are kept. |
+| Subscription preferences page – only with the [preferences page](../features/preferences-page.md) switch on | the project's **Custom subscription preferences URL** is this site's preferences page | that URL, when the checkbox is ticked |
+
+The **Confirmation email** select lists the project's transactional emails. Only emails whose content contains `{{verifyLink}}` can be chosen – bluefox rejects any other email as a confirmation email (bluefox's own sample *Confirm Registration* uses `{{confirmUrl}}` and is greyed out). If none qualifies, create one on the [Email templates](../features/email-templates.md) tab. Choose **— Leave unchanged —** to skip a list.
+
+Lists that are already set up as chosen are not changed. The check is cached for ten minutes; **Check again** reads bluefox anew. Applying also clears the [redirect link warning](emails.md#redirect-link-check).

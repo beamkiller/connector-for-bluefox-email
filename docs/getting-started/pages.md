@@ -28,7 +28,7 @@ Needs the **Subscription preferences page** switch (on by default).
 1. Create a page, e.g. **Newsletter preferences** with the slug `newsletter-preferences`.
 2. Add the `[cfbe_preferences]` shortcode.
 3. If you use another URL, enter it as **Preferences page URL** on the Emails tab.
-4. In bluefox set the project's **Custom subscription preferences URL** to this page.
+4. In bluefox set the project's **Custom subscription preferences URL** to this page – or tick it under **bluefox setup** on the [General tab](../settings/general.md#bluefox-setup) and click **Apply in bluefox**.
 
 The "Unsubscribe" and "Pause" links of your newsletters now lead to this page. See [Preferences page](../features/preferences-page.md).
 

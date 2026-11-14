@@ -46,7 +46,8 @@ msgid "Connected: %1$s (%2$s)"
 msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:146
-#: admin/class-admin-page.php:336
+#: admin/class-admin-page.php:335
+#: admin/class-bluefox-setup.php:475
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
@@ -139,6 +140,172 @@ msgstr "Integrációk"
 msgid "More"
 msgstr "Egyéb"
 
+#: admin/class-bluefox-setup.php:235
+msgid "bluefox setup"
+msgstr "bluefox beállítás"
+
+#: admin/class-bluefox-setup.php:236
+msgid "These settings live in your bluefox project. Check them here and apply them with one click."
+msgstr "Ezek a beállítások a bluefox projektedben vannak. Itt ellenőrizheted őket, és egy kattintással beállíthatod."
+
+#: admin/class-bluefox-setup.php:242
+msgid "Save the project ID and API key above first."
+msgstr "Előbb mentsd el fent a projekt azonosítót és az API kulcsot."
+
+#: admin/class-bluefox-setup.php:246
+msgid "Choose a default subscriber list above first."
+msgstr "Előbb válassz fent alapértelmezett feliratkozói listát."
+
+#. translators: %s: error message
+#: admin/class-bluefox-setup.php:256
+#, php-format
+msgid "bluefox could not be read: %s"
+msgstr "Nem sikerült beolvasni a bluefox adatait: %s"
+
+#: admin/class-bluefox-setup.php:258
+#: admin/class-bluefox-setup.php:276
+msgid "Check again"
+msgstr "Újraellenőrzés"
+
+#: admin/class-bluefox-setup.php:267
+msgid "Setting"
+msgstr "Beállítás"
+
+#: admin/class-bluefox-setup.php:267
+#: admin/views/tab-email-templates.php:168
+#: admin/views/tab-subscribers.php:71
+#: admin/views/tab-subscribers.php:103
+#: modules/woo-events/class-privacy.php:103
+#: modules/woo-events/views/tab-woo-events.php:174
+#: modules/woo-events/views/tab-woo-events.php:286
+msgid "Status"
+msgstr "Állapot"
+
+#: admin/class-bluefox-setup.php:267
+msgid "Change to"
+msgstr "Új érték"
+
+#: admin/class-bluefox-setup.php:275
+msgid "Apply in bluefox"
+msgstr "Beállítás a bluefox-ban"
+
+#. translators: %s: list name
+#: admin/class-bluefox-setup.php:302
+#, php-format
+msgid "Double opt-in of “%s”"
+msgstr "„%s” dupla megerősítése"
+
+#: admin/class-bluefox-setup.php:305
+msgid "List not found in bluefox"
+msgstr "A lista nem található a bluefox-ban"
+
+#: admin/class-bluefox-setup.php:309
+#: admin/class-bluefox-setup.php:366
+msgid "Ready"
+msgstr "Rendben"
+
+#: admin/class-bluefox-setup.php:311
+msgid "Off"
+msgstr "Kikapcsolva"
+
+#: admin/class-bluefox-setup.php:315
+msgid "confirmation email without {{verifyLink}}"
+msgstr "a megerősítő e-mailben nincs {{verifyLink}}"
+
+#: admin/class-bluefox-setup.php:319
+msgid "no redirect to this site"
+msgstr "nem erre az oldalra irányít át"
+
+#. translators: %s: URL
+#: admin/class-bluefox-setup.php:321
+#, php-format
+msgid "redirects to %s"
+msgstr "ide irányít át: %s"
+
+#: admin/class-bluefox-setup.php:329
+msgid "Confirmation email"
+msgstr "Megerősítő e-mail"
+
+#: admin/class-bluefox-setup.php:331
+msgid "— Leave unchanged —"
+msgstr "— Változatlanul hagyás —"
+
+#. translators: %s: email name
+#: admin/class-bluefox-setup.php:336
+#, php-format
+msgid "%s (no {{verifyLink}})"
+msgstr "%s (nincs benne {{verifyLink}})"
+
+#. translators: %s: thank-you page URL
+#: admin/class-bluefox-setup.php:348
+#, php-format
+msgid "Double opt-in on with this confirmation email; confirmed subscribers land on %s."
+msgstr "Dupla megerősítés bekapcsolva ezzel a megerősítő e-maillel; a megerősített feliratkozók ide érkeznek: %s."
+
+#: admin/class-bluefox-setup.php:351
+msgid "None of your bluefox transactional emails contains {{verifyLink}}. Create the confirmation email on the Email templates tab, or add {{verifyLink}} to an email in bluefox."
+msgstr "Egyik bluefox tranzakciós e-mailed sem tartalmazza a {{verifyLink}} változót. Hozd létre a megerősítő e-mailt az E-mail sablonok fülön, vagy tedd bele a {{verifyLink}} változót egy e-mailbe a bluefox-ban."
+
+#: admin/class-bluefox-setup.php:351
+#: admin/class-email-templates-tab.php:64
+msgid "Email templates"
+msgstr "E-mail sablonok"
+
+#: admin/class-bluefox-setup.php:364
+#: includes/class-modules.php:99
+msgid "Subscription preferences page"
+msgstr "Feliratkozási beállítások oldal"
+
+#: admin/class-bluefox-setup.php:369
+msgid "bluefox’s own page is used"
+msgstr "a bluefox saját oldala van használatban"
+
+#. translators: %s: URL
+#: admin/class-bluefox-setup.php:371
+#, php-format
+msgid "set to %s"
+msgstr "beállított érték: %s"
+
+#. translators: %s: preferences page URL
+#: admin/class-bluefox-setup.php:376
+#, php-format
+msgid "Unsubscribe and pause links lead to %s"
+msgstr "A leiratkozó és szüneteltető linkek ide vezetnek: %s"
+
+#. translators: 1: list name, 2: error message
+#: admin/class-bluefox-setup.php:443
+#, php-format
+msgid "“%1$s”: %2$s"
+msgstr "„%1$s”: %2$s"
+
+#. translators: %s: list name
+#: admin/class-bluefox-setup.php:446
+#, php-format
+msgid "Double opt-in of “%s” is on, with the chosen email and this site’s thank-you page."
+msgstr "„%s” dupla megerősítése bekapcsolva, a kiválasztott e-maillel és ennek az oldalnak a köszönő oldalával."
+
+#. translators: %s: error message
+#: admin/class-bluefox-setup.php:455
+#, php-format
+msgid "Preferences page: %s"
+msgstr "Beállítások oldal: %s"
+
+#: admin/class-bluefox-setup.php:457
+msgid "Unsubscribe and pause links now lead to this site’s preferences page."
+msgstr "A leiratkozó és szüneteltető linkek mostantól ennek az oldalnak a beállítások oldalára vezetnek."
+
+#: admin/class-bluefox-setup.php:462
+msgid "Nothing to change: bluefox is already set up like this."
+msgstr "Nincs mit módosítani: a bluefox már így van beállítva."
+
+#: admin/class-bluefox-setup.php:489
+#: admin/class-email-templates-tab.php:122
+#: admin/class-redirect-check.php:253
+#: admin/views/tab-email-templates.php:48
+#: modules/woo-events/class-settings-tab.php:229
+msgid "Connect bluefox on the General tab first."
+msgstr "Előbb csatlakoztasd a bluefox-ot az Általános fülön."
+
 #: admin/class-checkout-tab.php:35
 #: admin/views/tab-subscribers.php:29
 msgid "Checkout"
@@ -192,21 +359,10 @@ msgstr "akciós termékekre nem érvényes"
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr "Létrehozva: %1$s. Már megvolt: %2$s."
 
-#: admin/class-email-templates-tab.php:64
-msgid "Email templates"
-msgstr "E-mail sablonok"
-
 #: admin/class-email-templates-tab.php:103
 #: includes/class-email-template-sync.php:49
 msgid "Unknown email template."
 msgstr "Ismeretlen e-mail sablon."
-
-#: admin/class-email-templates-tab.php:122
-#: admin/class-redirect-check.php:253
-#: admin/views/tab-email-templates.php:48
-#: modules/woo-events/class-settings-tab.php:229
-msgid "Connect bluefox on the General tab first."
-msgstr "Előbb csatlakoztasd a bluefox-ot az Általános fülön."
 
 #: admin/class-email-templates-tab.php:138
 msgid "The email was created in bluefox."
@@ -589,8 +745,8 @@ msgid "Load lists"
 msgstr "Listák betöltése"
 
 #: admin/views/tab-api.php:67
-msgid "Used by forms and the checkout unless they choose another list. Turn on double opt-in for the list in bluefox, with a confirmation email in your language."
-msgstr "Ezt használják az űrlapok és a pénztár, hacsak nem választanak másik listát. A bluefox-ban kapcsold be a listán a dupla megerősítést (double opt-in), a saját nyelveden írt megerősítő e-maillel."
+msgid "Used by forms and the checkout unless they choose another list. Double opt-in is set up under “bluefox setup” below."
+msgstr "Ezt használják az űrlapok és a pénztár, hacsak nem választanak másik listát. A dupla megerősítést lent, a „bluefox beállítás” részben állíthatod be."
 
 #: admin/views/tab-api.php:71
 msgid "Features"
@@ -648,7 +804,7 @@ msgstr "A listák az Általános fülről jönnek („Listák betöltése”)."
 
 #: admin/views/tab-checkout.php:53
 #: admin/views/tab-popup.php:75
-#: modules/integrations/elementor/class-elementor-form-action.php:114
+#: modules/integrations/elementor/class-elementor-form-action.php:113
 #: modules/integrations/views/rule-row.php:91
 #: blocks/signup-form/index.js:84
 msgid "Extra tags"
@@ -1000,15 +1156,6 @@ msgstr "Marketing (triggered): a bluefox csak a kiválasztott lista aktív felir
 #: admin/views/tab-email-templates.php:162
 msgid "Transactional: a service email every recipient gets, no unsubscribe link needed."
 msgstr "Tranzakciós: szolgáltatási e-mail, amelyet minden címzett megkap, nem kell bele leiratkozó link."
-
-#: admin/views/tab-email-templates.php:168
-#: admin/views/tab-subscribers.php:71
-#: admin/views/tab-subscribers.php:103
-#: modules/woo-events/class-privacy.php:103
-#: modules/woo-events/views/tab-woo-events.php:174
-#: modules/woo-events/views/tab-woo-events.php:286
-msgid "Status"
-msgstr "Állapot"
 
 #: admin/views/tab-email-templates.php:172
 msgid "Open"
@@ -1537,7 +1684,7 @@ msgid "bluefox list"
 msgstr "bluefox lista"
 
 #: admin/views/tab-popup.php:69
-#: modules/integrations/elementor/class-elementor-form-action.php:66
+#: modules/integrations/elementor/class-elementor-form-action.php:65
 #: modules/integrations/views/rule-row.php:51
 msgid "Default list"
 msgstr "Alapértelmezett lista"
@@ -1936,12 +2083,12 @@ msgid "Last error"
 msgstr "Utolsó hiba"
 
 #: admin/views/tab-subscribers.php:123
-#: modules/webhooks/class-users-column.php:80
+#: modules/webhooks/class-users-column.php:79
 msgid "paused"
 msgstr "szünetel"
 
 #: admin/views/tab-subscribers.php:124
-#: modules/webhooks/class-users-column.php:82
+#: modules/webhooks/class-users-column.php:81
 msgid "unsubscribed"
 msgstr "leiratkozott"
 
@@ -2733,10 +2880,6 @@ msgid "Remind shoppers of carts they left, with a restore link and an optional r
 msgstr "Emlékezteti a vásárlókat az otthagyott kosarukra, visszaállító linkkel és opcionális visszacsábító kuponnal."
 
 #: includes/class-modules.php:99
-msgid "Subscription preferences page"
-msgstr "Feliratkozási beállítások oldal"
-
-#: includes/class-modules.php:99
 msgid "Your own unsubscribe / pause page on this site instead of the bluefox hosted page."
 msgstr "Saját leiratkozó / szüneteltető oldal ezen a webhelyen a bluefox által hosztolt oldal helyett."
 
@@ -3038,49 +3181,49 @@ msgstr "Űrlap integrációk"
 msgid "Use the WPForms field IDs (shown in the form builder), e.g. 1, 2; name parts as 1.first / 1.last."
 msgstr "Használd a WPForms mező ID-kat (az űrlapszerkesztőben láthatók), pl. 1, 2; a névrészeket 1.first / 1.last formában."
 
-#: modules/integrations/elementor/class-elementor-form-action.php:73
+#: modules/integrations/elementor/class-elementor-form-action.php:72
 #: modules/integrations/views/rule-row.php:48
 msgid "List"
 msgstr "Lista"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:82
+#: modules/integrations/elementor/class-elementor-form-action.php:81
 msgid "Email field ID"
 msgstr "E-mail mező ID"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:84
+#: modules/integrations/elementor/class-elementor-form-action.php:83
 msgid "Empty = the first email field."
 msgstr "Üres = az első e-mail mező."
 
-#: modules/integrations/elementor/class-elementor-form-action.php:90
+#: modules/integrations/elementor/class-elementor-form-action.php:89
 msgid "Name field ID (optional)"
 msgstr "Név mező ID (opcionális)"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:97
+#: modules/integrations/elementor/class-elementor-form-action.php:96
 msgid "Consent field ID"
 msgstr "Hozzájárulás mező ID"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:99
+#: modules/integrations/elementor/class-elementor-form-action.php:98
 msgid "An Acceptance or Checkbox field. The visitor is only subscribed when it is ticked."
 msgstr "Elfogadás (Acceptance) vagy Jelölőnégyzet (Checkbox) mező. A látogató csak akkor iratkozik fel, ha be van pipálva."
 
-#: modules/integrations/elementor/class-elementor-form-action.php:105
+#: modules/integrations/elementor/class-elementor-form-action.php:104
 msgid "This form itself is the newsletter signup"
 msgstr "Maga ez az űrlap a hírlevél feliratkozás"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:108
+#: modules/integrations/elementor/class-elementor-form-action.php:107
 msgid "Consent is implied by submitting. Only switch this on if the form clearly says that submitting it subscribes to the newsletter. Without a consent field and without this switch, nobody is subscribed."
 msgstr "A hozzájárulást maga a beküldés jelenti. Csak akkor kapcsold be, ha az űrlapon egyértelműen szerepel, hogy a beküldéssel feliratkozik a hírlevélre. Hozzájárulás mező és e kapcsoló nélkül senki nem iratkozik fel."
 
-#: modules/integrations/elementor/class-elementor-form-action.php:116
+#: modules/integrations/elementor/class-elementor-form-action.php:115
 msgid "Comma separated."
 msgstr "Vesszővel elválasztva."
 
-#: modules/integrations/elementor/class-elementor-form-action.php:122
+#: modules/integrations/elementor/class-elementor-form-action.php:121
 #: modules/integrations/views/rule-row.php:103
 msgid "Custom fields"
 msgstr "Egyéni mezők"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:125
+#: modules/integrations/elementor/class-elementor-form-action.php:124
 msgid "One per line: form field ID=bluefox contact field name."
 msgstr "Soronként egy: űrlapmező ID=bluefox kontakt mező neve."
 
@@ -3611,19 +3754,19 @@ msgstr "Egy WordPress felhasználó törlése nem törli a bluefox kontaktot, é
 msgid "bluefox"
 msgstr "bluefox"
 
-#: modules/webhooks/class-users-column.php:61
+#: modules/webhooks/class-users-column.php:60
 msgid "Bounced"
 msgstr "Visszapattant"
 
-#: modules/webhooks/class-users-column.php:64
+#: modules/webhooks/class-users-column.php:63
 msgid "Spam complaint"
 msgstr "Spam panasz"
 
-#: modules/webhooks/class-users-column.php:78
+#: modules/webhooks/class-users-column.php:77
 msgid "subscribed"
 msgstr "feliratkozva"
 
-#: modules/webhooks/class-users-column.php:84
+#: modules/webhooks/class-users-column.php:83
 msgid "not confirmed"
 msgstr "nincs megerősítve"
 

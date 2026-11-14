@@ -311,8 +311,7 @@ final class Admin_Page {
 	public function render_api_tab(): void {
 		$cfbe_values       = Settings::get( 'api' );
 		$cfbe_key_constant = Settings::api_key_from_constant();
-		$cfbe_lists        = get_transient( Settings::LISTS_CACHE );
-		$cfbe_lists        = is_array( $cfbe_lists ) ? $cfbe_lists : array();
+		$cfbe_lists        = Settings::list_names();
 		$cfbe_webhook_url  = rest_url( 'cfbe/v1/bluefox-hook' );
 		$cfbe_modules      = Modules::all();
 		$cfbe_states       = Modules::states();

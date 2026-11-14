@@ -50,8 +50,7 @@ final class Users_Column {
 		}
 
 		$lines    = array();
-		$names    = get_transient( Settings::LISTS_CACHE );
-		$names    = is_array( $names ) ? $names : array();
+		$names    = Settings::list_names();
 		$statuses = get_user_meta( (int) $user_id, Event_Processor::META_LIST_STATUS, true );
 		foreach ( is_array( $statuses ) ? $statuses : array() as $list => $status ) {
 			$label   = isset( $names[ $list ] ) ? (string) $names[ $list ] : (string) $list;

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-06T21:34:13+00:00\n"
+"POT-Creation-Date: 2026-11-14T05:24:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -52,7 +52,8 @@ msgid "Connected: %1$s (%2$s)"
 msgstr ""
 
 #: admin/class-admin-ajax.php:146
-#: admin/class-admin-page.php:336
+#: admin/class-admin-page.php:335
+#: admin/class-bluefox-setup.php:475
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
@@ -145,6 +146,172 @@ msgstr ""
 msgid "More"
 msgstr ""
 
+#: admin/class-bluefox-setup.php:235
+msgid "bluefox setup"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:236
+msgid "These settings live in your bluefox project. Check them here and apply them with one click."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:242
+msgid "Save the project ID and API key above first."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:246
+msgid "Choose a default subscriber list above first."
+msgstr ""
+
+#. translators: %s: error message
+#: admin/class-bluefox-setup.php:256
+#, php-format
+msgid "bluefox could not be read: %s"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:258
+#: admin/class-bluefox-setup.php:276
+msgid "Check again"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:267
+msgid "Setting"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:267
+#: admin/views/tab-email-templates.php:168
+#: admin/views/tab-subscribers.php:71
+#: admin/views/tab-subscribers.php:103
+#: modules/woo-events/class-privacy.php:103
+#: modules/woo-events/views/tab-woo-events.php:174
+#: modules/woo-events/views/tab-woo-events.php:286
+msgid "Status"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:267
+msgid "Change to"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:275
+msgid "Apply in bluefox"
+msgstr ""
+
+#. translators: %s: list name
+#: admin/class-bluefox-setup.php:302
+#, php-format
+msgid "Double opt-in of “%s”"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:305
+msgid "List not found in bluefox"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:309
+#: admin/class-bluefox-setup.php:366
+msgid "Ready"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:311
+msgid "Off"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:315
+msgid "confirmation email without {{verifyLink}}"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:319
+msgid "no redirect to this site"
+msgstr ""
+
+#. translators: %s: URL
+#: admin/class-bluefox-setup.php:321
+#, php-format
+msgid "redirects to %s"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:329
+msgid "Confirmation email"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:331
+msgid "— Leave unchanged —"
+msgstr ""
+
+#. translators: %s: email name
+#: admin/class-bluefox-setup.php:336
+#, php-format
+msgid "%s (no {{verifyLink}})"
+msgstr ""
+
+#. translators: %s: thank-you page URL
+#: admin/class-bluefox-setup.php:348
+#, php-format
+msgid "Double opt-in on with this confirmation email; confirmed subscribers land on %s."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:351
+msgid "None of your bluefox transactional emails contains {{verifyLink}}. Create the confirmation email on the Email templates tab, or add {{verifyLink}} to an email in bluefox."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:351
+#: admin/class-email-templates-tab.php:64
+msgid "Email templates"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:364
+#: includes/class-modules.php:99
+msgid "Subscription preferences page"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:369
+msgid "bluefox’s own page is used"
+msgstr ""
+
+#. translators: %s: URL
+#: admin/class-bluefox-setup.php:371
+#, php-format
+msgid "set to %s"
+msgstr ""
+
+#. translators: %s: preferences page URL
+#: admin/class-bluefox-setup.php:376
+#, php-format
+msgid "Unsubscribe and pause links lead to %s"
+msgstr ""
+
+#. translators: 1: list name, 2: error message
+#: admin/class-bluefox-setup.php:443
+#, php-format
+msgid "“%1$s”: %2$s"
+msgstr ""
+
+#. translators: %s: list name
+#: admin/class-bluefox-setup.php:446
+#, php-format
+msgid "Double opt-in of “%s” is on, with the chosen email and this site’s thank-you page."
+msgstr ""
+
+#. translators: %s: error message
+#: admin/class-bluefox-setup.php:455
+#, php-format
+msgid "Preferences page: %s"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:457
+msgid "Unsubscribe and pause links now lead to this site’s preferences page."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:462
+msgid "Nothing to change: bluefox is already set up like this."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:489
+#: admin/class-email-templates-tab.php:122
+#: admin/class-redirect-check.php:253
+#: admin/views/tab-email-templates.php:48
+#: modules/woo-events/class-settings-tab.php:229
+msgid "Connect bluefox on the General tab first."
+msgstr ""
+
 #: admin/class-checkout-tab.php:35
 #: admin/views/tab-subscribers.php:29
 msgid "Checkout"
@@ -198,20 +365,9 @@ msgstr ""
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr ""
 
-#: admin/class-email-templates-tab.php:64
-msgid "Email templates"
-msgstr ""
-
 #: admin/class-email-templates-tab.php:103
 #: includes/class-email-template-sync.php:49
 msgid "Unknown email template."
-msgstr ""
-
-#: admin/class-email-templates-tab.php:122
-#: admin/class-redirect-check.php:253
-#: admin/views/tab-email-templates.php:48
-#: modules/woo-events/class-settings-tab.php:229
-msgid "Connect bluefox on the General tab first."
 msgstr ""
 
 #: admin/class-email-templates-tab.php:138
@@ -595,7 +751,7 @@ msgid "Load lists"
 msgstr ""
 
 #: admin/views/tab-api.php:67
-msgid "Used by forms and the checkout unless they choose another list. Turn on double opt-in for the list in bluefox, with a confirmation email in your language."
+msgid "Used by forms and the checkout unless they choose another list. Double opt-in is set up under “bluefox setup” below."
 msgstr ""
 
 #: admin/views/tab-api.php:71
@@ -654,7 +810,7 @@ msgstr ""
 
 #: admin/views/tab-checkout.php:53
 #: admin/views/tab-popup.php:75
-#: modules/integrations/elementor/class-elementor-form-action.php:114
+#: modules/integrations/elementor/class-elementor-form-action.php:113
 #: modules/integrations/views/rule-row.php:91
 #: blocks/signup-form/index.js:84
 msgid "Extra tags"
@@ -1005,15 +1161,6 @@ msgstr ""
 
 #: admin/views/tab-email-templates.php:162
 msgid "Transactional: a service email every recipient gets, no unsubscribe link needed."
-msgstr ""
-
-#: admin/views/tab-email-templates.php:168
-#: admin/views/tab-subscribers.php:71
-#: admin/views/tab-subscribers.php:103
-#: modules/woo-events/class-privacy.php:103
-#: modules/woo-events/views/tab-woo-events.php:174
-#: modules/woo-events/views/tab-woo-events.php:286
-msgid "Status"
 msgstr ""
 
 #: admin/views/tab-email-templates.php:172
@@ -1543,7 +1690,7 @@ msgid "bluefox list"
 msgstr ""
 
 #: admin/views/tab-popup.php:69
-#: modules/integrations/elementor/class-elementor-form-action.php:66
+#: modules/integrations/elementor/class-elementor-form-action.php:65
 #: modules/integrations/views/rule-row.php:51
 msgid "Default list"
 msgstr ""
@@ -1942,12 +2089,12 @@ msgid "Last error"
 msgstr ""
 
 #: admin/views/tab-subscribers.php:123
-#: modules/webhooks/class-users-column.php:80
+#: modules/webhooks/class-users-column.php:79
 msgid "paused"
 msgstr ""
 
 #: admin/views/tab-subscribers.php:124
-#: modules/webhooks/class-users-column.php:82
+#: modules/webhooks/class-users-column.php:81
 msgid "unsubscribed"
 msgstr ""
 
@@ -2739,10 +2886,6 @@ msgid "Remind shoppers of carts they left, with a restore link and an optional r
 msgstr ""
 
 #: includes/class-modules.php:99
-msgid "Subscription preferences page"
-msgstr ""
-
-#: includes/class-modules.php:99
 msgid "Your own unsubscribe / pause page on this site instead of the bluefox hosted page."
 msgstr ""
 
@@ -3044,49 +3187,49 @@ msgstr ""
 msgid "Use the WPForms field IDs (shown in the form builder), e.g. 1, 2; name parts as 1.first / 1.last."
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:73
+#: modules/integrations/elementor/class-elementor-form-action.php:72
 #: modules/integrations/views/rule-row.php:48
 msgid "List"
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:82
+#: modules/integrations/elementor/class-elementor-form-action.php:81
 msgid "Email field ID"
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:84
+#: modules/integrations/elementor/class-elementor-form-action.php:83
 msgid "Empty = the first email field."
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:90
+#: modules/integrations/elementor/class-elementor-form-action.php:89
 msgid "Name field ID (optional)"
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:97
+#: modules/integrations/elementor/class-elementor-form-action.php:96
 msgid "Consent field ID"
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:99
+#: modules/integrations/elementor/class-elementor-form-action.php:98
 msgid "An Acceptance or Checkbox field. The visitor is only subscribed when it is ticked."
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:105
+#: modules/integrations/elementor/class-elementor-form-action.php:104
 msgid "This form itself is the newsletter signup"
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:108
+#: modules/integrations/elementor/class-elementor-form-action.php:107
 msgid "Consent is implied by submitting. Only switch this on if the form clearly says that submitting it subscribes to the newsletter. Without a consent field and without this switch, nobody is subscribed."
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:116
+#: modules/integrations/elementor/class-elementor-form-action.php:115
 msgid "Comma separated."
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:122
+#: modules/integrations/elementor/class-elementor-form-action.php:121
 #: modules/integrations/views/rule-row.php:103
 msgid "Custom fields"
 msgstr ""
 
-#: modules/integrations/elementor/class-elementor-form-action.php:125
+#: modules/integrations/elementor/class-elementor-form-action.php:124
 msgid "One per line: form field ID=bluefox contact field name."
 msgstr ""
 
@@ -3617,19 +3760,19 @@ msgstr ""
 msgid "bluefox"
 msgstr ""
 
-#: modules/webhooks/class-users-column.php:61
+#: modules/webhooks/class-users-column.php:60
 msgid "Bounced"
 msgstr ""
 
-#: modules/webhooks/class-users-column.php:64
+#: modules/webhooks/class-users-column.php:63
 msgid "Spam complaint"
 msgstr ""
 
-#: modules/webhooks/class-users-column.php:78
+#: modules/webhooks/class-users-column.php:77
 msgid "subscribed"
 msgstr ""
 
-#: modules/webhooks/class-users-column.php:84
+#: modules/webhooks/class-users-column.php:83
 msgid "not confirmed"
 msgstr ""
 

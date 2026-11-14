@@ -25,6 +25,7 @@ Full documentation: [beamkiller.github.io/connector-for-bluefox-email](https://b
 * Gutenberg block, `[cfbe_form]` shortcode and a configurable popup (scroll, delay, exit intent, page views, page targeting, device, frequency).
 * Promo bar and promo boxes (`[cfbe_promo]`): "Subscribe and get 10% off" with a button that opens the signup form in a dialog; the discount comes from your coupon settings.
 * Double opt-in handled by bluefox.email: the confirmation email is sent by your bluefox list, then the subscriber lands on your own thank-you page (`[cfbe_thankyou]`).
+* bluefox setup on the General tab: shows per list whether double opt-in is on, which confirmation email it uses and where confirmed subscribers land, plus whether the unsubscribe links lead to your own preferences page. Pick the confirmation email from your bluefox transactional emails (only ones with `{{verifyLink}}` can be chosen) and apply everything in bluefox with one click.
 * Redirect link check: if a bluefox list sends confirmed subscribers to another site's thank-you page (an old test site, a staging copy), the plugin warns you and fixes it with one click.
 * Choose the list per form, add tags, optional name and "interests" field (each interest becomes a tag); automatic source and placement tags.
 * Texts, benefits list, colours and corner radius are all editable, with a live preview.
@@ -160,10 +161,17 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 
 == Changelog ==
 
+= 1.1.0 =
+* New: "bluefox setup" on the General tab – choose the double opt-in confirmation email per list from your bluefox transactional emails, and switch on double opt-in, the thank-you page redirect and your own preferences page in bluefox with one click.
+* Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
+
 = 1.0.0 =
 * First public release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+New one-click bluefox setup on the General tab (double opt-in email, thank-you redirect, preferences page).
 
 = 1.0.0 =
 First public release.

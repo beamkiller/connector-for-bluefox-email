@@ -22,8 +22,7 @@ final class List_Options {
 	 * @param string $current Stored list ID.
 	 */
 	public static function lists( string $current = '' ): array {
-		$lists = get_transient( Settings::LISTS_CACHE );
-		$lists = is_array( $lists ) ? $lists : array();
+		$lists = Settings::list_names();
 		if ( '' !== $current && ! isset( $lists[ $current ] ) ) {
 			$lists[ $current ] = $current;
 		}

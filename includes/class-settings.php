@@ -202,6 +202,19 @@ final class Settings {
 	}
 
 	/**
+	 * List names for display (ID => name): the 1-day cache, else the names saved at the last “Load lists”.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function list_names(): array {
+		$lists = get_transient( self::LISTS_CACHE );
+		if ( ! is_array( $lists ) || array() === $lists ) {
+			$lists = get_option( self::KNOWN_LISTS, array() );
+		}
+		return is_array( $lists ) ? $lists : array();
+	}
+
+	/**
 	 * Stores freshly loaded lists: the 1-day cache for the pickers and the lasting allowlist.
 	 *
 	 * @param array<string, string> $lists List ID => name.

@@ -2,7 +2,7 @@
 
 Switch: **Subscription preferences page** (on by default). Texts: [Emails tab](../settings/emails.md).
 
-Your own, translatable unsubscribe and pause page on your site, instead of the page hosted by bluefox. Setup is described in [Thank-you and preferences pages](../getting-started/pages.md): a page with the `[cfbe_preferences]` shortcode, set as the bluefox project's **Custom subscription preferences URL**.
+Your own, translatable unsubscribe and pause page on your site, instead of the page hosted by bluefox. Setup is described in [Thank-you and preferences pages](../getting-started/pages.md): a page with the `[cfbe_preferences]` shortcode, set as the bluefox project's **Custom subscription preferences URL** (one click under **bluefox setup** on the [General tab](../settings/general.md#bluefox-setup)).
 
 ![Newsletter preferences page section on the Emails tab: page URL, title and intro](../assets/images/settings-preferences.png)
 

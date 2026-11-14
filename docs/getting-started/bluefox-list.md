@@ -2,7 +2,11 @@
 
 The plugin relies on bluefox.email for double opt-in (DOI). It adds the visitor to the list without a status, bluefox sends its confirmation email, and the contact becomes `active` when they click the link. Only then does the plugin count the signup as confirmed and, if the [welcome coupon](../features/welcome-coupon.md) is on, create the coupon.
 
-Configure each list you use once in bluefox:
+Configure each list you use once in bluefox.
+
+!!! tip "One click instead"
+    Since 1.1.0 the **bluefox setup** section of the [General tab](../settings/general.md#bluefox-setup) does steps 1, 3 and 4 for you, and step 2 once a confirmation email exists: choose it per list and click **Apply in bluefox**.
+
 
 1. **Turn on double opt-in** for the list.
 2. **Confirmation email** – create a transactional email (type HTML) in your language and choose it as the list's confirmation email. It must contain the `{{verifyLink}}` merge tag. A ready-made template is on the plugin's **Coupon** tab (*Double opt-in confirmation template*) and in the plugin folder at `templates/emails/confirm-subscription.html`.

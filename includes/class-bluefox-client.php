@@ -88,6 +88,16 @@ class Bluefox_Client {
 	}
 
 	/**
+	 * Updates project settings (e.g. `customSubscriptionPreferencesUrl`).
+	 *
+	 * @param array $data Fields to change.
+	 * @return array|\WP_Error
+	 */
+	public function update_project( array $data ) {
+		return $this->request( 'PATCH', '', $data );
+	}
+
+	/**
 	 * Subscriber lists (max 30).
 	 *
 	 * @return array|\WP_Error List items.

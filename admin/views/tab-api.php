@@ -64,7 +64,7 @@ if ( '' !== $cfbe_values['list_id'] && ! isset( $cfbe_lists[ $cfbe_values['list_
 				</select>
 				<button type="button" class="button" id="cfbe-load-lists"><?php esc_html_e( 'Load lists', 'connector-for-bluefox-email' ); ?></button>
 				<span class="cfbe-result" id="cfbe-lists-result" aria-live="polite"></span>
-				<p class="description"><?php esc_html_e( 'Used by forms and the checkout unless they choose another list. Turn on double opt-in for the list in bluefox, with a confirmation email in your language.', 'connector-for-bluefox-email' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Used by forms and the checkout unless they choose another list. Double opt-in is set up under “bluefox setup” below.', 'connector-for-bluefox-email' ); ?></p>
 			</td>
 		</tr>
 	</table>
@@ -102,3 +102,4 @@ if ( '' !== $cfbe_values['list_id'] && ! isset( $cfbe_lists[ $cfbe_values['list_
 	</table>
 	<?php submit_button(); ?>
 </form>
+<?php do_action( 'cfbe_api_tab_after' ); ?>

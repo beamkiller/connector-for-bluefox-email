@@ -62,9 +62,8 @@ class Elementor_Form_Action extends \ElementorPro\Modules\Forms\Classes\Action_B
 			)
 		);
 
-		$lists   = get_transient( Settings::LISTS_CACHE );
 		$options = array( '' => esc_html__( 'Default list', 'connector-for-bluefox-email' ) );
-		foreach ( is_array( $lists ) ? $lists : array() as $id => $name ) {
+		foreach ( Settings::list_names() as $id => $name ) {
 			$options[ (string) $id ] = (string) $name;
 		}
 		$widget->add_control(

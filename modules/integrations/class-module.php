@@ -134,8 +134,7 @@ final class Module {
 	public function render_tab(): void {
 		$cfbe_values       = (array) Settings::get( self::AREA );
 		$cfbe_integrations = self::integrations( $this->dispatcher );
-		$cfbe_lists        = get_transient( Settings::LISTS_CACHE );
-		$cfbe_lists        = is_array( $cfbe_lists ) ? $cfbe_lists : array();
+		$cfbe_lists        = Settings::list_names();
 		$cfbe_option       = Settings::option_name( self::AREA );
 		include __DIR__ . '/views/tab-integrations.php';
 	}
