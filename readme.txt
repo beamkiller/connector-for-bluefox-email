@@ -93,7 +93,7 @@ What is sent and when:
 * When the Email delivery module is on: every email sent with `wp_mail()` (recipients, subject, body, attachments) is sent to bluefox.email for delivery.
 * When order or abandoned cart emails are on: order or cart details used in the email (order number, items, totals, customer name and address).
 * On the preferences page: the visitor's own subscription token, to read and change their subscription.
-* In the admin: your lists, emails, sender identities and webhook settings when you load or change them. Registering the webhook sends your site's webhook URL and uses your API key as its secret; the redirect link check reads your lists' double opt-in settings and, when you click its fix button, updates their redirect link.
+* In the admin: your lists, emails, sender identities and webhook settings when you load or change them. Registering the webhook sends your site's webhook URL and uses your API key as its secret; the redirect link check reads your lists' double opt-in settings and, when you click its fix button, updates their redirect link. The bluefox setup on the General tab reads your lists, transactional emails and project settings when the tab is opened (cached for ten minutes) and, only when you click Apply in bluefox, updates the double opt-in settings of the lists the plugin uses (confirmation email, your thank-you page URL) and the project's custom subscription preferences URL (your preferences page URL). The optional AI agent abilities make the same calls.
 * bluefox.email sends webhook events (subscription changes, bounces, complaints, opens, clicks) to your site only if you register the webhook.
 
 bluefox.email terms of service: https://bluefox.email/terms-of-use
@@ -105,6 +105,7 @@ bluefox.email privacy policy: https://bluefox.email/privacy-policy
 2. Go to **bluefox.email → General**, enter your project ID and API key (or define `CFBE_BLUEFOX_API_KEY` in `wp-config.php`), click **Test connection** and **Load lists**, then choose your default list.
 3. Switch on the features you need under **Features**.
 4. On the **Email templates** tab, create the double opt-in confirmation email with one click: the plugin turns on double opt-in for your list and sets the email and your thank-you page as the redirect link. Create the other emails (welcome coupon, reminders, order emails) the same way.
+   Under **bluefox setup** on the General tab you can check and apply the double opt-in email, redirect link and preferences page for every list the plugin uses.
 5. Create the thank-you page with `[cfbe_thankyou]` (default URL `/newsletter-confirmed/`) and add a signup form: block, `[cfbe_form]`, popup or promo bar.
 
 Step-by-step guide: [Getting started](https://beamkiller.github.io/connector-for-bluefox-email/getting-started/).

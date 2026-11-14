@@ -278,13 +278,13 @@ final class Bluefox_Setup {
 	}
 
 	/**
-	 * Status badge.
+	 * Prints a status badge.
 	 *
 	 * @param bool   $ok    Good.
 	 * @param string $label Text.
 	 */
-	private static function badge( bool $ok, string $label ): string {
-		return '<span class="cfbe-status cfbe-status-' . ( $ok ? 'rewarded' : 'failed' ) . '">' . esc_html( $label ) . '</span>';
+	private static function badge( bool $ok, string $label ): void {
+		printf( '<span class="%1$s">%2$s</span>', esc_attr( 'cfbe-status cfbe-status-' . ( $ok ? 'rewarded' : 'failed' ) ), esc_html( $label ) );
 	}
 
 	/**
@@ -302,13 +302,14 @@ final class Bluefox_Setup {
 			sprintf( __( 'Double opt-in of “%s”', 'connector-for-bluefox-email' ), $row['name'] )
 		) . '</strong></td><td>';
 		if ( ! $row['found'] ) {
-			echo self::badge( false, __( 'List not found in bluefox', 'connector-for-bluefox-email' ) ) . '</td><td></td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- badge() escapes.
+			self::badge( false, __( 'List not found in bluefox', 'connector-for-bluefox-email' ) );
+			echo '</td><td></td></tr>';
 			return;
 		}
 		if ( $row['ok'] ) {
-			echo self::badge( true, __( 'Ready', 'connector-for-bluefox-email' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- badge() escapes.
+			self::badge( true, __( 'Ready', 'connector-for-bluefox-email' ) );
 		} elseif ( ! $row['active'] ) {
-			echo self::badge( false, __( 'Off', 'connector-for-bluefox-email' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- badge() escapes.
+			self::badge( false, __( 'Off', 'connector-for-bluefox-email' ) );
 		} else {
 			$problems = array();
 			if ( ! $row['email_ok'] ) {
@@ -320,7 +321,7 @@ final class Bluefox_Setup {
 					/* translators: %s: URL */
 					: sprintf( __( 'redirects to %s', 'connector-for-bluefox-email' ), $row['redirect'] );
 			}
-			echo self::badge( false, implode( '; ', $problems ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- badge() escapes.
+			self::badge( false, implode( '; ', $problems ) );
 		}
 		echo '</td><td>';
 
@@ -368,13 +369,13 @@ final class Bluefox_Setup {
 		$ok       = '' !== $current && Redirect_Check::same_url( $current, $expected );
 		echo '<tr><td><strong>' . esc_html__( 'Subscription preferences page', 'connector-for-bluefox-email' ) . '</strong></td><td>';
 		if ( $ok ) {
-			echo self::badge( true, __( 'Ready', 'connector-for-bluefox-email' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- badge() escapes.
+			self::badge( true, __( 'Ready', 'connector-for-bluefox-email' ) );
 		} else {
 			$label = '' === $current
 				? __( 'bluefox’s own page is used', 'connector-for-bluefox-email' )
 				/* translators: %s: URL */
 				: sprintf( __( 'set to %s', 'connector-for-bluefox-email' ), $current );
-			echo self::badge( false, $label ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- badge() escapes.
+			self::badge( false, $label );
 		}
 		echo '</td><td><label><input type="checkbox" name="prefs" value="1"' . checked( ! $ok, true, false ) . '> ' . esc_html(
 			/* translators: %s: preferences page URL */
@@ -553,7 +554,7 @@ final class Bluefox_Setup {
 		$do = isset( $_POST['do'] ) ? sanitize_key( wp_unslash( $_POST['do'] ) ) : '';
 		if ( 'apply' === $do ) {
 			$choices = array();
-			$raw     = isset( $_POST['email'] ) && is_array( $_POST['email'] ) ? wp_unslash( $_POST['email'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per item below.
+			$raw     = isset( $_POST['email'] ) && is_array( $_POST['email'] ) ? map_deep( wp_unslash( $_POST['email'] ), 'sanitize_text_field' ) : array();
 			foreach ( $raw as $list_id => $email_id ) {
 				$choices[ Form_Config::clean_list_id( (string) $list_id ) ] = Form_Config::clean_list_id( (string) $email_id );
 			}
