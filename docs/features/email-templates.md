@@ -17,7 +17,7 @@ The cards are grouped:
 
 | Template | Type | Shown when | Wired up on **Create** |
 |---|---|---|---|
-| Double opt-in confirmation | transactional | Signup forms on | Double opt-in is switched on for the chosen list with this email, and your thank-you page becomes the list's redirect link. |
+| Double opt-in confirmation | transactional | Signup forms on | Double opt-in is switched on for the chosen list with this email, and your thank-you page becomes the list's redirect link; the list's confirmation title and message are kept. For other lists, or to switch back to another email, use **bluefox setup** on the [General tab](../settings/general.md#bluefox-setup). Its *In use* status shows the lists that really use the email in bluefox. |
 | Welcome coupon | transactional | Welcome coupon on | Selected as **Coupon email ID** on the Coupon tab. |
 | Coupon expiry reminder | triggered | Welcome coupon on | Selected as **Reminder email ID** on the Coupon tab: unused welcome coupons get it once, *Reminder before expiry* days before they expire. |
 | First order thank-you | triggered or transactional (you choose) | Order emails on | Rule *First paid order of a customer*. |

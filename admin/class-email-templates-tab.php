@@ -82,10 +82,13 @@ final class Email_Templates_Tab {
 		$cfbe_notice     = get_transient( self::NOTICE . get_current_user_id() );
 		$cfbe_templates  = Email_Templates::available();
 		$cfbe_identities = $cfbe_ready ? $this->identities( $client ) : array();
-		$cfbe_lists      = Form_Config::known_lists();
-		$cfbe_default    = (string) Settings::get( 'api', 'list_id' );
-		$cfbe_action     = self::ACTION;
-		$cfbe_design     = self::DESIGN;
+		if ( $cfbe_ready && '' !== (string) ( Email_Templates::record( 'confirm' )['email_id'] ?? '' ) ) {
+			( new Bluefox_Setup( $this->client ) )->state( $client ); // Live "In use" for the confirmation email.
+		}
+		$cfbe_lists   = Form_Config::known_lists();
+		$cfbe_default = (string) Settings::get( 'api', 'list_id' );
+		$cfbe_action  = self::ACTION;
+		$cfbe_design  = self::DESIGN;
 		delete_transient( self::NOTICE . get_current_user_id() );
 		include __DIR__ . '/views/tab-email-templates.php';
 	}

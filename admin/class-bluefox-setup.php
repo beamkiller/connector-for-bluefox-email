@@ -326,6 +326,7 @@ final class Bluefox_Setup {
 
 		$name     = 'email[' . $id . ']';
 		$selected = self::default_email( $row, $emails );
+		$plugin   = (string) ( Email_Templates::record( 'confirm' )['email_id'] ?? '' );
 		echo '<label class="screen-reader-text" for="cfbe-setup-' . esc_attr( $id ) . '">' . esc_html__( 'Confirmation email', 'connector-for-bluefox-email' ) . '</label>';
 		echo '<select id="cfbe-setup-' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '">';
 		echo '<option value="">' . esc_html__( '— Leave unchanged —', 'connector-for-bluefox-email' ) . '</option>';
@@ -334,6 +335,10 @@ final class Bluefox_Setup {
 				? $email['name']
 				/* translators: %s: email name */
 				: sprintf( __( '%s (no {{verifyLink}})', 'connector-for-bluefox-email' ), $email['name'] );
+			if ( '' !== $plugin && (string) $email_id === $plugin ) {
+				/* translators: %s: email name */
+				$label = sprintf( __( '%s (from Email templates)', 'connector-for-bluefox-email' ), $label );
+			}
 			printf(
 				'<option value="%1$s"%2$s%3$s>%4$s</option>',
 				esc_attr( (string) $email_id ),

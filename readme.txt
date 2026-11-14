@@ -164,6 +164,8 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 = 1.1.0 =
 * New: "bluefox setup" on the General tab – choose the double opt-in confirmation email per list from your bluefox transactional emails, and switch on double opt-in, the thank-you page redirect and your own preferences page in bluefox with one click.
 * Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
+* Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
+* Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
 
 = 1.0.0 =
 * First public release.

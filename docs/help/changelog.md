@@ -6,6 +6,8 @@ Beta for testing: install the zip from the [GitHub pre-release](https://github.c
 
 - **bluefox setup** on the General tab: choose the double opt-in confirmation email per list from your bluefox transactional emails (only emails with `{{verifyLink}}` are selectable), and switch on double opt-in, the thank-you page redirect and your own preferences page in bluefox with one click. See [General tab](../settings/general.md#bluefox-setup).
 - Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
+- Fix: creating the double opt-in email on the [Email templates](../features/email-templates.md) tab cleared the list's confirmation title and message in bluefox.
+- Email templates: the double opt-in email's *In use* status now reflects which lists really use it in bluefox (with a link to **bluefox setup** when none does), and the email is marked *(from Email templates)* in the bluefox setup.
 
 ## 1.0.0
 

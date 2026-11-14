@@ -173,16 +173,20 @@ final class Email_Template_Sync {
 			if ( '' === $list_id ) {
 				return array( __( 'Choose it as the double opt-in email of your list in bluefox.', 'connector-for-bluefox-email' ) );
 			}
+			// bluefox replaces the whole doubleOptIn object: send the list's confirmation texts back.
+			$current = array();
+			$lists   = $this->client->get_lists();
+			foreach ( is_array( $lists ) ? $lists : array() as $list ) {
+				if ( is_array( $list ) && (string) ( $list['_id'] ?? '' ) === $list_id && is_array( $list['doubleOptIn'] ?? null ) ) {
+					$current = $list['doubleOptIn'];
+				}
+			}
 			$result = $this->client->update_list(
 				$list_id,
-				array(
-					'doubleOptIn' => array(
-						'active'       => true,
-						'emailId'      => $email_id,
-						'redirectLink' => Settings::thankyou_url(),
-					),
-				)
+				array( 'doubleOptIn' => Admin\Bluefox_Setup::double_opt_in( $current, $email_id, Settings::thankyou_url() ) )
 			);
+			Admin\Bluefox_Setup::flush();
+			Admin\Redirect_Check::flush();
 			if ( is_wp_error( $result ) ) {
 				/* translators: %s: error message */
 				return array( sprintf( __( 'The list could not be updated (%s): choose the email as its double opt-in email in bluefox.', 'connector-for-bluefox-email' ), $result->get_error_message() ) );

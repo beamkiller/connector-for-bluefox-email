@@ -464,9 +464,34 @@ final class Email_Templates {
 		}
 
 		if ( 'confirm' === $key ) {
+			$setup_url = $tab_url( 'api' ) . '#cfbe-setup';
+			$state     = get_transient( Admin\Bluefox_Setup::CACHE );
+			if ( is_array( $state ) && isset( $state['lists'] ) && is_array( $state['lists'] ) ) {
+				$names = array();
+				foreach ( $state['lists'] as $item ) {
+					$doi = is_array( $item ) && is_array( $item['doubleOptIn'] ?? null ) ? $item['doubleOptIn'] : array();
+					if ( ! empty( $doi['active'] ) && (string) ( $doi['emailId'] ?? '' ) === $email_id ) {
+						$names[] = '“' . (string) ( $item['name'] ?? $item['_id'] ?? '' ) . '”';
+					}
+				}
+				if ( array() === $names ) {
+					return array(
+						'used' => false,
+						'text' => __( 'Not used by any list: choose it as the confirmation email under “bluefox setup” on the General tab.', 'connector-for-bluefox-email' ),
+						'url'  => $setup_url,
+					);
+				}
+				return array(
+					'used' => true,
+					/* translators: %s: subscriber list names in quotes */
+					'text' => sprintf( __( 'In use: double opt-in email of %s.', 'connector-for-bluefox-email' ), implode( ', ', $names ) ),
+					'url'  => $setup_url,
+				);
+			}
 			$list = (string) ( $record['used_on_list'] ?? '' );
 			if ( '' === $list ) {
-				$unused['text'] = __( 'Not used yet: choose it as the double opt-in email of your list in bluefox.', 'connector-for-bluefox-email' );
+				$unused['text'] = __( 'Not used by any list: choose it as the confirmation email under “bluefox setup” on the General tab.', 'connector-for-bluefox-email' );
+				$unused['url']  = $setup_url;
 				return $unused;
 			}
 			$lists = Form_Config::known_lists();

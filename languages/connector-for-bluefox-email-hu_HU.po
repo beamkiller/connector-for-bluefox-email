@@ -47,12 +47,12 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:335
-#: admin/class-bluefox-setup.php:475
+#: admin/class-bluefox-setup.php:480
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
-#: admin/class-email-templates-tab.php:100
-#: admin/class-email-templates-tab.php:173
+#: admin/class-email-templates-tab.php:103
+#: admin/class-email-templates-tab.php:176
 #: admin/class-redirect-check.php:246
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
@@ -200,7 +200,7 @@ msgid "List not found in bluefox"
 msgstr "A lista nem található a bluefox-ban"
 
 #: admin/class-bluefox-setup.php:309
-#: admin/class-bluefox-setup.php:366
+#: admin/class-bluefox-setup.php:371
 msgid "Ready"
 msgstr "Rendben"
 
@@ -222,84 +222,90 @@ msgstr "nem erre az oldalra irányít át"
 msgid "redirects to %s"
 msgstr "ide irányít át: %s"
 
-#: admin/class-bluefox-setup.php:329
+#: admin/class-bluefox-setup.php:330
 msgid "Confirmation email"
 msgstr "Megerősítő e-mail"
 
-#: admin/class-bluefox-setup.php:331
+#: admin/class-bluefox-setup.php:332
 msgid "— Leave unchanged —"
 msgstr "— Változatlanul hagyás —"
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:336
+#: admin/class-bluefox-setup.php:337
 #, php-format
 msgid "%s (no {{verifyLink}})"
 msgstr "%s (nincs benne {{verifyLink}})"
 
+#. translators: %s: email name
+#: admin/class-bluefox-setup.php:340
+#, php-format
+msgid "%s (from Email templates)"
+msgstr "%s (az E-mail sablonokból)"
+
 #. translators: %s: thank-you page URL
-#: admin/class-bluefox-setup.php:348
+#: admin/class-bluefox-setup.php:353
 #, php-format
 msgid "Double opt-in on with this confirmation email; confirmed subscribers land on %s."
 msgstr "Dupla megerősítés bekapcsolva ezzel a megerősítő e-maillel; a megerősített feliratkozók ide érkeznek: %s."
 
-#: admin/class-bluefox-setup.php:351
+#: admin/class-bluefox-setup.php:356
 msgid "None of your bluefox transactional emails contains {{verifyLink}}. Create the confirmation email on the Email templates tab, or add {{verifyLink}} to an email in bluefox."
 msgstr "Egyik bluefox tranzakciós e-mailed sem tartalmazza a {{verifyLink}} változót. Hozd létre a megerősítő e-mailt az E-mail sablonok fülön, vagy tedd bele a {{verifyLink}} változót egy e-mailbe a bluefox-ban."
 
-#: admin/class-bluefox-setup.php:351
+#: admin/class-bluefox-setup.php:356
 #: admin/class-email-templates-tab.php:64
 msgid "Email templates"
 msgstr "E-mail sablonok"
 
-#: admin/class-bluefox-setup.php:364
+#: admin/class-bluefox-setup.php:369
 #: includes/class-modules.php:99
 msgid "Subscription preferences page"
 msgstr "Feliratkozási beállítások oldal"
 
-#: admin/class-bluefox-setup.php:369
+#: admin/class-bluefox-setup.php:374
 msgid "bluefox’s own page is used"
 msgstr "a bluefox saját oldala van használatban"
 
 #. translators: %s: URL
-#: admin/class-bluefox-setup.php:371
+#: admin/class-bluefox-setup.php:376
 #, php-format
 msgid "set to %s"
 msgstr "beállított érték: %s"
 
 #. translators: %s: preferences page URL
-#: admin/class-bluefox-setup.php:376
+#: admin/class-bluefox-setup.php:381
 #, php-format
 msgid "Unsubscribe and pause links lead to %s"
 msgstr "A leiratkozó és szüneteltető linkek ide vezetnek: %s"
 
 #. translators: 1: list name, 2: error message
-#: admin/class-bluefox-setup.php:443
+#: admin/class-bluefox-setup.php:448
 #, php-format
 msgid "“%1$s”: %2$s"
 msgstr "„%1$s”: %2$s"
 
 #. translators: %s: list name
-#: admin/class-bluefox-setup.php:446
+#: admin/class-bluefox-setup.php:451
 #, php-format
 msgid "Double opt-in of “%s” is on, with the chosen email and this site’s thank-you page."
 msgstr "„%s” dupla megerősítése bekapcsolva, a kiválasztott e-maillel és ennek az oldalnak a köszönő oldalával."
 
 #. translators: %s: error message
-#: admin/class-bluefox-setup.php:455
+#: admin/class-bluefox-setup.php:460
 #, php-format
 msgid "Preferences page: %s"
 msgstr "Beállítások oldal: %s"
 
-#: admin/class-bluefox-setup.php:457
+#: admin/class-bluefox-setup.php:462
 msgid "Unsubscribe and pause links now lead to this site’s preferences page."
 msgstr "A leiratkozó és szüneteltető linkek mostantól ennek az oldalnak a beállítások oldalára vezetnek."
 
-#: admin/class-bluefox-setup.php:462
+#: admin/class-bluefox-setup.php:467
 msgid "Nothing to change: bluefox is already set up like this."
 msgstr "Nincs mit módosítani: a bluefox már így van beállítva."
 
-#: admin/class-bluefox-setup.php:489
-#: admin/class-email-templates-tab.php:122
+#: admin/class-bluefox-setup.php:494
+#: admin/class-email-templates-tab.php:125
 #: admin/class-redirect-check.php:253
 #: admin/views/tab-email-templates.php:48
 #: modules/woo-events/class-settings-tab.php:229
@@ -359,26 +365,26 @@ msgstr "akciós termékekre nem érvényes"
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr "Létrehozva: %1$s. Már megvolt: %2$s."
 
-#: admin/class-email-templates-tab.php:103
+#: admin/class-email-templates-tab.php:106
 #: includes/class-email-template-sync.php:49
 msgid "Unknown email template."
 msgstr "Ismeretlen e-mail sablon."
 
-#: admin/class-email-templates-tab.php:138
+#: admin/class-email-templates-tab.php:141
 msgid "The email was created in bluefox."
 msgstr "Az e-mail létrejött a bluefox-ban."
 
-#: admin/class-email-templates-tab.php:148
+#: admin/class-email-templates-tab.php:151
 msgid "The email was updated in bluefox."
 msgstr "Az e-mail frissült a bluefox-ban."
 
 #. translators: %s: email address
-#: admin/class-email-templates-tab.php:160
+#: admin/class-email-templates-tab.php:163
 #, php-format
 msgid "A test was sent to %s with sample data."
 msgstr "Teszt elküldve ide: %s, mintaadatokkal."
 
-#: admin/class-email-templates-tab.php:164
+#: admin/class-email-templates-tab.php:167
 msgid "Unknown action."
 msgstr "Ismeretlen művelet."
 
@@ -2439,32 +2445,32 @@ msgid "Choose it as the double opt-in email of your list in bluefox."
 msgstr "Állítsd be a listád dupla megerősítő (double opt-in) e-mailjeként a bluefox-ban."
 
 #. translators: %s: error message
-#: includes/class-email-template-sync.php:188
+#: includes/class-email-template-sync.php:192
 #, php-format
 msgid "The list could not be updated (%s): choose the email as its double opt-in email in bluefox."
 msgstr "A listát nem sikerült frissíteni (%s): állítsd be az e-mailt a lista dupla megerősítő e-mailjeként a bluefox-ban."
 
-#: includes/class-email-template-sync.php:193
+#: includes/class-email-template-sync.php:197
 msgid "Double opt-in is on for the list, with this email and your thank-you page as the redirect link."
 msgstr "A dupla megerősítés be van kapcsolva a listánál, ezzel az e-maillel, átirányító linkként pedig a köszönő oldaladdal."
 
-#: includes/class-email-template-sync.php:198
+#: includes/class-email-template-sync.php:202
 msgid "Selected as the coupon email on the Coupon tab."
 msgstr "Kiválasztva kupon e-mailként a Kupon fülön."
 
-#: includes/class-email-template-sync.php:203
+#: includes/class-email-template-sync.php:207
 msgid "Selected as the reminder email on the Coupon tab. Reminders start with the next hourly check."
 msgstr "Kiválasztva emlékeztető e-mailként a Kupon fülön. Az emlékeztetők a következő óránkénti ellenőrzéssel indulnak."
 
-#: includes/class-email-template-sync.php:222
+#: includes/class-email-template-sync.php:226
 msgid "A rule for this event already exists: select the new email in it if you want to use it."
 msgstr "Erre az eseményre már létezik szabály: ha az új e-mailt szeretnéd használni, válaszd ki benne."
 
-#: includes/class-email-template-sync.php:235
+#: includes/class-email-template-sync.php:239
 msgid "The new email was selected in the existing rule for this event, and the rule was switched on."
 msgstr "Az új e-mail kiválasztásra került az eseményhez tartozó meglévő szabályban, és a szabály bekapcsolt."
 
-#: includes/class-email-template-sync.php:248
+#: includes/class-email-template-sync.php:252
 msgid "A rule that sends this email was added and switched on."
 msgstr "Hozzáadtunk és bekapcsoltunk egy szabályt, amely ezt az e-mailt küldi."
 
@@ -2783,49 +2789,56 @@ msgstr "Értékelés írása"
 msgid "Total"
 msgstr "Összesen"
 
-#: includes/class-email-templates.php:469
-msgid "Not used yet: choose it as the double opt-in email of your list in bluefox."
-msgstr "Még nincs használatban: állítsd be a listád dupla megerősítő (double opt-in) e-mailjeként a bluefox-ban."
+#: includes/class-email-templates.php:480
+#: includes/class-email-templates.php:493
+msgid "Not used by any list: choose it as the confirmation email under “bluefox setup” on the General tab."
+msgstr "Egyik lista sem használja: válaszd ki megerősítő e-mailként az Általános fül „bluefox beállítás” részében."
+
+#. translators: %s: subscriber list names in quotes
+#: includes/class-email-templates.php:487
+#, php-format
+msgid "In use: double opt-in email of %s."
+msgstr "Használatban: %s dupla megerősítő e-mailje."
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:476
+#: includes/class-email-templates.php:501
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr "Használatban: a(z) „%s” lista dupla megerősítő (double opt-in) e-mailje."
 
-#: includes/class-email-templates.php:485
+#: includes/class-email-templates.php:510
 msgid "In use: coupon email on the Coupon tab."
 msgstr "Használatban: kupon e-mail a Kupon fülön."
 
-#: includes/class-email-templates.php:489
+#: includes/class-email-templates.php:514
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr "Még nincs használatban: válaszd ki kupon e-mailként a Kupon fülön."
 
-#: includes/class-email-templates.php:498
+#: includes/class-email-templates.php:523
 msgid "In use: reminder email on the Coupon tab."
 msgstr "Használatban: emlékeztető e-mail a Kupon fülön."
 
-#: includes/class-email-templates.php:502
+#: includes/class-email-templates.php:527
 msgid "Not used yet: select it as the reminder email on the Coupon tab."
 msgstr "Még nincs használatban: válaszd ki emlékeztető e-mailként a Kupon fülön."
 
-#: includes/class-email-templates.php:515
+#: includes/class-email-templates.php:540
 msgid "In use: abandoned cart reminder (on)."
 msgstr "Használatban: elhagyott kosár emlékeztető (bekapcsolva)."
 
-#: includes/class-email-templates.php:515
+#: includes/class-email-templates.php:540
 msgid "In use: Order emails rule (on)."
 msgstr "Használatban: Rendelési e-mailek szabály (bekapcsolva)."
 
-#: includes/class-email-templates.php:516
+#: includes/class-email-templates.php:541
 msgid "Selected in a rule that is switched off."
 msgstr "Egy kikapcsolt szabályban van kiválasztva."
 
-#: includes/class-email-templates.php:522
+#: includes/class-email-templates.php:547
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr "Még nincs használatban: válaszd ki emlékeztetőként az Elhagyott kosarak fülön."
 
-#: includes/class-email-templates.php:523
+#: includes/class-email-templates.php:548
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr "Még nincs használatban: válaszd ki egy szabályban a Rendelési e-mailek fülön."
 
