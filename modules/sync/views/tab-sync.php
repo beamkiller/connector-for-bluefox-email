@@ -69,6 +69,50 @@ $cfbe_labels = Fields::labels();
 				<p class="description"><?php esc_html_e( 'Tags are added to the existing ones; nothing is removed.', 'connector-for-bluefox-email' ); ?></p>
 			</td>
 		</tr>
+		<?php if ( $cfbe_woo ) : ?>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'Purchased product tags', 'connector-for-bluefox-email' ); ?></th>
+			<td>
+				<label><input type="checkbox" name="<?php echo esc_attr( $cfbe_name( 'product_tags' ) ); ?>" value="1" <?php checked( $cfbe_values['product_tags'] ); ?>>
+					<?php esc_html_e( 'Tag contacts who bought one of the products below', 'connector-for-bluefox-email' ); ?>
+				</label>
+				<p>
+					<label for="cfbe-sync-products" class="screen-reader-text"><?php esc_html_e( 'Products', 'connector-for-bluefox-email' ); ?></label>
+					<select id="cfbe-sync-products" class="wc-product-search" multiple="multiple" style="width: 100%; max-width: 40em;" name="<?php echo esc_attr( $cfbe_name( 'product_tag_ids' ) ); ?>[]" data-placeholder="<?php esc_attr_e( 'Search for a product…', 'connector-for-bluefox-email' ); ?>" data-action="woocommerce_json_search_products" data-minimum_input_length="2">
+						<?php foreach ( $cfbe_products as $cfbe_product_id => $cfbe_product_name ) : ?>
+							<option value="<?php echo esc_attr( (string) $cfbe_product_id ); ?>" selected="selected"><?php echo esc_html( $cfbe_product_name ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</p>
+				<p>
+					<label for="cfbe-sync-tag-prefix"><?php esc_html_e( 'Tag prefix', 'connector-for-bluefox-email' ); ?></label>
+					<input type="text" id="cfbe-sync-tag-prefix" class="regular-text code" maxlength="40" pattern="[a-z0-9_\-]+" name="<?php echo esc_attr( $cfbe_name( 'product_tag_prefix' ) ); ?>" value="<?php echo esc_attr( $cfbe_values['product_tag_prefix'] ); ?>">
+				</p>
+				<p class="description">
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: 1: example tag, 2: maximum number of products */
+							__( 'Each chosen product becomes a tag such as %1$s on everyone with a paid order of it (variations count as their product), so you can build segments and campaigns for its buyers. Type at least two letters to search; up to %2$d products. Tags are only added, never removed. To tag earlier orders, run “Sync all existing users/customers now” below after saving.', 'connector-for-bluefox-email' ),
+							$cfbe_values['product_tag_prefix'] . 'example-product',
+							\CFBE\Sync\Fields::PRODUCT_TAG_MAX
+						)
+					);
+					?>
+				</p>
+			</td>
+		</tr>
+		<?php else : ?>
+		<tr class="hidden">
+			<td colspan="2">
+				<input type="hidden" name="<?php echo esc_attr( $cfbe_name( 'product_tags' ) ); ?>" value="<?php echo $cfbe_values['product_tags'] ? '1' : ''; ?>">
+				<input type="hidden" name="<?php echo esc_attr( $cfbe_name( 'product_tag_prefix' ) ); ?>" value="<?php echo esc_attr( $cfbe_values['product_tag_prefix'] ); ?>">
+				<?php foreach ( $cfbe_values['product_tag_ids'] as $cfbe_product_id ) : ?>
+					<input type="hidden" name="<?php echo esc_attr( $cfbe_name( 'product_tag_ids' ) ); ?>[]" value="<?php echo esc_attr( (string) (int) $cfbe_product_id ); ?>">
+				<?php endforeach; ?>
+			</td>
+		</tr>
+		<?php endif; ?>
 	</table>
 
 	<h2><?php esc_html_e( 'Fields', 'connector-for-bluefox-email' ); ?></h2>

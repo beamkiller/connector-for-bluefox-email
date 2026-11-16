@@ -82,7 +82,8 @@ class Contact_Syncer {
 		$map      = Fields::active_map( $settings, Modules::woocommerce_active() );
 		$user     = get_user_by( 'email', $email );
 		$user     = is_object( $user ) ? $user : null;
-		$data     = $this->collector->collect( $email, $user, array_keys( $map ) );
+		$products = Modules::woocommerce_active() ? Fields::tagged_products( $settings ) : array();
+		$data     = $this->collector->collect( $email, $user, array_keys( $map ), $products );
 
 		if ( ! $data['has_user'] && 0 === $data['paid_orders'] ) {
 			return self::result( self::NO_DATA );
@@ -111,6 +112,12 @@ class Contact_Syncer {
 		}
 		if ( ! empty( $settings['tag_customer'] ) && $data['paid_orders'] > 0 ) {
 			$add_tags[] = Fields::TAG_CUSTOMER;
+		}
+		foreach ( (array) ( $data['bought'] ?? array() ) as $product_id ) {
+			$tag = Fields::product_tag( (int) $product_id, (string) $settings['product_tag_prefix'] );
+			if ( '' !== $tag ) {
+				$add_tags[] = $tag;
+			}
 		}
 
 		$contact = $this->client->get_contact( $email );

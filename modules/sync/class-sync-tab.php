@@ -83,6 +83,11 @@ class Sync_Tab {
 		if ( 'toplevel_page_' . Admin_Page::SLUG !== $hook || 'sync' !== $tab ) {
 			return;
 		}
+		if ( Modules::woocommerce_active() ) {
+			// WooCommerce's own AJAX product search (selectWoo): only matching products are loaded, fine for big stores.
+			wp_enqueue_script( 'wc-enhanced-select' );
+			wp_enqueue_style( 'woocommerce_admin_styles' );
+		}
 		wp_enqueue_script( 'cfbe-sync-admin', CFBE_URL . 'modules/sync/assets/sync-admin.js', array(), \CFBE\Plugin::asset_version( 'modules/sync/assets/sync-admin.js' ), true );
 		wp_localize_script(
 			'cfbe-sync-admin',
@@ -108,7 +113,24 @@ class Sync_Tab {
 		$cfbe_woo        = Modules::woocommerce_active();
 		$cfbe_progress   = Backfill::progress();
 		$cfbe_configured = null !== $this->client;
+		$cfbe_products   = $cfbe_woo ? self::product_names( (array) $cfbe_values['product_tag_ids'] ) : array();
 		include __DIR__ . '/views/tab-sync.php';
+	}
+
+	/**
+	 * Names of the chosen products (only these are loaded; the select searches the rest over AJAX).
+	 *
+	 * @param array $ids Product IDs.
+	 * @return array<int, string> ID => name.
+	 */
+	public static function product_names( array $ids ): array {
+		$out = array();
+		foreach ( Fields::clean_product_ids( $ids ) as $id ) {
+			$product = function_exists( 'wc_get_product' ) ? wc_get_product( $id ) : null;
+			/* translators: %d: product ID */
+			$out[ $id ] = is_object( $product ) ? wp_strip_all_tags( (string) $product->get_formatted_name() ) : sprintf( __( 'Deleted product #%d', 'connector-for-bluefox-email' ), $id );
+		}
+		return $out;
 	}
 
 	/**

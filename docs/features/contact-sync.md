@@ -56,6 +56,25 @@ The fields must exist in bluefox, otherwise bluefox silently ignores the values.
 
 Both are off by default. Tags are added to the existing ones; nothing is removed.
 
+## Purchased product tags
+
+*Since 1.1.0, WooCommerce only, off by default.* Tag the buyers of chosen products, so you can build segments and campaigns for them – for example everyone who bought a starter kit gets the refill offer.
+
+1. Tick **Tag contacts who bought one of the products below**.
+2. Search the products in the picker: type at least two letters of the name or SKU. Only matching products are loaded, so it works on big stores too. Up to 200 products.
+3. Optionally change the **Tag prefix** (default `bought-`). The tag is the prefix plus the product's slug, e.g. `bought-starter-kit`.
+4. Save, then run **Sync all existing users/customers now** to tag people who bought before (see [Backfill](#backfill)).
+
+From then on, every paid order of a chosen product adds the tag with the automatic sync. Rules:
+
+- All paid orders of the person count, not only the latest ones.
+- A variation counts as its product: buying *T-shirt – red, M* gives the T-shirt's tag.
+- Tags are only added, never removed – also not after a refund or when you remove the product from the list.
+- Renaming a product's slug creates a new tag for later syncs; the old tag stays on the contacts.
+- With [scope](#which-contacts) *existing contacts only*, buyers who are not bluefox contacts are not created.
+
+Agents can find product IDs with `cfbe/search-products` and set the products with `cfbe/update-settings` (see [AI agent access](ai-agent-access.md)).
+
 ## Automatic sync
 
 With **Automatic sync** on (default), a contact is synced in the background about 30 seconds after:

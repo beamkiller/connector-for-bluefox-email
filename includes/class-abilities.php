@@ -239,6 +239,48 @@ final class Abilities {
 			)
 		);
 
+		wp_register_ability(
+			'cfbe/search-products',
+			array(
+				'label'               => __( 'Search WooCommerce products', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Finds WooCommerce products by name or SKU (id, name, slug, and the purchased product tag it would get). Use the ids as sync.product_tag_ids in cfbe/update-settings, with sync.product_tags true, to tag contacts who bought these products (tag = sync.product_tag_prefix + slug); run the contact sync of existing customers afterwards to tag earlier orders.', 'connector-for-bluefox-email' ),
+				'category'            => self::CATEGORY,
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'search' => array(
+							'type'        => 'string',
+							'minLength'   => 2,
+							'description' => __( 'Part of the product name or SKU.', 'connector-for-bluefox-email' ),
+						),
+						'limit'  => array(
+							'type'        => 'integer',
+							'minimum'     => 1,
+							'maximum'     => 50,
+							'description' => __( 'Most results. Default 20.', 'connector-for-bluefox-email' ),
+						),
+					),
+					'required'             => array( 'search' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'  => 'array',
+					'items' => array(
+						'type'       => 'object',
+						'properties' => array(
+							'id'   => array( 'type' => 'integer' ),
+							'name' => array( 'type' => 'string' ),
+							'slug' => array( 'type' => 'string' ),
+							'tag'  => array( 'type' => 'string' ),
+						),
+					),
+				),
+				'execute_callback'    => array( $this, 'search_products' ),
+				'permission_callback' => $permission,
+				'meta'                => self::meta( true, true ),
+			)
+		);
+
 		$this->register_setup_abilities( $permission );
 		$this->register_template_abilities( $permission );
 	}
@@ -680,6 +722,40 @@ final class Abilities {
 			);
 		}
 		Settings::remember_lists( $cache );
+		return $out;
+	}
+
+	/**
+	 * `cfbe/search-products`: products only (variations count as their product for the tags).
+	 *
+	 * @param mixed $input Input.
+	 * @return array|\WP_Error
+	 */
+	public function search_products( $input = array() ) {
+		if ( ! Modules::woocommerce_active() || ! class_exists( '\WC_Data_Store' ) ) {
+			return new \WP_Error( 'cfbe_no_woocommerce', __( 'WooCommerce is not active.', 'connector-for-bluefox-email' ), array( 'status' => 409 ) );
+		}
+		$input  = is_array( $input ) ? $input : array();
+		$search = trim( sanitize_text_field( (string) ( $input['search'] ?? '' ) ) );
+		$limit  = min( 50, max( 1, (int) ( $input['limit'] ?? 20 ) ) );
+		if ( strlen( $search ) < 2 ) {
+			return new \WP_Error( 'cfbe_search_too_short', __( 'Type at least two characters.', 'connector-for-bluefox-email' ), array( 'status' => 400 ) );
+		}
+		$ids    = (array) \WC_Data_Store::load( 'product' )->search_products( $search, '', false, false, $limit );
+		$prefix = (string) Sync\Fields::settings()['product_tag_prefix'];
+		$out    = array();
+		foreach ( Sync\Fields::clean_product_ids( $ids ) as $id ) {
+			$product = wc_get_product( $id );
+			if ( ! is_object( $product ) ) {
+				continue;
+			}
+			$out[] = array(
+				'id'   => $id,
+				'name' => wp_strip_all_tags( (string) $product->get_name() ),
+				'slug' => (string) $product->get_slug(),
+				'tag'  => Sync\Fields::product_tag( $id, $prefix ),
+			);
+		}
 		return $out;
 	}
 

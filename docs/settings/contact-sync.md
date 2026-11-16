@@ -12,6 +12,9 @@ See [Contact sync](../features/contact-sync.md) for how and when contacts are sy
 | Automatic sync | `cfbe_sync[auto_sync]` | on | Syncs when a user registers or updates the profile, an order is paid, completed or refunded, and when a signup is confirmed. |
 | Tags → Add the wp-user tag to registered users | `cfbe_sync[tag_wp_user]` | off | Adds the `wp-user` tag. |
 | Tags → Add the customer tag to people with at least one paid order | `cfbe_sync[tag_customer]` | off | Adds the `customer` tag. Shown only with WooCommerce. |
+| Purchased product tags → Tag contacts who bought one of the products below | `cfbe_sync[product_tags]` | off | Turns the purchased product tags on. Shown only with WooCommerce. See [Purchased product tags](../features/contact-sync.md#purchased-product-tags). |
+| Purchased product tags → products | `cfbe_sync[product_tag_ids][]` | none | Products chosen in the searchable picker (WooCommerce's AJAX product search; at least two letters). At most 200; variations count as their product. |
+| Purchased product tags → Tag prefix | `cfbe_sync[product_tag_prefix]` | `bought-` | Lowercase letters, digits, `-` and `_`, at most 40 characters; empty means `bought-`. Tag = prefix + product slug. |
 
 Tags are only added, never removed.
 

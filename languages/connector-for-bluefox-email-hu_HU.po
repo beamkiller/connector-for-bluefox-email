@@ -47,7 +47,7 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:335
-#: admin/class-bluefox-setup.php:551
+#: admin/class-bluefox-setup.php:552
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
@@ -56,7 +56,7 @@ msgstr "Sikeres kapcsolat: %1$s (%2$s)"
 #: admin/class-redirect-check.php:246
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
-#: modules/sync/class-sync-tab.php:262
+#: modules/sync/class-sync-tab.php:284
 #: modules/webhooks/class-webhooks-tab.php:274
 #: modules/woo-events/class-settings-tab.php:272
 msgid "You are not allowed to do this."
@@ -81,13 +81,13 @@ msgstr "bluefox.email"
 
 #: admin/class-admin-page.php:143
 #: modules/mailer/class-admin.php:118
-#: modules/sync/class-sync-tab.php:94
+#: modules/sync/class-sync-tab.php:99
 msgid "Working…"
 msgstr "Folyamatban…"
 
 #: admin/class-admin-page.php:144
 #: modules/mailer/class-admin.php:119
-#: modules/sync/class-sync-tab.php:95
+#: modules/sync/class-sync-tab.php:100
 #: modules/woo-events/class-settings-tab.php:321
 msgid "Something went wrong."
 msgstr "Hiba történt."
@@ -199,124 +199,124 @@ msgstr "„%s” dupla megerősítése"
 msgid "List not found in bluefox"
 msgstr "A lista nem található a bluefox-ban"
 
-#: admin/class-bluefox-setup.php:309
-#: admin/class-bluefox-setup.php:371
+#: admin/class-bluefox-setup.php:310
+#: admin/class-bluefox-setup.php:372
 msgid "Ready"
 msgstr "Rendben"
 
-#: admin/class-bluefox-setup.php:311
+#: admin/class-bluefox-setup.php:312
 msgid "Off"
 msgstr "Kikapcsolva"
 
-#: admin/class-bluefox-setup.php:315
+#: admin/class-bluefox-setup.php:316
 msgid "confirmation email without {{verifyLink}}"
 msgstr "a megerősítő e-mailben nincs {{verifyLink}}"
 
-#: admin/class-bluefox-setup.php:319
+#: admin/class-bluefox-setup.php:320
 msgid "no redirect to this site"
 msgstr "nem erre az oldalra irányít át"
 
 #. translators: %s: URL
-#: admin/class-bluefox-setup.php:321
+#: admin/class-bluefox-setup.php:322
 #, php-format
 msgid "redirects to %s"
 msgstr "ide irányít át: %s"
 
-#: admin/class-bluefox-setup.php:330
+#: admin/class-bluefox-setup.php:331
 msgid "Confirmation email"
 msgstr "Megerősítő e-mail"
 
-#: admin/class-bluefox-setup.php:332
+#: admin/class-bluefox-setup.php:333
 msgid "— Leave unchanged —"
 msgstr "— Változatlanul hagyás —"
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:337
+#: admin/class-bluefox-setup.php:338
 #, php-format
 msgid "%s (no {{verifyLink}})"
 msgstr "%s (nincs benne {{verifyLink}})"
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:340
+#: admin/class-bluefox-setup.php:341
 #, php-format
 msgid "%s (from Email templates)"
 msgstr "%s (az E-mail sablonokból)"
 
 #. translators: %s: thank-you page URL
-#: admin/class-bluefox-setup.php:353
+#: admin/class-bluefox-setup.php:354
 #, php-format
 msgid "Double opt-in on with this confirmation email; confirmed subscribers land on %s."
 msgstr "Dupla megerősítés bekapcsolva ezzel a megerősítő e-maillel; a megerősített feliratkozók ide érkeznek: %s."
 
-#: admin/class-bluefox-setup.php:356
+#: admin/class-bluefox-setup.php:357
 msgid "None of your bluefox transactional emails contains {{verifyLink}}. Create the confirmation email on the Email templates tab, or add {{verifyLink}} to an email in bluefox."
 msgstr "Egyik bluefox tranzakciós e-mailed sem tartalmazza a {{verifyLink}} változót. Hozd létre a megerősítő e-mailt az E-mail sablonok fülön, vagy tedd bele a {{verifyLink}} változót egy e-mailbe a bluefox-ban."
 
-#: admin/class-bluefox-setup.php:356
+#: admin/class-bluefox-setup.php:357
 #: admin/class-email-templates-tab.php:64
 msgid "Email templates"
 msgstr "E-mail sablonok"
 
-#: admin/class-bluefox-setup.php:369
+#: admin/class-bluefox-setup.php:370
 #: includes/class-modules.php:99
 msgid "Subscription preferences page"
 msgstr "Feliratkozási beállítások oldal"
 
-#: admin/class-bluefox-setup.php:374
+#: admin/class-bluefox-setup.php:375
 msgid "bluefox’s own page is used"
 msgstr "a bluefox saját oldala van használatban"
 
 #. translators: %s: URL
-#: admin/class-bluefox-setup.php:376
+#: admin/class-bluefox-setup.php:377
 #, php-format
 msgid "set to %s"
 msgstr "beállított érték: %s"
 
 #. translators: %s: preferences page URL
-#: admin/class-bluefox-setup.php:381
+#: admin/class-bluefox-setup.php:382
 #, php-format
 msgid "Unsubscribe and pause links lead to %s"
 msgstr "A leiratkozó és szüneteltető linkek ide vezetnek: %s"
 
 #. translators: %s: list ID
-#: admin/class-bluefox-setup.php:492
+#: admin/class-bluefox-setup.php:493
 #, php-format
 msgid "List %s is not used by the plugin (default list, popup, checkout, coupon or form integrations): skipped."
 msgstr "A(z) %s listát nem használja a bővítmény (alapértelmezett lista, felugró ablak, pénztár, kupon vagy űrlap integrációk): kihagyva."
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:496
+#: admin/class-bluefox-setup.php:497
 #, php-format
 msgid "“%s” has no {{verifyLink}}, so bluefox would reject it as a confirmation email: skipped."
 msgstr "„%s” nem tartalmazza a {{verifyLink}} változót, ezért a bluefox nem fogadná el megerősítő e-mailként: kihagyva."
 
 #. translators: 1: list name, 2: error message
-#: admin/class-bluefox-setup.php:518
+#: admin/class-bluefox-setup.php:519
 #, php-format
 msgid "“%1$s”: %2$s"
 msgstr "„%1$s”: %2$s"
 
 #. translators: %s: list name
-#: admin/class-bluefox-setup.php:521
+#: admin/class-bluefox-setup.php:522
 #, php-format
 msgid "Double opt-in of “%s” is on, with the chosen email and this site’s thank-you page."
 msgstr "„%s” dupla megerősítése bekapcsolva, a kiválasztott e-maillel és ennek az oldalnak a köszönő oldalával."
 
 #. translators: %s: error message
-#: admin/class-bluefox-setup.php:531
+#: admin/class-bluefox-setup.php:532
 #, php-format
 msgid "Preferences page: %s"
 msgstr "Beállítások oldal: %s"
 
-#: admin/class-bluefox-setup.php:533
+#: admin/class-bluefox-setup.php:534
 msgid "Unsubscribe and pause links now lead to this site’s preferences page."
 msgstr "A leiratkozó és szüneteltető linkek mostantól ennek az oldalnak a beállítások oldalára vezetnek."
 
-#: admin/class-bluefox-setup.php:538
+#: admin/class-bluefox-setup.php:539
 msgid "Nothing to change: bluefox is already set up like this."
 msgstr "Nincs mit módosítani: a bluefox már így van beállítva."
 
-#: admin/class-bluefox-setup.php:565
+#: admin/class-bluefox-setup.php:566
 #: admin/class-email-templates-tab.php:125
 #: admin/class-redirect-check.php:253
 #: admin/views/tab-email-templates.php:48
@@ -372,7 +372,7 @@ msgstr "akciós termékekre nem érvényes"
 
 #. translators: 1: created field names, 2: existing field names
 #: admin/class-coupon-tab.php:173
-#: modules/sync/class-sync-tab.php:197
+#: modules/sync/class-sync-tab.php:219
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr "Létrehozva: %1$s. Már megvolt: %2$s."
@@ -1507,7 +1507,7 @@ msgid "By default the assets load only where the form appears. Turn this on to a
 msgstr "Alapból a fájlok csak ott töltődnek be, ahol az űrlap megjelenik. Kapcsold be, hogy elkerüld a formázatlan tartalom felvillanását. Ha egy gyorsítótár bővítmény késlelteti a JavaScriptet (pl. WP Rocket „Delay JavaScript execution”), vedd fel a kivételek közé: cfbe-form.js"
 
 #: admin/views/tab-form.php:156
-#: modules/sync/views/tab-sync.php:74
+#: modules/sync/views/tab-sync.php:118
 msgid "Fields"
 msgstr "Mezők"
 
@@ -2204,158 +2204,182 @@ msgstr "bluefox e-mailek lekérése"
 msgid "Returns the transactional and triggered emails of the connected bluefox project (id, name). Use an id as coupon.email_id (transactional) or as email_id of an order email / abandoned cart rule (transactional or triggered, matching the rule type)."
 msgstr "Visszaadja a csatlakoztatott bluefox projekt tranzakciós és triggered e-mailjeit (azonosító, név). Az azonosítót coupon.email_id-ként (tranzakciós), vagy egy rendelési / elhagyott kosár szabály email_id-jaként használd (tranzakciós vagy triggered, a szabály típusának megfelelően)."
 
+#: includes/class-abilities.php:245
+msgid "Search WooCommerce products"
+msgstr "WooCommerce termékek keresése"
+
+#: includes/class-abilities.php:246
+msgid "Finds WooCommerce products by name or SKU (id, name, slug, and the purchased product tag it would get). Use the ids as sync.product_tag_ids in cfbe/update-settings, with sync.product_tags true, to tag contacts who bought these products (tag = sync.product_tag_prefix + slug); run the contact sync of existing customers afterwards to tag earlier orders."
+msgstr "WooCommerce termékeket keres név vagy cikkszám alapján (azonosító, név, slug és a vásárlási címke, amelyet kapna). Az azonosítókat sync.product_tag_ids-ként add meg a cfbe/update-settings-ben, sync.product_tags true értékkel, hogy a termékek vásárlói címkét kapjanak (címke = sync.product_tag_prefix + slug); a korábbi rendelésekhez utána futtasd a meglévő vásárlók kontakt szinkronizálását."
+
+#: includes/class-abilities.php:254
+msgid "Part of the product name or SKU."
+msgstr "A terméknév vagy a cikkszám egy része."
+
 #: includes/class-abilities.php:260
+msgid "Most results. Default 20."
+msgstr "Legfeljebb ennyi találat. Alapértelmezés: 20."
+
+#: includes/class-abilities.php:302
 msgid "Check the bluefox setup"
 msgstr "A bluefox beállítás ellenőrzése"
 
-#: includes/class-abilities.php:261
+#: includes/class-abilities.php:303
 msgid "Returns the bluefox-side settings the plugin relies on (\"bluefox setup\" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site's thank-you page (ready = all three); the project's transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); and, with the preferences page on, whether unsubscribe links lead to this site's preferences page. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true."
 msgstr "Visszaadja azokat a bluefox oldali beállításokat, amelyekre a bővítmény épít („bluefox beállítás” az Általános fülön): a bővítmény által használt listánként, hogy be van-e kapcsolva a dupla megerősítés, melyik a megerősítő e-mail és tartalmazza-e a {{verifyLink}} változót, valamint hogy a megerősített feliratkozók ennek az oldalnak a köszönő oldalára kerülnek-e (ready = mindhárom teljesül); a projekt tranzakciós e-mailjeit (can_confirm = használható megerősítő e-mailként, from_templates = az E-mail sablonok fülön készült); és bekapcsolt beállítások oldal esetén, hogy a leiratkozó linkek ennek az oldalnak a beállítások oldalára vezetnek-e. A suggested az az e-mail, amelyet a cfbe/apply-bluefox-setup alapból használna. Tíz percig gyorsítótárazott, kivéve ha a fresh értéke true."
 
-#: includes/class-abilities.php:269
+#: includes/class-abilities.php:311
 msgid "Read bluefox anew instead of the ten-minute cache. Default false."
 msgstr "A bluefox újraolvasása a tízperces gyorsítótár helyett. Alapértelmezés: false."
 
-#: includes/class-abilities.php:292
+#: includes/class-abilities.php:334
 msgid "Apply the bluefox setup"
 msgstr "A bluefox beállítás alkalmazása"
 
-#: includes/class-abilities.php:293
+#: includes/class-abilities.php:335
 msgid "Changes settings in the connected bluefox project (\"Apply in bluefox\" on the General tab). For each list in lists (list ID => transactional email ID, see cfbe/get-bluefox-setup): double opt-in on with that confirmation email (it must contain {{verifyLink}}) and this site's thank-you page as redirect link; the list's confirmation title and message are kept. Only lists the plugin uses are changed. preferences true sets the project's custom subscription preferences URL to this site's preferences page (preferences page feature on). Returns what was done, what failed, and the setup afterwards."
 msgstr "Módosítja a csatlakoztatott bluefox projekt beállításait („Beállítás a bluefox-ban” az Általános fülön). A lists minden listájára (lista azonosító => tranzakciós e-mail azonosító, lásd cfbe/get-bluefox-setup): dupla megerősítés bekapcsolva ezzel a megerősítő e-maillel (tartalmaznia kell a {{verifyLink}} változót), átirányító linkként ennek az oldalnak a köszönő oldalával; a lista megerősítő címe és üzenete megmarad. Csak a bővítmény által használt listák változnak. A preferences true a projekt egyéni feliratkozási beállítások URL-jét ennek az oldalnak a beállítások oldalára állítja (bekapcsolt beállítások oldal funkcióval). Visszaadja, mi történt, mi nem sikerült, és utána a beállítás állapotát."
 
-#: includes/class-abilities.php:301
+#: includes/class-abilities.php:343
 msgid "List ID => confirmation email ID."
 msgstr "Lista azonosító => megerősítő e-mail azonosító."
 
-#: includes/class-abilities.php:306
+#: includes/class-abilities.php:348
 msgid "Point unsubscribe and pause links to this site's preferences page. Default false."
 msgstr "A leiratkozó és szüneteltető linkek ennek az oldalnak a beállítások oldalára mutassanak. Alapértelmezés: false."
 
-#: includes/class-abilities.php:335
+#: includes/class-abilities.php:377
 msgid "Texts to use: subject, preview, heading, intro, button, footer (Handlebars variables such as {{orderNumber}} work). Omitted texts keep their current value."
 msgstr "A használandó szövegek: subject, preview, heading, intro, button, footer (a Handlebars változók, pl. {{orderNumber}}, működnek). A meg nem adott szövegek megtartják a jelenlegi értéküket."
 
-#: includes/class-abilities.php:342
+#: includes/class-abilities.php:384
 msgid "Template key, see cfbe/list-email-templates."
 msgstr "Sablon kulcs, lásd cfbe/list-email-templates."
 
-#: includes/class-abilities.php:348
+#: includes/class-abilities.php:390
 msgid "List bluefox email templates"
 msgstr "bluefox e-mail sablonok listázása"
 
-#: includes/class-abilities.php:349
+#: includes/class-abilities.php:391
 msgid "Returns the ready-made emails of the Email templates tab whose feature is on: key, label, what it is, why use it, when it is sent, the email types the admin may choose (triggered = marketing, only active subscribers of a list, with an unsubscribe link; transactional = every recipient), its texts, whether it was created in bluefox, where it is used and whether its design is older than the current one. Also returns the design source (woocommerce or form) and the sender identities of the bluefox project."
 msgstr "Visszaadja az E-mail sablonok fül kész e-mailjeit, amelyek funkciója be van kapcsolva: kulcs, név, mi ez, mire jó, mikor megy ki, a választható e-mail típusok (triggered = marketing, csak egy lista aktív feliratkozóinak, leiratkozó linkkel; transactional = minden címzettnek), a szövegei, létre lett-e hozva a bluefoxban, hol használja a bővítmény, és régebbi-e a dizájnja a jelenleginél. Visszaadja a dizájn forrását (woocommerce vagy form) és a bluefox projekt küldő azonosítóit is."
 
-#: includes/class-abilities.php:368
+#: includes/class-abilities.php:410
 msgid "Create a bluefox email from a template"
 msgstr "bluefox e-mail létrehozása sablonból"
 
-#: includes/class-abilities.php:369
+#: includes/class-abilities.php:411
 msgid "Creates a ready-made email in the connected bluefox project (\"Create in bluefox\" on the Email templates tab) and, unless assign is false, selects it where the plugin uses it: confirmation = double opt-in email of the list, welcome_coupon = coupon email, order and cart emails = an Order emails / Abandoned carts rule. Triggered (marketing) emails need list_id (see cfbe/list-bluefox-lists). WooCommerce keeps sending its own order emails."
 msgstr "Létrehoz egy kész e-mailt a csatlakoztatott bluefox projektben (az E-mail sablonok fül „Létrehozás a bluefox-ban” gombja), és – ha az assign nem false – kiválasztja ott, ahol a bővítmény használja: megerősítő = a lista dupla megerősítő e-mailje, welcome_coupon = kupon e-mail, rendelési és kosár e-mailek = egy Rendelési e-mailek / Elhagyott kosarak szabály. A triggered (marketing) e-mailekhez list_id kell (lásd cfbe/list-bluefox-lists). A WooCommerce továbbra is elküldi a saját rendelési e-mailjeit."
 
-#: includes/class-abilities.php:379
+#: includes/class-abilities.php:421
 msgid "Email type, only where the template allows a choice (default: the first allowed type)."
 msgstr "E-mail típusa, csak ahol a sablon választást enged (alapértelmezés: az első engedélyezett típus)."
 
-#: includes/class-abilities.php:383
+#: includes/class-abilities.php:425
 msgid "Subscriber list: required for triggered emails; for the confirmation email the list that gets double opt-in."
 msgstr "Feliratkozói lista: a triggered e-mailekhez kötelező; a megerősítő e-mailnél az a lista, amely dupla megerősítést kap."
 
-#: includes/class-abilities.php:387
+#: includes/class-abilities.php:429
 msgid "Sender identity ID from cfbe/list-email-templates. Omit for the project default sender."
 msgstr "Küldő azonosító a cfbe/list-email-templates válaszából. Elhagyva a projekt alapértelmezett küldője."
 
-#: includes/class-abilities.php:391
+#: includes/class-abilities.php:433
 msgid "Select the new email where the plugin uses it. Default true."
 msgstr "Az új e-mail kiválasztása ott, ahol a bővítmény használja. Alapértelmezés: true."
 
-#: includes/class-abilities.php:416
+#: includes/class-abilities.php:458
 msgid "Update a bluefox email from its template"
 msgstr "bluefox e-mail frissítése a sablonjából"
 
-#: includes/class-abilities.php:417
+#: includes/class-abilities.php:459
 msgid "Sends new texts and the current design to an email created from a template (\"Update in bluefox\"). Refuses with cfbe_template_changed when the email was changed in bluefox after the plugin last wrote it: ask the admin before repeating with force true, which replaces those changes. Emails switched to the bluefox visual editor are never overwritten."
 msgstr "Új szövegeket és a jelenlegi dizájnt küldi egy sablonból létrehozott e-mailnek („Frissítés a bluefox-ban”). cfbe_template_changed hibával elutasítja, ha az e-mailt a bővítmény utolsó írása óta módosították a bluefoxban: kérdezd meg az adminisztrátort, mielőtt force true értékkel megismétled, ami felülírja ezeket a módosításokat. A bluefox vizuális szerkesztőjére váltott e-maileket soha nem írja felül."
 
-#: includes/class-abilities.php:426
+#: includes/class-abilities.php:468
 msgid "Replace changes made in bluefox. Default false."
 msgstr "A bluefoxban végzett módosítások felülírása. Alapértelmezés: false."
 
-#: includes/class-abilities.php:447
+#: includes/class-abilities.php:489
 msgid "Send a test of a template email"
 msgstr "Teszt küldése egy sablon e-mailből"
 
-#: includes/class-abilities.php:448
+#: includes/class-abilities.php:490
 msgid "Has bluefox send a created template email, filled with sample data, to the email address of the signed-in admin (\"Send me a test\"). It cannot send to any other address."
 msgstr "A bluefox elküld egy létrehozott sablon e-mailt mintaadatokkal a bejelentkezett adminisztrátor e-mail címére („Küldj nekem tesztet”). Más címre nem tud küldeni."
 
-#: includes/class-abilities.php:473
+#: includes/class-abilities.php:515
 msgid "Set the design of the template emails"
 msgstr "A sablon e-mailek dizájnjának beállítása"
 
-#: includes/class-abilities.php:474
+#: includes/class-abilities.php:516
 msgid "Chooses the design of the ready-made emails: woocommerce = logo, colours, font and footer from WooCommerce → Settings → Emails (needs WooCommerce); form = the signup form colours. Emails already created keep their design until cfbe/update-email-template is run for them."
 msgstr "Kiválasztja a kész e-mailek dizájnját: woocommerce = logó, színek, betűtípus és lábléc a WooCommerce → Beállítások → E-mailek oldalról (WooCommerce kell hozzá); form = a feliratkozó űrlap színei. A már létrehozott e-mailek megtartják a dizájnjukat, amíg nem futtatod rájuk a cfbe/update-email-template-et."
 
-#: includes/class-abilities.php:493
+#: includes/class-abilities.php:535
 msgid "Created templates whose design differs from the new one."
 msgstr "Létrehozott sablonok, amelyek dizájnja eltér az újtól."
 
 #. translators: 1: setting keys, 2: settings area
-#: includes/class-abilities.php:579
+#: includes/class-abilities.php:621
 #, php-format
 msgid "Unknown settings %1$s in area %2$s. Call cfbe/get-settings for the valid keys."
 msgstr "Ismeretlen beállítás(ok): %1$s a(z) %2$s területen. Az érvényes kulcsokat a cfbe/get-settings adja meg."
 
 #. translators: %s: setting keys
-#: includes/class-abilities.php:588
+#: includes/class-abilities.php:630
 #, php-format
 msgid "%s can only be changed in wp-admin."
 msgstr "%s csak a wp-adminban módosítható."
 
 #. translators: 1: module slugs, 2: valid module slugs
-#: includes/class-abilities.php:639
+#: includes/class-abilities.php:681
 #, php-format
 msgid "Unknown modules %1$s. Valid modules: %2$s."
 msgstr "Ismeretlen modul(ok): %1$s. Érvényes modulok: %2$s."
 
-#: includes/class-abilities.php:828
+#: includes/class-abilities.php:736
+msgid "WooCommerce is not active."
+msgstr "A WooCommerce nincs bekapcsolva."
+
+#: includes/class-abilities.php:742
+msgid "Type at least two characters."
+msgstr "Írj be legalább két karaktert."
+
+#: includes/class-abilities.php:904
 msgid "This email was already created in bluefox: use cfbe/update-email-template to change it."
 msgstr "Ez az e-mail már létre lett hozva a bluefoxban: a módosításához használd a cfbe/update-email-template-et."
 
 #. translators: %s: allowed email types
-#: includes/class-abilities.php:835
+#: includes/class-abilities.php:911
 #, php-format
 msgid "This template can only be created as: %s."
 msgstr "Ez a sablon csak így hozható létre: %s."
 
-#: includes/class-abilities.php:894
+#: includes/class-abilities.php:970
 msgid "The signed-in user has no email address."
 msgstr "A bejelentkezett felhasználónak nincs e-mail címe."
 
-#: includes/class-abilities.php:910
+#: includes/class-abilities.php:986
 msgid "Design must be woocommerce or form."
 msgstr "A dizájn csak woocommerce vagy form lehet."
 
-#: includes/class-abilities.php:913
+#: includes/class-abilities.php:989
 msgid "WooCommerce is not active, so its email design cannot be used."
 msgstr "A WooCommerce nincs bekapcsolva, ezért az e-mail dizájnja nem használható."
 
 #. translators: %s: template keys
-#: includes/class-abilities.php:942
+#: includes/class-abilities.php:1018
 #, php-format
 msgid "Unknown template or its feature is off. Available: %s."
 msgstr "Ismeretlen sablon, vagy a funkciója ki van kapcsolva. Elérhető: %s."
 
-#: includes/class-abilities.php:959
+#: includes/class-abilities.php:1035
 msgid "bluefox is not connected yet: set the project ID and API key on the General tab in wp-admin."
 msgstr "A bluefox még nincs csatlakoztatva: add meg a projekt azonosítót és az API kulcsot a wp-admin Általános fülén."
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:1019
+#: includes/class-abilities.php:1095
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr "Ismeretlen beállítási terület: „%1$s”. Érvényes területek: %2$s."
@@ -3570,120 +3594,126 @@ msgstr "Teszt elküldve"
 msgid "Failed, sent by WordPress"
 msgstr "Sikertelen, a WordPress küldte el"
 
-#: modules/sync/class-fields.php:123
+#: modules/sync/class-fields.php:133
 msgid "Full name (first + last name)"
 msgstr "Teljes név (keresztnév + vezetéknév)"
 
-#: modules/sync/class-fields.php:124
+#: modules/sync/class-fields.php:134
 msgid "First name"
 msgstr "Keresztnév"
 
-#: modules/sync/class-fields.php:125
+#: modules/sync/class-fields.php:135
 msgid "Last name"
 msgstr "Vezetéknév"
 
-#: modules/sync/class-fields.php:126
+#: modules/sync/class-fields.php:136
 msgid "WordPress user ID"
 msgstr "WordPress felhasználó ID"
 
-#: modules/sync/class-fields.php:127
+#: modules/sync/class-fields.php:137
 msgid "WordPress role"
 msgstr "WordPress szerepkör"
 
-#: modules/sync/class-fields.php:128
+#: modules/sync/class-fields.php:138
 msgid "Registration date"
 msgstr "Regisztráció dátuma"
 
-#: modules/sync/class-fields.php:129
+#: modules/sync/class-fields.php:139
 msgid "Number of orders"
 msgstr "Rendelések száma"
 
-#: modules/sync/class-fields.php:130
+#: modules/sync/class-fields.php:140
 msgid "Total spent"
 msgstr "Összes költés"
 
-#: modules/sync/class-fields.php:131
+#: modules/sync/class-fields.php:141
 msgid "Last order date"
 msgstr "Utolsó rendelés dátuma"
 
-#: modules/sync/class-fields.php:132
+#: modules/sync/class-fields.php:142
 msgid "Last order total"
 msgstr "Utolsó rendelés összege"
 
-#: modules/sync/class-fields.php:133
+#: modules/sync/class-fields.php:143
 msgid "First order date"
 msgstr "Első rendelés dátuma"
 
-#: modules/sync/class-fields.php:134
+#: modules/sync/class-fields.php:144
 msgid "Billing country"
 msgstr "Számlázási ország"
 
-#: modules/sync/class-fields.php:135
+#: modules/sync/class-fields.php:145
 msgid "Billing city"
 msgstr "Számlázási város"
 
-#: modules/sync/class-fields.php:136
+#: modules/sync/class-fields.php:146
 msgid "Purchased product categories (comma-separated slugs)"
 msgstr "Vásárolt termékkategóriák (vesszővel elválasztott slugok)"
 
-#: modules/sync/class-fields.php:137
+#: modules/sync/class-fields.php:147
 msgid "Customer type (customer / guest)"
 msgstr "Vásárló típusa (customer / guest)"
 
-#: modules/sync/class-sync-tab.php:96
+#: modules/sync/class-sync-tab.php:101
 msgid "Sync all existing users and customers now? This runs in the background in batches of 50, one batch per minute."
 msgstr "Szinkronizálod most az összes meglévő felhasználót és vásárlót? A háttérben fut, 50-es adagokban, percenként egy adag."
 
-#: modules/sync/class-sync-tab.php:97
+#: modules/sync/class-sync-tab.php:102
 msgid "Cancel the running sync?"
 msgstr "Leállítod a futó szinkronizálást?"
 
+#. translators: %d: product ID
+#: modules/sync/class-sync-tab.php:131
+#, php-format
+msgid "Deleted product #%d"
+msgstr "Törölt termék #%d"
+
 #. translators: 1: updated, 2: created, 3: unchanged, 4: skipped, 5: errors
-#: modules/sync/class-sync-tab.php:123
+#: modules/sync/class-sync-tab.php:145
 #, php-format
 msgid "updated %1$d, created %2$d, unchanged %3$d, skipped %4$d, errors %5$d"
 msgstr "frissítve %1$d, létrehozva %2$d, változatlan %3$d, kihagyva %4$d, hiba %5$d"
 
 #. translators: 1: processed emails, 2: number of users, 3: phase, 4: details
-#: modules/sync/class-sync-tab.php:133
+#: modules/sync/class-sync-tab.php:155
 #, php-format
 msgid "Running: %1$d processed (%2$d users in total, now: %3$s) – %4$s."
 msgstr "Fut: %1$d feldolgozva (összesen %2$d felhasználó, most: %3$s) – %4$s."
 
 #. translators: 1: processed emails, 2: number of users, 3: phase, 4: details
-#: modules/sync/class-sync-tab.php:133
+#: modules/sync/class-sync-tab.php:155
 msgid "guest customers"
 msgstr "vendég vásárlók"
 
 #. translators: 1: processed emails, 2: number of users, 3: phase, 4: details
-#: modules/sync/class-sync-tab.php:133
+#: modules/sync/class-sync-tab.php:155
 msgid "users"
 msgstr "felhasználók"
 
 #. translators: 1: processed emails, 2: details
-#: modules/sync/class-sync-tab.php:136
+#: modules/sync/class-sync-tab.php:158
 #, php-format
 msgid "Last sync finished: %1$d processed – %2$s."
 msgstr "Az utolsó szinkronizálás befejeződött: %1$d feldolgozva – %2$s."
 
 #. translators: 1: processed emails, 2: details
-#: modules/sync/class-sync-tab.php:139
+#: modules/sync/class-sync-tab.php:161
 #, php-format
 msgid "Last sync was cancelled after %1$d – %2$s."
 msgstr "Az utolsó szinkronizálás %1$d után megszakítva – %2$s."
 
-#: modules/sync/class-sync-tab.php:141
+#: modules/sync/class-sync-tab.php:163
 msgid "No sync has run yet."
 msgstr "Még nem futott szinkronizálás."
 
-#: modules/sync/class-sync-tab.php:187
-#: modules/sync/class-sync-tab.php:216
+#: modules/sync/class-sync-tab.php:209
+#: modules/sync/class-sync-tab.php:238
 #: modules/sync/views/tab-sync.php:27
 msgid "Connect to bluefox first (General tab)."
 msgstr "Előbb csatlakozz a bluefox-hoz (Általános fül)."
 
 #. translators: %s: field names
-#: modules/sync/class-sync-tab.php:203
+#: modules/sync/class-sync-tab.php:225
 #, php-format
 msgid "Failed: %s."
 msgstr "Sikertelen: %s."
@@ -3736,69 +3766,96 @@ msgstr "A(z) %s címke hozzáadása azokhoz, akiknek legalább egy fizetett rend
 msgid "Tags are added to the existing ones; nothing is removed."
 msgstr "A címkék a meglévők mellé kerülnek; semmi nem törlődik."
 
-#: modules/sync/views/tab-sync.php:75
+#: modules/sync/views/tab-sync.php:74
+msgid "Purchased product tags"
+msgstr "Vásárolt termék címkék"
+
+#: modules/sync/views/tab-sync.php:77
+msgid "Tag contacts who bought one of the products below"
+msgstr "Címke azoknak a kontaktoknak, akik megvették az alábbi termékek valamelyikét"
+
+#: modules/sync/views/tab-sync.php:80
+#: modules/woo-events/class-privacy.php:95
+msgid "Products"
+msgstr "Termékek"
+
+#: modules/sync/views/tab-sync.php:81
+msgid "Search for a product…"
+msgstr "Termék keresése…"
+
+#: modules/sync/views/tab-sync.php:88
+msgid "Tag prefix"
+msgstr "Címke előtag"
+
+#. translators: 1: example tag, 2: maximum number of products
+#: modules/sync/views/tab-sync.php:96
+#, php-format
+msgid "Each chosen product becomes a tag such as %1$s on everyone with a paid order of it (variations count as their product), so you can build segments and campaigns for its buyers. Type at least two letters to search; up to %2$d products. Tags are only added, never removed. To tag earlier orders, run “Sync all existing users/customers now” below after saving."
+msgstr "Minden kiválasztott termékből címke lesz, például %1$s, mindenkin, akinek van fizetett rendelése belőle (a változatok a termékükhöz számítanak), így a vásárlóinak szegmenseket és kampányokat építhetsz. A kereséshez írj be legalább két betűt; legfeljebb %2$d termék választható. A címkék csak hozzáadódnak, sosem törlődnek. A korábbi rendelésekhez mentés után futtasd lent a „Minden meglévő felhasználó/vásárló szinkronizálása most” gombot."
+
+#: modules/sync/views/tab-sync.php:119
 msgid "Custom contact fields written to bluefox. The field must exist in bluefox with the given name, otherwise bluefox silently ignores the value. Allowed characters: A–Z, a–z, 0–9 and _."
 msgstr "A bluefox-ba írt egyéni kontakt mezők. A mezőnek léteznie kell a bluefox-ban a megadott névvel, különben a bluefox csendben figyelmen kívül hagyja az értéket. Megengedett karakterek: A–Z, a–z, 0–9 és _."
 
-#: modules/sync/views/tab-sync.php:79
+#: modules/sync/views/tab-sync.php:123
 msgid "Sync"
 msgstr "Szinkronizálás"
 
-#: modules/sync/views/tab-sync.php:80
+#: modules/sync/views/tab-sync.php:124
 msgid "Data"
 msgstr "Adat"
 
-#: modules/sync/views/tab-sync.php:81
+#: modules/sync/views/tab-sync.php:125
 msgid "bluefox field name"
 msgstr "bluefox mező neve"
 
-#: modules/sync/views/tab-sync.php:82
+#: modules/sync/views/tab-sync.php:126
 msgid "Type"
 msgstr "Típus"
 
-#: modules/sync/views/tab-sync.php:104
+#: modules/sync/views/tab-sync.php:148
 msgid "Fixed name, used in templates as {{contact.name}}. An existing name in bluefox is never cleared."
 msgstr "Rögzített név, a sablonokban {{contact.name}} formában használható. A bluefox-ban meglévő nevet soha nem törli."
 
-#: modules/sync/views/tab-sync.php:115
+#: modules/sync/views/tab-sync.php:159
 msgid "Order and customer fields become available when WooCommerce is active."
 msgstr "A rendelési és vásárlói mezők akkor érhetők el, ha a WooCommerce aktív."
 
-#: modules/sync/views/tab-sync.php:120
+#: modules/sync/views/tab-sync.php:164
 msgid "Fields in bluefox"
 msgstr "Mezők a bluefox-ban"
 
-#: modules/sync/views/tab-sync.php:121
+#: modules/sync/views/tab-sync.php:165
 msgid "Creates the enabled fields above that do not exist in your bluefox project yet. Save the settings first."
 msgstr "Létrehozza a fenti bekapcsolt mezők közül azokat, amelyek még nem léteznek a bluefox projektedben. Előbb mentsd el a beállításokat."
 
-#: modules/sync/views/tab-sync.php:122
+#: modules/sync/views/tab-sync.php:166
 msgid "Create missing fields in bluefox"
 msgstr "Hiányzó mezők létrehozása a bluefox-ban"
 
-#: modules/sync/views/tab-sync.php:124
+#: modules/sync/views/tab-sync.php:168
 msgid "Sync existing users and customers"
 msgstr "Meglévő felhasználók és vásárlók szinkronizálása"
 
-#: modules/sync/views/tab-sync.php:125
+#: modules/sync/views/tab-sync.php:169
 msgid "Runs in the background in batches of 50, one batch per minute, to stay within the bluefox API limits. You can leave this page."
 msgstr "A háttérben fut 50-es adagokban, percenként egy adag, hogy a bluefox API korlátain belül maradjon. Elhagyhatod ezt az oldalt."
 
-#: modules/sync/views/tab-sync.php:128
+#: modules/sync/views/tab-sync.php:172
 msgid "Sync all existing users/customers now"
 msgstr "Minden meglévő felhasználó/vásárló szinkronizálása most"
 
-#: modules/sync/views/tab-sync.php:129
+#: modules/sync/views/tab-sync.php:173
 msgid "Cancel"
 msgstr "Mégse"
 
 #. translators: %s: WP-CLI command
-#: modules/sync/views/tab-sync.php:134
+#: modules/sync/views/tab-sync.php:178
 #, php-format
 msgid "Also available on the command line: %s"
 msgstr "Parancssorból is elérhető: %s"
 
-#: modules/sync/views/tab-sync.php:137
+#: modules/sync/views/tab-sync.php:181
 msgid "Deleting a WordPress user does not delete the bluefox contact, and changing an account email does not rename it. Remove such contacts in bluefox if needed."
 msgstr "Egy WordPress felhasználó törlése nem törli a bluefox kontaktot, és a fiók e-mail címének módosítása nem nevezi át. Szükség esetén távolítsd el ezeket a kontaktokat a bluefox-ban."
 
@@ -4029,10 +4086,6 @@ msgstr "bluefox.email elhagyott kosarak"
 #: modules/woo-events/class-settings-tab.php:102
 msgid "Abandoned carts"
 msgstr "Elhagyott kosarak"
-
-#: modules/woo-events/class-privacy.php:95
-msgid "Products"
-msgstr "Termékek"
 
 #: modules/woo-events/class-privacy.php:99
 msgid "Cart total"

@@ -74,11 +74,13 @@ class Data_Collector {
 	 * @param string        $email  Email address.
 	 * @param \WP_User|null $user   The WordPress user with this email, if any.
 	 * @param string[]|null $wanted Field keys to compute (null = all); skips expensive lookups.
-	 * @return array{values: array, has_user: bool, paid_orders: int}
+	 * @param int[]         $track  Product IDs to look for in all paid orders (purchased product tags).
+	 * @return array{values: array, has_user: bool, paid_orders: int, bought: int[]}
 	 */
-	public function collect( string $email, $user, ?array $wanted = null ): array {
+	public function collect( string $email, $user, ?array $wanted = null, array $track = array() ): array {
 		$values = array();
 		$paid   = 0;
+		$bought = array();
 
 		if ( is_object( $user ) && ! empty( $user->ID ) ) {
 			$user_id                = (int) $user->ID;
@@ -93,8 +95,9 @@ class Data_Collector {
 		}
 
 		if ( call_user_func( $this->woo_active ) && function_exists( 'wc_get_orders' ) ) {
-			$woo    = $this->woo_values( $email, $user, $wanted );
+			$woo    = $this->woo_values( $email, $user, $wanted, $track );
 			$paid   = $woo['paid'];
+			$bought = $woo['bought'];
 			$values = self::fill( $values, $woo['values'] );
 		}
 
@@ -109,6 +112,7 @@ class Data_Collector {
 			),
 			'has_user'    => null !== $user,
 			'paid_orders' => $paid,
+			'bought'      => $bought,
 		);
 	}
 
@@ -118,9 +122,10 @@ class Data_Collector {
 	 * @param string        $email  Email address.
 	 * @param \WP_User|null $user   User.
 	 * @param string[]|null $wanted Wanted keys.
-	 * @return array{values: array, paid: int}
+	 * @param int[]         $track  Product IDs to look for.
+	 * @return array{values: array, paid: int, bought: int[]}
 	 */
-	private function woo_values( string $email, $user, ?array $wanted ): array {
+	private function woo_values( string $email, $user, ?array $wanted, array $track = array() ): array {
 		$query = array(
 			'status'  => self::paid_statuses(),
 			'type'    => 'shop_order',
@@ -149,6 +154,7 @@ class Data_Collector {
 				return array(
 					'values' => array(),
 					'paid'   => 0,
+					'bought' => array(),
 				);
 			}
 		}
@@ -171,7 +177,7 @@ class Data_Collector {
 		}
 
 		// Same numbers for customers and guests: paid orders, total minus refunds.
-		$totals               = $this->paid_totals( $query, $orders, $more, null === $user );
+		$totals               = $this->paid_totals( $query, $orders, $more, null === $user, $track );
 		$paid                 = $totals['count'];
 		$values['orderCount'] = $paid;
 		$values['totalSpent'] = round( $totals['total'], 2 );
@@ -215,6 +221,7 @@ class Data_Collector {
 		return array(
 			'values' => $values,
 			'paid'   => $paid,
+			'bought' => $totals['bought'],
 		);
 	}
 
@@ -226,13 +233,16 @@ class Data_Collector {
 	 * @param array $orders     Orders of the first page (guests: already without account orders).
 	 * @param bool  $more       Whether the first page was full (more pages may exist).
 	 * @param bool  $guest_only Skip orders placed by a registered account.
-	 * @return array{count: int, total: float}
+	 * @param int[] $track      Product IDs to look for (variations count as their parent product).
+	 * @return array{count: int, total: float, bought: int[]}
 	 */
-	private function paid_totals( array $query, array $orders, bool $more, bool $guest_only ): array {
-		$count = 0;
-		$total = 0.0;
-		$page  = 1;
-		$batch = $orders;
+	private function paid_totals( array $query, array $orders, bool $more, bool $guest_only, array $track = array() ): array {
+		$count  = 0;
+		$total  = 0.0;
+		$page   = 1;
+		$batch  = $orders;
+		$track  = array_fill_keys( array_map( 'intval', $track ), true );
+		$bought = array();
 		while ( true ) {
 			foreach ( $batch as $order ) {
 				if ( ! is_object( $order ) || ( $guest_only && 0 !== (int) $order->get_customer_id() ) ) {
@@ -240,6 +250,15 @@ class Data_Collector {
 				}
 				++$count;
 				$total += (float) $order->get_total() - (float) $order->get_total_refunded();
+				if ( $track && count( $bought ) < count( $track ) ) {
+					foreach ( (array) $order->get_items() as $item ) {
+						// get_product_id() is the parent product for variations.
+						$product_id = is_object( $item ) && is_callable( array( $item, 'get_product_id' ) ) ? (int) $item->get_product_id() : 0;
+						if ( isset( $track[ $product_id ] ) ) {
+							$bought[ $product_id ] = true;
+						}
+					}
+				}
 			}
 			if ( ! $more ) {
 				break;
@@ -252,8 +271,9 @@ class Data_Collector {
 			}
 		}
 		return array(
-			'count' => $count,
-			'total' => $total,
+			'count'  => $count,
+			'total'  => $total,
+			'bought' => array_keys( $bought ),
 		);
 	}
 

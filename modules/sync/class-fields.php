@@ -25,6 +25,16 @@ final class Fields {
 	const TAG_CUSTOMER = 'customer';
 
 	/**
+	 * Default prefix of the purchased product tags (`bought-<product-slug>`).
+	 */
+	const PRODUCT_TAG_PREFIX = 'bought-';
+
+	/**
+	 * Most products that can be chosen for purchased product tags.
+	 */
+	const PRODUCT_TAG_MAX = 200;
+
+	/**
 	 * Keys that are never accepted as custom field names (built-in contact properties).
 	 */
 	const RESERVED = array( 'email', 'tags', '_id', '_lists', 'createdAt', 'updatedAt', 'accountId', 'projectId' );
@@ -151,12 +161,72 @@ final class Fields {
 		}
 		return array(
 			// subscribers = only update existing bluefox contacts; all = also create contacts.
-			'scope'        => 'subscribers',
-			'auto_sync'    => true,
-			'tag_wp_user'  => false,
-			'tag_customer' => false,
-			'fields'       => $fields,
+			'scope'              => 'subscribers',
+			'auto_sync'          => true,
+			'tag_wp_user'        => false,
+			'tag_customer'       => false,
+			// Purchased product tags: off by default; only the chosen products are tagged.
+			'product_tags'       => false,
+			'product_tag_ids'    => array(),
+			'product_tag_prefix' => self::PRODUCT_TAG_PREFIX,
+			'fields'             => $fields,
 		);
+	}
+
+	/**
+	 * Product IDs chosen for purchased product tags, when the option is on (empty otherwise).
+	 *
+	 * @param array|null $settings Settings (null = stored).
+	 * @return int[]
+	 */
+	public static function tagged_products( ?array $settings = null ): array {
+		$settings = null === $settings ? self::settings() : $settings;
+		if ( empty( $settings['product_tags'] ) ) {
+			return array();
+		}
+		return self::clean_product_ids( $settings['product_tag_ids'] ?? array() );
+	}
+
+	/**
+	 * Positive, unique product IDs, at most PRODUCT_TAG_MAX.
+	 *
+	 * @param mixed $ids Raw IDs (array or comma-separated string).
+	 * @return int[]
+	 */
+	public static function clean_product_ids( $ids ): array {
+		$ids = is_array( $ids ) ? $ids : explode( ',', (string) $ids );
+		$out = array();
+		foreach ( $ids as $id ) {
+			$id = is_scalar( $id ) ? (int) $id : 0;
+			if ( $id > 0 && ! in_array( $id, $out, true ) ) {
+				$out[] = $id;
+			}
+		}
+		return array_slice( $out, 0, self::PRODUCT_TAG_MAX );
+	}
+
+	/**
+	 * Cleans the tag prefix: lowercase letters, digits, `-` and `_`, at most 40 characters; the default when empty.
+	 *
+	 * @param string $prefix Raw prefix.
+	 */
+	public static function clean_prefix( string $prefix ): string {
+		$prefix = substr( (string) preg_replace( '/[^a-z0-9_-]/', '', strtolower( trim( $prefix ) ) ), 0, 40 );
+		return '' === $prefix ? self::PRODUCT_TAG_PREFIX : $prefix;
+	}
+
+	/**
+	 * The tag of a purchased product: prefix + the product's slug ('' when the product no longer exists).
+	 *
+	 * @param int    $product_id Product ID.
+	 * @param string $prefix     Prefix.
+	 */
+	public static function product_tag( int $product_id, string $prefix ): string {
+		$slug = (string) get_post_field( 'post_name', $product_id );
+		if ( '' === $slug ) {
+			return '';
+		}
+		return substr( self::clean_prefix( $prefix ) . rawurldecode( $slug ), 0, 100 );
 	}
 
 	/**
@@ -248,6 +318,10 @@ final class Fields {
 		$clean['auto_sync']    = ! empty( $input['auto_sync'] );
 		$clean['tag_wp_user']  = ! empty( $input['tag_wp_user'] );
 		$clean['tag_customer'] = ! empty( $input['tag_customer'] );
+
+		$clean['product_tags']       = ! empty( $input['product_tags'] );
+		$clean['product_tag_ids']    = self::clean_product_ids( $input['product_tag_ids'] ?? array() );
+		$clean['product_tag_prefix'] = self::clean_prefix( is_scalar( $input['product_tag_prefix'] ?? null ) ? (string) $input['product_tag_prefix'] : '' );
 
 		$raw_fields  = isset( $input['fields'] ) && is_array( $input['fields'] ) ? $input['fields'] : array();
 		$prev_fields = isset( $previous['fields'] ) && is_array( $previous['fields'] ) ? $previous['fields'] : array();
