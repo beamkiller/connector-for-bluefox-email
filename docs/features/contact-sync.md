@@ -39,10 +39,15 @@ Each row of the **Fields** table is one bluefox contact field. Tick **Sync**, an
 | First order date | `firstOrderDate` | date | yes |
 | Billing country | `billingCountry` | string | yes |
 | Billing city | `billingCity` | string | yes |
+| Billing phone | `billingPhone` | string | no |
+| Billing company | `billingCompany` | string | no |
+| Billing street address (address lines 1 and 2) | `billingAddress` | string | no |
+| Billing postcode | `billingPostcode` | string | no |
+| Billing state / county (code) | `billingState` | string | no |
 | Purchased product categories (comma-separated slugs) | `purchasedCategories` | string | no |
 | Customer type (`customer` / `guest`) | `customerType` | string | yes |
 
-The fields from *Number of orders* down need WooCommerce. For registered customers and guests alike, the order count and total spent are calculated from their paid orders (processing or completed), minus refunds. Dates are sent as `YYYY-MM-DD`.
+The fields from *Number of orders* down need WooCommerce. For registered customers and guests alike, the order count and total spent are calculated from their paid orders (processing or completed), minus refunds. Dates are sent as `YYYY-MM-DD`. Billing details come from the customer's account, or from the latest paid order for guests and empty account values; the phone, company and address fields are personal data and therefore off by default *(since 1.1.0)* – switch on only what you use, for example when moving from MailerLite, whose WooCommerce integration filled Phone, Company, Address, ZIP and State.
 
 The fields must exist in bluefox, otherwise bluefox silently ignores the values. Save the settings, then click **Create missing fields in bluefox**.
 

@@ -4,6 +4,7 @@
 
 Beta for testing: install the zip from the [GitHub pre-release](https://github.com/beamkiller/connector-for-bluefox-email/releases). WordPress.org still offers 1.0.0.
 
+- **Billing details in Contact sync** *(beta 4)*: new fields `billingPhone`, `billingCompany`, `billingAddress`, `billingPostcode`, `billingState` – off by default (personal data); **Create missing fields in bluefox** creates them.
 - **Purchased product tags** in [Contact sync](../features/contact-sync.md#purchased-product-tags) *(beta 3)*: choose products with a searchable picker, and everyone with a paid order of one gets a `bought-<product-slug>` tag in bluefox – for segments and campaigns aimed at the product's buyers. Off by default; earlier orders are tagged by the sync of existing customers. Agents: `cfbe/search-products`.
 - **bluefox setup** on the General tab: choose the double opt-in confirmation email per list from your bluefox transactional emails (only emails with `{{verifyLink}}` are selectable), and switch on double opt-in, the thank-you page redirect and your own preferences page in bluefox with one click. See [General tab](../settings/general.md#bluefox-setup).
 - Fix: list selects showed the list ID instead of its name once the one-day list cache expired.

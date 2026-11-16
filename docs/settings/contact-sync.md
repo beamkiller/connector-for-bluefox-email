@@ -42,6 +42,11 @@ Field names may contain `A–Z`, `a–z`, `0–9` and `_` (max. 64 characters). 
 | First order date | `firstOrderDate` | date | on | yes |
 | Billing country | `billingCountry` | string | on | yes |
 | Billing city | `billingCity` | string | on | yes |
+| Billing phone | `billingPhone` | string | off | yes |
+| Billing company | `billingCompany` | string | off | yes |
+| Billing street address (address lines 1 and 2) | `billingAddress` | string | off | yes |
+| Billing postcode | `billingPostcode` | string | off | yes |
+| Billing state / county (code) | `billingState` | string | off | yes |
 | Purchased product categories (comma-separated slugs) | `purchasedCategories` | string | off | yes |
 | Customer type (customer / guest) | `customerType` | string | on | yes |
 

@@ -3594,63 +3594,83 @@ msgstr "Teszt elküldve"
 msgid "Failed, sent by WordPress"
 msgstr "Sikertelen, a WordPress küldte el"
 
-#: modules/sync/class-fields.php:133
+#: modules/sync/class-fields.php:159
 msgid "Full name (first + last name)"
 msgstr "Teljes név (keresztnév + vezetéknév)"
 
-#: modules/sync/class-fields.php:134
+#: modules/sync/class-fields.php:160
 msgid "First name"
 msgstr "Keresztnév"
 
-#: modules/sync/class-fields.php:135
+#: modules/sync/class-fields.php:161
 msgid "Last name"
 msgstr "Vezetéknév"
 
-#: modules/sync/class-fields.php:136
+#: modules/sync/class-fields.php:162
 msgid "WordPress user ID"
 msgstr "WordPress felhasználó ID"
 
-#: modules/sync/class-fields.php:137
+#: modules/sync/class-fields.php:163
 msgid "WordPress role"
 msgstr "WordPress szerepkör"
 
-#: modules/sync/class-fields.php:138
+#: modules/sync/class-fields.php:164
 msgid "Registration date"
 msgstr "Regisztráció dátuma"
 
-#: modules/sync/class-fields.php:139
+#: modules/sync/class-fields.php:165
 msgid "Number of orders"
 msgstr "Rendelések száma"
 
-#: modules/sync/class-fields.php:140
+#: modules/sync/class-fields.php:166
 msgid "Total spent"
 msgstr "Összes költés"
 
-#: modules/sync/class-fields.php:141
+#: modules/sync/class-fields.php:167
 msgid "Last order date"
 msgstr "Utolsó rendelés dátuma"
 
-#: modules/sync/class-fields.php:142
+#: modules/sync/class-fields.php:168
 msgid "Last order total"
 msgstr "Utolsó rendelés összege"
 
-#: modules/sync/class-fields.php:143
+#: modules/sync/class-fields.php:169
 msgid "First order date"
 msgstr "Első rendelés dátuma"
 
-#: modules/sync/class-fields.php:144
+#: modules/sync/class-fields.php:170
 msgid "Billing country"
 msgstr "Számlázási ország"
 
-#: modules/sync/class-fields.php:145
+#: modules/sync/class-fields.php:171
 msgid "Billing city"
 msgstr "Számlázási város"
 
-#: modules/sync/class-fields.php:146
+#: modules/sync/class-fields.php:172
+msgid "Billing phone"
+msgstr "Számlázási telefonszám"
+
+#: modules/sync/class-fields.php:173
+msgid "Billing company"
+msgstr "Számlázási cégnév"
+
+#: modules/sync/class-fields.php:174
+msgid "Billing street address (address lines 1 and 2)"
+msgstr "Számlázási cím (1. és 2. címsor)"
+
+#: modules/sync/class-fields.php:175
+msgid "Billing postcode"
+msgstr "Számlázási irányítószám"
+
+#: modules/sync/class-fields.php:176
+msgid "Billing state / county (code)"
+msgstr "Számlázási megye / állam (kód)"
+
+#: modules/sync/class-fields.php:177
 msgid "Purchased product categories (comma-separated slugs)"
 msgstr "Vásárolt termékkategóriák (vesszővel elválasztott slugok)"
 
-#: modules/sync/class-fields.php:147
+#: modules/sync/class-fields.php:178
 msgid "Customer type (customer / guest)"
 msgstr "Vásárló típusa (customer / guest)"
 

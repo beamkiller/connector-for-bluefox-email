@@ -170,6 +170,7 @@ class Data_Collector {
 				$values['billingCity']    = (string) $customer->get_billing_city();
 				$values['firstName']      = (string) $customer->get_billing_first_name();
 				$values['lastName']       = (string) $customer->get_billing_last_name();
+				$values                   = array_merge( $values, self::billing_extras( $customer, $wanted ) );
 			}
 			$values['customerType'] = 'customer';
 		} else {
@@ -197,6 +198,11 @@ class Data_Collector {
 			if ( empty( $values['lastName'] ) ) {
 				$values['lastName'] = (string) $latest->get_billing_last_name();
 			}
+			foreach ( self::billing_extras( $latest, $wanted ) as $key => $value ) {
+				if ( empty( $values[ $key ] ) ) {
+					$values[ $key ] = $value;
+				}
+			}
 
 			$oldest = end( $orders );
 			if ( count( $orders ) >= self::ORDER_LIMIT ) {
@@ -223,6 +229,39 @@ class Data_Collector {
 			'paid'   => $paid,
 			'bought' => $totals['bought'],
 		);
+	}
+
+	/**
+	 * Billing phone, company, street address, postcode and state of a customer or an order – only the wanted keys,
+	 * so switched-off personal data is never read.
+	 *
+	 * @param object        $source WC_Customer or WC_Order (both have the billing getters).
+	 * @param string[]|null $wanted Wanted keys (null = all).
+	 * @return array<string, string>
+	 */
+	private static function billing_extras( $source, ?array $wanted ): array {
+		$getters = array(
+			'billingPhone'    => array( 'get_billing_phone' ),
+			'billingCompany'  => array( 'get_billing_company' ),
+			'billingAddress'  => array( 'get_billing_address_1', 'get_billing_address_2' ),
+			'billingPostcode' => array( 'get_billing_postcode' ),
+			'billingState'    => array( 'get_billing_state' ),
+		);
+		$out     = array();
+		foreach ( $getters as $key => $methods ) {
+			if ( null !== $wanted && ! in_array( $key, $wanted, true ) ) {
+				continue;
+			}
+			$parts = array();
+			foreach ( $methods as $method ) {
+				$part = is_callable( array( $source, $method ) ) ? trim( (string) $source->$method() ) : '';
+				if ( '' !== $part ) {
+					$parts[] = $part;
+				}
+			}
+			$out[ $key ] = implode( ', ', $parts );
+		}
+		return $out;
 	}
 
 	/**

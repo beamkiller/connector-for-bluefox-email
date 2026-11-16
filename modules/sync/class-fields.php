@@ -111,6 +111,32 @@ final class Fields {
 			'woo'  => true,
 			'on'   => true,
 		),
+		// Personal data: off by default, switched on only where the shop really uses it.
+		'billingPhone'        => array(
+			'type' => 'string',
+			'woo'  => true,
+			'on'   => false,
+		),
+		'billingCompany'      => array(
+			'type' => 'string',
+			'woo'  => true,
+			'on'   => false,
+		),
+		'billingAddress'      => array(
+			'type' => 'string',
+			'woo'  => true,
+			'on'   => false,
+		),
+		'billingPostcode'     => array(
+			'type' => 'string',
+			'woo'  => true,
+			'on'   => false,
+		),
+		'billingState'        => array(
+			'type' => 'string',
+			'woo'  => true,
+			'on'   => false,
+		),
 		'purchasedCategories' => array(
 			'type' => 'string',
 			'woo'  => true,
@@ -143,6 +169,11 @@ final class Fields {
 			'firstOrderDate'      => __( 'First order date', 'connector-for-bluefox-email' ),
 			'billingCountry'      => __( 'Billing country', 'connector-for-bluefox-email' ),
 			'billingCity'         => __( 'Billing city', 'connector-for-bluefox-email' ),
+			'billingPhone'        => __( 'Billing phone', 'connector-for-bluefox-email' ),
+			'billingCompany'      => __( 'Billing company', 'connector-for-bluefox-email' ),
+			'billingAddress'      => __( 'Billing street address (address lines 1 and 2)', 'connector-for-bluefox-email' ),
+			'billingPostcode'     => __( 'Billing postcode', 'connector-for-bluefox-email' ),
+			'billingState'        => __( 'Billing state / county (code)', 'connector-for-bluefox-email' ),
 			'purchasedCategories' => __( 'Purchased product categories (comma-separated slugs)', 'connector-for-bluefox-email' ),
 			'customerType'        => __( 'Customer type (customer / guest)', 'connector-for-bluefox-email' ),
 		);

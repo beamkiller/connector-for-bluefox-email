@@ -43,7 +43,7 @@ Full documentation: [beamkiller.github.io/connector-for-bluefox-email](https://b
 
 **Contact sync**
 
-* Keep bluefox contacts enriched with user and customer data (name, order count, total spent, last order date, purchased categories, …) for segmentation.
+* Keep bluefox contacts enriched with user and customer data (name, order count, total spent, last order date, purchased categories, billing country and city, and – if you switch them on – billing phone, company, address, postcode and state) for segmentation.
 * Purchased product tags (off by default): choose products with a searchable picker, and everyone who bought one gets a tag such as `bought-<product-slug>` – for segments and campaigns aimed at the buyers of a product.
 * Bulk backfill and WP-CLI command.
 
@@ -90,7 +90,7 @@ What is sent and when:
 * When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name (if given), tags and the list they subscribe to, plus the values of any form fields you map to bluefox contact fields in the form integration settings.
 * When the Welcome coupon module confirms a signup: the subscription status is read and the coupon email is sent with the coupon code, value and expiry date.
 * When a welcome coupon is about to expire unused (and a reminder email is set): the reminder email is sent to that subscriber with the same coupon details.
-* When the Contact sync module is on: the user and customer fields you enable (for example name, order count, total spent, last order date) and, if you switch them on, tags for the chosen products the person bought.
+* When the Contact sync module is on: the user and customer fields you enable (for example name, order count, total spent, last order date; billing phone, company and address only if you switch them on) and, if you switch them on, tags for the chosen products the person bought.
 * When the Email delivery module is on: every email sent with `wp_mail()` (recipients, subject, body, attachments) is sent to bluefox.email for delivery.
 * When order or abandoned cart emails are on: order or cart details used in the email (order number, items, totals, customer name and address).
 * On the preferences page: the visitor's own subscription token, to read and change their subscription.
@@ -168,6 +168,7 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 * Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
 * Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
 * Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
+* New: billing phone, company, street address, postcode and state as Contact sync fields (off by default).
 * New: purchased product tags in Contact sync – choose products with a searchable picker (fine for big stores), and their buyers get a `bought-<product-slug>` tag in bluefox, also for earlier orders via the sync of existing customers. Off by default.
 * AI agent access: new ability cfbe/search-products; the purchased product tag settings are in the sync area of cfbe/get-settings / cfbe/update-settings. New abilities cfbe/get-bluefox-setup and cfbe/apply-bluefox-setup; cfbe/list-bluefox-lists also returns each list's confirmation email and redirect link; abilities with only optional input run without input.
 
