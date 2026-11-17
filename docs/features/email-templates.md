@@ -24,6 +24,9 @@ The cards are grouped:
 | Review request | triggered or transactional (you choose) | Order emails on | Rule *Review request*, 7 days after completion. The email lists the ordered products, each with a **Write a review** button that opens the product page on its Reviews tab (no prices). |
 | Abandoned cart reminder | triggered | Abandoned cart emails on | Rule *Abandoned cart*, with the item list, restore button and – when switched on – the recovery coupon. |
 
+!!! note "Greeting by first name"
+    Since 1.1.0 a newly created double opt-in email greets by first name: `Hi {{#if contact.firstName}}{{contact.firstName}}{{else}}{{DEFAULT contact.name "there"}}{{/if}},` (`firstName` is the First name field of the [Contact sync](contact-sync.md) table, if renamed there use that name). Confirmation emails created before 1.1.0 or outside the plugin are not changed – to greet by first name, add this to the intro on the Email templates tab and click **Update in bluefox**, or edit your own email in bluefox.
+
 Rules: when a rule for the event already exists **without** an email, the new email is filled into it and the rule is switched on. When the existing rule already has an email, nothing is changed – select the new email there if you want it.
 
 **Triggered** emails are marketing emails: they belong to a subscriber list, only its active subscribers receive them, and they carry an unsubscribe link. Choose the list when you create them.
