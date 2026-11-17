@@ -27,6 +27,10 @@ final class Email_Templates {
 	 */
 	public static function definitions(): array {
 		$order_vars = '{{orderNumber}}, {{orderDate}}, {{orderTotal}}, {{billing.firstName}}, {{paymentMethod}}, {{shippingMethod}}, {{siteName}}';
+		// Greeting of the confirmation email: the first name (field named like on the Contact sync tab), else the full name.
+		$first_field = Name_Parts::field_names()['first'];
+		$first_var   = '{{contact.' . $first_field . '}}';
+		$greet       = '{{#if contact.' . $first_field . '}}' . $first_var . '{{else}}{{DEFAULT contact.name "' . __( 'there', 'connector-for-bluefox-email' ) . '"}}{{/if}}';
 		return array(
 			'confirm'         => array(
 				'label'      => __( 'Double opt-in confirmation', 'connector-for-bluefox-email' ),
@@ -39,12 +43,13 @@ final class Email_Templates {
 				'module'     => 'forms',
 				'button_url' => '{{{verifyLink}}}',
 				'blocks'     => array(),
-				'variables'  => '{{contact.email}}',
+				'variables'  => '{{contact.email}}, {{contact.name}}, ' . $first_var,
 				'defaults'   => array(
 					'subject' => __( 'Please confirm your subscription', 'connector-for-bluefox-email' ),
 					'preview' => __( 'One click and you are on the list.', 'connector-for-bluefox-email' ),
 					'heading' => __( 'Confirm your subscription', 'connector-for-bluefox-email' ),
-					'intro'   => __( 'Thank you for signing up to our newsletter. Please click the button below to confirm your email address.', 'connector-for-bluefox-email' ),
+					/* translators: %s: greeting name (first name, else full name, else "there"); keep it as is */
+					'intro'   => sprintf( __( 'Hi %s, thank you for signing up to our newsletter. Please click the button below to confirm your email address.', 'connector-for-bluefox-email' ), $greet ),
 					'button'  => __( 'Yes, subscribe me', 'connector-for-bluefox-email' ),
 					'footer'  => __( 'If you did not sign up, simply ignore this email: you will not be subscribed.', 'connector-for-bluefox-email' ),
 				),
@@ -352,6 +357,11 @@ final class Email_Templates {
 			'orderTotal'   => '33.90',
 			'viewOrderUrl' => home_url( '/' ),
 			'billing'      => array( 'firstName' => 'Jane' ),
+			'contact'      => array(
+				'email'                            => 'jane@example.com',
+				'name'                             => 'Jane Doe',
+				Name_Parts::field_names()['first'] => 'Jane',
+			),
 			'items'        => $items,
 			'itemCount'    => 3,
 			'note'         => __( 'Your parcel ships tomorrow.', 'connector-for-bluefox-email' ),

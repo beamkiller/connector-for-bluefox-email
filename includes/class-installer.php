@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Installer {
 
-	const DB_VERSION = '4';
+	const DB_VERSION = '5';
 	const OPTION     = 'cfbe_db_version';
 	const TABLE      = 'cfbe_subscribers';
 
@@ -75,6 +75,8 @@ final class Installer {
   email varchar(190) NOT NULL,
   mailbox varchar(190) NOT NULL DEFAULT '',
   name varchar(190) DEFAULT NULL,
+  first_name varchar(100) DEFAULT NULL,
+  last_name varchar(100) DEFAULT NULL,
   source varchar(20) NOT NULL DEFAULT '',
   list_id varchar(64) NOT NULL DEFAULT '',
   tags text DEFAULT NULL,
@@ -95,7 +97,8 @@ final class Installer {
   PRIMARY KEY  (id),
   UNIQUE KEY email (email),
   KEY status_created (status,created_at),
-  KEY mailbox (mailbox)
+  KEY mailbox (mailbox),
+  KEY created_at (created_at)
 ) {$collate};";
 	}
 }

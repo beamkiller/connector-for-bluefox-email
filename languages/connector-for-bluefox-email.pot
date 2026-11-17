@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails 1.1.0-beta.3\n"
+"Project-Id-Version: Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails 1.1.0-beta.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/connector-for-bluefox-email\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-16T17:39:01+00:00\n"
+"POT-Creation-Date: 2026-11-17T14:10:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: admin/class-admin-ajax.php:146
 #: admin/class-admin-page.php:335
-#: admin/class-bluefox-setup.php:552
+#: admin/class-bluefox-setup.php:626
 #: admin/class-coupon-tab.php:157
 #: admin/class-coupon-tab.php:215
 #: admin/class-coupon-tab.php:227
@@ -146,38 +146,38 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:235
+#: admin/class-bluefox-setup.php:257
 msgid "bluefox setup"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:236
+#: admin/class-bluefox-setup.php:258
 msgid "These settings live in your bluefox project. Check them here and apply them with one click."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:242
+#: admin/class-bluefox-setup.php:264
 msgid "Save the project ID and API key above first."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:246
+#: admin/class-bluefox-setup.php:268
 msgid "Choose a default subscriber list above first."
 msgstr ""
 
 #. translators: %s: error message
-#: admin/class-bluefox-setup.php:256
+#: admin/class-bluefox-setup.php:278
 #, php-format
 msgid "bluefox could not be read: %s"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:258
-#: admin/class-bluefox-setup.php:276
+#: admin/class-bluefox-setup.php:280
+#: admin/class-bluefox-setup.php:299
 msgid "Check again"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:267
+#: admin/class-bluefox-setup.php:289
 msgid "Setting"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:267
+#: admin/class-bluefox-setup.php:289
 #: admin/views/tab-email-templates.php:168
 #: admin/views/tab-subscribers.php:71
 #: admin/views/tab-subscribers.php:103
@@ -187,142 +187,181 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:267
+#: admin/class-bluefox-setup.php:289
 msgid "Change to"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:275
+#: admin/class-bluefox-setup.php:298
 msgid "Apply in bluefox"
 msgstr ""
 
 #. translators: %s: list name
-#: admin/class-bluefox-setup.php:302
+#: admin/class-bluefox-setup.php:325
 #, php-format
 msgid "Double opt-in of “%s”"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:305
+#: admin/class-bluefox-setup.php:328
 msgid "List not found in bluefox"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:310
-#: admin/class-bluefox-setup.php:372
+#: admin/class-bluefox-setup.php:333
+#: admin/class-bluefox-setup.php:395
+#: admin/class-bluefox-setup.php:416
 msgid "Ready"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:312
+#: admin/class-bluefox-setup.php:335
 msgid "Off"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:316
+#: admin/class-bluefox-setup.php:339
 msgid "confirmation email without {{verifyLink}}"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:320
+#: admin/class-bluefox-setup.php:343
 msgid "no redirect to this site"
 msgstr ""
 
 #. translators: %s: URL
-#: admin/class-bluefox-setup.php:322
+#: admin/class-bluefox-setup.php:345
 #, php-format
 msgid "redirects to %s"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:331
+#: admin/class-bluefox-setup.php:354
 msgid "Confirmation email"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:333
+#: admin/class-bluefox-setup.php:356
 msgid "— Leave unchanged —"
 msgstr ""
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:338
+#: admin/class-bluefox-setup.php:361
 #, php-format
 msgid "%s (no {{verifyLink}})"
 msgstr ""
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:341
+#: admin/class-bluefox-setup.php:364
 #, php-format
 msgid "%s (from Email templates)"
 msgstr ""
 
 #. translators: %s: thank-you page URL
-#: admin/class-bluefox-setup.php:354
+#: admin/class-bluefox-setup.php:377
 #, php-format
 msgid "Double opt-in on with this confirmation email; confirmed subscribers land on %s."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:357
+#: admin/class-bluefox-setup.php:380
 msgid "None of your bluefox transactional emails contains {{verifyLink}}. Create the confirmation email on the Email templates tab, or add {{verifyLink}} to an email in bluefox."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:357
+#: admin/class-bluefox-setup.php:380
 #: admin/class-email-templates-tab.php:64
 msgid "Email templates"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:370
+#: admin/class-bluefox-setup.php:391
+msgid "Contact fields for names"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:393
+msgid "Could not be read"
+msgstr ""
+
+#. translators: %s: field names
+#: admin/class-bluefox-setup.php:398
+#, php-format
+msgid "Missing: %s"
+msgstr ""
+
+#. translators: %s: field names
+#: admin/class-bluefox-setup.php:402
+#, php-format
+msgid "Create the missing fields of %s (otherwise bluefox silently drops the names)"
+msgstr ""
+
+#: admin/class-bluefox-setup.php:414
 #: includes/class-modules.php:99
 msgid "Subscription preferences page"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:375
+#: admin/class-bluefox-setup.php:419
 msgid "bluefox’s own page is used"
 msgstr ""
 
 #. translators: %s: URL
-#: admin/class-bluefox-setup.php:377
+#: admin/class-bluefox-setup.php:421
 #, php-format
 msgid "set to %s"
 msgstr ""
 
 #. translators: %s: preferences page URL
-#: admin/class-bluefox-setup.php:382
+#: admin/class-bluefox-setup.php:426
 #, php-format
 msgid "Unsubscribe and pause links lead to %s"
 msgstr ""
 
 #. translators: %s: list ID
-#: admin/class-bluefox-setup.php:493
+#: admin/class-bluefox-setup.php:544
 #, php-format
 msgid "List %s is not used by the plugin (default list, popup, checkout, coupon or form integrations): skipped."
 msgstr ""
 
 #. translators: %s: email name
-#: admin/class-bluefox-setup.php:497
+#: admin/class-bluefox-setup.php:548
 #, php-format
 msgid "“%s” has no {{verifyLink}}, so bluefox would reject it as a confirmation email: skipped."
 msgstr ""
 
 #. translators: 1: list name, 2: error message
-#: admin/class-bluefox-setup.php:519
+#: admin/class-bluefox-setup.php:570
 #, php-format
 msgid "“%1$s”: %2$s"
 msgstr ""
 
 #. translators: %s: list name
-#: admin/class-bluefox-setup.php:522
+#: admin/class-bluefox-setup.php:573
 #, php-format
 msgid "Double opt-in of “%s” is on, with the chosen email and this site’s thank-you page."
 msgstr ""
 
 #. translators: %s: error message
-#: admin/class-bluefox-setup.php:532
+#: admin/class-bluefox-setup.php:583
 #, php-format
 msgid "Preferences page: %s"
 msgstr ""
 
-#: admin/class-bluefox-setup.php:534
+#: admin/class-bluefox-setup.php:585
 msgid "Unsubscribe and pause links now lead to this site’s preferences page."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:539
+#. translators: %s: error message
+#: admin/class-bluefox-setup.php:593
+#, php-format
+msgid "Contact fields: %s"
+msgstr ""
+
+#. translators: 1: field name, 2: error message
+#: admin/class-bluefox-setup.php:600
+#, php-format
+msgid "Contact field %1$s: %2$s"
+msgstr ""
+
+#. translators: %s: field names
+#: admin/class-bluefox-setup.php:607
+#, php-format
+msgid "Created the contact fields %s."
+msgstr ""
+
+#: admin/class-bluefox-setup.php:613
 msgid "Nothing to change: bluefox is already set up like this."
 msgstr ""
 
-#: admin/class-bluefox-setup.php:566
+#: admin/class-bluefox-setup.php:640
 #: admin/class-email-templates-tab.php:125
 #: admin/class-redirect-check.php:253
 #: admin/views/tab-email-templates.php:48
@@ -362,7 +401,7 @@ msgstr ""
 #. translators: %s: minimum order amount
 #. translators: %s: amount placeholder
 #: admin/class-coupon-tab.php:133
-#: includes/class-email-templates.php:392
+#: includes/class-email-templates.php:402
 #, php-format
 msgid "minimum order %s"
 msgstr ""
@@ -1362,7 +1401,7 @@ msgid "Field border"
 msgstr ""
 
 #: admin/views/tab-form.php:25
-#: admin/views/tab-form.php:229
+#: admin/views/tab-form.php:255
 msgid "Error"
 msgstr ""
 
@@ -1467,8 +1506,8 @@ msgid "Value"
 msgstr ""
 
 #: admin/views/tab-form.php:115
-#: admin/views/tab-form.php:185
-#: admin/views/tab-form.php:192
+#: admin/views/tab-form.php:211
+#: admin/views/tab-form.php:218
 msgid "Label"
 msgstr ""
 
@@ -1523,110 +1562,144 @@ msgid "Name field"
 msgstr ""
 
 #: admin/views/tab-form.php:161
-#: admin/views/tab-form.php:168
+#: admin/views/tab-form.php:194
 msgid "Show"
 msgstr ""
 
 #: admin/views/tab-form.php:162
-#: admin/views/tab-form.php:169
+#: admin/views/tab-form.php:195
 msgid "Required"
 msgstr ""
 
+#: admin/views/tab-form.php:164
+msgid "Name fields"
+msgstr ""
+
+#: admin/views/tab-form.php:165
+msgid "One Name field"
+msgstr ""
+
 #: admin/views/tab-form.php:166
-msgid "Interests"
+msgid "First name and Last name"
+msgstr ""
+
+#: admin/views/tab-form.php:169
+msgid "Name order"
 msgstr ""
 
 #: admin/views/tab-form.php:171
-msgid "Dropdown (single choice)"
+msgid "Automatic (from the site language)"
 msgstr ""
 
 #: admin/views/tab-form.php:172
+msgid "First name, then last name"
+msgstr ""
+
+#: admin/views/tab-form.php:173
+msgid "Last name, then first name (e.g. Hungarian)"
+msgstr ""
+
+#. translators: 1: bluefox field name of the first name, 2: of the last name
+#: admin/views/tab-form.php:182
+#, php-format
+msgid "With two fields, Required applies to both. bluefox gets the parts as %1$s and %2$s (renamed on the Contact sync tab, if you changed them there) and the full name as name, in the order above. The fields must exist in bluefox: bluefox setup on the General tab creates them."
+msgstr ""
+
+#: admin/views/tab-form.php:192
+msgid "Interests"
+msgstr ""
+
+#: admin/views/tab-form.php:197
+msgid "Dropdown (single choice)"
+msgstr ""
+
+#: admin/views/tab-form.php:198
 msgid "Checkboxes (multiple choice)"
 msgstr ""
 
-#: admin/views/tab-form.php:177
+#: admin/views/tab-form.php:203
 msgid "Question text"
 msgstr ""
 
-#: admin/views/tab-form.php:181
+#: admin/views/tab-form.php:207
 msgid "Options"
 msgstr ""
 
-#: admin/views/tab-form.php:186
-#: admin/views/tab-form.php:193
+#: admin/views/tab-form.php:212
+#: admin/views/tab-form.php:219
 msgid "bluefox tag"
 msgstr ""
 
-#: admin/views/tab-form.php:187
+#: admin/views/tab-form.php:213
 #: modules/woo-events/views/tab-woo-events.php:175
 msgid "Actions"
 msgstr ""
 
-#: admin/views/tab-form.php:193
+#: admin/views/tab-form.php:219
 msgid "automatic"
 msgstr ""
 
-#: admin/views/tab-form.php:195
+#: admin/views/tab-form.php:221
 msgid "Up"
 msgstr ""
 
-#: admin/views/tab-form.php:196
+#: admin/views/tab-form.php:222
 msgid "Down"
 msgstr ""
 
-#: admin/views/tab-form.php:197
+#: admin/views/tab-form.php:223
 #: modules/integrations/views/map-row.php:20
 #: modules/integrations/views/rule-row.php:44
 #: modules/woo-events/views/tab-woo-events.php:111
 msgid "Remove"
 msgstr ""
 
-#: admin/views/tab-form.php:203
+#: admin/views/tab-form.php:229
 msgid "+ Add option"
 msgstr ""
 
-#: admin/views/tab-form.php:204
+#: admin/views/tab-form.php:230
 msgid "If left empty, the tag is generated from the label (e.g. “Special offers” → interest-special-offers). Do not rename tags after going live, because bluefox segments rely on them."
 msgstr ""
 
-#: admin/views/tab-form.php:209
+#: admin/views/tab-form.php:235
 msgid "Consent"
 msgstr ""
 
-#: admin/views/tab-form.php:212
+#: admin/views/tab-form.php:238
 msgid "Checkbox text"
 msgstr ""
 
-#: admin/views/tab-form.php:214
+#: admin/views/tab-form.php:240
 msgid "This text is stored as proof of consent."
 msgstr ""
 
-#: admin/views/tab-form.php:217
+#: admin/views/tab-form.php:243
 msgid "Privacy policy URL"
 msgstr ""
 
-#: admin/views/tab-form.php:222
+#: admin/views/tab-form.php:248
 msgid "Messages"
 msgstr ""
 
-#: admin/views/tab-form.php:227
+#: admin/views/tab-form.php:253
 msgid "Successful signup"
 msgstr ""
 
-#: admin/views/tab-form.php:228
+#: admin/views/tab-form.php:254
 msgid "Already subscribed"
 msgstr ""
 
-#: admin/views/tab-form.php:239
-#: includes/class-privacy.php:467
+#: admin/views/tab-form.php:265
+#: includes/class-privacy.php:469
 msgid "Subscription status"
 msgstr ""
 
-#: admin/views/tab-form.php:241
+#: admin/views/tab-form.php:267
 msgid "Show the “Already subscribed” message"
 msgstr ""
 
-#: admin/views/tab-form.php:242
+#: admin/views/tab-form.php:268
 msgid "Off: every successful signup shows the “Successful signup” message, so nobody can use the form to find out whether an address is on your list. On: subscribers who sign up again see “Already subscribed”, which also tells anyone who types their address."
 msgstr ""
 
@@ -1702,7 +1775,7 @@ msgid "Interests field (if enabled on the Form tab)"
 msgstr ""
 
 #: admin/views/tab-popup.php:59
-#: includes/class-privacy.php:464
+#: includes/class-privacy.php:466
 #: blocks/signup-form/index.js:48
 msgid "bluefox list"
 msgstr ""
@@ -2080,12 +2153,12 @@ msgstr ""
 
 #: admin/views/tab-subscribers.php:100
 #: includes/class-privacy.php:462
-#: public/class-form-renderer.php:81
+#: public/class-form-renderer.php:85
 msgid "Name"
 msgstr ""
 
 #: admin/views/tab-subscribers.php:102
-#: includes/class-privacy.php:465
+#: includes/class-privacy.php:467
 #: modules/sync/views/tab-sync.php:51
 msgid "Tags"
 msgstr ""
@@ -2231,7 +2304,7 @@ msgid "Check the bluefox setup"
 msgstr ""
 
 #: includes/class-abilities.php:303
-msgid "Returns the bluefox-side settings the plugin relies on (\"bluefox setup\" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site's thank-you page (ready = all three); the project's transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); and, with the preferences page on, whether unsubscribe links lead to this site's preferences page. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true."
+msgid "Returns the bluefox-side settings the plugin relies on (\"bluefox setup\" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site's thank-you page (ready = all three); the project's transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); with the preferences page on, whether unsubscribe links lead to this site's preferences page; and contact_fields: whether the name fields (name, first and last name) exist in bluefox. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true."
 msgstr ""
 
 #: includes/class-abilities.php:311
@@ -2254,138 +2327,142 @@ msgstr ""
 msgid "Point unsubscribe and pause links to this site's preferences page. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:377
+#: includes/class-abilities.php:352
+msgid "Create the missing name contact fields (name, first name, last name) in bluefox. Default false."
+msgstr ""
+
+#: includes/class-abilities.php:381
 msgid "Texts to use: subject, preview, heading, intro, button, footer (Handlebars variables such as {{orderNumber}} work). Omitted texts keep their current value."
 msgstr ""
 
-#: includes/class-abilities.php:384
+#: includes/class-abilities.php:388
 msgid "Template key, see cfbe/list-email-templates."
 msgstr ""
 
-#: includes/class-abilities.php:390
+#: includes/class-abilities.php:394
 msgid "List bluefox email templates"
 msgstr ""
 
-#: includes/class-abilities.php:391
+#: includes/class-abilities.php:395
 msgid "Returns the ready-made emails of the Email templates tab whose feature is on: key, label, what it is, why use it, when it is sent, the email types the admin may choose (triggered = marketing, only active subscribers of a list, with an unsubscribe link; transactional = every recipient), its texts, whether it was created in bluefox, where it is used and whether its design is older than the current one. Also returns the design source (woocommerce or form) and the sender identities of the bluefox project."
 msgstr ""
 
-#: includes/class-abilities.php:410
+#: includes/class-abilities.php:414
 msgid "Create a bluefox email from a template"
 msgstr ""
 
-#: includes/class-abilities.php:411
+#: includes/class-abilities.php:415
 msgid "Creates a ready-made email in the connected bluefox project (\"Create in bluefox\" on the Email templates tab) and, unless assign is false, selects it where the plugin uses it: confirmation = double opt-in email of the list, welcome_coupon = coupon email, order and cart emails = an Order emails / Abandoned carts rule. Triggered (marketing) emails need list_id (see cfbe/list-bluefox-lists). WooCommerce keeps sending its own order emails."
 msgstr ""
 
-#: includes/class-abilities.php:421
+#: includes/class-abilities.php:425
 msgid "Email type, only where the template allows a choice (default: the first allowed type)."
 msgstr ""
 
-#: includes/class-abilities.php:425
+#: includes/class-abilities.php:429
 msgid "Subscriber list: required for triggered emails; for the confirmation email the list that gets double opt-in."
 msgstr ""
 
-#: includes/class-abilities.php:429
+#: includes/class-abilities.php:433
 msgid "Sender identity ID from cfbe/list-email-templates. Omit for the project default sender."
 msgstr ""
 
-#: includes/class-abilities.php:433
+#: includes/class-abilities.php:437
 msgid "Select the new email where the plugin uses it. Default true."
 msgstr ""
 
-#: includes/class-abilities.php:458
+#: includes/class-abilities.php:462
 msgid "Update a bluefox email from its template"
 msgstr ""
 
-#: includes/class-abilities.php:459
+#: includes/class-abilities.php:463
 msgid "Sends new texts and the current design to an email created from a template (\"Update in bluefox\"). Refuses with cfbe_template_changed when the email was changed in bluefox after the plugin last wrote it: ask the admin before repeating with force true, which replaces those changes. Emails switched to the bluefox visual editor are never overwritten."
 msgstr ""
 
-#: includes/class-abilities.php:468
+#: includes/class-abilities.php:472
 msgid "Replace changes made in bluefox. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:489
+#: includes/class-abilities.php:493
 msgid "Send a test of a template email"
 msgstr ""
 
-#: includes/class-abilities.php:490
+#: includes/class-abilities.php:494
 msgid "Has bluefox send a created template email, filled with sample data, to the email address of the signed-in admin (\"Send me a test\"). It cannot send to any other address."
 msgstr ""
 
-#: includes/class-abilities.php:515
+#: includes/class-abilities.php:519
 msgid "Set the design of the template emails"
 msgstr ""
 
-#: includes/class-abilities.php:516
+#: includes/class-abilities.php:520
 msgid "Chooses the design of the ready-made emails: woocommerce = logo, colours, font and footer from WooCommerce → Settings → Emails (needs WooCommerce); form = the signup form colours. Emails already created keep their design until cfbe/update-email-template is run for them."
 msgstr ""
 
-#: includes/class-abilities.php:535
+#: includes/class-abilities.php:539
 msgid "Created templates whose design differs from the new one."
 msgstr ""
 
 #. translators: 1: setting keys, 2: settings area
-#: includes/class-abilities.php:621
+#: includes/class-abilities.php:625
 #, php-format
 msgid "Unknown settings %1$s in area %2$s. Call cfbe/get-settings for the valid keys."
 msgstr ""
 
 #. translators: %s: setting keys
-#: includes/class-abilities.php:630
+#: includes/class-abilities.php:634
 #, php-format
 msgid "%s can only be changed in wp-admin."
 msgstr ""
 
 #. translators: 1: module slugs, 2: valid module slugs
-#: includes/class-abilities.php:681
+#: includes/class-abilities.php:685
 #, php-format
 msgid "Unknown modules %1$s. Valid modules: %2$s."
 msgstr ""
 
-#: includes/class-abilities.php:736
+#: includes/class-abilities.php:740
 msgid "WooCommerce is not active."
 msgstr ""
 
-#: includes/class-abilities.php:742
+#: includes/class-abilities.php:746
 msgid "Type at least two characters."
 msgstr ""
 
-#: includes/class-abilities.php:904
+#: includes/class-abilities.php:908
 msgid "This email was already created in bluefox: use cfbe/update-email-template to change it."
 msgstr ""
 
 #. translators: %s: allowed email types
-#: includes/class-abilities.php:911
+#: includes/class-abilities.php:915
 #, php-format
 msgid "This template can only be created as: %s."
 msgstr ""
 
-#: includes/class-abilities.php:970
+#: includes/class-abilities.php:974
 msgid "The signed-in user has no email address."
 msgstr ""
 
-#: includes/class-abilities.php:986
+#: includes/class-abilities.php:990
 msgid "Design must be woocommerce or form."
 msgstr ""
 
-#: includes/class-abilities.php:989
+#: includes/class-abilities.php:993
 msgid "WooCommerce is not active, so its email design cannot be used."
 msgstr ""
 
 #. translators: %s: template keys
-#: includes/class-abilities.php:1018
+#: includes/class-abilities.php:1022
 #, php-format
 msgid "Unknown template or its feature is off. Available: %s."
 msgstr ""
 
-#: includes/class-abilities.php:1035
+#: includes/class-abilities.php:1039
 msgid "bluefox is not connected yet: set the project ID and API key on the General tab in wp-admin."
 msgstr ""
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:1095
+#: includes/class-abilities.php:1099
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr ""
@@ -2395,32 +2472,32 @@ msgid "The bluefox connection is not configured (Project ID / API key)."
 msgstr ""
 
 #: includes/class-checkout-optin.php:236
-#: public/class-form-renderer.php:239
+#: public/class-form-renderer.php:243
 msgid "Privacy policy"
 msgstr ""
 
-#: includes/class-checkout-optin.php:448
+#: includes/class-checkout-optin.php:452
 msgid "Newsletter: the customer subscribed, the confirmation email has been sent."
 msgstr ""
 
-#: includes/class-checkout-optin.php:450
+#: includes/class-checkout-optin.php:454
 msgid "Newsletter: the customer is already a subscriber (no new coupon)."
 msgstr ""
 
-#: includes/class-checkout-optin.php:452
+#: includes/class-checkout-optin.php:456
 msgid "Newsletter: bluefox is unavailable right now, the subscription will be retried later."
 msgstr ""
 
-#: includes/class-checkout-optin.php:454
+#: includes/class-checkout-optin.php:458
 msgid "Newsletter: the subscription failed (details: bluefox.email → Logs)."
 msgstr ""
 
-#: includes/class-checkout-optin.php:472
+#: includes/class-checkout-optin.php:476
 msgid "Newsletter:"
 msgstr ""
 
 #. translators: %s: date and time of the consent
-#: includes/class-checkout-optin.php:476
+#: includes/class-checkout-optin.php:480
 #, php-format
 msgid "subscribed at checkout (%s)"
 msgstr ""
@@ -2544,371 +2621,377 @@ msgstr ""
 msgid "A rule that sends this email was added and switched on."
 msgstr ""
 
-#: includes/class-email-templates.php:32
-msgid "Double opt-in confirmation"
-msgstr ""
-
-#: includes/class-email-templates.php:34
-msgid "Asks a new subscriber to confirm their email address (double opt-in)."
-msgstr ""
-
-#: includes/class-email-templates.php:35
-msgid "Only confirmed, real addresses join your list – this keeps it clean and GDPR-proof. The welcome coupon is sent only after confirmation."
+#: includes/class-email-templates.php:33
+msgid "there"
 msgstr ""
 
 #: includes/class-email-templates.php:36
+msgid "Double opt-in confirmation"
+msgstr ""
+
+#: includes/class-email-templates.php:38
+msgid "Asks a new subscriber to confirm their email address (double opt-in)."
+msgstr ""
+
+#: includes/class-email-templates.php:39
+msgid "Only confirmed, real addresses join your list – this keeps it clean and GDPR-proof. The welcome coupon is sent only after confirmation."
+msgstr ""
+
+#: includes/class-email-templates.php:40
 msgid "Right after someone subscribes. bluefox sends it."
 msgstr ""
 
-#: includes/class-email-templates.php:37
+#: includes/class-email-templates.php:41
 msgid "Switches on double opt-in for the chosen list with this email, and sets your thank-you page as the page shown after confirming."
 msgstr ""
 
-#: includes/class-email-templates.php:44
+#: includes/class-email-templates.php:48
 msgid "Please confirm your subscription"
 msgstr ""
 
-#: includes/class-email-templates.php:45
+#: includes/class-email-templates.php:49
 msgid "One click and you are on the list."
 msgstr ""
 
-#: includes/class-email-templates.php:46
+#: includes/class-email-templates.php:50
 msgid "Confirm your subscription"
 msgstr ""
 
-#: includes/class-email-templates.php:47
-msgid "Thank you for signing up to our newsletter. Please click the button below to confirm your email address."
-msgstr ""
-
-#: includes/class-email-templates.php:48
-msgid "Yes, subscribe me"
-msgstr ""
-
-#: includes/class-email-templates.php:49
-msgid "If you did not sign up, simply ignore this email: you will not be subscribed."
+#. translators: %s: greeting name (first name, else full name, else "there"); keep it as is
+#: includes/class-email-templates.php:52
+#, php-format
+msgid "Hi %s, thank you for signing up to our newsletter. Please click the button below to confirm your email address."
 msgstr ""
 
 #: includes/class-email-templates.php:53
+msgid "Yes, subscribe me"
+msgstr ""
+
+#: includes/class-email-templates.php:54
+msgid "If you did not sign up, simply ignore this email: you will not be subscribed."
+msgstr ""
+
+#: includes/class-email-templates.php:58
 #: includes/class-modules.php:89
 msgid "Welcome coupon"
 msgstr ""
 
-#: includes/class-email-templates.php:55
+#: includes/class-email-templates.php:60
 msgid "Delivers the welcome coupon code to a new subscriber."
 msgstr ""
 
-#: includes/class-email-templates.php:56
+#: includes/class-email-templates.php:61
 msgid "Rewards the signup and brings the new subscriber straight to the shop."
 msgstr ""
 
-#: includes/class-email-templates.php:57
+#: includes/class-email-templates.php:62
 msgid "When the subscriber has clicked the confirmation link."
 msgstr ""
 
-#: includes/class-email-templates.php:58
+#: includes/class-email-templates.php:63
 msgid "Selects it as the coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:65
+#: includes/class-email-templates.php:70
 msgid "Your welcome gift: {{discount}} off"
 msgstr ""
 
-#: includes/class-email-templates.php:66
+#: includes/class-email-templates.php:71
 msgid "Your coupon code is inside."
 msgstr ""
 
-#: includes/class-email-templates.php:67
+#: includes/class-email-templates.php:72
 msgid "Welcome, {{DEFAULT name \"friend\"}}!"
 msgstr ""
 
-#: includes/class-email-templates.php:68
+#: includes/class-email-templates.php:73
 msgid "Thank you for confirming your subscription. As promised, here is your welcome gift. Enter the code in the cart, using the same email address you subscribed with."
 msgstr ""
 
-#: includes/class-email-templates.php:69
+#: includes/class-email-templates.php:74
 msgid "Start shopping"
 msgstr ""
 
-#: includes/class-email-templates.php:70
+#: includes/class-email-templates.php:75
 msgid "One welcome coupon per email address. {{terms}}"
 msgstr ""
 
-#: includes/class-email-templates.php:74
+#: includes/class-email-templates.php:79
 msgid "Coupon expiry reminder"
 msgstr ""
 
-#: includes/class-email-templates.php:76
+#: includes/class-email-templates.php:81
 msgid "Reminds a subscriber that their welcome coupon is about to expire."
 msgstr ""
 
-#: includes/class-email-templates.php:77
+#: includes/class-email-templates.php:82
 msgid "Many coupons are forgotten: a timely reminder turns them into orders."
 msgstr ""
 
-#: includes/class-email-templates.php:78
+#: includes/class-email-templates.php:83
 msgid "Once per coupon, the set number of days before an unused welcome coupon expires (Coupon tab) – only to active subscribers of the chosen list (it is a marketing email)."
 msgstr ""
 
-#: includes/class-email-templates.php:79
+#: includes/class-email-templates.php:84
 msgid "Selects it as the reminder email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:86
+#: includes/class-email-templates.php:91
 msgid "Your {{discount}} coupon expires soon"
 msgstr ""
 
-#: includes/class-email-templates.php:87
+#: includes/class-email-templates.php:92
 msgid "Only {{daysLeft}} days left to use your code {{couponCode}}."
 msgstr ""
 
-#: includes/class-email-templates.php:88
+#: includes/class-email-templates.php:93
 msgid "Don’t miss your discount, {{DEFAULT name \"friend\"}}!"
 msgstr ""
 
-#: includes/class-email-templates.php:89
+#: includes/class-email-templates.php:94
 msgid "Just a friendly reminder: your welcome coupon is valid until {{expiry}} – only {{daysLeft}} days left to use it. Enter the code in the cart, using the same email address you subscribed with."
 msgstr ""
 
-#: includes/class-email-templates.php:90
+#: includes/class-email-templates.php:95
 msgid "Use my coupon"
 msgstr ""
 
-#: includes/class-email-templates.php:95
+#: includes/class-email-templates.php:100
 msgid "First order thank-you"
 msgstr ""
 
-#: includes/class-email-templates.php:97
+#: includes/class-email-templates.php:102
 msgid "A personal thank-you for a customer’s very first order."
 msgstr ""
 
-#: includes/class-email-templates.php:98
+#: includes/class-email-templates.php:103
 msgid "Makes first-time buyers feel welcome and more likely to return. WooCommerce has no such email."
 msgstr ""
 
-#: includes/class-email-templates.php:99
+#: includes/class-email-templates.php:104
 msgid "With the first paid order of an email address (guests included)."
 msgstr ""
 
-#: includes/class-email-templates.php:100
+#: includes/class-email-templates.php:105
 msgid "Adds an Order emails rule for this event."
 msgstr ""
 
-#: includes/class-email-templates.php:109
+#: includes/class-email-templates.php:114
 msgid "Thank you for your first order!"
 msgstr ""
 
-#: includes/class-email-templates.php:110
+#: includes/class-email-templates.php:115
 msgid "A warm welcome from our team."
 msgstr ""
 
-#: includes/class-email-templates.php:111
+#: includes/class-email-templates.php:116
 msgid "Welcome to {{siteName}}!"
 msgstr ""
 
-#: includes/class-email-templates.php:112
+#: includes/class-email-templates.php:117
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, thank you for choosing us for your first order. We hope you love it."
 msgstr ""
 
-#: includes/class-email-templates.php:113
-#: includes/class-email-templates.php:138
+#: includes/class-email-templates.php:118
+#: includes/class-email-templates.php:143
 msgid "Visit the shop"
 msgstr ""
 
-#: includes/class-email-templates.php:114
-#: includes/class-email-templates.php:163
+#: includes/class-email-templates.php:119
+#: includes/class-email-templates.php:168
 msgid "Questions? Simply reply to this email."
 msgstr ""
 
-#: includes/class-email-templates.php:118
+#: includes/class-email-templates.php:123
 msgid "Review request"
 msgstr ""
 
-#: includes/class-email-templates.php:120
+#: includes/class-email-templates.php:125
 msgid "Asks the customer to review the products they bought."
 msgstr ""
 
-#: includes/class-email-templates.php:121
+#: includes/class-email-templates.php:126
 msgid "More reviews build trust and bring more sales. WooCommerce does not ask for reviews by email."
 msgstr ""
 
-#: includes/class-email-templates.php:122
+#: includes/class-email-templates.php:127
 msgid "7 days after the order is completed."
 msgstr ""
 
-#: includes/class-email-templates.php:123
+#: includes/class-email-templates.php:128
 msgid "Adds an Order emails rule with a 7-day delay."
 msgstr ""
 
-#: includes/class-email-templates.php:134
+#: includes/class-email-templates.php:139
 msgid "How did we do?"
 msgstr ""
 
-#: includes/class-email-templates.php:135
+#: includes/class-email-templates.php:140
 msgid "Your opinion helps other shoppers."
 msgstr ""
 
-#: includes/class-email-templates.php:136
+#: includes/class-email-templates.php:141
 msgid "How was your order?"
 msgstr ""
 
-#: includes/class-email-templates.php:137
+#: includes/class-email-templates.php:142
 msgid "Hi {{DEFAULT billing.firstName \"there\"}}, we hope you are happy with your order #{{orderNumber}}. Would you take a minute to review the products?"
 msgstr ""
 
-#: includes/class-email-templates.php:139
+#: includes/class-email-templates.php:144
 msgid "Thank you for helping us get better."
 msgstr ""
 
-#: includes/class-email-templates.php:143
+#: includes/class-email-templates.php:148
 msgid "Abandoned cart reminder"
 msgstr ""
 
-#: includes/class-email-templates.php:145
+#: includes/class-email-templates.php:150
 msgid "Reminds shoppers of the cart they left, with a button that restores it."
 msgstr ""
 
-#: includes/class-email-templates.php:146
+#: includes/class-email-templates.php:151
 msgid "Wins back sales that would otherwise be lost; can include a single-use recovery coupon. WooCommerce has no such email."
 msgstr ""
 
-#: includes/class-email-templates.php:147
+#: includes/class-email-templates.php:152
 msgid "When a cart has been left untouched for the idle time set on the Abandoned carts tab – only to active subscribers of the chosen list (it is a marketing email)."
 msgstr ""
 
-#: includes/class-email-templates.php:148
+#: includes/class-email-templates.php:153
 msgid "Adds an abandoned cart reminder on the Abandoned carts tab."
 msgstr ""
 
-#: includes/class-email-templates.php:158
+#: includes/class-email-templates.php:163
 msgid "You left something in your cart"
 msgstr ""
 
-#: includes/class-email-templates.php:159
+#: includes/class-email-templates.php:164
 msgid "Your cart is saved and waiting for you."
 msgstr ""
 
-#: includes/class-email-templates.php:160
+#: includes/class-email-templates.php:165
 msgid "Still thinking it over?"
 msgstr ""
 
-#: includes/class-email-templates.php:161
+#: includes/class-email-templates.php:166
 msgid "You left these items in your cart. We saved it for you, so you can finish your order with one click."
 msgstr ""
 
-#: includes/class-email-templates.php:162
+#: includes/class-email-templates.php:167
 msgid "Back to my cart"
 msgstr ""
 
 #. translators: unsubscribe link label in marketing emails
-#: includes/class-email-templates.php:288
+#: includes/class-email-templates.php:293
 msgid "Unsubscribe"
 msgstr ""
 
 #. translators: %s: template label, e.g. Welcome coupon
-#: includes/class-email-templates.php:310
+#: includes/class-email-templates.php:315
 #, php-format
 msgid "%s (Connector for bluefox.email)"
 msgstr ""
 
-#: includes/class-email-templates.php:326
+#: includes/class-email-templates.php:331
 msgid "Sample product"
 msgstr ""
 
-#: includes/class-email-templates.php:334
+#: includes/class-email-templates.php:339
 msgid "Another sample product"
 msgstr ""
 
-#: includes/class-email-templates.php:357
+#: includes/class-email-templates.php:367
 msgid "Your parcel ships tomorrow."
 msgstr ""
 
-#: includes/class-email-templates.php:387
+#: includes/class-email-templates.php:397
 msgid "Your coupon code"
 msgstr ""
 
 #. translators: %s: discount placeholder, e.g. 10%
-#: includes/class-email-templates.php:390
+#: includes/class-email-templates.php:400
 #, php-format
 msgid "%s off"
 msgstr ""
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:392
+#: includes/class-email-templates.php:402
 #, php-format
 msgid "Valid until %s"
 msgstr ""
 
 #. translators: %s: discount placeholder
-#: includes/class-email-templates.php:397
+#: includes/class-email-templates.php:407
 #, php-format
 msgid "Finish your order now and get %s off with this code:"
 msgstr ""
 
 #. translators: %s: expiry date placeholder
-#: includes/class-email-templates.php:400
+#: includes/class-email-templates.php:410
 #, php-format
 msgid "Valid until %s. The link below applies it automatically."
 msgstr ""
 
-#: includes/class-email-templates.php:407
+#: includes/class-email-templates.php:417
 msgid "Write a review"
 msgstr ""
 
-#: includes/class-email-templates.php:421
+#: includes/class-email-templates.php:431
 #: modules/woo-events/views/tab-woo-events.php:285
 msgid "Total"
 msgstr ""
 
-#: includes/class-email-templates.php:480
-#: includes/class-email-templates.php:493
+#: includes/class-email-templates.php:490
+#: includes/class-email-templates.php:503
 msgid "Not used by any list: choose it as the confirmation email under “bluefox setup” on the General tab."
 msgstr ""
 
 #. translators: %s: subscriber list names in quotes
-#: includes/class-email-templates.php:487
+#: includes/class-email-templates.php:497
 #, php-format
 msgid "In use: double opt-in email of %s."
 msgstr ""
 
 #. translators: %s: subscriber list name
-#: includes/class-email-templates.php:501
+#: includes/class-email-templates.php:511
 #, php-format
 msgid "In use: double opt-in email of the list “%s”."
 msgstr ""
 
-#: includes/class-email-templates.php:510
+#: includes/class-email-templates.php:520
 msgid "In use: coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:514
+#: includes/class-email-templates.php:524
 msgid "Not used yet: select it as the coupon email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:523
+#: includes/class-email-templates.php:533
 msgid "In use: reminder email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:527
+#: includes/class-email-templates.php:537
 msgid "Not used yet: select it as the reminder email on the Coupon tab."
 msgstr ""
 
-#: includes/class-email-templates.php:540
+#: includes/class-email-templates.php:550
 msgid "In use: abandoned cart reminder (on)."
 msgstr ""
 
-#: includes/class-email-templates.php:540
+#: includes/class-email-templates.php:550
 msgid "In use: Order emails rule (on)."
 msgstr ""
 
-#: includes/class-email-templates.php:541
+#: includes/class-email-templates.php:551
 msgid "Selected in a rule that is switched off."
 msgstr ""
 
-#: includes/class-email-templates.php:547
+#: includes/class-email-templates.php:557
 msgid "Not used yet: select it as a reminder on the Abandoned carts tab."
 msgstr ""
 
-#: includes/class-email-templates.php:548
+#: includes/class-email-templates.php:558
 msgid "Not used yet: select it in a rule on the Order emails tab."
 msgstr ""
 
@@ -3152,42 +3235,54 @@ msgid "When an erasure request is processed, the contact is deleted in bluefox.e
 msgstr ""
 
 #: includes/class-privacy.php:463
+#: modules/sync/class-fields.php:160
+#: public/class-form-renderer.php:81
+msgid "First name"
+msgstr ""
+
+#: includes/class-privacy.php:464
+#: modules/sync/class-fields.php:161
+#: public/class-form-renderer.php:82
+msgid "Last name"
+msgstr ""
+
+#: includes/class-privacy.php:465
 msgid "Signup source"
 msgstr ""
 
-#: includes/class-privacy.php:466
+#: includes/class-privacy.php:468
 msgid "Signup status"
 msgstr ""
 
-#: includes/class-privacy.php:468
+#: includes/class-privacy.php:470
 msgid "Consent text"
 msgstr ""
 
-#: includes/class-privacy.php:469
+#: includes/class-privacy.php:471
 msgid "Consent IP address"
 msgstr ""
 
-#: includes/class-privacy.php:470
+#: includes/class-privacy.php:472
 msgid "Consent time (UTC)"
 msgstr ""
 
-#: includes/class-privacy.php:471
+#: includes/class-privacy.php:473
 msgid "Confirmation time (UTC)"
 msgstr ""
 
-#: includes/class-privacy.php:472
+#: includes/class-privacy.php:474
 msgid "Welcome coupon ID"
 msgstr ""
 
-#: includes/class-privacy.php:473
+#: includes/class-privacy.php:475
 msgid "Order ID"
 msgstr ""
 
-#: includes/class-privacy.php:474
+#: includes/class-privacy.php:476
 msgid "Created (UTC)"
 msgstr ""
 
-#: includes/class-privacy.php:475
+#: includes/class-privacy.php:477
 msgid "Subscription status changed (UTC)"
 msgstr ""
 
@@ -3203,8 +3298,8 @@ msgstr ""
 msgid "Unknown source."
 msgstr ""
 
-#: includes/class-rest-subscribe.php:200
-#: includes/class-subscription-service.php:143
+#: includes/class-rest-subscribe.php:202
+#: includes/class-subscription-service.php:144
 msgid "Too many attempts, please try again later."
 msgstr ""
 
@@ -3217,26 +3312,38 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/class-signup-validator.php:40
+#: includes/class-signup-validator.php:49
+#: includes/class-signup-validator.php:63
+#: includes/class-signup-validator.php:70
 msgid "The name can be at most 100 characters long."
 msgstr ""
 
-#: includes/class-signup-validator.php:42
+#: includes/class-signup-validator.php:52
+#: public/class-assets.php:63
+msgid "Please enter your first name."
+msgstr ""
+
+#: includes/class-signup-validator.php:53
+#: public/class-assets.php:64
+msgid "Please enter your last name."
+msgstr ""
+
+#: includes/class-signup-validator.php:72
 #: public/class-assets.php:62
 msgid "Please enter your name."
 msgstr ""
 
-#: includes/class-signup-validator.php:50
-#: public/class-assets.php:63
+#: includes/class-signup-validator.php:81
+#: public/class-assets.php:65
 msgid "Please choose at least one topic."
 msgstr ""
 
-#: includes/class-signup-validator.php:55
+#: includes/class-signup-validator.php:86
 msgid "You must give your consent to subscribe."
 msgstr ""
 
-#: includes/class-subscription-service.php:134
-#: public/class-assets.php:65
+#: includes/class-subscription-service.php:135
+#: public/class-assets.php:67
 msgid "Please correct the highlighted fields."
 msgstr ""
 
@@ -3602,14 +3709,6 @@ msgstr ""
 
 #: modules/sync/class-fields.php:159
 msgid "Full name (first + last name)"
-msgstr ""
-
-#: modules/sync/class-fields.php:160
-msgid "First name"
-msgstr ""
-
-#: modules/sync/class-fields.php:161
-msgid "Last name"
 msgstr ""
 
 #: modules/sync/class-fields.php:162
@@ -4400,11 +4499,11 @@ msgstr ""
 msgid "Items"
 msgstr ""
 
-#: public/class-assets.php:64
+#: public/class-assets.php:66
 msgid "Please accept the consent to subscribe."
 msgstr ""
 
-#: public/class-assets.php:66
+#: public/class-assets.php:68
 msgid "Sending…"
 msgstr ""
 
@@ -4412,15 +4511,15 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: public/class-form-renderer.php:83
+#: public/class-form-renderer.php:87
 msgid "Email address"
 msgstr ""
 
-#: public/class-form-renderer.php:95
+#: public/class-form-renderer.php:99
 msgid "Website"
 msgstr ""
 
-#: public/class-form-renderer.php:223
+#: public/class-form-renderer.php:227
 msgid "– Select –"
 msgstr ""
 

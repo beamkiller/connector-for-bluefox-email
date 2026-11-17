@@ -77,7 +77,11 @@ final class Form_Renderer {
 		$html .= '<form class="cfbe-form__form" novalidate data-cfbe-source="' . esc_attr( $args['source'] ) . '"' . ( '' !== $args['place'] ? ' data-cfbe-place="' . esc_attr( $args['place'] ) . '"' : '' ) . '>';
 		$html .= '<div class="cfbe-form__fields">';
 
-		if ( $args['show_name'] ) {
+		if ( $args['show_name'] && 'split' === \CFBE\Name_Parts::mode( $form ) ) {
+			$first = $this->text_field( $id( 'first_name' ), 'first_name', 'text', __( 'First name', 'connector-for-bluefox-email' ), ! empty( $form['name_required'] ), 'given-name' );
+			$last  = $this->text_field( $id( 'last_name' ), 'last_name', 'text', __( 'Last name', 'connector-for-bluefox-email' ), ! empty( $form['name_required'] ), 'family-name' );
+			$html .= '<div class="cfbe-form__name">' . ( \CFBE\Name_Parts::last_first( $form ) ? $last . $first : $first . $last ) . '</div>';
+		} elseif ( $args['show_name'] ) {
 			$html .= $this->text_field( $id( 'name' ), 'name', 'text', __( 'Name', 'connector-for-bluefox-email' ), ! empty( $form['name_required'] ), 'name' );
 		}
 		$html .= $this->text_field( $id( 'email' ), 'email', 'email', __( 'Email address', 'connector-for-bluefox-email' ), true, 'email' );

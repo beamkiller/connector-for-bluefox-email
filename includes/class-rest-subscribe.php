@@ -158,6 +158,8 @@ final class Rest_Subscribe {
 			array(
 				'email'        => (string) $request->get_param( 'email' ),
 				'name'         => (string) $request->get_param( 'name' ),
+				'first_name'   => (string) $request->get_param( 'first_name' ),
+				'last_name'    => (string) $request->get_param( 'last_name' ),
 				'interests'    => $request->get_param( 'interests' ),
 				'consent'      => $request->get_param( 'consent' ),
 				'consent_text' => self::consent_text(),

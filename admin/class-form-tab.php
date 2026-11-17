@@ -76,6 +76,8 @@ final class Form_Tab {
 		if ( isset( $input['intro'] ) ) {
 			$clean['intro'] = sanitize_textarea_field( (string) $input['intro'] );
 		}
+		$clean['name_mode']    = \CFBE\Name_Parts::mode( $input );
+		$clean['name_order']   = in_array( $input['name_order'] ?? '', \CFBE\Name_Parts::ORDERS, true ) ? $input['name_order'] : 'auto';
 		$clean['layout']       = 'inline' === ( $input['layout'] ?? '' ) ? 'inline' : 'stacked';
 		$clean['promo_action'] = 'scroll' === ( $input['promo_action'] ?? '' ) ? 'scroll' : 'dialog';
 		$clean['variant']      = in_array( $input['variant'] ?? '', \CFBE\Frontend\Form_Renderer::VARIANTS, true ) ? $input['variant'] : 'card';

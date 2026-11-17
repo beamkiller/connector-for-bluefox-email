@@ -331,6 +331,8 @@ final class Checkout_Optin {
 				array(
 					'email'          => (string) $order->get_billing_email(),
 					'name'           => self::order_name( $order ),
+					'first_name'     => (string) $order->get_billing_first_name(),
+					'last_name'      => (string) $order->get_billing_last_name(),
 					'consent'        => true,
 					'consent_text'   => (string) $order->get_meta( self::META_TEXT ),
 					'ip'             => (string) $order->get_meta( self::META_IP ),
@@ -408,6 +410,8 @@ final class Checkout_Optin {
 				array(
 					'email'           => (string) $user->user_email,
 					'name'            => trim( $user->first_name . ' ' . $user->last_name ),
+					'first_name'      => (string) $user->first_name,
+					'last_name'       => (string) $user->last_name,
 					'consent'         => true,
 					'consent_text'    => (string) $consent_text,
 					'ip'              => (string) $ip,

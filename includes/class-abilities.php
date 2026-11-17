@@ -300,7 +300,7 @@ final class Abilities {
 			'cfbe/get-bluefox-setup',
 			array(
 				'label'               => __( 'Check the bluefox setup', 'connector-for-bluefox-email' ),
-				'description'         => __( 'Returns the bluefox-side settings the plugin relies on ("bluefox setup" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site\'s thank-you page (ready = all three); the project\'s transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); and, with the preferences page on, whether unsubscribe links lead to this site\'s preferences page. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true.', 'connector-for-bluefox-email' ),
+				'description'         => __( 'Returns the bluefox-side settings the plugin relies on ("bluefox setup" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site\'s thank-you page (ready = all three); the project\'s transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); with the preferences page on, whether unsubscribe links lead to this site\'s preferences page; and contact_fields: whether the name fields (name, first and last name) exist in bluefox. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true.', 'connector-for-bluefox-email' ),
 				'category'            => self::CATEGORY,
 				'input_schema'        => array(
 					'default'              => array(), // Lets the ability run without input.
@@ -338,14 +338,18 @@ final class Abilities {
 					'default'              => array(), // Lets the ability run without input.
 					'type'                 => 'object',
 					'properties'           => array(
-						'lists'       => array(
+						'lists'          => array(
 							'type'                 => 'object',
 							'description'          => __( 'List ID => confirmation email ID.', 'connector-for-bluefox-email' ),
 							'additionalProperties' => array( 'type' => 'string' ),
 						),
-						'preferences' => array(
+						'preferences'    => array(
 							'type'        => 'boolean',
 							'description' => __( 'Point unsubscribe and pause links to this site\'s preferences page. Default false.', 'connector-for-bluefox-email' ),
+						),
+						'contact_fields' => array(
+							'type'        => 'boolean',
+							'description' => __( 'Create the missing name contact fields (name, first name, last name) in bluefox. Default false.', 'connector-for-bluefox-email' ),
 						),
 					),
 					'additionalProperties' => false,
@@ -793,7 +797,7 @@ final class Abilities {
 		unset( $choices[''] );
 		$setup = new Admin\Bluefox_Setup( $this->client );
 		$setup->state( $client ); // Knows which emails can confirm, so a wrong one is refused before bluefox.
-		$result = $setup->apply( $client, $choices, ! empty( $input['preferences'] ) );
+		$result = $setup->apply( $client, $choices, ! empty( $input['preferences'] ), ! empty( $input['contact_fields'] ) );
 		$after  = $setup->report( $client );
 		return array(
 			'done'   => $result['done'],

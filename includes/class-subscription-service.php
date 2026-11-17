@@ -126,6 +126,7 @@ class Subscription_Service {
 			$form['interests_required'] = false;
 			$form['name_required']      = false;
 			$form['name_enabled']       = true; // Keep a name the form or billing details provide.
+			$form['name_mode']          = 'single'; // They send `name` (and the checkout first / last too).
 		}
 		$validation = $this->validator->validate( $input, $form );
 		if ( $validation['errors'] ) {
@@ -145,7 +146,8 @@ class Subscription_Service {
 		$tags    = Signup_Validator::tags_for( $data['interests'], $source, (string) ( $input['place'] ?? '' ) );
 		$tags    = array_values( array_unique( array_merge( $tags, Signup_Validator::clean_tags( (array) ( $input['tags'] ?? array() ) ) ) ) );
 		$list_id = self::list_id( (string) ( $input['list_id'] ?? '' ) );
-		$fields  = self::clean_fields( (array) ( $input['fields'] ?? array() ) );
+		// Values mapped by a form integration win over the parts.
+		$fields = self::clean_fields( (array) ( $input['fields'] ?? array() ) ) + Name_Parts::bluefox_fields( $data['first_name'] ?? '', $data['last_name'] ?? '' );
 
 		// Only a row created by THIS request can be classified as an already-existing subscriber.
 		$is_new_row = null === $this->repository->find_by_email( $data['email'] );
@@ -155,6 +157,8 @@ class Subscription_Service {
 			array(
 				'email'        => $data['email'],
 				'name'         => '' === $data['name'] ? null : $data['name'],
+				'first_name'   => '' === ( $data['first_name'] ?? '' ) ? null : $data['first_name'],
+				'last_name'    => '' === ( $data['last_name'] ?? '' ) ? null : $data['last_name'],
 				'source'       => $source,
 				'list_id'      => $list_id,
 				'tags'         => $tags,
@@ -206,7 +210,7 @@ class Subscription_Service {
 		if ( ! $row || Subscriber_Repository::STATUS_PENDING !== $row['status'] ) {
 			return;
 		}
-		$this->sync( $row['email'], (string) $row['name'], (array) $row['tags'], (string) $source, (int) $attempt, false, self::list_id( (string) ( $row['list_id'] ?? '' ) ) );
+		$this->sync( $row['email'], (string) $row['name'], (array) $row['tags'], (string) $source, (int) $attempt, false, self::list_id( (string) ( $row['list_id'] ?? '' ) ), self::row_name_fields( $row ) );
 	}
 
 	/**
@@ -357,8 +361,18 @@ class Subscription_Service {
 		if ( null === $this->client || empty( $row['merge_pending'] ) ) {
 			return;
 		}
-		$this->merge_contact( (string) $row['email'], (string) ( $row['name'] ?? '' ), (array) ( $row['tags'] ?? array() ) );
+		$this->merge_contact( (string) $row['email'], (string) ( $row['name'] ?? '' ), (array) ( $row['tags'] ?? array() ), self::row_name_fields( $row ) );
 		$this->repository->set_merge_pending( (string) $row['email'], false );
+	}
+
+	/**
+	 * First / last name of a stored signup as bluefox fields (retries and the update after the confirmation).
+	 *
+	 * @param array $row Local signup row.
+	 * @return array<string, string>
+	 */
+	private static function row_name_fields( array $row ): array {
+		return Name_Parts::bluefox_fields( (string) ( $row['first_name'] ?? '' ), (string) ( $row['last_name'] ?? '' ) );
 	}
 
 	/**

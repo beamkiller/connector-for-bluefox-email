@@ -53,7 +53,9 @@ The corner radii become `--cfbe-radius-button` and `--cfbe-radius-input`.
 | Label | Option key | Default | What it does |
 |---|---|---|---|
 | Name field → Show | `cfbe_form[name_enabled]` | on | Shows the optional *Name* field. |
-| Name field → Required | `cfbe_form[name_required]` | off | Makes the name required. |
+| Name field → Required | `cfbe_form[name_required]` | off | Makes the name required – with two fields, both. |
+| Name field → One Name field / First name and Last name | `cfbe_form[name_mode]` | `single` | `split` shows *First name* and *Last name* (autocomplete `given-name` / `family-name`). bluefox gets the parts in the First name / Last name fields of the [Contact sync](contact-sync.md) table (`firstName` / `lastName` unless renamed there) and the full name as `name`. *Since 1.1.0.* |
+| Name field → Name order | `cfbe_form[name_order]` | `auto` | Order of the two fields and of the full name: `auto` follows the site language (family name first for Hungarian, Japanese, Chinese, Korean, Vietnamese), `first_last`, `last_first`. *Since 1.1.0.* |
 | Interests → Show | `cfbe_form[interests_enabled]` | on | Shows the interests field – only when at least one option is set. |
 | Interests → Required | `cfbe_form[interests_required]` | off | At least one interest must be picked. |
 | Interests → Dropdown / Checkboxes | `cfbe_form[interests_mode]` | `select` | `select` (*Dropdown (single choice)*) or `checkbox` (*Checkboxes (multiple choice)*). |

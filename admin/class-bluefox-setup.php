@@ -182,6 +182,25 @@ final class Bluefox_Setup {
 	}
 
 	/**
+	 * Contact fields the signup needs in bluefox: the full name and its parts (named like on the Contact sync tab).
+	 *
+	 * @return string[]
+	 */
+	public static function name_fields(): array {
+		return array_values( array_unique( array_merge( array( 'name' ), array_values( \CFBE\Name_Parts::field_names() ) ) ) );
+	}
+
+	/**
+	 * The name fields missing from bluefox (null when the existing fields are unknown).
+	 *
+	 * @param array|null $existing Field names in bluefox.
+	 * @return string[]|null
+	 */
+	public static function missing_fields( ?array $existing ): ?array {
+		return null === $existing ? null : array_values( array_diff( self::name_fields(), $existing ) );
+	}
+
+	/**
 	 * Whether the preferences row applies (module on).
 	 */
 	private static function prefs_on(): bool {
@@ -216,10 +235,13 @@ final class Bluefox_Setup {
 		if ( $names ) {
 			Settings::remember_lists( $names );
 		}
-		$state = array(
+		$fields = $client->get_contact_fields();
+		$state  = array(
 			'lists'     => $lists,
 			'emails'    => self::email_options( $emails ),
 			'prefs_url' => (string) ( $project['customSubscriptionPreferencesUrl'] ?? '' ),
+			// null: the fields could not be read (the row then says so instead of claiming they are missing).
+			'fields'    => is_wp_error( $fields ) ? null : array_values( array_filter( array_map( static fn( $f ) => is_array( $f ) ? (string) ( $f['name'] ?? '' ) : '', $fields ) ) ),
 		);
 		set_transient( self::CACHE, $state, 10 * MINUTE_IN_SECONDS );
 		return $state;
@@ -271,6 +293,7 @@ final class Bluefox_Setup {
 		if ( self::prefs_on() ) {
 			$this->render_prefs_row( $state['prefs_url'] );
 		}
+		$this->render_fields_row( self::missing_fields( $state['fields'] ?? null ) );
 		echo '</tbody></table>';
 		echo '<p><button type="submit" name="do" value="apply" class="button button-primary">' . esc_html__( 'Apply in bluefox', 'connector-for-bluefox-email' ) . '</button> ';
 		echo '<button type="submit" name="do" value="refresh" class="button">' . esc_html__( 'Check again', 'connector-for-bluefox-email' ) . '</button></p>';
@@ -357,6 +380,27 @@ final class Bluefox_Setup {
 			echo '<p class="description">' . esc_html__( 'None of your bluefox transactional emails contains {{verifyLink}}. Create the confirmation email on the Email templates tab, or add {{verifyLink}} to an email in bluefox.', 'connector-for-bluefox-email' ) . ' <a href="' . esc_url( add_query_arg( 'tab', Email_Templates_Tab::TAB, admin_url( 'admin.php?page=' . Admin_Page::SLUG ) ) ) . '">' . esc_html__( 'Email templates', 'connector-for-bluefox-email' ) . '</a></p>';
 		}
 		echo '</td></tr>';
+	}
+
+	/**
+	 * The contact fields row (name, first name, last name).
+	 *
+	 * @param string[]|null $missing Missing fields (null = unknown).
+	 */
+	private function render_fields_row( ?array $missing ): void {
+		echo '<tr><td><strong>' . esc_html__( 'Contact fields for names', 'connector-for-bluefox-email' ) . '</strong></td><td>';
+		if ( null === $missing ) {
+			self::badge( false, __( 'Could not be read', 'connector-for-bluefox-email' ) );
+		} elseif ( array() === $missing ) {
+			self::badge( true, __( 'Ready', 'connector-for-bluefox-email' ) );
+		} else {
+			/* translators: %s: field names */
+			self::badge( false, sprintf( __( 'Missing: %s', 'connector-for-bluefox-email' ), implode( ', ', $missing ) ) );
+		}
+		echo '</td><td><label><input type="checkbox" name="contact_fields" value="1"' . checked( null === $missing || array() !== $missing, true, false ) . '> ' . esc_html(
+			/* translators: %s: field names */
+			sprintf( __( 'Create the missing fields of %s (otherwise bluefox silently drops the names)', 'connector-for-bluefox-email' ), implode( ', ', self::name_fields() ) )
+		) . '</label></td></tr>';
 	}
 
 	/**
@@ -457,11 +501,17 @@ final class Bluefox_Setup {
 				'ready'    => '' !== $state['prefs_url'] && Redirect_Check::same_url( $state['prefs_url'], $expected ),
 			);
 		}
+		$missing = self::missing_fields( $state['fields'] ?? null );
 		return array(
-			'thankyou_url' => $thankyou,
-			'lists'        => $lists,
-			'emails'       => $emails,
-			'preferences'  => $preferences,
+			'thankyou_url'   => $thankyou,
+			'lists'          => $lists,
+			'emails'         => $emails,
+			'preferences'    => $preferences,
+			'contact_fields' => array(
+				'required' => self::name_fields(),
+				'missing'  => $missing,
+				'ready'    => array() === $missing,
+			),
 		);
 	}
 
@@ -471,9 +521,10 @@ final class Bluefox_Setup {
 	 * @param Bluefox_Client $client  Client.
 	 * @param array          $choices list ID => email ID ('' = leave unchanged).
 	 * @param bool           $prefs   Set the preferences page URL.
+	 * @param bool           $fields  Create the missing name fields.
 	 * @return array{done: string[], failed: string[]}
 	 */
-	public function apply( Bluefox_Client $client, array $choices, bool $prefs ): array {
+	public function apply( Bluefox_Client $client, array $choices, bool $prefs, bool $fields = false ): array {
 		$result  = array(
 			'done'   => array(),
 			'failed' => array(),
@@ -535,6 +586,29 @@ final class Bluefox_Setup {
 			}
 		}
 
+		if ( $fields ) {
+			$existing = $client->get_contact_fields();
+			if ( is_wp_error( $existing ) ) {
+				/* translators: %s: error message */
+				$result['failed'][] = sprintf( __( 'Contact fields: %s', 'connector-for-bluefox-email' ), $existing->get_error_message() );
+			} else {
+				$created = array();
+				foreach ( (array) self::missing_fields( array_map( static fn( $f ) => is_array( $f ) ? (string) ( $f['name'] ?? '' ) : '', $existing ) ) as $name ) {
+					$made = $client->create_contact_field( $name, 'string' );
+					if ( is_wp_error( $made ) ) {
+						/* translators: 1: field name, 2: error message */
+						$result['failed'][] = sprintf( __( 'Contact field %1$s: %2$s', 'connector-for-bluefox-email' ), $name, $made->get_error_message() );
+					} else {
+						$created[] = $name;
+					}
+				}
+				if ( $created ) {
+					/* translators: %s: field names */
+					$result['done'][] = sprintf( __( 'Created the contact fields %s.', 'connector-for-bluefox-email' ), implode( ', ', $created ) );
+				}
+			}
+		}
+
 		if ( array() === $result['done'] && array() === $result['failed'] ) {
 			$result['done'][] = __( 'Nothing to change: bluefox is already set up like this.', 'connector-for-bluefox-email' );
 		}
@@ -560,7 +634,7 @@ final class Bluefox_Setup {
 			}
 			$client = call_user_func( $this->client );
 			$result = $client instanceof Bluefox_Client
-				? $this->apply( $client, $choices, ! empty( $_POST['prefs'] ) )
+				? $this->apply( $client, $choices, ! empty( $_POST['prefs'] ), ! empty( $_POST['contact_fields'] ) )
 				: array(
 					'done'   => array(),
 					'failed' => array( __( 'Connect bluefox on the General tab first.', 'connector-for-bluefox-email' ) ),

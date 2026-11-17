@@ -52,11 +52,15 @@
 			interests.push( box.value );
 		} );
 		var name = field( form, 'name' );
+		var first = field( form, 'first_name' );
+		var last = field( form, 'last_name' );
 		var hp = field( form, 'cfbe_hp' );
 		var cfg = field( form, 'cfbe_cfg' );
 		return {
 			email: field( form, 'email' ).value.trim(),
 			name: name ? name.value.trim() : '',
+			first_name: first ? first.value.trim() : '',
+			last_name: last ? last.value.trim() : '',
 			interests: interests,
 			consent: field( form, 'consent' ).checked,
 			source: form.getAttribute( 'data-cfbe-source' ) || 'shortcode',
@@ -91,6 +95,8 @@
 		var errors = [];
 		var email = field( form, 'email' );
 		var name = field( form, 'name' );
+		var first = field( form, 'first_name' );
+		var last = field( form, 'last_name' );
 		var interests = interestsTarget( form );
 
 		if ( ! EMAIL_RE.test( data.email ) ) {
@@ -98,6 +104,12 @@
 		}
 		if ( name && name.required && ! data.name ) {
 			errors.push( [ name, i18n.nameRequired ] );
+		}
+		if ( first && first.required && ! data.first_name ) {
+			errors.push( [ first, i18n.firstNameRequired || i18n.nameRequired ] );
+		}
+		if ( last && last.required && ! data.last_name ) {
+			errors.push( [ last, i18n.lastNameRequired || i18n.nameRequired ] );
 		}
 		if ( interests && form.querySelector( '.cfbe-field--interests .cfbe-req' ) && ! data.interests.length ) {
 			errors.push( [ interests, i18n.interestsRequired ] );

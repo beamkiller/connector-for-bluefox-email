@@ -160,6 +160,32 @@ $cfbe_rows   = $cfbe_values['interests'] ? $cfbe_values['interests'] : array(
 			<td>
 				<label><input type="checkbox" name="<?php echo esc_attr( $cfbe_name( 'name_enabled' ) ); ?>" value="1" <?php checked( $cfbe_values['name_enabled'] ); ?>> <?php esc_html_e( 'Show', 'connector-for-bluefox-email' ); ?></label><br>
 				<label><input type="checkbox" name="<?php echo esc_attr( $cfbe_name( 'name_required' ) ); ?>" value="1" <?php checked( $cfbe_values['name_required'] ); ?>> <?php esc_html_e( 'Required', 'connector-for-bluefox-email' ); ?></label>
+				<fieldset style="margin-top: 8px;">
+					<legend class="screen-reader-text"><?php esc_html_e( 'Name fields', 'connector-for-bluefox-email' ); ?></legend>
+					<label><input type="radio" name="<?php echo esc_attr( $cfbe_name( 'name_mode' ) ); ?>" value="single" <?php checked( 'split' !== $cfbe_values['name_mode'] ); ?>> <?php esc_html_e( 'One Name field', 'connector-for-bluefox-email' ); ?></label><br>
+					<label><input type="radio" name="<?php echo esc_attr( $cfbe_name( 'name_mode' ) ); ?>" value="split" <?php checked( 'split' === $cfbe_values['name_mode'] ); ?>> <?php esc_html_e( 'First name and Last name', 'connector-for-bluefox-email' ); ?></label>
+				</fieldset>
+				<p>
+					<label for="cfbe-name-order"><?php esc_html_e( 'Name order', 'connector-for-bluefox-email' ); ?></label>
+					<select id="cfbe-name-order" name="<?php echo esc_attr( $cfbe_name( 'name_order' ) ); ?>">
+						<option value="auto" <?php selected( $cfbe_values['name_order'], 'auto' ); ?>><?php esc_html_e( 'Automatic (from the site language)', 'connector-for-bluefox-email' ); ?></option>
+						<option value="first_last" <?php selected( $cfbe_values['name_order'], 'first_last' ); ?>><?php esc_html_e( 'First name, then last name', 'connector-for-bluefox-email' ); ?></option>
+						<option value="last_first" <?php selected( $cfbe_values['name_order'], 'last_first' ); ?>><?php esc_html_e( 'Last name, then first name (e.g. Hungarian)', 'connector-for-bluefox-email' ); ?></option>
+					</select>
+				</p>
+				<p class="description">
+					<?php
+					$cfbe_name_fields = \CFBE\Name_Parts::field_names();
+					echo esc_html(
+						sprintf(
+							/* translators: 1: bluefox field name of the first name, 2: of the last name */
+							__( 'With two fields, Required applies to both. bluefox gets the parts as %1$s and %2$s (renamed on the Contact sync tab, if you changed them there) and the full name as name, in the order above. The fields must exist in bluefox: bluefox setup on the General tab creates them.', 'connector-for-bluefox-email' ),
+							$cfbe_name_fields['first'],
+							$cfbe_name_fields['last']
+						)
+					);
+					?>
+				</p>
 			</td>
 		</tr>
 		<tr>

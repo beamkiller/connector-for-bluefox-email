@@ -155,6 +155,10 @@ final class Settings {
 				$defaults = array(
 					'name_enabled'      => true,
 					'name_required'     => false,
+					// single = one Name field; split = First name + Last name.
+					'name_mode'         => 'single',
+					// auto = from the site language (family name first e.g. for Hungarian), first_last, last_first.
+					'name_order'        => 'auto',
 					'consent_label'     => 'I agree to receive the newsletter and offers by email. I have read the privacy policy.',
 					'privacy_url'       => '',
 					'msg_pending'       => 'Thank you! We have sent you a confirmation email. Please click the link in it to complete your subscription.',

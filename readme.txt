@@ -27,7 +27,7 @@ Full documentation: [beamkiller.github.io/connector-for-bluefox-email](https://b
 * Double opt-in handled by bluefox.email: the confirmation email is sent by your bluefox list, then the subscriber lands on your own thank-you page (`[cfbe_thankyou]`).
 * bluefox setup on the General tab: shows per list whether double opt-in is on, which confirmation email it uses and where confirmed subscribers land, plus whether the unsubscribe links lead to your own preferences page. Pick the confirmation email from your bluefox transactional emails (only ones with `{{verifyLink}}` can be chosen) and apply everything in bluefox with one click.
 * Redirect link check: if a bluefox list sends confirmed subscribers to another site's thank-you page (an old test site, a staging copy), the plugin warns you and fixes it with one click.
-* Choose the list per form, add tags, optional name and "interests" field (each interest becomes a tag); automatic source and placement tags.
+* Choose the list per form, add tags, an optional name – one Name field or First name + Last name, in the order of the site language – and "interests" field (each interest becomes a tag); automatic source and placement tags.
 * Texts, benefits list, colours and corner radius are all editable, with a live preview.
 * Accessible markup (labels, focus trap in the popup, ESC to close, reduced-motion support) and page-cache friendly (no nonces in public forms; honeypot, time trap and rate limiting instead).
 
@@ -87,14 +87,14 @@ This plugin connects to the **bluefox.email API** (`https://api.bluefox.email`),
 
 What is sent and when:
 
-* When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name (if given), tags and the list they subscribe to, plus the values of any form fields you map to bluefox contact fields in the form integration settings.
+* When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name or first and last name (if given; at the checkout the billing first and last name), tags and the list they subscribe to, plus the values of any form fields you map to bluefox contact fields in the form integration settings.
 * When the Welcome coupon module confirms a signup: the subscription status is read and the coupon email is sent with the coupon code, value and expiry date.
 * When a welcome coupon is about to expire unused (and a reminder email is set): the reminder email is sent to that subscriber with the same coupon details.
 * When the Contact sync module is on: the user and customer fields you enable (for example name, order count, total spent, last order date; billing phone, company and address only if you switch them on) and, if you switch them on, tags for the chosen products the person bought.
 * When the Email delivery module is on: every email sent with `wp_mail()` (recipients, subject, body, attachments) is sent to bluefox.email for delivery.
 * When order or abandoned cart emails are on: order or cart details used in the email (order number, items, totals, customer name and address).
 * On the preferences page: the visitor's own subscription token, to read and change their subscription.
-* In the admin: your lists, emails, sender identities and webhook settings when you load or change them. Registering the webhook sends your site's webhook URL and uses your API key as its secret; the redirect link check reads your lists' double opt-in settings and, when you click its fix button, updates their redirect link. The bluefox setup on the General tab reads your lists, transactional emails and project settings when the tab is opened (cached for ten minutes) and, only when you click Apply in bluefox, updates the double opt-in settings of the lists the plugin uses (confirmation email, your thank-you page URL) and the project's custom subscription preferences URL (your preferences page URL). The optional AI agent abilities make the same calls.
+* In the admin: your lists, emails, sender identities and webhook settings when you load or change them. Registering the webhook sends your site's webhook URL and uses your API key as its secret; the redirect link check reads your lists' double opt-in settings and, when you click its fix button, updates their redirect link. The bluefox setup on the General tab reads your lists, transactional emails and project settings when the tab is opened (cached for ten minutes) and, only when you click Apply in bluefox, updates the double opt-in settings of the lists the plugin uses (confirmation email, your thank-you page URL), the project's custom subscription preferences URL (your preferences page URL) and creates missing name contact fields. The optional AI agent abilities make the same calls.
 * bluefox.email sends webhook events (subscription changes, bounces, complaints, opens, clicks) to your site only if you register the webhook.
 
 bluefox.email terms of service: https://bluefox.email/terms-of-use
@@ -168,6 +168,7 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 * Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
 * Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
 * Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
+* New: the signup form can ask for First name and Last name (Form tab), in the order of the site language or as set; bluefox gets firstName, lastName and the full name, and the checkout sends the billing first and last name too. The bluefox setup checks and creates the name fields; the double opt-in template greets by first name.
 * New: billing phone, company, street address, postcode and state as Contact sync fields (off by default).
 * New: purchased product tags in Contact sync – choose products with a searchable picker (fine for big stores), and their buyers get a `bought-<product-slug>` tag in bluefox, also for earlier orders via the sync of existing customers. Off by default.
 * AI agent access: new ability cfbe/search-products; the purchased product tag settings are in the sync area of cfbe/get-settings / cfbe/update-settings. New abilities cfbe/get-bluefox-setup and cfbe/apply-bluefox-setup; cfbe/list-bluefox-lists also returns each list's confirmation email and redirect link; abilities with only optional input run without input.

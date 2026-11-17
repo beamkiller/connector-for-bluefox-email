@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * The bluefox test sends ignore template data, so the Email templates tab previews the email here instead. Renders the
  * small Handlebars subset the templates use: {{x}}, {{{x}}}, {{a.b}}, {{DEFAULT a.b "fallback"}},
- * {{#each items}}…{{/each}} and {{#if x}}…{{/if}}. Values are HTML-escaped except in triple braces (URLs).
+ * {{#each items}}…{{/each}} and {{#if x}}…{{else}}…{{/if}}. Values are HTML-escaped except in triple braces (URLs).
  */
 final class Email_Preview {
 
@@ -52,7 +52,8 @@ final class Email_Preview {
 			'/\{\{#if ([\w.]+)\}\}(.*?)\{\{\/if\}\}/s',
 			static function ( array $m ) use ( $data ): string {
 				$value = self::value( $data, $m[1] );
-				return ! empty( $value ) ? self::render( $m[2], $data ) : '';
+				$parts = explode( '{{else}}', $m[2], 2 );
+				return ! empty( $value ) ? self::render( $parts[0], $data ) : self::render( $parts[1] ?? '', $data );
 			},
 			$template
 		);

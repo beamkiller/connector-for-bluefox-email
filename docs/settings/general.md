@@ -44,6 +44,7 @@ A switch whose requirement is missing is disabled and shows *Requires WooCommerc
 | Row | Ready when | **Apply in bluefox** sets |
 |---|---|---|
 | Double opt-in of "*list*" – one row per list the plugin uses (default list, popup, checkout, coupon, form integrations) | double opt-in is on, the confirmation email contains `{{verifyLink}}` and the redirect link is this site's [thank-you page](emails.md) | double opt-in on, the **Confirmation email** you choose, and the thank-you page as redirect link. The list's confirmation title and message are kept. |
+| Contact fields for names | `name` and the first / last name fields (named like on the [Contact sync](contact-sync.md) tab) exist in bluefox – otherwise bluefox silently drops the names | the missing fields, when the checkbox is ticked |
 | Subscription preferences page – only with the [preferences page](../features/preferences-page.md) switch on | the project's **Custom subscription preferences URL** is this site's preferences page | that URL, when the checkbox is ticked |
 
 The **Confirmation email** select lists the project's transactional emails. Only emails whose content contains `{{verifyLink}}` can be chosen – bluefox rejects any other email as a confirmation email (bluefox's own sample *Confirm Registration* uses `{{confirmUrl}}` and is greyed out). If none qualifies, create one on the [Email templates](../features/email-templates.md) tab. Choose **— Leave unchanged —** to skip a list.

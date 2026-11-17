@@ -55,6 +55,21 @@
 	min-width: 0;
 }
 
+.cfbe-form__name {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--cfbe-gap);
+}
+
+.cfbe-form__name > .cfbe-field {
+	flex: 1 1 140px;
+	min-width: 0;
+}
+
+.cfbe-form--inline .cfbe-form__fields > .cfbe-form__name {
+	flex: 2 1 300px;
+}
+
 .cfbe-form--inline .cfbe-field--checkboxes {
 	flex-basis: 100%;
 }

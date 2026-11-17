@@ -105,7 +105,7 @@ class Subscriber_Repository {
 	 * Inserts a pending signup; returns the existing row if the email is already stored. An expired or failed
 	 * row starts over as a new pending signup with this request's data and consent.
 	 *
-	 * @param array $data Keys: email, name, source, list_id, tags, consent_text, consent_ip, order_id.
+	 * @param array $data Keys: email, name, first_name, last_name, source, list_id, tags, consent_text, consent_ip, order_id.
 	 * @return array|null Stored row.
 	 */
 	public function insert_pending( array $data ): ?array {
@@ -117,6 +117,8 @@ class Subscriber_Repository {
 				$this->table,
 				array(
 					'name'          => isset( $data['name'] ) ? (string) $data['name'] : null,
+					'first_name'    => isset( $data['first_name'] ) ? (string) $data['first_name'] : null,
+					'last_name'     => isset( $data['last_name'] ) ? (string) $data['last_name'] : null,
 					'source'        => (string) ( $data['source'] ?? '' ),
 					'list_id'       => (string) ( $data['list_id'] ?? '' ),
 					'tags'          => wp_json_encode( array_values( (array) ( $data['tags'] ?? array() ) ) ),
@@ -131,7 +133,7 @@ class Subscriber_Repository {
 					'updated_at'    => $now,
 				),
 				array( 'email' => $email ),
-				array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s' ),
+				array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s' ),
 				array( '%s' )
 			);
 			return $this->find_by_email( $email );
@@ -147,6 +149,8 @@ class Subscriber_Repository {
 				'email'        => $email,
 				'mailbox'      => self::mailbox( $email ),
 				'name'         => isset( $data['name'] ) ? (string) $data['name'] : null,
+				'first_name'   => isset( $data['first_name'] ) ? (string) $data['first_name'] : null,
+				'last_name'    => isset( $data['last_name'] ) ? (string) $data['last_name'] : null,
 				'source'       => (string) ( $data['source'] ?? '' ),
 				'list_id'      => (string) ( $data['list_id'] ?? '' ),
 				'tags'         => wp_json_encode( array_values( (array) ( $data['tags'] ?? array() ) ) ),
@@ -158,7 +162,7 @@ class Subscriber_Repository {
 				'created_at'   => $now,
 				'updated_at'   => $now,
 			),
-			array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
+			array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
 		);
 
 		// A concurrent insert of the same email loses on the UNIQUE key; both callers get the stored row.

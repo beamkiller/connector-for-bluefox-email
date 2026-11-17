@@ -60,6 +60,8 @@ final class Assets {
 			'i18n'       => array(
 				'emailInvalid'      => __( 'Please enter a valid email address.', 'connector-for-bluefox-email' ),
 				'nameRequired'      => __( 'Please enter your name.', 'connector-for-bluefox-email' ),
+				'firstNameRequired' => __( 'Please enter your first name.', 'connector-for-bluefox-email' ),
+				'lastNameRequired'  => __( 'Please enter your last name.', 'connector-for-bluefox-email' ),
 				'interestsRequired' => __( 'Please choose at least one topic.', 'connector-for-bluefox-email' ),
 				'consentRequired'   => __( 'Please accept the consent to subscribe.', 'connector-for-bluefox-email' ),
 				'fixFields'         => __( 'Please correct the highlighted fields.', 'connector-for-bluefox-email' ),

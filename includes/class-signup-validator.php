@@ -21,9 +21,9 @@ final class Signup_Validator {
 	/**
 	 * Validates and cleans signup input.
 	 *
-	 * @param array $input Raw input: email, name, interests, consent.
+	 * @param array $input Raw input: email, name, first_name, last_name, interests, consent.
 	 * @param array $form  `form` settings.
-	 * @return array{data: array{email: string, name: string, interests: string[]}, errors: array<string, string>}
+	 * @return array{data: array{email: string, name: string, first_name: string, last_name: string, interests: string[]}, errors: array<string, string>}
 	 */
 	public function validate( array $input, array $form ): array {
 		$errors = array();
@@ -33,13 +33,44 @@ final class Signup_Validator {
 			$errors['email'] = __( 'Please enter a valid email address.', 'connector-for-bluefox-email' );
 		}
 
-		$name = '';
+		$name  = '';
+		$first = '';
+		$last  = '';
 		if ( ! empty( $form['name_enabled'] ) ) {
-			$name = sanitize_text_field( (string) ( $input['name'] ?? '' ) );
-			if ( self::length( $name ) > self::MAX_NAME ) {
-				$errors['name'] = __( 'The name can be at most 100 characters long.', 'connector-for-bluefox-email' );
-			} elseif ( '' === $name && ! empty( $form['name_required'] ) ) {
-				$errors['name'] = __( 'Please enter your name.', 'connector-for-bluefox-email' );
+			$first = sanitize_text_field( (string) ( $input['first_name'] ?? '' ) );
+			$last  = sanitize_text_field( (string) ( $input['last_name'] ?? '' ) );
+			$name  = sanitize_text_field( (string) ( $input['name'] ?? '' ) );
+			if ( 'split' === Name_Parts::mode( $form ) ) {
+				foreach ( array(
+					'first_name' => $first,
+					'last_name'  => $last,
+				) as $key => $value ) {
+					if ( self::length( $value ) > Name_Parts::MAX ) {
+						$errors[ $key ] = __( 'The name can be at most 100 characters long.', 'connector-for-bluefox-email' );
+					} elseif ( '' === $value && ! empty( $form['name_required'] ) ) {
+						$errors[ $key ] = 'first_name' === $key
+							? __( 'Please enter your first name.', 'connector-for-bluefox-email' )
+							: __( 'Please enter your last name.', 'connector-for-bluefox-email' );
+					}
+				}
+				// The full name follows the parts; whatever came as `name` is ignored.
+				$name = Name_Parts::compose( $first, $last, Name_Parts::last_first( $form ) );
+				$name = function_exists( 'mb_substr' ) ? mb_substr( $name, 0, 190 ) : substr( $name, 0, 190 );
+			} else {
+				foreach ( array( $first, $last ) as $value ) {
+					// First / last from the checkout or an account: not shown on the form, never required.
+					if ( self::length( $value ) > Name_Parts::MAX ) {
+						$errors['name'] = __( 'The name can be at most 100 characters long.', 'connector-for-bluefox-email' );
+					}
+				}
+				if ( '' === $name && '' !== $first . $last ) {
+					$name = Name_Parts::compose( $first, $last, Name_Parts::last_first( $form ) );
+				}
+				if ( self::length( $name ) > self::MAX_NAME ) {
+					$errors['name'] = __( 'The name can be at most 100 characters long.', 'connector-for-bluefox-email' );
+				} elseif ( '' === $name && ! empty( $form['name_required'] ) ) {
+					$errors['name'] = __( 'Please enter your name.', 'connector-for-bluefox-email' );
+				}
 			}
 		}
 
@@ -57,9 +88,11 @@ final class Signup_Validator {
 
 		return array(
 			'data'   => array(
-				'email'     => strtolower( $email ),
-				'name'      => $name,
-				'interests' => $interests,
+				'email'      => strtolower( $email ),
+				'name'       => $name,
+				'first_name' => $first,
+				'last_name'  => $last,
+				'interests'  => $interests,
 			),
 			'errors' => $errors,
 		);

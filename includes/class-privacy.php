@@ -460,6 +460,8 @@ final class Privacy {
 		$labels = array(
 			'email'          => __( 'Email', 'connector-for-bluefox-email' ),
 			'name'           => __( 'Name', 'connector-for-bluefox-email' ),
+			'first_name'     => __( 'First name', 'connector-for-bluefox-email' ),
+			'last_name'      => __( 'Last name', 'connector-for-bluefox-email' ),
 			'source'         => __( 'Signup source', 'connector-for-bluefox-email' ),
 			'list_id'        => __( 'bluefox list', 'connector-for-bluefox-email' ),
 			'tags'           => __( 'Tags', 'connector-for-bluefox-email' ),
