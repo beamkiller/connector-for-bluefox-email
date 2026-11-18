@@ -166,12 +166,37 @@ $cfbe_labels = Fields::labels();
 <p><button type="button" class="button" id="cfbe-sync-fields" <?php disabled( ! $cfbe_configured ); ?>><?php esc_html_e( 'Create missing fields in bluefox', 'connector-for-bluefox-email' ); ?></button> <span class="cfbe-result" id="cfbe-sync-fields-result" aria-live="polite"></span></p>
 
 <h2><?php esc_html_e( 'Sync existing users and customers', 'connector-for-bluefox-email' ); ?></h2>
-<p><?php esc_html_e( 'Runs in the background in batches of 50, one batch per minute, to stay within the bluefox API limits. You can leave this page.', 'connector-for-bluefox-email' ); ?></p>
-<p id="cfbe-sync-progress" aria-live="polite" data-running="<?php echo 'running' === $cfbe_progress['status'] ? '1' : '0'; ?>"><?php echo esc_html( Sync_Tab::progress_text( $cfbe_progress ) ); ?></p>
+<p><?php esc_html_e( 'Runs in the background in short batches (about 20 seconds each), with pauses that keep it within the bluefox API limits. Every contact is saved as soon as it is done, so a stopped batch goes on where it was. You can leave this page; while it is open, it also keeps a stalled sync going.', 'connector-for-bluefox-email' ); ?></p>
+<?php $cfbe_status = Sync_Tab::status_data( $cfbe_progress ); ?>
+<div id="cfbe-sync-live" data-running="<?php echo $cfbe_status['running'] ? '1' : '0'; ?>">
+	<p class="cfbe-sync-bar">
+		<progress id="cfbe-sync-bar" max="100" value="<?php echo esc_attr( (string) $cfbe_status['percent'] ); ?>" style="width: 100%; max-width: 40em; height: 18px; vertical-align: middle;"><?php echo esc_html( $cfbe_status['percent'] . '%' ); ?></progress>
+		<strong id="cfbe-sync-percent"><?php echo esc_html( $cfbe_status['percent'] . '%' ); ?></strong>
+	</p>
+	<p id="cfbe-sync-progress" aria-live="polite"><?php echo esc_html( $cfbe_status['message'] ); ?></p>
+	<p id="cfbe-sync-stats" class="description"></p>
+	<div id="cfbe-sync-health" class="notice notice-warning inline" <?php echo '' === $cfbe_status['health']['text'] ? 'hidden' : ''; ?>><p><?php echo esc_html( $cfbe_status['health']['text'] ); ?></p></div>
+</div>
 <p>
-	<button type="button" class="button button-primary" id="cfbe-sync-start" <?php disabled( ! $cfbe_configured || 'running' === $cfbe_progress['status'] ); ?>><?php esc_html_e( 'Sync all existing users/customers now', 'connector-for-bluefox-email' ); ?></button>
-	<button type="button" class="button" id="cfbe-sync-cancel" <?php disabled( 'running' !== $cfbe_progress['status'] ); ?>><?php esc_html_e( 'Cancel', 'connector-for-bluefox-email' ); ?></button>
+	<button type="button" class="button button-primary" id="cfbe-sync-start" <?php disabled( ! $cfbe_configured || $cfbe_status['running'] ); ?>><?php esc_html_e( 'Sync all existing users/customers now', 'connector-for-bluefox-email' ); ?></button>
+	<button type="button" class="button" id="cfbe-sync-resume" <?php echo $cfbe_status['can_resume'] ? '' : 'hidden'; ?>><?php esc_html_e( 'Resume', 'connector-for-bluefox-email' ); ?></button>
+	<button type="button" class="button" id="cfbe-sync-cancel" <?php disabled( ! $cfbe_status['running'] && 'paused' !== $cfbe_status['status'] ); ?>><?php esc_html_e( 'Cancel', 'connector-for-bluefox-email' ); ?></button>
 </p>
+<details id="cfbe-sync-errors" <?php echo $cfbe_status['errors'] ? '' : 'hidden'; ?>>
+	<summary><?php esc_html_e( 'Last errors', 'connector-for-bluefox-email' ); ?> (<span id="cfbe-sync-errors-count"><?php echo esc_html( (string) count( $cfbe_status['errors'] ) ); ?></span>)</summary>
+	<table class="widefat striped" style="max-width: 60em;">
+		<thead><tr><th><?php esc_html_e( 'Time', 'connector-for-bluefox-email' ); ?></th><th><?php esc_html_e( 'Contact', 'connector-for-bluefox-email' ); ?></th><th><?php esc_html_e( 'bluefox response', 'connector-for-bluefox-email' ); ?></th></tr></thead>
+		<tbody id="cfbe-sync-errors-body">
+			<?php foreach ( $cfbe_status['errors'] as $cfbe_error ) : ?>
+				<tr>
+					<td><?php echo esc_html( wp_date( 'Y-m-d H:i:s', (int) $cfbe_error['time'] ) ); ?></td>
+					<td><?php echo esc_html( (string) $cfbe_error['email'] ); ?></td>
+					<td><?php echo esc_html( ( $cfbe_error['status'] ? 'HTTP ' . $cfbe_error['status'] . ': ' : '' ) . $cfbe_error['message'] ); ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</details>
 <p class="description">
 	<?php
 	/* translators: %s: WP-CLI command */

@@ -94,9 +94,11 @@ Several changes to the same person within a few seconds are combined into one sy
 
 To sync everyone who is already on the site, click **Sync all existing users/customers now**.
 
-- It runs in the background in batches of 50, one batch per minute, with a short pause between contacts, to stay within the bluefox API limits. You can leave the page.
+- It runs in the background in short batches (at most 50 contacts or about 20 seconds each, below common PHP time limits), with a short pause between contacts to stay within the bluefox API limits. You can leave the page.
 - Registered users come first, then guest customers (billing emails of paid guest orders).
-- The progress line shows the counts per result (created, updated, unchanged, not a contact, …). **Cancel** stops the run.
+- **Built for big lists** *(since 1.1.0)*: every contact is saved as soon as it is done, and each batch leaves a watchdog behind – if the server stops a batch (time limit, error), it goes on from the last saved contact. Temporary bluefox errors (429 rate limit, 5xx, network) are retried with growing pauses instead of being counted; a rejected API key (401/403) or eight temporary errors in a row **pause** the run with the reason.
+- The tab shows a **progress bar** (users plus guest orders), the counts per result, speed and minutes left, and the **last 20 errors** with the bluefox response (masked email, HTTP status, message). It refreshes every few seconds.
+- **Stalled?** When nothing has happened for 5 minutes, the tab says why: the background queue did not run the next batch (WP-Cron disabled or too few visitors), or a batch was stopped. While the tab is open it keeps the sync going itself; **Resume** continues a paused or stalled run, **Cancel** stops it. For a lasting fix on sites without a working WP-Cron, set up a real cron job for `wp-cron.php` – or use WP-CLI, which has no time limit.
 
 === "wp-admin"
 

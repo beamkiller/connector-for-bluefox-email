@@ -79,6 +79,26 @@ class Contact_Source {
 	}
 
 	/**
+	 * Number of paid guest orders (an upper bound of the guest customers, for the progress bar).
+	 */
+	public function guest_order_count(): int {
+		if ( ! Modules::woocommerce_active() || ! function_exists( 'wc_get_orders' ) ) {
+			return 0;
+		}
+		$result = wc_get_orders(
+			array(
+				'customer_id' => 0,
+				'status'      => Data_Collector::paid_statuses(),
+				'type'        => 'shop_order',
+				'limit'       => 1,
+				'paginate'    => true,
+				'return'      => 'ids',
+			)
+		);
+		return is_object( $result ) && isset( $result->total ) ? (int) $result->total : 0;
+	}
+
+	/**
 	 * Number of registered users.
 	 */
 	public function user_count(): int {

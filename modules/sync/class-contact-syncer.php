@@ -130,7 +130,7 @@ class Contact_Syncer {
 						'error' => $contact->get_error_message(),
 					)
 				);
-				return self::result( self::ERROR );
+				return self::result( self::ERROR, array(), $contact );
 			}
 			if ( 'all' !== $settings['scope'] ) {
 				return self::result( self::NOT_CONTACT );
@@ -149,7 +149,7 @@ class Contact_Syncer {
 							'error' => $created->get_error_message(),
 						)
 					);
-					return self::result( self::ERROR, $payload );
+					return self::result( self::ERROR, $payload, $created );
 				}
 			}
 			return self::result( self::CREATED, $payload );
@@ -179,7 +179,7 @@ class Contact_Syncer {
 						'error' => $updated->get_error_message(),
 					)
 				);
-				return self::result( self::ERROR, $payload );
+				return self::result( self::ERROR, $payload, $updated );
 			}
 		}
 		return self::result( self::UPDATED, $payload );
@@ -246,13 +246,24 @@ class Contact_Syncer {
 	/**
 	 * Result array.
 	 *
-	 * @param string $outcome Outcome.
-	 * @param array  $payload Payload.
+	 * @param string         $outcome Outcome.
+	 * @param array          $payload Payload.
+	 * @param \WP_Error|null $error   The bluefox error of an ERROR outcome.
 	 */
-	private static function result( string $outcome, array $payload = array() ): array {
-		return array(
+	private static function result( string $outcome, array $payload = array(), ?\WP_Error $error = null ): array {
+		$result = array(
 			'outcome' => $outcome,
 			'payload' => $payload,
 		);
+		if ( null !== $error ) {
+			// For the backfill's live view: the HTTP status decides between retry, pause and skip.
+			$data            = $error->get_error_data();
+			$result['error'] = array(
+				'code'    => (string) $error->get_error_code(),
+				'status'  => is_array( $data ) ? (int) ( $data['status'] ?? 0 ) : 0,
+				'message' => (string) $error->get_error_message(),
+			);
+		}
+		return $result;
 	}
 }

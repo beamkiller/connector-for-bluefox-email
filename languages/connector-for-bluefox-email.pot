@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails 1.1.0-beta.4\n"
+"Project-Id-Version: Connector for bluefox.email – Newsletter, Store Marketing and Transactional Emails 1.1.0-beta.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/connector-for-bluefox-email\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-17T14:10:46+00:00\n"
+"POT-Creation-Date: 2026-11-18T12:31:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: connector-for-bluefox-email\n"
@@ -62,7 +62,7 @@ msgstr ""
 #: admin/class-redirect-check.php:246
 #: includes/class-privacy.php:436
 #: modules/mailer/class-admin.php:293
-#: modules/sync/class-sync-tab.php:284
+#: modules/sync/class-sync-tab.php:400
 #: modules/webhooks/class-webhooks-tab.php:274
 #: modules/woo-events/class-settings-tab.php:272
 msgid "You are not allowed to do this."
@@ -87,13 +87,13 @@ msgstr ""
 
 #: admin/class-admin-page.php:143
 #: modules/mailer/class-admin.php:118
-#: modules/sync/class-sync-tab.php:99
+#: modules/sync/class-sync-tab.php:101
 msgid "Working…"
 msgstr ""
 
 #: admin/class-admin-page.php:144
 #: modules/mailer/class-admin.php:119
-#: modules/sync/class-sync-tab.php:100
+#: modules/sync/class-sync-tab.php:102
 #: modules/woo-events/class-settings-tab.php:321
 msgid "Something went wrong."
 msgstr ""
@@ -417,7 +417,7 @@ msgstr ""
 
 #. translators: 1: created field names, 2: existing field names
 #: admin/class-coupon-tab.php:173
-#: modules/sync/class-sync-tab.php:219
+#: modules/sync/class-sync-tab.php:233
 #, php-format
 msgid "Created: %1$s. Already existed: %2$s."
 msgstr ""
@@ -1717,6 +1717,8 @@ msgstr ""
 
 #: admin/views/tab-logs.php:24
 #: modules/mailer/views/tab-mailer.php:116
+#: modules/sync/class-sync-tab.php:108
+#: modules/sync/views/tab-sync.php:188
 #: modules/webhooks/views/tab-webhooks.php:113
 msgid "Time"
 msgstr ""
@@ -2299,170 +2301,206 @@ msgstr ""
 msgid "Most results. Default 20."
 msgstr ""
 
-#: includes/class-abilities.php:302
+#: includes/class-abilities.php:309
+msgid "Get the contact sync progress"
+msgstr ""
+
+#: includes/class-abilities.php:310
+msgid "Returns the progress of syncing all existing users and customers to bluefox: status (idle, running, waiting, paused, cancelled, done), processed / total, percent, counts (updated, created, unchanged, skipped, errors), speed and minutes left, health (ok, waiting, paused, stalled_queue = the background queue does not run, stalled_batch = a batch was stopped) with an explanation, and the last errors with the bluefox response. Needs the Contact sync feature."
+msgstr ""
+
+#: includes/class-abilities.php:315
+msgid "Start the contact sync"
+msgstr ""
+
+#: includes/class-abilities.php:316
+msgid "Starts syncing all existing users and guest customers to bluefox contacts in background batches (the button \"Sync all existing users/customers now\"). Does nothing while a sync is running. Follow it with cfbe/get-sync-status."
+msgstr ""
+
+#: includes/class-abilities.php:321
+msgid "Resume the contact sync"
+msgstr ""
+
+#: includes/class-abilities.php:322
+msgid "Continues a paused or stalled contact sync from the last saved contact (the Resume button)."
+msgstr ""
+
+#: includes/class-abilities.php:327
+msgid "Cancel the contact sync"
+msgstr ""
+
+#: includes/class-abilities.php:328
+msgid "Stops a running, waiting or paused contact sync (the Cancel button). Contacts synced so far stay in bluefox."
+msgstr ""
+
+#: includes/class-abilities.php:369
 msgid "Check the bluefox setup"
 msgstr ""
 
-#: includes/class-abilities.php:303
+#: includes/class-abilities.php:370
 msgid "Returns the bluefox-side settings the plugin relies on (\"bluefox setup\" on the General tab): per list the plugin uses, whether double opt-in is on, its confirmation email and whether it contains {{verifyLink}}, and whether confirmed subscribers are redirected to this site's thank-you page (ready = all three); the project's transactional emails (can_confirm = usable as confirmation email, from_templates = created on the Email templates tab); with the preferences page on, whether unsubscribe links lead to this site's preferences page; and contact_fields: whether the name fields (name, first and last name) exist in bluefox. suggested is the email cfbe/apply-bluefox-setup would use by default. Cached for ten minutes unless fresh is true."
 msgstr ""
 
-#: includes/class-abilities.php:311
+#: includes/class-abilities.php:378
 msgid "Read bluefox anew instead of the ten-minute cache. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:334
+#: includes/class-abilities.php:401
 msgid "Apply the bluefox setup"
 msgstr ""
 
-#: includes/class-abilities.php:335
+#: includes/class-abilities.php:402
 msgid "Changes settings in the connected bluefox project (\"Apply in bluefox\" on the General tab). For each list in lists (list ID => transactional email ID, see cfbe/get-bluefox-setup): double opt-in on with that confirmation email (it must contain {{verifyLink}}) and this site's thank-you page as redirect link; the list's confirmation title and message are kept. Only lists the plugin uses are changed. preferences true sets the project's custom subscription preferences URL to this site's preferences page (preferences page feature on). Returns what was done, what failed, and the setup afterwards."
 msgstr ""
 
-#: includes/class-abilities.php:343
+#: includes/class-abilities.php:410
 msgid "List ID => confirmation email ID."
 msgstr ""
 
-#: includes/class-abilities.php:348
+#: includes/class-abilities.php:415
 msgid "Point unsubscribe and pause links to this site's preferences page. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:352
+#: includes/class-abilities.php:419
 msgid "Create the missing name contact fields (name, first name, last name) in bluefox. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:381
+#: includes/class-abilities.php:448
 msgid "Texts to use: subject, preview, heading, intro, button, footer (Handlebars variables such as {{orderNumber}} work). Omitted texts keep their current value."
 msgstr ""
 
-#: includes/class-abilities.php:388
+#: includes/class-abilities.php:455
 msgid "Template key, see cfbe/list-email-templates."
 msgstr ""
 
-#: includes/class-abilities.php:394
+#: includes/class-abilities.php:461
 msgid "List bluefox email templates"
 msgstr ""
 
-#: includes/class-abilities.php:395
+#: includes/class-abilities.php:462
 msgid "Returns the ready-made emails of the Email templates tab whose feature is on: key, label, what it is, why use it, when it is sent, the email types the admin may choose (triggered = marketing, only active subscribers of a list, with an unsubscribe link; transactional = every recipient), its texts, whether it was created in bluefox, where it is used and whether its design is older than the current one. Also returns the design source (woocommerce or form) and the sender identities of the bluefox project."
 msgstr ""
 
-#: includes/class-abilities.php:414
+#: includes/class-abilities.php:481
 msgid "Create a bluefox email from a template"
 msgstr ""
 
-#: includes/class-abilities.php:415
+#: includes/class-abilities.php:482
 msgid "Creates a ready-made email in the connected bluefox project (\"Create in bluefox\" on the Email templates tab) and, unless assign is false, selects it where the plugin uses it: confirmation = double opt-in email of the list, welcome_coupon = coupon email, order and cart emails = an Order emails / Abandoned carts rule. Triggered (marketing) emails need list_id (see cfbe/list-bluefox-lists). WooCommerce keeps sending its own order emails."
 msgstr ""
 
-#: includes/class-abilities.php:425
+#: includes/class-abilities.php:492
 msgid "Email type, only where the template allows a choice (default: the first allowed type)."
 msgstr ""
 
-#: includes/class-abilities.php:429
+#: includes/class-abilities.php:496
 msgid "Subscriber list: required for triggered emails; for the confirmation email the list that gets double opt-in."
 msgstr ""
 
-#: includes/class-abilities.php:433
+#: includes/class-abilities.php:500
 msgid "Sender identity ID from cfbe/list-email-templates. Omit for the project default sender."
 msgstr ""
 
-#: includes/class-abilities.php:437
+#: includes/class-abilities.php:504
 msgid "Select the new email where the plugin uses it. Default true."
 msgstr ""
 
-#: includes/class-abilities.php:462
+#: includes/class-abilities.php:529
 msgid "Update a bluefox email from its template"
 msgstr ""
 
-#: includes/class-abilities.php:463
+#: includes/class-abilities.php:530
 msgid "Sends new texts and the current design to an email created from a template (\"Update in bluefox\"). Refuses with cfbe_template_changed when the email was changed in bluefox after the plugin last wrote it: ask the admin before repeating with force true, which replaces those changes. Emails switched to the bluefox visual editor are never overwritten."
 msgstr ""
 
-#: includes/class-abilities.php:472
+#: includes/class-abilities.php:539
 msgid "Replace changes made in bluefox. Default false."
 msgstr ""
 
-#: includes/class-abilities.php:493
+#: includes/class-abilities.php:560
 msgid "Send a test of a template email"
 msgstr ""
 
-#: includes/class-abilities.php:494
+#: includes/class-abilities.php:561
 msgid "Has bluefox send a created template email, filled with sample data, to the email address of the signed-in admin (\"Send me a test\"). It cannot send to any other address."
 msgstr ""
 
-#: includes/class-abilities.php:519
+#: includes/class-abilities.php:586
 msgid "Set the design of the template emails"
 msgstr ""
 
-#: includes/class-abilities.php:520
+#: includes/class-abilities.php:587
 msgid "Chooses the design of the ready-made emails: woocommerce = logo, colours, font and footer from WooCommerce → Settings → Emails (needs WooCommerce); form = the signup form colours. Emails already created keep their design until cfbe/update-email-template is run for them."
 msgstr ""
 
-#: includes/class-abilities.php:539
+#: includes/class-abilities.php:606
 msgid "Created templates whose design differs from the new one."
 msgstr ""
 
 #. translators: 1: setting keys, 2: settings area
-#: includes/class-abilities.php:625
+#: includes/class-abilities.php:692
 #, php-format
 msgid "Unknown settings %1$s in area %2$s. Call cfbe/get-settings for the valid keys."
 msgstr ""
 
 #. translators: %s: setting keys
-#: includes/class-abilities.php:634
+#: includes/class-abilities.php:701
 #, php-format
 msgid "%s can only be changed in wp-admin."
 msgstr ""
 
 #. translators: 1: module slugs, 2: valid module slugs
-#: includes/class-abilities.php:685
+#: includes/class-abilities.php:752
 #, php-format
 msgid "Unknown modules %1$s. Valid modules: %2$s."
 msgstr ""
 
-#: includes/class-abilities.php:740
+#: includes/class-abilities.php:807
 msgid "WooCommerce is not active."
 msgstr ""
 
-#: includes/class-abilities.php:746
+#: includes/class-abilities.php:813
 msgid "Type at least two characters."
 msgstr ""
 
-#: includes/class-abilities.php:908
+#: includes/class-abilities.php:841
+msgid "Switch on the Contact sync feature first (cfbe/set-modules: sync)."
+msgstr ""
+
+#: includes/class-abilities.php:1044
 msgid "This email was already created in bluefox: use cfbe/update-email-template to change it."
 msgstr ""
 
 #. translators: %s: allowed email types
-#: includes/class-abilities.php:915
+#: includes/class-abilities.php:1051
 #, php-format
 msgid "This template can only be created as: %s."
 msgstr ""
 
-#: includes/class-abilities.php:974
+#: includes/class-abilities.php:1110
 msgid "The signed-in user has no email address."
 msgstr ""
 
-#: includes/class-abilities.php:990
+#: includes/class-abilities.php:1126
 msgid "Design must be woocommerce or form."
 msgstr ""
 
-#: includes/class-abilities.php:993
+#: includes/class-abilities.php:1129
 msgid "WooCommerce is not active, so its email design cannot be used."
 msgstr ""
 
 #. translators: %s: template keys
-#: includes/class-abilities.php:1022
+#: includes/class-abilities.php:1158
 #, php-format
 msgid "Unknown template or its feature is off. Available: %s."
 msgstr ""
 
-#: includes/class-abilities.php:1039
+#: includes/class-abilities.php:1175
 msgid "bluefox is not connected yet: set the project ID and API key on the General tab in wp-admin."
 msgstr ""
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:1099
+#: includes/class-abilities.php:1235
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr ""
@@ -3012,7 +3050,7 @@ msgid "Single-use WooCommerce coupon for new subscribers, sent after they confir
 msgstr ""
 
 #: includes/class-modules.php:90
-#: modules/sync/class-sync-tab.php:68
+#: modules/sync/class-sync-tab.php:70
 msgid "Contact sync"
 msgstr ""
 
@@ -3779,68 +3817,141 @@ msgstr ""
 msgid "Customer type (customer / guest)"
 msgstr ""
 
-#: modules/sync/class-sync-tab.php:101
-msgid "Sync all existing users and customers now? This runs in the background in batches of 50, one batch per minute."
+#: modules/sync/class-sync-tab.php:103
+msgid "Sync all existing users and customers now? This runs in the background in short batches; you can follow it here."
 msgstr ""
 
-#: modules/sync/class-sync-tab.php:102
+#. translators: 1: contacts per minute, 2: minutes left
+#: modules/sync/class-sync-tab.php:105
+#, php-format
+msgid "%1$d contacts per minute, about %2$d minutes left"
+msgstr ""
+
+#: modules/sync/class-sync-tab.php:106
 msgid "Cancel the running sync?"
 msgstr ""
 
+#: modules/sync/class-sync-tab.php:107
+#: modules/sync/views/tab-sync.php:186
+msgid "Last errors"
+msgstr ""
+
+#: modules/sync/class-sync-tab.php:109
+#: modules/sync/views/tab-sync.php:188
+msgid "Contact"
+msgstr ""
+
+#: modules/sync/class-sync-tab.php:110
+#: modules/sync/views/tab-sync.php:188
+msgid "bluefox response"
+msgstr ""
+
 #. translators: %d: product ID
-#: modules/sync/class-sync-tab.php:131
+#: modules/sync/class-sync-tab.php:139
 #, php-format
 msgid "Deleted product #%d"
 msgstr ""
 
 #. translators: 1: updated, 2: created, 3: unchanged, 4: skipped, 5: errors
-#: modules/sync/class-sync-tab.php:145
+#: modules/sync/class-sync-tab.php:153
 #, php-format
 msgid "updated %1$d, created %2$d, unchanged %3$d, skipped %4$d, errors %5$d"
 msgstr ""
 
-#. translators: 1: processed emails, 2: number of users, 3: phase, 4: details
-#: modules/sync/class-sync-tab.php:155
+#. translators: 1: processed emails, 2: users, 3: guest orders, 4: phase, 5: details
+#: modules/sync/class-sync-tab.php:163
 #, php-format
-msgid "Running: %1$d processed (%2$d users in total, now: %3$s) – %4$s."
+msgid "Running: %1$d processed (%2$d users and up to %3$d guest orders, now: %4$s) – %5$s."
 msgstr ""
 
-#. translators: 1: processed emails, 2: number of users, 3: phase, 4: details
-#: modules/sync/class-sync-tab.php:155
+#. translators: 1: processed emails, 2: users, 3: guest orders, 4: phase, 5: details
+#: modules/sync/class-sync-tab.php:163
 msgid "guest customers"
 msgstr ""
 
-#. translators: 1: processed emails, 2: number of users, 3: phase, 4: details
-#: modules/sync/class-sync-tab.php:155
+#. translators: 1: processed emails, 2: users, 3: guest orders, 4: phase, 5: details
+#: modules/sync/class-sync-tab.php:163
 msgid "users"
 msgstr ""
 
 #. translators: 1: processed emails, 2: details
-#: modules/sync/class-sync-tab.php:158
+#: modules/sync/class-sync-tab.php:166
 #, php-format
 msgid "Last sync finished: %1$d processed – %2$s."
 msgstr ""
 
 #. translators: 1: processed emails, 2: details
-#: modules/sync/class-sync-tab.php:161
+#: modules/sync/class-sync-tab.php:169
+#, php-format
+msgid "Waiting for bluefox: %1$d processed – %2$s."
+msgstr ""
+
+#. translators: 1: processed emails, 2: details
+#: modules/sync/class-sync-tab.php:172
+#, php-format
+msgid "Paused: %1$d processed – %2$s."
+msgstr ""
+
+#. translators: 1: processed emails, 2: details
+#: modules/sync/class-sync-tab.php:175
 #, php-format
 msgid "Last sync was cancelled after %1$d – %2$s."
 msgstr ""
 
-#: modules/sync/class-sync-tab.php:163
+#: modules/sync/class-sync-tab.php:177
 msgid "No sync has run yet."
 msgstr ""
 
-#: modules/sync/class-sync-tab.php:209
-#: modules/sync/class-sync-tab.php:238
+#: modules/sync/class-sync-tab.php:223
+#: modules/sync/class-sync-tab.php:252
 #: modules/sync/views/tab-sync.php:27
 msgid "Connect to bluefox first (General tab)."
 msgstr ""
 
 #. translators: %s: field names
-#: modules/sync/class-sync-tab.php:225
+#: modules/sync/class-sync-tab.php:239
 #, php-format
 msgid "Failed: %s."
+msgstr ""
+
+#. translators: 1: HTTP status, 2: bluefox message
+#: modules/sync/class-sync-tab.php:364
+#, php-format
+msgid "HTTP %1$d: %2$s"
+msgstr ""
+
+#. translators: 1: bluefox response, 2: seconds
+#: modules/sync/class-sync-tab.php:370
+#, php-format
+msgid "bluefox asked to slow down or could not be reached (%1$s). Retrying the same contact in %2$d seconds – nothing is lost."
+msgstr ""
+
+#. translators: %s: bluefox response
+#: modules/sync/class-sync-tab.php:377
+#, php-format
+msgid "Paused: bluefox rejected the API key (%s). Check the project ID and API key on the General tab, then click Resume."
+msgstr ""
+
+#: modules/sync/class-sync-tab.php:380
+msgid "Paused: bluefox is not connected. Enter the project ID and API key on the General tab, then click Resume."
+msgstr ""
+
+#. translators: 1: number of attempts, 2: bluefox response
+#: modules/sync/class-sync-tab.php:383
+#, php-format
+msgid "Paused after %1$d failed attempts in a row (%2$s). Click Resume to try again later."
+msgstr ""
+
+#. translators: %d: minutes
+#: modules/sync/class-sync-tab.php:386
+#, php-format
+msgid "No progress for %d minutes: the background queue did not run the next batch. WP-Cron may be disabled on this site, or the site gets too few visitors to trigger it. While this page is open, the sync goes on from here. For a lasting fix, set up a real cron job for wp-cron.php, or run the sync on the command line: wp cfbe sync"
+msgstr ""
+
+#. translators: %d: minutes
+#: modules/sync/class-sync-tab.php:389
+#, php-format
+msgid "No progress for %d minutes: the last batch stopped before it finished (usually the server's PHP time limit or an error – see the Logs tab). It goes on from the last saved contact; you can also click Resume."
 msgstr ""
 
 #: modules/sync/views/tab-sync.php:25
@@ -3963,24 +4074,28 @@ msgid "Sync existing users and customers"
 msgstr ""
 
 #: modules/sync/views/tab-sync.php:169
-msgid "Runs in the background in batches of 50, one batch per minute, to stay within the bluefox API limits. You can leave this page."
+msgid "Runs in the background in short batches (about 20 seconds each), with pauses that keep it within the bluefox API limits. Every contact is saved as soon as it is done, so a stopped batch goes on where it was. You can leave this page; while it is open, it also keeps a stalled sync going."
 msgstr ""
 
-#: modules/sync/views/tab-sync.php:172
+#: modules/sync/views/tab-sync.php:181
 msgid "Sync all existing users/customers now"
 msgstr ""
 
-#: modules/sync/views/tab-sync.php:173
+#: modules/sync/views/tab-sync.php:182
+msgid "Resume"
+msgstr ""
+
+#: modules/sync/views/tab-sync.php:183
 msgid "Cancel"
 msgstr ""
 
 #. translators: %s: WP-CLI command
-#: modules/sync/views/tab-sync.php:178
+#: modules/sync/views/tab-sync.php:203
 #, php-format
 msgid "Also available on the command line: %s"
 msgstr ""
 
-#: modules/sync/views/tab-sync.php:181
+#: modules/sync/views/tab-sync.php:206
 msgid "Deleting a WordPress user does not delete the bluefox contact, and changing an account email does not rename it. Remove such contacts in bluefox if needed."
 msgstr ""
 

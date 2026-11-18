@@ -57,7 +57,8 @@ Field names may contain `A–Z`, `a–z`, `0–9` and `_` (max. 64 characters). 
 | Button | What it does |
 |---|---|
 | Create missing fields in bluefox | Creates the enabled fields that do not exist in your bluefox project yet. Save the settings first. |
-| Sync all existing users/customers now | Starts the backfill: in the background, batches of 50, one batch per minute. Progress is shown on the tab (updated, created, unchanged, skipped, errors). Also available as `wp cfbe sync [--dry-run] [--limit=<n>]`. |
-| Cancel | Stops a running backfill. |
+| Sync all existing users/customers now | Starts the backfill in the background, in short batches (at most 50 contacts or about 20 seconds). The live view shows a progress bar, the counts (updated, created, unchanged, skipped, errors), speed, minutes left, the health of the run and the last errors with the bluefox response. Also available as `wp cfbe sync [--dry-run] [--limit=<n>]`. See [Backfill](../features/contact-sync.md#backfill). |
+| Resume | Shown when the run is paused (rejected API key, bluefox unavailable) or stalled: goes on from the last saved contact. *Since 1.1.0.* |
+| Cancel | Stops a running, waiting or paused backfill. |
 
 Deleting a WordPress user does not delete the bluefox contact, and changing an account email does not rename it.

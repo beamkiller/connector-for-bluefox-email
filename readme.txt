@@ -45,7 +45,7 @@ Full documentation: [beamkiller.github.io/connector-for-bluefox-email](https://b
 
 * Keep bluefox contacts enriched with user and customer data (name, order count, total spent, last order date, purchased categories, billing country and city, and – if you switch them on – billing phone, company, address, postcode and state) for segmentation.
 * Purchased product tags (off by default): choose products with a searchable picker, and everyone who bought one gets a tag such as `bought-<product-slug>` – for segments and campaigns aimed at the buyers of a product.
-* Bulk backfill and WP-CLI command.
+* Bulk backfill for big lists: short background batches that save every contact and continue by themselves after a stop, retries on bluefox rate limits, a live progress bar with the last errors and a Resume button – and a WP-CLI command.
 
 **Send WordPress emails through bluefox.email**
 
@@ -168,7 +168,8 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 * Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
 * Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
 * Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
-* New: the signup form can ask for First name and Last name (Form tab), in the order of the site language or as set; bluefox gets firstName, lastName and the full name, and the checkout sends the billing first and last name too. The bluefox setup checks and creates the name fields; the double opt-in template greets by first name.
+* New: the contact sync backfill is built for big lists – time-limited batches that save every contact, a watchdog that continues a stopped batch, retries with pauses on bluefox rate limits, a pause with the reason on a rejected API key, a live progress bar with health and the last errors, and a Resume button. New abilities cfbe/get-sync-status, cfbe/start-sync, cfbe/resume-sync and cfbe/cancel-sync.
+* New: the signup form can ask for First name and Last name (Form tab), in the order of the site language or as set; bluefox gets firstName, lastName and the full name, and the checkout sends the billing first and last name too. The bluefox setup checks and creates the name fields; a newly created double opt-in email greets by first name (existing confirmation emails are not changed – add {{contact.firstName}} to them yourself).
 * New: billing phone, company, street address, postcode and state as Contact sync fields (off by default).
 * New: purchased product tags in Contact sync – choose products with a searchable picker (fine for big stores), and their buyers get a `bought-<product-slug>` tag in bluefox, also for earlier orders via the sync of existing customers. Off by default.
 * AI agent access: new ability cfbe/search-products; the purchased product tag settings are in the sync area of cfbe/get-settings / cfbe/update-settings. New abilities cfbe/get-bluefox-setup and cfbe/apply-bluefox-setup; cfbe/list-bluefox-lists also returns each list's confirmation email and redirect link; abilities with only optional input run without input.

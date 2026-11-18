@@ -282,7 +282,74 @@ final class Abilities {
 		);
 
 		$this->register_setup_abilities( $permission );
+		$this->register_sync_abilities( $permission );
 		$this->register_template_abilities( $permission );
+	}
+
+	/**
+	 * Registers the contact sync backfill abilities ("Sync existing users and customers" on the Contact sync tab).
+	 *
+	 * @param callable $permission Permission callback.
+	 */
+	private function register_sync_abilities( $permission ): void {
+		$status_schema = array(
+			'type'       => 'object',
+			'properties' => array(
+				'status'    => array( 'type' => 'string' ),
+				'running'   => array( 'type' => 'boolean' ),
+				'processed' => array( 'type' => 'integer' ),
+				'total'     => array( 'type' => 'integer' ),
+				'percent'   => array( 'type' => 'integer' ),
+				'health'    => array( 'type' => 'object' ),
+				'errors'    => array( 'type' => 'array' ),
+			),
+		);
+		$abilities     = array(
+			'cfbe/get-sync-status' => array(
+				__( 'Get the contact sync progress', 'connector-for-bluefox-email' ),
+				__( 'Returns the progress of syncing all existing users and customers to bluefox: status (idle, running, waiting, paused, cancelled, done), processed / total, percent, counts (updated, created, unchanged, skipped, errors), speed and minutes left, health (ok, waiting, paused, stalled_queue = the background queue does not run, stalled_batch = a batch was stopped) with an explanation, and the last errors with the bluefox response. Needs the Contact sync feature.', 'connector-for-bluefox-email' ),
+				'get_sync_status',
+				true,
+			),
+			'cfbe/start-sync'      => array(
+				__( 'Start the contact sync', 'connector-for-bluefox-email' ),
+				__( 'Starts syncing all existing users and guest customers to bluefox contacts in background batches (the button "Sync all existing users/customers now"). Does nothing while a sync is running. Follow it with cfbe/get-sync-status.', 'connector-for-bluefox-email' ),
+				'start_sync',
+				false,
+			),
+			'cfbe/resume-sync'     => array(
+				__( 'Resume the contact sync', 'connector-for-bluefox-email' ),
+				__( 'Continues a paused or stalled contact sync from the last saved contact (the Resume button).', 'connector-for-bluefox-email' ),
+				'resume_sync',
+				false,
+			),
+			'cfbe/cancel-sync'     => array(
+				__( 'Cancel the contact sync', 'connector-for-bluefox-email' ),
+				__( 'Stops a running, waiting or paused contact sync (the Cancel button). Contacts synced so far stay in bluefox.', 'connector-for-bluefox-email' ),
+				'cancel_sync',
+				false,
+			),
+		);
+		foreach ( $abilities as $name => $ability ) {
+			wp_register_ability(
+				$name,
+				array(
+					'label'               => $ability[0],
+					'description'         => $ability[1],
+					'category'            => self::CATEGORY,
+					'input_schema'        => array(
+						'default'              => array(), // Lets the ability run without input.
+						'type'                 => 'object',
+						'properties'           => array(),
+						'additionalProperties' => false,
+					),
+					'output_schema'       => $status_schema,
+					'execute_callback'    => array( $this, $ability[2] ),
+					'permission_callback' => $permission,
+					'meta'                => self::meta( $ability[3], true ),
+				)
+			);
+		}
 	}
 
 	/**
@@ -761,6 +828,75 @@ final class Abilities {
 			);
 		}
 		return $out;
+	}
+
+	/**
+	 * The backfill runner, or an error while the Contact sync feature is off.
+	 *
+	 * @return Sync\Backfill|\WP_Error
+	 */
+	private function backfill() {
+		$backfill = Sync\Module::backfill();
+		if ( null === $backfill ) {
+			return new \WP_Error( 'cfbe_sync_off', __( 'Switch on the Contact sync feature first (cfbe/set-modules: sync).', 'connector-for-bluefox-email' ), array( 'status' => 409 ) );
+		}
+		return $backfill;
+	}
+
+	/**
+	 * `cfbe/get-sync-status`.
+	 *
+	 * @return array|\WP_Error
+	 */
+	public function get_sync_status() {
+		$backfill = $this->backfill();
+		return is_wp_error( $backfill ) ? $backfill : Sync\Sync_Tab::status_data( Sync\Backfill::progress() );
+	}
+
+	/**
+	 * `cfbe/start-sync`.
+	 *
+	 * @return array|\WP_Error
+	 */
+	public function start_sync() {
+		$backfill = $this->backfill();
+		if ( is_wp_error( $backfill ) ) {
+			return $backfill;
+		}
+		$client = $this->client();
+		if ( is_wp_error( $client ) ) {
+			return $client;
+		}
+		$backfill->start();
+		return Sync\Sync_Tab::status_data( Sync\Backfill::progress() );
+	}
+
+	/**
+	 * `cfbe/resume-sync`.
+	 *
+	 * @return array|\WP_Error
+	 */
+	public function resume_sync() {
+		$backfill = $this->backfill();
+		if ( is_wp_error( $backfill ) ) {
+			return $backfill;
+		}
+		$backfill->resume();
+		return Sync\Sync_Tab::status_data( Sync\Backfill::progress() );
+	}
+
+	/**
+	 * `cfbe/cancel-sync`.
+	 *
+	 * @return array|\WP_Error
+	 */
+	public function cancel_sync() {
+		$backfill = $this->backfill();
+		if ( is_wp_error( $backfill ) ) {
+			return $backfill;
+		}
+		$backfill->cancel();
+		return Sync\Sync_Tab::status_data( Sync\Backfill::progress() );
 	}
 
 	/**

@@ -51,9 +51,10 @@ final class Module {
 		add_filter( 'cfbe_settings_defaults_' . Fields::AREA, array( Fields::class, 'filter_defaults' ) );
 		add_filter( 'cfbe_sanitize_settings_' . Fields::AREA, array( Fields::class, 'sanitize' ), 10, 3 );
 
-		$this->syncer = new Contact_Syncer( $this->plugin->client(), new Data_Collector(), $this->plugin->logger() );
-		$source       = new Contact_Source();
-		$backfill     = new Backfill( $this->syncer, $source, $this->plugin->jobs(), $this->plugin->logger() );
+		$this->syncer   = new Contact_Syncer( $this->plugin->client(), new Data_Collector(), $this->plugin->logger() );
+		$source         = new Contact_Source();
+		$backfill       = new Backfill( $this->syncer, $source, $this->plugin->jobs(), $this->plugin->logger() );
+		self::$backfill = $backfill;
 
 		add_action( Triggers::JOB, array( $this, 'run_contact_job' ) );
 		add_action( Backfill::HOOK, array( $backfill, 'run_batch' ), 10, 2 );
@@ -69,6 +70,20 @@ final class Module {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			\WP_CLI::add_command( 'cfbe sync', new Cli_Command( $this->syncer, $source ) );
 		}
+	}
+
+	/**
+	 * The backfill runner of this request (null while the module is off), for the abilities.
+	 *
+	 * @var Backfill|null
+	 */
+	private static $backfill = null;
+
+	/**
+	 * The backfill runner (null while the Contact sync module is off).
+	 */
+	public static function backfill(): ?Backfill {
+		return self::$backfill;
 	}
 
 	/**

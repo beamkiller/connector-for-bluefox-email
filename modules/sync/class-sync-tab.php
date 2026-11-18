@@ -55,6 +55,8 @@ class Sync_Tab {
 		add_action( 'wp_ajax_cfbe_sync_start', array( $this, 'ajax_start' ) );
 		add_action( 'wp_ajax_cfbe_sync_cancel', array( $this, 'ajax_cancel' ) );
 		add_action( 'wp_ajax_cfbe_sync_status', array( $this, 'ajax_status' ) );
+		add_action( 'wp_ajax_cfbe_sync_resume', array( $this, 'ajax_resume' ) );
+		add_action( 'wp_ajax_cfbe_sync_tick', array( $this, 'ajax_tick' ) );
 	}
 
 	/**
@@ -98,8 +100,14 @@ class Sync_Tab {
 				'i18n'    => array(
 					'working'       => __( 'Working…', 'connector-for-bluefox-email' ),
 					'error'         => __( 'Something went wrong.', 'connector-for-bluefox-email' ),
-					'confirmStart'  => __( 'Sync all existing users and customers now? This runs in the background in batches of 50, one batch per minute.', 'connector-for-bluefox-email' ),
+					'confirmStart'  => __( 'Sync all existing users and customers now? This runs in the background in short batches; you can follow it here.', 'connector-for-bluefox-email' ),
+					/* translators: 1: contacts per minute, 2: minutes left */
+					'stats'         => __( '%1$d contacts per minute, about %2$d minutes left', 'connector-for-bluefox-email' ),
 					'confirmCancel' => __( 'Cancel the running sync?', 'connector-for-bluefox-email' ),
+					'errorsTitle'   => __( 'Last errors', 'connector-for-bluefox-email' ),
+					'colTime'       => __( 'Time', 'connector-for-bluefox-email' ),
+					'colEmail'      => __( 'Contact', 'connector-for-bluefox-email' ),
+					'colResponse'   => __( 'bluefox response', 'connector-for-bluefox-email' ),
 				),
 			)
 		);
@@ -151,11 +159,17 @@ class Sync_Tab {
 		);
 		switch ( $progress['status'] ) {
 			case 'running':
-				/* translators: 1: processed emails, 2: number of users, 3: phase, 4: details */
-				return sprintf( __( 'Running: %1$d processed (%2$d users in total, now: %3$s) – %4$s.', 'connector-for-bluefox-email' ), (int) $progress['processed'], (int) $progress['total'], 'guests' === $progress['phase'] ? __( 'guest customers', 'connector-for-bluefox-email' ) : __( 'users', 'connector-for-bluefox-email' ), $detail );
+				/* translators: 1: processed emails, 2: users, 3: guest orders, 4: phase, 5: details */
+				return sprintf( __( 'Running: %1$d processed (%2$d users and up to %3$d guest orders, now: %4$s) – %5$s.', 'connector-for-bluefox-email' ), (int) $progress['processed'], (int) $progress['total'], (int) $progress['guest_total'], 'guests' === $progress['phase'] ? __( 'guest customers', 'connector-for-bluefox-email' ) : __( 'users', 'connector-for-bluefox-email' ), $detail );
 			case 'done':
 				/* translators: 1: processed emails, 2: details */
 				return sprintf( __( 'Last sync finished: %1$d processed – %2$s.', 'connector-for-bluefox-email' ), (int) $progress['processed'], $detail );
+			case 'waiting':
+				/* translators: 1: processed emails, 2: details */
+				return sprintf( __( 'Waiting for bluefox: %1$d processed – %2$s.', 'connector-for-bluefox-email' ), (int) $progress['processed'], $detail );
+			case 'paused':
+				/* translators: 1: processed emails, 2: details */
+				return sprintf( __( 'Paused: %1$d processed – %2$s.', 'connector-for-bluefox-email' ), (int) $progress['processed'], $detail );
 			case 'cancelled':
 				/* translators: 1: processed emails, 2: details */
 				return sprintf( __( 'Last sync was cancelled after %1$d – %2$s.', 'connector-for-bluefox-email' ), (int) $progress['processed'], $detail );
@@ -264,16 +278,118 @@ class Sync_Tab {
 	}
 
 	/**
+	 * AJAX: progress, and when the background queue has stopped running the sync, the due batch runs in this request
+	 * (short budget) – so an open Contact sync tab keeps a stalled sync going.
+	 */
+	public function ajax_tick(): void {
+		if ( ! $this->authorized() ) {
+			return;
+		}
+		$this->backfill->tick();
+		$this->send_status();
+	}
+
+	/**
+	 * AJAX: resume a paused or stalled backfill.
+	 */
+	public function ajax_resume(): void {
+		if ( ! $this->authorized() ) {
+			return;
+		}
+		$this->backfill->resume();
+		$this->send_status();
+	}
+
+	/**
 	 * Sends the current progress.
 	 */
 	private function send_status(): void {
-		$progress = Backfill::progress();
-		wp_send_json_success(
-			array(
-				'running' => 'running' === $progress['status'],
-				'message' => self::progress_text( $progress ),
-			)
+		wp_send_json_success( self::status_data( Backfill::progress() ) );
+	}
+
+	/**
+	 * Everything the live view (and the cfbe/get-sync-status ability) shows about a backfill.
+	 *
+	 * @param array    $progress Progress.
+	 * @param int|null $now      Current time (tests).
+	 */
+	public static function status_data( array $progress, ?int $now = null ): array {
+		$now      = null === $now ? time() : $now;
+		$counts   = (array) $progress['counts'];
+		$total    = (int) $progress['total'] + (int) $progress['guest_total'];
+		$done     = (int) $progress['processed'];
+		$health   = Backfill::health( $progress, $now );
+		$elapsed  = max( 1, (int) $progress['updated'] - (int) $progress['started'] );
+		$per_min  = $done > 0 ? $done / $elapsed * 60 : 0.0;
+		$left_min = $per_min > 0 && $total > $done ? (int) ceil( ( $total - $done ) / $per_min ) : 0;
+		return array(
+			'status'      => (string) $progress['status'],
+			'running'     => in_array( $progress['status'], array( 'running', 'waiting' ), true ),
+			'message'     => self::progress_text( $progress ),
+			'processed'   => $done,
+			'total'       => $total,
+			// The guest total is an upper bound (orders, not people): a finished run is 100%.
+			'percent'     => 'done' === $progress['status'] ? 100 : ( $total > 0 ? min( 99, (int) floor( $done * 100 / $total ) ) : 0 ),
+			'phase'       => (string) $progress['phase'],
+			'counts'      => array(
+				'updated'   => (int) ( $counts[ Contact_Syncer::UPDATED ] ?? 0 ),
+				'created'   => (int) ( $counts[ Contact_Syncer::CREATED ] ?? 0 ),
+				'unchanged' => (int) ( $counts[ Contact_Syncer::UNCHANGED ] ?? 0 ),
+				'skipped'   => (int) ( $counts[ Contact_Syncer::NOT_CONTACT ] ?? 0 ) + (int) ( $counts[ Contact_Syncer::NO_DATA ] ?? 0 ) + (int) ( $counts[ Contact_Syncer::INVALID ] ?? 0 ),
+				'errors'    => (int) ( $counts[ Contact_Syncer::ERROR ] ?? 0 ) + (int) ( $counts[ Contact_Syncer::NOT_CONFIGURED ] ?? 0 ),
+			),
+			'per_minute'  => (int) round( $per_min ),
+			'eta_minutes' => $left_min,
+			'health'      => array(
+				'code' => $health['code'],
+				'text' => self::health_text( $progress, $health, $now ),
+			),
+			'can_resume'  => 'paused' === $progress['status'] || 0 === strpos( $health['code'], 'stalled' ),
+			'last_error'  => (array) $progress['last_error'],
+			'errors'      => array_values( (array) $progress['errors'] ),
 		);
+	}
+
+	/**
+	 * Explains the health of a running or paused backfill ('' when there is nothing to say).
+	 *
+	 * @param array $progress Progress.
+	 * @param array $health   Backfill::health() result.
+	 * @param int   $now      Current time.
+	 */
+	public static function health_text( array $progress, array $health, int $now ): string {
+		$error    = (array) $progress['last_error'];
+		$response = '' !== (string) ( $error['message'] ?? '' )
+			/* translators: 1: HTTP status, 2: bluefox message */
+			? sprintf( __( 'HTTP %1$d: %2$s', 'connector-for-bluefox-email' ), (int) ( $error['status'] ?? 0 ), (string) $error['message'] )
+			: '';
+		switch ( $health['code'] ) {
+			case 'waiting':
+				return sprintf(
+					/* translators: 1: bluefox response, 2: seconds */
+					__( 'bluefox asked to slow down or could not be reached (%1$s). Retrying the same contact in %2$d seconds – nothing is lost.', 'connector-for-bluefox-email' ),
+					$response,
+					max( 0, (int) $progress['next_at'] - $now )
+				);
+			case 'paused':
+				if ( 'auth' === $progress['reason'] ) {
+					/* translators: %s: bluefox response */
+					return sprintf( __( 'Paused: bluefox rejected the API key (%s). Check the project ID and API key on the General tab, then click Resume.', 'connector-for-bluefox-email' ), $response );
+				}
+				if ( 'not_configured' === $progress['reason'] ) {
+					return __( 'Paused: bluefox is not connected. Enter the project ID and API key on the General tab, then click Resume.', 'connector-for-bluefox-email' );
+				}
+				/* translators: 1: number of attempts, 2: bluefox response */
+				return sprintf( __( 'Paused after %1$d failed attempts in a row (%2$s). Click Resume to try again later.', 'connector-for-bluefox-email' ), Backfill::MAX_RETRIES, $response );
+			case 'stalled_queue':
+				/* translators: %d: minutes */
+				return sprintf( __( 'No progress for %d minutes: the background queue did not run the next batch. WP-Cron may be disabled on this site, or the site gets too few visitors to trigger it. While this page is open, the sync goes on from here. For a lasting fix, set up a real cron job for wp-cron.php, or run the sync on the command line: wp cfbe sync', 'connector-for-bluefox-email' ), $health['minutes'] );
+			case 'stalled_batch':
+				/* translators: %d: minutes */
+				return sprintf( __( 'No progress for %d minutes: the last batch stopped before it finished (usually the server\'s PHP time limit or an error – see the Logs tab). It goes on from the last saved contact; you can also click Resume.', 'connector-for-bluefox-email' ), $health['minutes'] );
+			default:
+				return '';
+		}
 	}
 
 	/**
