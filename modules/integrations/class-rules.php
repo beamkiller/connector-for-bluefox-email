@@ -16,7 +16,8 @@ defined( 'ABSPATH' ) || exit;
  * Stored shape (option `cfbe_integrations`):
  * `slug => array( 'rules' => list<rule> )` (Elementor: empty, rules live in the widget). The on/off switch of each
  * form plugin is a module switch on the General tab (`integration_<slug>`).
- * Rule: form, list_id, email_field, name_field, consent_field, implied_consent, tags, fields (list of form_field/bluefox_field).
+ * Rule: form, list_id, email_field, name_field, consent_field, implied_consent, tags, fields (list of form_field/bluefox_field),
+ * auto_fields (match form fields to the Contact sync fields by name; see Field_Matcher).
  */
 final class Rules {
 
@@ -117,6 +118,7 @@ final class Rules {
 			'implied_consent' => ! empty( $raw['implied_consent'] ),
 			'tags'            => implode( ', ', $tags ),
 			'fields'          => $fields,
+			'auto_fields'     => ! array_key_exists( 'auto_fields', $raw ) || ! empty( $raw['auto_fields'] ),
 		);
 	}
 
@@ -133,6 +135,7 @@ final class Rules {
 			'implied_consent' => false,
 			'tags'            => '',
 			'fields'          => array(),
+			'auto_fields'     => true,
 		);
 	}
 

@@ -99,10 +99,23 @@ class Dispatcher {
 			return false;
 		}
 
+		$matched = (array) ( $input['matched_fields'] ?? array() );
+		unset( $input['matched_fields'] );
+		if ( $matched ) {
+			$this->logger->info(
+				'Form integration matched fields by name',
+				array(
+					'source' => $source,
+					'form'   => $sub->form_id,
+					'fields' => implode( ', ', $matched ),
+				)
+			);
+		}
+
 		/**
 		 * Filters a signup coming from a third-party form; return false to skip it.
 		 *
-		 * @param array  $input   Signup input (email, name, consent, consent_text, ip, list_id, tags, fields, skip_form_rules).
+		 * @param array  $input   Signup input (email, name, first_name, last_name, consent, consent_text, ip, list_id, tags, fields, skip_form_rules).
 		 * @param string $source  Integration slug: cf7 | wpforms | fluentforms | gravityforms | elementor.
 		 * @param string $form_id Form ID.
 		 */
@@ -139,10 +152,11 @@ class Dispatcher {
 	 *
 	 * @param array      $rule  Rule.
 	 * @param Submission $sub   Submission.
-	 * @param string     $label Integration label.
+	 * @param string     $label  Integration label.
+	 * @param array|null $active Contact sync fields that are switched on: key => bluefox name (null = stored settings).
 	 * @return array|string
 	 */
-	public static function build_input( array $rule, Submission $sub, string $label ) {
+	public static function build_input( array $rule, Submission $sub, string $label, ?array $active = null ) {
 		$email_field = (string) ( $rule['email_field'] ?? '' );
 		if ( '' === $email_field ) {
 			$email_field = $sub->detect_email_field();
@@ -178,9 +192,45 @@ class Dispatcher {
 
 		$tags = array_filter( array_map( 'trim', explode( ',', (string) ( $rule['tags'] ?? '' ) ) ) );
 
+		$name_field = (string) ( $rule['name_field'] ?? '' );
+		$name_raw   = $sub->raw( $name_field );
+		$name       = sanitize_text_field( $sub->text( $name_field ) );
+		$first      = '';
+		$last       = '';
+		if ( is_array( $name_raw ) ) {
+			// A name group (Fluent Forms `names`): keep the parts too.
+			$first = sanitize_text_field( Submission::flatten( $name_raw['first_name'] ?? '' ) );
+			$last  = sanitize_text_field( Submission::flatten( $name_raw['last_name'] ?? '' ) );
+		}
+
+		$matched = array();
+		if ( self::auto_fields( $rule ) ) {
+			$skip    = array_filter( array( $email_field, $consent_field, $name_field ) );
+			$matched = Field_Matcher::match( $sub, $skip, $active );
+			$names   = null === $active ? \CFBE\Sync\Fields::active_map() : $active;
+			foreach ( $matched as $key => $value ) {
+				if ( 'name' === $key ) {
+					$name = '' === $name ? $value : $name;
+				} elseif ( 'firstName' === $key ) {
+					$first = '' === $first ? $value : $first;
+				} elseif ( 'lastName' === $key ) {
+					$last = '' === $last ? $value : $last;
+				} else {
+					$target = (string) ( $names[ $key ] ?? $key );
+					// A mapping set on the rule wins.
+					if ( ! isset( $fields[ $target ] ) ) {
+						$fields[ $target ] = $value;
+					}
+				}
+			}
+		}
+
 		return array(
 			'email'           => $email,
-			'name'            => sanitize_text_field( $sub->text( (string) ( $rule['name_field'] ?? '' ) ) ),
+			'name'            => $name,
+			'first_name'      => $first,
+			'last_name'       => $last,
+			'matched_fields'  => array_keys( $matched ),
 			'consent'         => true,
 			'consent_text'    => self::consent_text( $label, $sub, $implied ? '' : $consent_field, $implied ),
 			'ip'              => $sub->ip,
@@ -189,6 +239,16 @@ class Dispatcher {
 			'fields'          => $fields,
 			'skip_form_rules' => true,
 		);
+	}
+
+	/**
+	 * Whether the rule matches form fields to Contact sync fields by name (on unless switched off; rules saved
+	 * before 1.1.0 have no such key and get it on).
+	 *
+	 * @param array $rule Rule.
+	 */
+	public static function auto_fields( array $rule ): bool {
+		return ! array_key_exists( 'auto_fields', $rule ) || ! empty( $rule['auto_fields'] );
 	}
 
 	/**

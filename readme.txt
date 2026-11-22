@@ -53,7 +53,7 @@ Full documentation: [beamkiller.github.io/connector-for-bluefox-email](https://b
 
 **Form plugin integrations**
 
-* Subscribe people from Contact Form 7, WPForms, Fluent Forms, Gravity Forms and Elementor Pro forms, with consent checks and field mapping.
+* Subscribe people from Contact Form 7, WPForms, Fluent Forms, Gravity Forms and Elementor Pro forms, with consent checks and field mapping – fields named like first_name, last_name or phone are matched automatically.
 
 **Subscription preferences page**
 
@@ -168,6 +168,7 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 * Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
 * Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
 * Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
+* New: form integrations match fields by name – a form field named like a Contact sync field that is switched on (first_name, last_name, phone, company, address, city, zip, state, country, Fluent Forms names.first_name …) is sent to that bluefox field without a mapping. A Fluent Forms name group as the Name field also fills First name and Last name. On by default, per form.
 * New: the contact sync backfill is built for big lists – time-limited batches that save every contact, a watchdog that continues a stopped batch, retries with pauses on bluefox rate limits, a pause with the reason on a rejected API key, a live progress bar with health and the last errors, and a Resume button. New abilities cfbe/get-sync-status, cfbe/start-sync, cfbe/resume-sync and cfbe/cancel-sync.
 * New: the signup form can ask for First name and Last name (Form tab), in the order of the site language or as set; bluefox gets firstName, lastName and the full name, and the checkout sends the billing first and last name too. The bluefox setup checks and creates the name fields; a newly created double opt-in email greets by first name (existing confirmation emails are not changed – add {{contact.firstName}} to them yourself).
 * New: billing phone, company, street address, postcode and state as Contact sync fields (off by default).

@@ -137,6 +137,7 @@ class Elementor extends Integration {
 				'consent_field'   => $settings['cfbe_consent_field'] ?? '',
 				'implied_consent' => 'yes' === ( $settings['cfbe_implied_consent'] ?? '' ),
 				'tags'            => $settings['cfbe_tags'] ?? '',
+				'auto_fields'     => ! array_key_exists( 'cfbe_auto_fields', $settings ) || 'yes' === $settings['cfbe_auto_fields'],
 			)
 		);
 		$rule           = null === $rule ? Rules::blank_rule() : $rule;

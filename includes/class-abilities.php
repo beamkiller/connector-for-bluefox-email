@@ -1204,6 +1204,18 @@ final class Abilities {
 			unset( $values[ $key ] );
 			$values[ $key . '_set' ] = $set;
 		}
+		if ( 'integrations' === $area ) {
+			// Rules saved before 1.1.0 have no auto_fields key: show its effective value (on).
+			foreach ( $values as $slug => $item ) {
+				if ( is_array( $item ) && isset( $item['rules'] ) && is_array( $item['rules'] ) ) {
+					foreach ( $item['rules'] as $i => $rule ) {
+						if ( is_array( $rule ) ) {
+							$values[ $slug ]['rules'][ $i ]['auto_fields'] = \CFBE\Integrations\Dispatcher::auto_fields( $rule );
+						}
+					}
+				}
+			}
+		}
 		return $values;
 	}
 

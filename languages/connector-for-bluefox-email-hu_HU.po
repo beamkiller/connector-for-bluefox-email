@@ -440,7 +440,7 @@ msgid "Unknown action."
 msgstr "Ismeretlen művelet."
 
 #: admin/class-form-tab.php:38
-#: modules/integrations/views/rule-row.php:24
+#: modules/integrations/views/rule-row.php:28
 msgid "Form"
 msgstr "Űrlap"
 
@@ -862,7 +862,7 @@ msgstr "A listák az Általános fülről jönnek („Listák betöltése”)."
 #: admin/views/tab-checkout.php:53
 #: admin/views/tab-popup.php:75
 #: modules/integrations/elementor/class-elementor-form-action.php:113
-#: modules/integrations/views/rule-row.php:91
+#: modules/integrations/views/rule-row.php:97
 #: blocks/signup-form/index.js:84
 msgid "Extra tags"
 msgstr "Extra címkék"
@@ -1643,7 +1643,7 @@ msgstr "Le"
 
 #: admin/views/tab-form.php:223
 #: modules/integrations/views/map-row.php:20
-#: modules/integrations/views/rule-row.php:44
+#: modules/integrations/views/rule-row.php:48
 #: modules/woo-events/views/tab-woo-events.php:111
 msgid "Remove"
 msgstr "Törlés"
@@ -1778,7 +1778,7 @@ msgstr "bluefox lista"
 
 #: admin/views/tab-popup.php:69
 #: modules/integrations/elementor/class-elementor-form-action.php:65
-#: modules/integrations/views/rule-row.php:51
+#: modules/integrations/views/rule-row.php:55
 msgid "Default list"
 msgstr "Alapértelmezett lista"
 
@@ -2494,7 +2494,7 @@ msgid "bluefox is not connected yet: set the project ID and API key on the Gener
 msgstr "A bluefox még nincs csatlakoztatva: add meg a projekt azonosítót és az API kulcsot a wp-admin Általános fülén."
 
 #. translators: 1: settings area, 2: valid areas
-#: includes/class-abilities.php:1235
+#: includes/class-abilities.php:1247
 #, php-format
 msgid "Unknown settings area \"%1$s\". Valid areas: %2$s."
 msgstr "Ismeretlen beállítási terület: „%1$s”. Érvényes területek: %2$s."
@@ -3404,7 +3404,7 @@ msgid "Use the WPForms field IDs (shown in the form builder), e.g. 1, 2; name pa
 msgstr "Használd a WPForms mező ID-kat (az űrlapszerkesztőben láthatók), pl. 1, 2; a névrészeket 1.first / 1.last formában."
 
 #: modules/integrations/elementor/class-elementor-form-action.php:72
-#: modules/integrations/views/rule-row.php:48
+#: modules/integrations/views/rule-row.php:52
 msgid "List"
 msgstr "Lista"
 
@@ -3441,11 +3441,20 @@ msgid "Comma separated."
 msgstr "Vesszővel elválasztva."
 
 #: modules/integrations/elementor/class-elementor-form-action.php:121
-#: modules/integrations/views/rule-row.php:103
+#: modules/integrations/views/rule-row.php:109
+msgid "Match fields by name"
+msgstr "Mezők párosítása név alapján"
+
+#: modules/integrations/elementor/class-elementor-form-action.php:124
+msgid "Fields whose ID matches a Contact sync field that is switched on (e.g. first_name, last_name, phone, city) are sent to bluefox too."
+msgstr "Azok a mezők is a bluefoxba kerülnek, amelyek azonosítója egy bekapcsolt Contact sync mezőnek felel meg (pl. first_name, last_name, phone, city)."
+
+#: modules/integrations/elementor/class-elementor-form-action.php:130
+#: modules/integrations/views/rule-row.php:130
 msgid "Custom fields"
 msgstr "Egyéni mezők"
 
-#: modules/integrations/elementor/class-elementor-form-action.php:124
+#: modules/integrations/elementor/class-elementor-form-action.php:133
 msgid "One per line: form field ID=bluefox contact field name."
 msgstr "Soronként egy: űrlapmező ID=bluefox kontakt mező neve."
 
@@ -3457,69 +3466,83 @@ msgstr "Űrlapmező"
 msgid "bluefox field"
 msgstr "bluefox mező"
 
-#: modules/integrations/views/rule-row.php:28
+#: modules/integrations/views/rule-row.php:32
 msgid "— Select a form —"
 msgstr "— Válassz űrlapot —"
 
 #. translators: %s: form ID
-#: modules/integrations/views/rule-row.php:33
+#: modules/integrations/views/rule-row.php:37
 #, php-format
 msgid "#%s (not found)"
 msgstr "#%s (nem található)"
 
-#: modules/integrations/views/rule-row.php:42
+#: modules/integrations/views/rule-row.php:46
 msgid "Form ID"
 msgstr "Űrlap ID"
 
-#: modules/integrations/views/rule-row.php:60
+#: modules/integrations/views/rule-row.php:64
 msgid "Load the lists on the General tab to choose another list."
 msgstr "Másik lista választásához töltsd be a listákat az Általános fülön."
 
-#: modules/integrations/views/rule-row.php:65
+#: modules/integrations/views/rule-row.php:69
 msgid "Email field"
 msgstr "E-mail mező"
 
-#: modules/integrations/views/rule-row.php:68
+#: modules/integrations/views/rule-row.php:72
 msgid "Empty = the first email field of the form."
 msgstr "Üres = az űrlap első e-mail mezője."
 
-#: modules/integrations/views/rule-row.php:72
+#: modules/integrations/views/rule-row.php:76
 msgid "Name field (optional)"
 msgstr "Név mező (opcionális)"
 
-#: modules/integrations/views/rule-row.php:76
+#: modules/integrations/views/rule-row.php:78
+msgid "A name field or a name group (Fluent Forms: names). Empty = found by name when \"Match fields by name\" is on: name, or first_name + last_name."
+msgstr "Egy név mező vagy név csoport (Fluent Forms: names). Üresen hagyva, ha a „Mezők párosítása név alapján” be van kapcsolva, név alapján keresi: name, vagy first_name + last_name."
+
+#: modules/integrations/views/rule-row.php:82
 msgid "Consent field"
 msgstr "Hozzájárulás mező"
 
-#: modules/integrations/views/rule-row.php:79
+#: modules/integrations/views/rule-row.php:85
 msgid "A checkbox / acceptance field. The visitor is only subscribed when it is ticked."
 msgstr "Jelölőnégyzet / elfogadás mező. A látogató csak akkor iratkozik fel, ha be van pipálva."
 
-#: modules/integrations/views/rule-row.php:83
+#: modules/integrations/views/rule-row.php:89
 msgid "This form itself is the newsletter signup (consent is implied by submitting)"
 msgstr "Maga ez az űrlap a hírlevél feliratkozás (a hozzájárulást a beküldés jelenti)"
 
-#: modules/integrations/views/rule-row.php:86
+#: modules/integrations/views/rule-row.php:92
 msgid "Everyone who submits this form will be subscribed. Only use this when the form clearly says that it is a newsletter signup (GDPR: consent must be informed and unambiguous)."
 msgstr "Mindenki, aki beküldi ezt az űrlapot, feliratkozik. Csak akkor használd, ha az űrlapon egyértelműen szerepel, hogy hírlevél feliratkozásról van szó (GDPR: a hozzájárulásnak tájékoztatáson alapulónak és egyértelműnek kell lennie)."
 
-#: modules/integrations/views/rule-row.php:87
+#: modules/integrations/views/rule-row.php:93
 msgid "Set a consent field or tick the box above - until then nobody is subscribed from this form."
 msgstr "Adj meg egy hozzájárulás mezőt, vagy pipáld be a fenti négyzetet – addig senki nem iratkozik fel erről az űrlapról."
 
 #. translators: %s: source tag, e.g. source-cf7
-#: modules/integrations/views/rule-row.php:97
+#: modules/integrations/views/rule-row.php:103
 #, php-format
 msgid "Comma separated. The tag %s is always added."
 msgstr "Vesszővel elválasztva. A(z) %s címke mindig hozzáadódik."
 
-#: modules/integrations/views/rule-row.php:112
+#: modules/integrations/views/rule-row.php:114
+msgid "Send form fields whose name matches a Contact sync field"
+msgstr "Azoknak az űrlapmezőknek a küldése, amelyek neve egy Contact sync mezőnek felel meg"
+
+#. translators: %s: comma separated bluefox field names, e.g. name, firstName, lastName
+#: modules/integrations/views/rule-row.php:121
+#, php-format
+msgid "Fields named e.g. first_name, last_name, phone, company, address, city, zip, state or country (Fluent Forms: names.first_name too) go to the Contact sync field of the same meaning, if it is switched on there. Switched on now: %s."
+msgstr "A pl. first_name, last_name, phone, company, address, city, zip, state vagy country nevű mezők (Fluent Forms: names.first_name is) az azonos jelentésű Contact sync mezőbe kerülnek, ha ott be van kapcsolva. Most bekapcsolva: %s."
+
+#: modules/integrations/views/rule-row.php:139
 msgid "Add field"
 msgstr "Mező hozzáadása"
 
-#: modules/integrations/views/rule-row.php:113
-msgid "Form field → bluefox contact field name (the field must exist in bluefox; unknown fields are ignored there)."
-msgstr "Űrlapmező → bluefox kontakt mező neve (a mezőnek léteznie kell a bluefox-ban; az ismeretlen mezőket ott figyelmen kívül hagyja)."
+#: modules/integrations/views/rule-row.php:140
+msgid "Form field → bluefox contact field name (the field must exist in bluefox; unknown fields are ignored there). A field set here wins over a match by name."
+msgstr "Űrlapmező → bluefox kontakt mező neve (a mezőnek léteznie kell a bluefox-ban; az ismeretlen mezőket ott figyelmen kívül hagyja). Az itt megadott mező elsőbbséget élvez a név alapján párosítottal szemben."
 
 #: modules/integrations/views/tab-integrations.php:17
 msgid "Subscribe people who submit forms built with other form plugins. Add a row per form: which list, which field holds the email address, and which checkbox is the newsletter consent. The subscription runs in the background (the form never waits for bluefox) and works like the plugin’s own form: double opt-in email, existing contacts, retries."

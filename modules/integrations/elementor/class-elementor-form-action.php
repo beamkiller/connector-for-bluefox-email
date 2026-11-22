@@ -116,6 +116,15 @@ class Elementor_Form_Action extends \ElementorPro\Modules\Forms\Classes\Action_B
 			)
 		);
 		$widget->add_control(
+			'cfbe_auto_fields',
+			array(
+				'label'       => esc_html__( 'Match fields by name', 'connector-for-bluefox-email' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'default'     => 'yes',
+				'description' => esc_html__( 'Fields whose ID matches a Contact sync field that is switched on (e.g. first_name, last_name, phone, city) are sent to bluefox too.', 'connector-for-bluefox-email' ),
+			)
+		);
+		$widget->add_control(
 			'cfbe_field_map',
 			array(
 				'label'       => esc_html__( 'Custom fields', 'connector-for-bluefox-email' ),
