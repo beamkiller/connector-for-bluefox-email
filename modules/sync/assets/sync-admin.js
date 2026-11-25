@@ -95,7 +95,9 @@
 			startBtn.disabled = d.running;
 		}
 		if ( resumeBtn ) {
+			// WordPress' .button sets display: inline-block, which beats the hidden attribute.
 			resumeBtn.hidden = ! d.can_resume;
+			resumeBtn.style.display = d.can_resume ? '' : 'none';
 		}
 		if ( cancelBtn ) {
 			cancelBtn.disabled = ! d.running && d.status !== 'paused';

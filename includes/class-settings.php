@@ -25,6 +25,13 @@ final class Settings {
 	const SECRET_LENGTH = 32;
 
 	/**
+	 * Last sanitized value per area in this request (see sanitize()).
+	 *
+	 * @var array<string, array>
+	 */
+	private $last_clean = array();
+
+	/**
 	 * All settings areas: the built-in ones plus those added by feature modules (`cfbe_settings_areas`).
 	 *
 	 * @return string[]
@@ -330,7 +337,13 @@ final class Settings {
 	 * @param mixed  $input Raw input.
 	 */
 	public function sanitize( string $area, $input ): array {
-		$input    = is_array( $input ) ? $input : array();
+		$input = is_array( $input ) ? $input : array();
+		// The first save of an option runs the callback twice: update_option() → add_option() sanitizes the
+		// already sanitized value again. Form markers (e.g. Contact sync's `present`) are gone by then, so
+		// return that value unchanged instead of reading it as a form post.
+		if ( isset( $this->last_clean[ $area ] ) && $input === $this->last_clean[ $area ] ) {
+			return $input;
+		}
 		$previous = (array) get_option( self::option_name( $area ), array() );
 
 		if ( 'api' === $area ) {
@@ -348,7 +361,9 @@ final class Settings {
 		 */
 		$clean = (array) apply_filters( 'cfbe_sanitize_settings_' . $area, $clean, $input, $previous );
 
-		return array_intersect_key( $clean, self::defaults( $area ) );
+		$clean                     = array_intersect_key( $clean, self::defaults( $area ) );
+		$this->last_clean[ $area ] = $clean;
+		return $clean;
 	}
 
 	/**

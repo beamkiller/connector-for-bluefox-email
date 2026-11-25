@@ -179,7 +179,7 @@ $cfbe_labels = Fields::labels();
 </div>
 <p>
 	<button type="button" class="button button-primary" id="cfbe-sync-start" <?php disabled( ! $cfbe_configured || $cfbe_status['running'] ); ?>><?php esc_html_e( 'Sync all existing users/customers now', 'connector-for-bluefox-email' ); ?></button>
-	<button type="button" class="button" id="cfbe-sync-resume" <?php echo $cfbe_status['can_resume'] ? '' : 'hidden'; ?>><?php esc_html_e( 'Resume', 'connector-for-bluefox-email' ); ?></button>
+	<button type="button" class="button" id="cfbe-sync-resume" <?php echo $cfbe_status['can_resume'] ? '' : 'hidden style="display:none"'; ?>><?php esc_html_e( 'Resume', 'connector-for-bluefox-email' ); ?></button>
 	<button type="button" class="button" id="cfbe-sync-cancel" <?php disabled( ! $cfbe_status['running'] && 'paused' !== $cfbe_status['status'] ); ?>><?php esc_html_e( 'Cancel', 'connector-for-bluefox-email' ); ?></button>
 </p>
 <details id="cfbe-sync-errors" <?php echo $cfbe_status['errors'] ? '' : 'hidden'; ?>>
