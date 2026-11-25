@@ -164,17 +164,17 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 == Changelog ==
 
 = 1.1.0 =
-* New: "bluefox setup" on the General tab – choose the double opt-in confirmation email per list from your bluefox transactional emails, and switch on double opt-in, the thank-you page redirect and your own preferences page in bluefox with one click.
-* Fix: the very first save of a settings tab could lose changes – e.g. a Contact sync field ticked before those settings were ever saved was unticked again after the reload.
-* Fix: list selects showed the list ID instead of its name once the one-day list cache expired.
-* Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
-* Email templates: the double opt-in email's "In use" status now reflects which lists really use it in bluefox, and the email is marked "(from Email templates)" in the bluefox setup.
-* New: form integrations match fields by name – a form field named like a Contact sync field that is switched on (first_name, last_name, phone, company, address, city, zip, state, country, Fluent Forms names.first_name …) is sent to that bluefox field without a mapping. A Fluent Forms name group as the Name field also fills First name and Last name. On by default, per form.
-* New: the contact sync backfill is built for big lists – time-limited batches that save every contact, a watchdog that continues a stopped batch, retries with pauses on bluefox rate limits, a pause with the reason on a rejected API key, a live progress bar with health and the last errors, and a Resume button. New abilities cfbe/get-sync-status, cfbe/start-sync, cfbe/resume-sync and cfbe/cancel-sync.
-* New: the signup form can ask for First name and Last name (Form tab), in the order of the site language or as set; bluefox gets firstName, lastName and the full name, and the checkout sends the billing first and last name too. The bluefox setup checks and creates the name fields; a newly created double opt-in email greets by first name (existing confirmation emails are not changed – add {{contact.firstName}} to them yourself).
+* New: bluefox setup on the General tab – check every list and, with one click, choose its double opt-in confirmation email and switch on double opt-in, the thank-you page redirect and your own preferences page.
+* New: First name and Last name on the signup form (Form tab), in the order of the site language or as you set it. bluefox gets firstName, lastName and the full name; the checkout sends the billing first and last name too. A newly created double opt-in email greets by first name (existing emails are not changed).
+* New: form plugin integrations match fields by name – fields named first_name, last_name, phone, company, address, city, zip, state or country (and the Fluent Forms Name field) go to the matching Contact sync field without a mapping. On by default, per form.
+* New: Contact sync for big lists – short background batches that save every contact, continue by themselves after a stop and wait on bluefox rate limits, with a live progress bar, the last errors and a Resume button.
 * New: billing phone, company, street address, postcode and state as Contact sync fields (off by default).
-* New: purchased product tags in Contact sync – choose products with a searchable picker (fine for big stores), and their buyers get a `bought-<product-slug>` tag in bluefox, also for earlier orders via the sync of existing customers. Off by default.
-* AI agent access: new ability cfbe/search-products; the purchased product tag settings are in the sync area of cfbe/get-settings / cfbe/update-settings. New abilities cfbe/get-bluefox-setup and cfbe/apply-bluefox-setup; cfbe/list-bluefox-lists also returns each list's confirmation email and redirect link; abilities with only optional input run without input.
+* New: purchased product tags – pick products with a searchable picker and their buyers get a bought-<product-slug> tag in bluefox, also for earlier orders. Off by default.
+* Improved: the double opt-in email's "In use" status on the Email templates tab shows which lists really use it in bluefox.
+* Fix: the first save of a settings tab could lose changes (for example a Contact sync field ticked before those settings were ever saved).
+* Fix: list selects showed the list ID instead of its name after the one-day list cache expired.
+* Fix: creating the double opt-in email on the Email templates tab cleared the list's confirmation title and message in bluefox.
+* AI agent access: new abilities for the bluefox setup, the contact sync (status, start, resume, cancel) and product search; list details include each list's confirmation email and redirect link.
 
 = 1.0.0 =
 * First public release.
