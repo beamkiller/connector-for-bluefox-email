@@ -4,7 +4,7 @@ Tags: newsletter, email marketing, woocommerce, double opt-in, transactional ema
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,7 +87,7 @@ This plugin connects to the **bluefox.email API** (`https://api.bluefox.email`),
 
 What is sent and when:
 
-* When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name or first and last name (if given; at the checkout the billing first and last name), tags and the list they subscribe to, plus the values of any form fields you map to bluefox contact fields in the form integration settings.
+* When someone submits a signup form, ticks the checkout opt-in or submits a connected third-party form: their email address, name or first and last name (if given; at the checkout the billing first and last name), tags and the list they subscribe to, plus the values of any form fields you map to bluefox contact fields in the form integration settings and, unless you switch "Match fields by name" off for that form, of form fields whose name matches a Contact sync field that is switched on (for example first_name, last_name, phone, city).
 * When the Welcome coupon module confirms a signup: the subscription status is read and the coupon email is sent with the coupon code, value and expiry date.
 * When a welcome coupon is about to expire unused (and a reminder email is set): the reminder email is sent to that subscriber with the same coupon details.
 * When the Contact sync module is on: the user and customer fields you enable (for example name, order count, total spent, last order date; billing phone, company and address only if you switch them on) and, if you switch them on, tags for the chosen products the person bought.
@@ -182,7 +182,7 @@ Yes. All emails are designed in bluefox.email; the plugin passes data (for examp
 == Upgrade Notice ==
 
 = 1.1.0 =
-New one-click bluefox setup on the General tab (double opt-in email, thank-you redirect, preferences page).
+One-click bluefox setup, first and last name on the signup form, form fields matched by name, contact sync for big lists with a progress bar, billing fields and purchased product tags. Settings are kept.
 
 = 1.0.0 =
 First public release.
