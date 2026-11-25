@@ -2,7 +2,7 @@
 Contributors: beamkiller
 Tags: newsletter, email marketing, woocommerce, double opt-in, transactional email
 Requires at least: 6.7
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.1
 Stable tag: 1.1.0
 License: GPLv2 or later
